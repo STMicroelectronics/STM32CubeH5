@@ -1,0 +1,8 @@
+[ProjectFiles]
+[Others]
+Define=
+HALModule=EXTI
+[Groups]
+Doc=../README.md;
+User/Secure= ../Secure/Src/hal_external_memory_helper.c
+Drivers/STM32H5xx_HAL_Driver=../../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_exti.c;

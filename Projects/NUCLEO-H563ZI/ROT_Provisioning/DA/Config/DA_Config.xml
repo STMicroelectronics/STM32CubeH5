@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Root xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="SCHVerif.xsd">
+<Obdata>
+	<Info>
+		<Title>Debug Authentication configuration</Title>
+		<ObDestAddress>0x0ffd0100</ObDestAddress> 
+		<DoEncryption>0</DoEncryption>
+		<GlobalAlign>16</GlobalAlign>
+	</Info>
+	<Hash>
+	</Hash>
+	<DA>
+	</DA>
+	<File>
+		<Name>Debug Authentication root key</Name>
+		<Value>.\..\Keys\key_1_root.pem</Value>
+		<Align>4</Align>
+		<KeyType>ecdsa-p256</KeyType>
+		<Type>Public</Type>
+		<Default>.\..\Keys\DA_Root_Authentication.pem</Default>
+		<Tooltip>Select the key used as root for authentication debug certificate chain. When this key is regenerated, all certificates must be regenerated as well</Tooltip>
+	</File>
+	<Permission>
+		<Name>Permission</Name> 
+		<Value>0x00005077</Value>
+		<Width>4</Width>
+		<Default>0xFFFFFFFF</Default>
+		<Tooltip>Enter Permission</Tooltip>
+	</Permission>
+	<Output>
+		<Name>Output File</Name>
+		<Value>.\..\Binary\DA_Config.obk</Value>
+		<Default>.\..\Binary\DA_Close.obk</Default>
+		<Tooltip>Select the output file .obk including DA configuration</Tooltip>
+	</Output>
+</Obdata>
+</Root>

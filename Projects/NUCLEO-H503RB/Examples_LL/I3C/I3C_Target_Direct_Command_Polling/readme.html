@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <link rel="stylesheet" href="../../../../../_htmresc/mini-st_2020.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<h2 id="i3c_target_direct_command_polling-example-description"><b>I3C_Target_Direct_Command_Polling Example Description</b></h2>
+<p>How to handle a Direct Command procedure between an I3C Controller and an I3C Target, using Controller in Polling.</p>
+<pre><code>  - Board: NUCLEO-H503RB&#39;s (embeds a STM32H503RB device)
+  - SCL Pin: PB6 (Arduino SCL/D15 CN5 pin 10, Morpho CN10 pin3) to PB6 (Arduino SCL/D15 CN5 pin 10, Morpho CN10 pin3)
+  - SDA Pin: PB7 (Arduino SDA/D14 CN5 pin 9, Morpho CN10 pin5) to PB7 (Arduino SDA/D14 CN5 pin 9, Morpho CN10 pin5)
+  Connect GND between each board
+  Use short wire as possible between the boards or twist an independent ground wire on each I3C lines
+  mean one GND twist around SCL and one GND twist around SDA to help communication at 12.5Mhz.</code></pre>
+<p>At the beginning of the main program the HAL_Init() function is called to reset At the beginning of the SystemClock_Config() function is used to configure the system clock (SYSCLK) to run at 250 MHz.</p>
+<p>The I3C peripheral configuration and I3C resources (CLOCK and GPIO) are ensured by the MX_I3C1_Init() function. User may update this function to change I3C configuration.</p>
+<p>The I3C communication is then initiated. The project is split in two workspaces: the Controller Board (I3C_Controller_Direct_Command_Polling) and the Target Board (I3C_Target_Direct_Command_Polling)</p>
+<ul>
+<li><p>Target Board The MX_I3C1_Init() function allow the configuration of the internal hardware FIFOs, the configuration of the Target own specific parameter.</p>
+<p>The Controller send data at 12.5Mhz during Push-pull phase.</p></li>
+</ul>
+<p>In a first step the Target on hardware side wait the assignation of a proper associated Dynamic Address from the Controller. As this phase is totally manage ny internal hardware state machine, there is no additional specific code to manage this action in polling mode.</p>
+<p>In a second step, until Common Command Code procedure from the Controller, the Target wait in a no activity loop. Then, at reception of the first Common Code procedure from the Controller, the Target start the sending or receiving of the CCC additional data depending of Common Command Code.</p>
+<p>This sending or receiving of additional data is totally manage by internal hardware state machine.</p>
+<p>Only each time a Set CCC command is confirmed, the treatment is done through the main loop, the associated data is compared with the expected value.</p>
+<p>Each time a Set CCC command is confirmed, the LED2 is toggle.</p>
+<p>NUCLEO-H503RB’s LEDs can be used to monitor the transfer status: - LED2 is toggle each time a Set Command Code process is treated on hardware side. - LED2 is toggle slowly when there is an error in Command Code process.</p>
+<h3 id="keywords"><b>Keywords</b></h3>
+<p>Connectivity, Communication, I3C, Polling, Controller, Target, Dynamic Address Assignment, Direct Command, Transmission, Reception</p>
+<h3 id="directory-contents"><b>Directory contents</b></h3>
+<ul>
+<li>I3C/I3C_Target_Direct_Command_Polling/Inc/stm32h5xx_it.h I3C interrupt handlers header file</li>
+<li>I3C/I3C_Target_Direct_Command_Polling/Inc/main.h Header for main.c module</li>
+<li>I3C/I3C_Target_Direct_Command_Polling/Inc/stm32_assert.h Template file to include assert_failed function</li>
+<li>I3C/I3C_Target_Direct_Command_Polling/Src/stm32h5xx_it.c I3C interrupt handlers</li>
+<li>I3C/I3C_Target_Direct_Command_Polling/Src/main.c Main program</li>
+<li>I3C/I3C_Target_Direct_Command_Polling/Src/system_stm32h5xx.c STM32H5xx system source file</li>
+</ul>
+<h3 id="hardware-and-software-environment"><b>Hardware and Software environment</b></h3>
+<ul>
+<li><p>This example runs on STM32H503RB devices.</p></li>
+<li><p>This example has been tested with NUCLEO-H503RB board and can be easily tailored to any other supported device and development board.</p></li>
+<li><p>NUCLEO-H503RB Set-up</p>
+<ul>
+<li>Use short wire as possible between the boards or twist an independent ground wire on each I3C lines mean one GND twist around SCL and one GND twist around SDA to help communication at 12.5Mhz.</li>
+<li>Connect I3C_SCL line of Controller board (PB6 Arduino SCL/D15 CN5 pin 10, Morpho CN10 pin3) to I3C_SCL line of Target Board (PB6 Arduino SCL/D15 CN5 pin 10, Morpho CN10 pin3).</li>
+<li>Connect I3C_SDA line of Controller board (PB7 Arduino SDA/D14 CN5 pin 9, Morpho CN10 pin5) to I3C_SDA line of Target Board (PB7 Arduino SDA/D14 CN5 pin 9, Morpho CN10 pin5).</li>
+<li>Connect GND of Controller board to GND of Target Board.</li>
+</ul></li>
+</ul>
+<h3 id="how-to-use-it"><b>How to use it ?</b></h3>
+<p>In order to make the program work, you must do the following:</p>
+<ul>
+<li>Open your preferred toolchain</li>
+<li>Rebuild all files and load your image into Controller memory (I3C_Controller_Direct_Command_Polling)</li>
+<li>Then rebuild all files and load your image into Target memory (I3C_Target_Direct_Command_Polling)</li>
+<li>Run the Controller in debug mode before run the Target in normal mode. This sequence will prevent a false startup phase on Target side as there is no high level on the bus, if the Target is started before the Controller.</li>
+</ul>
+</body>
+</html>

@@ -1,0 +1,6 @@
+[ProjectFiles]
+[Others]
+Define=TCPP0203_SUPPORT
+HALModule=
+[Groups]
+Doc=../README.md;

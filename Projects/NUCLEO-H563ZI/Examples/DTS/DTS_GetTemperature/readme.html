@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <link rel="stylesheet" href="../../../../../_htmresc/mini-st_2020.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<h2 id="dts_gettemperature-example-description"><b>DTS_GetTemperature Example Description</b></h2>
+<p>How to configure and use the DTS to get the temperature of the die.</p>
+<pre><code>  - Board: NUCLEO-H563ZI (embeds a STM32H563ZI device)</code></pre>
+<p>At the beginning of the main program the HAL_Init() function is called to reset all the peripherals, initialize the Flash interface and the systick. Then the SystemClock_Config() function is used to configure the system clock (SYSCLK) to run at 250 MHz.</p>
+<p>The DTS is configured to continuously get the temperature. The Temperature variable will hold the temperature value in °C unit. The Temperature value can be displayed on the debugger in “Temperature” variable.</p>
+<p>NUCLEO-H563ZI board’s LEDs can be used to monitor the process status: - LED3 toggles and example is stopped (using infinite loop) when there is an error during process.</p>
+<h3 id="keywords"><b>Keywords</b></h3>
+<p>DTS, Sensor, Temperature, Die</p>
+<h3 id="directory-contents"><b>Directory contents</b></h3>
+<ul>
+<li>DTS/DTS_GetTemperature/Inc/stm32h5xx_nucleo_conf.h BSP configuration file</li>
+<li>DTS/DTS_GetTemperature/Inc/stm32h5xx_hal_conf.h HAL configuration file</li>
+<li>DTS/DTS_GetTemperature/Inc/stm32h5xx_it.h HAL interrupt handlers header file</li>
+<li>DTS/DTS_GetTemperature/Inc/main.h Header for main.c module</li>
+<li>DTS/DTS_GetTemperature/Src/stm32h5xx_it.c HAL interrupt handlers</li>
+<li>DTS/DTS_GetTemperature/Src/main.c Main program</li>
+<li>DTS/DTS_GetTemperature/Src/stm32h5xx_hal_msp.c HAL MSP file</li>
+<li>DTS/DTS_GetTemperature/Src/system_stm32h5xx.c STM32H5xx system source file</li>
+</ul>
+<h3 id="hardware-and-software-environment"><b>Hardware and Software environment</b></h3>
+<ul>
+<li><p>This example runs on STM32H563ZI devices.</p></li>
+<li><p>This example has been tested with NUCLEO-H563ZI board and can be easily tailored to any other supported device and development board.</p></li>
+<li><p>To get the temperature information, put the “Temperature” variable in the debugger watch.</p></li>
+</ul>
+<h3 id="how-to-use-it"><b>How to use it ?</b></h3>
+<p>In order to make the program work, you must do the following :</p>
+<ul>
+<li>Open your preferred toolchain</li>
+<li>Rebuild all files and load your image into target memory</li>
+<li>Run the example</li>
+</ul>
+</body>
+</html>

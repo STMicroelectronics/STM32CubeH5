@@ -1,0 +1,14 @@
+Usage: HASH_HAL_Migrator.py -p <ProjectWorkSpace>
+
+"HASH_HAL_Migrator" is a Python script to ensure the migration of customer applications based
+on legacy HASH APIs to new HASH HAL APIs
+
+Options and arguments:
+    -h, --help                : [Exclusive] print this help message and exit
+    -p, --wokspacePath        : [Mandatory] defined the IP name
+    --verbose                 : [Optional]  print debug information
+
+        ----------------------------------------------------------------------------------------------------------------
+        Examples:
+        ----------------------------------------------------------------------------------------------------------------
+        HASH_HAL_Migrator.py -p "Project_Location"

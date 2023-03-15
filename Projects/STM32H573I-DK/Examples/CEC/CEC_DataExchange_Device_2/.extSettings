@@ -1,0 +1,11 @@
+[ProjectFiles]
+HeaderPath=..\..\..\..\..\..\Drivers\BSP\STM32H573I-DK;..\..\..\..\..\..\Drivers\BSP\Components\Common;..\..\..\..\..\..\Utilities\lcd
+[Others]
+Define=
+HALModule=EXTI;SRAM;I2C
+[Groups]
+Doc=../README.md;
+Drivers/BSP/Components=../../../../../../Drivers/BSP/Components/st7789h2/st7789h2_reg.c;../../../../../../Drivers/BSP/Components/st7789h2/st7789h2.c;../../../../../../Drivers/BSP/Components/ft6x06/ft6x06_reg.c;../../../../../../Drivers/BSP/Components/ft6x06/ft6x06.c;
+Drivers/BSP/STM32H573I-DK=../../../../../../Drivers/BSP/STM32H573I-DK/stm32h573i_discovery_ts.c;../../../../../../Drivers/BSP/STM32H573I-DK/stm32h573i_discovery_bus.c;../../../../../../Drivers/BSP/STM32H573I-DK/stm32h573i_discovery_lcd.c;../../../../../../Drivers/BSP/STM32H573I-DK/stm32h573i_discovery.c;
+Drivers/STM32H5xx_HAL_Driver=../../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_ll_fmc.c;../../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_i2c.c;../../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_sram.c;../../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_exti.c;
+Utilities=../../../../../../Utilities/lcd/stm32_lcd.c;

@@ -1,0 +1,33 @@
+#include "region_defs.h"
+
+define memory mem with size = 4G;
+
+define region BL2_CODE_region        = mem:[from BL2_CODE_START size BL2_CODE_SIZE];
+
+define region BL2_RAM_region         = mem:[from BL2_DATA_START size BL2_DATA_SIZE];
+
+initialize by copy  with packing = none {  readwrite };
+do not initialize  { section .noinit };
+define block ER_CODE  with fixed order, alignment = 8 {
+       readonly,
+       readonly section .BL2_Error_Code,
+       };
+place at address (BL2_BOOT_VTOR_ADDR) { readonly section .intvec };
+define block PERSO_AREA with fixed order {
+                                    readonly section .bootutil_key_cnt,
+                                    readonly section .bootutil_key,
+                                    readonly section .bootutil_enc_key,
+                                    readonly object keys.o};
+
+place at address (PERSO_START) {block PERSO_AREA};
+place in BL2_CODE_region {block ER_CODE };
+
+define block ER_DATA_NOINIT   with  alignment = 32 { section .noinit};
+define block ER_DATA        with  alignment = 32 { readwrite};
+    /* MSP */
+
+define block ARM_LIB_STACK with alignment = 32, size = BL2_MSP_STACK_SIZE { };
+define block HEAP   with alignment = 8, size = BL2_HEAP_SIZE { };
+
+define block DATA with fixed order {block ER_DATA_NOINIT, block ER_DATA, block ARM_LIB_STACK, block HEAP};
+place in BL2_RAM_region          { block DATA};

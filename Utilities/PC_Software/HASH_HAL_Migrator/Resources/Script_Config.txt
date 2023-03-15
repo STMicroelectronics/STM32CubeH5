@@ -1,0 +1,1 @@
+HASH_HAL_Migrator version = "V1.0.0"

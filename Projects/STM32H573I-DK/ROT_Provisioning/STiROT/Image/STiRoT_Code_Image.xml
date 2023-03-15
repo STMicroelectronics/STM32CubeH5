@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Root xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="SCHVerif.xsd">
+<McubootFormat>
+	<GlobalParam>
+		<Command>sign</Command>
+		<Title>Firmware image generation</Title>
+		<LinkedXML>./../Config/STiRoT_Config.xml</LinkedXML>
+	</GlobalParam>
+	<Param>
+		<Name>Authentication key</Name>
+		<Link></Link>
+		<Type>File</Type>
+		<Command>-k</Command>
+		<Hidden>1</Hidden>
+		<Tooltip>Signature Key used</Tooltip>
+		<Default></Default>
+	</Param>
+	<Param>
+		<Name>Encryption key</Name>
+		<Link>GetPublic</Link>
+		<Type>File</Type>
+		<Command>-E</Command>
+		<Hidden>1</Hidden>
+		<Default></Default>
+	</Param>
+	<Param>
+		<Name>Image magic</Name>
+		<Type>Data</Type>
+		<Command>-ma</Command>
+		<Hidden>1</Hidden>
+		<Default>0x73ab1024</Default>
+	</Param>
+	<Param>
+		<Name>Endianness</Name>
+		<Type>Data</Type>
+		<Command>-e</Command>
+		<Hidden>1</Hidden>
+		<Default>little</Default>
+	</Param>
+	<Param>
+		<Name>Padding</Name>
+		<Type>Data</Type>
+		<Command>--pad</Command>
+		<Hidden>1</Hidden>
+		<Default></Default>
+	</Param>
+	<Param>
+		<Name>Firmware area size</Name>
+		<Link></Link>
+		<Type>Data</Type>
+		<Command>-S</Command>
+		<Hidden>1</Hidden>
+		<Default></Default>
+	</Param>
+	<Param>
+		<Name>Header Size</Name>
+		<Type>Data</Type>
+		<Command>-H</Command>
+		<Hidden>1</Hidden>
+		<Default>0x400</Default>
+	</Param>
+	<Param>
+		<Name>Padding Header</Name>
+		<Type>Data</Type>
+		<Command>--pad-header</Command>
+		<Hidden>1</Hidden>
+		<Default></Default>
+	</Param>
+	<Param>
+		<Name>Dependency with data image</Name>
+		<Value>1,1.0.0</Value>
+		<Type>Dependency</Type>
+		<Command>-d</Command>
+		<Enable>0</Enable>
+		<Tooltip>To be enabled when a compatibility with a specific data image version is required. Data image version format is x.y.z</Tooltip>
+		<Default>1,1.0.0</Default>
+	</Param>
+	<Param>
+		<Name>Write Option</Name>
+		<Type>Data</Type>
+		<Command>--overwrite-only</Command>
+		<Hidden>1</Hidden>
+		<Default></Default>
+	</Param>
+	<Param>
+		<Name>Version</Name>
+		<Value>1.0.0</Value>
+		<Type>Data</Type>
+		<Command>-v</Command>
+		<Tooltip>Version of the firmware binary. Format is x.y.z</Tooltip>
+		<Default>1.0.0</Default>
+	</Param>
+	<Param>
+		<Name>Security Counter</Name>
+		<Value>auto</Value>
+		<Type>Data</Type>
+		<Command>-s</Command>
+		<Hidden>1</Hidden>
+		<Default>auto</Default>
+	</Param>
+	<Param>
+		<Name>Align</Name>
+		<Type>Data</Type>
+		<Command>--align</Command>
+		<Hidden>1</Hidden>
+		<Default>16</Default>
+	</Param>
+  <Param>
+		<Name>Firmware download area offset</Name>
+		<Link>+0x8000000</Link>
+		<Type>Data</Type>
+		<Command>-x</Command>
+		<Hidden>0</Hidden>
+		<Default></Default>
+  </Param>
+	<Param>
+		<Name>Firmware binary input file</Name>
+		<Value>./../../../Applications/ROT/STiROT_Appli/Binary/appli.bin</Value>
+		<Type>File</Type>
+		<Tooltip>Select the firmware binary file to be processed for the image generation</Tooltip>
+		<Default>./../../../Applications/ROT/STiROT_Appli/Binary/appli.bin</Default>
+	</Param>
+	<Output>
+		<Name>Image output file</Name>
+		<Value>./../../../Applications/ROT/STiROT_Appli/Binary/appli_enc_sign.hex</Value>
+		<Default>./../../../Applications/ROT/STiROT_Appli/Binary/appli_enc_sign.hex</Default>
+	</Output>
+  </McubootFormat>
+</Root>

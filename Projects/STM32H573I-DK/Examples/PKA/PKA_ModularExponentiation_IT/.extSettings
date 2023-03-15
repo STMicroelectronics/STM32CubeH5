@@ -1,0 +1,10 @@
+[ProjectFiles]
+HeaderPath=..\..\..\..\..\..\Drivers\BSP\STM32H573I-DK
+[Others]
+Define=
+HALModule=EXTI
+[Groups]
+Application/User=../Src/main.c;../Src/stm32h5xx_hal_msp.c;../Src/stm32h5xx_it.c;../Src/plaintext.c;../Src/ciphertext.c;../Src/rsa_priv_2048.c;../Src/rsa_pub_2048.c;
+Doc=../README.md;../Src/rsa_priv_2048.pem;../Src/rsa_pub_2048.pem;
+Drivers/BSP/STM32H573I-DK=../../../../../../Drivers/BSP/STM32H573I-DK/stm32h573i_discovery.c;
+Drivers/STM32H5xx_HAL_Driver=../../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_exti.c;

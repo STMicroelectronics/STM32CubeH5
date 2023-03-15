@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <link rel="stylesheet" href="../../../../../_htmresc/mini-st_2020.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<h2 id="i3c_target_private_command_it-example-description"><b>I3C_Target_Private_Command_IT Example Description</b></h2>
+<p>How to handle I3C as Target data buffer transmission/reception between two boards, using interrupt.</p>
+<pre><code>  - Board: NUCLEO-H563ZI (embeds a STM32H563ZI device)
+  - SCL Pin: PB8 (Arduino SCL/D15 CN6 pin 2, Morpho CN5 pin3) to PB8 (Arduino SCL/D15 CN6 pin 2, Morpho CN5 pin3)
+  - SDA Pin: PB9 (Arduino SDA/D14 CN6 pin 4, Morpho CN5 pin5) to PB9 (Arduino SDA/D14 CN6 pin 4, Morpho CN5 pin5)
+  Connect GND between each board
+  Use short wire as possible between the boards or twist an independent ground wire on each I3C lines
+  mean one GND twist around SCL and one GND twist around SDA to help communication at 12.5Mhz.</code></pre>
+<p>At the beginning of the SystemClock_Config() function is used to configure the system clock (SYSCLK) to run at 250 MHz.</p>
+<p>The I3C peripheral configuration and I3C resources (CLOCK, GPIO and NVIC) are ensured by the MX_I3C1_Init() function. User may update this function to change I3C configuration.</p>
+<p>The I3C communication is then initiated.</p>
+<p>The project is split in two workspace: the Controller Board (I3C_Controller_Private_Command_IT) and the Target Board (I3C_Target_Private_Command_IT)</p>
+<ul>
+<li><p>Target Board</p>
+<p>The MX_I3C1_Init() function by setting the different interrupts allow the Target application to be inform when the Controller assign a Dynamic Address through Target_Event_Treatment_Callback() function.</p>
+<p>The Target_Reception_Callback() and the Target_Transmit_Callback() callback functions allow respectively the reception and the transmission of a predefined data buffer in Target mode using Interrupt.</p>
+<p>The Controller send data at 12.5Mhz during Push-pull phases.</p></li>
+</ul>
+<p>For this example the aTxBuffer is predefined and the aRxBuffer size is same as aTxBuffer.</p>
+<p>In a first step the Target wait the assignation of a proper associated Dynamic Address from the Controller.</p>
+<p>Then the I3C Controller continue the communication by sending aTxBuffer to I3C Target which receives aRxBuffer through Target_Reception_Callback().</p>
+<p>The second step starts when the user press the USER push-button on the Controller Board, the I3C Target sends aTxBuffer through Target_Transmit_Callback() to the I3C Controller which receives aRxBuffer.</p>
+<p>The end of this two steps are monitored through the Target_Complete_Callback() function result. Finally, aTxBuffer and aRxBuffer are compared through Buffercmp() in order to check buffers correctness.</p>
+<p>NUCLEO-H563ZI’s LEDs can be used to monitor the transfer status:</p>
+<ul>
+<li>LED1 is ON when a dynamic address is received.</li>
+<li>LED1 is OFF when the transmission process is complete.</li>
+<li>LED1 is ON when the reception process is complete.</li>
+<li>LED1 toggle slowly when there is an error in transmission/reception process.</li>
+</ul>
+<h3 id="keywords"><b>Keywords</b></h3>
+<p>Connectivity, Communication, I3C, Interrupt, Controller, Target, Dynamic Address Assignment, Private, Transmission, Reception</p>
+<h3 id="directory-contents"><b>Directory contents</b></h3>
+<ul>
+<li>I3C/I3C_Target_Private_Command_IT/Inc/stm32h5xx_it.h I3C interrupt handlers header file</li>
+<li>I3C/I3C_Target_Private_Command_IT/Inc/main.h Header for main.c module</li>
+<li>I3C/I3C_Target_Private_Command_IT/Inc/stm32_assert.h Template file to include assert_failed function</li>
+<li>I3C/I3C_Target_Private_Command_IT/Src/stm32h5xx_it.c I3C interrupt handlers</li>
+<li>I3C/I3C_Target_Private_Command_IT/Src/main.c Main program</li>
+<li>I3C/I3C_Target_Private_Command_IT/Src/system_stm32h5xx.c STM32H5xx system source file</li>
+</ul>
+<h3 id="hardware-and-software-environment"><b>Hardware and Software environment</b></h3>
+<ul>
+<li><p>This example runs on STM32H563ZI devices.</p></li>
+<li><p>This example has been tested with NUCLEO-H563ZI board and can be easily tailored to any other supported device and development board.</p></li>
+<li><p>NUCLEO-H563ZI Set-up</p>
+<ul>
+<li>Use short wire as possible between the boards or twist an independent ground wire on each I3C lines mean one GND twist around SCL and one GND twist around SDA to help communication at 12.5Mhz.</li>
+<li>Connect I3C_SCL line of Controller board (PB8 Arduino SCL/D15 CN6 pin 2, Morpho CN5 pin3) to I3C_SCL line of Target Board (PB8 Arduino SCL/D15 CN6 pin 2, Morpho CN5 pin3).</li>
+<li>Connect I3C_SDA line of Controller board (PB9 Arduino SDA/D14 CN6 pin 4, Morpho CN5 pin5) to I3C_SDA line of Target Board (PB9 Arduino SDA/D14 CN6 pin 4, Morpho CN5 pin5).</li>
+<li>Connect GND of Controller board to GND of Target Board.</li>
+</ul></li>
+</ul>
+<h3 id="how-to-use-it"><b>How to use it ?</b></h3>
+<p>In order to make the program work, you must do the following :</p>
+<ul>
+<li>Rebuild all files and load your image into Controller memory (I3C_Controller_Private_Command_IT)</li>
+<li>Then rebuild all files and load your image into Target memory (I3C_Target_Private_Command_IT)</li>
+<li>Run the Controller before run the Target, this will let a false startup phase on Target side as there is no high level on the bus, if the Target is started before the Controller.</li>
+</ul>
+</body>
+</html>

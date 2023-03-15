@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <link rel="stylesheet" href="../../../../../_htmresc/mini-st_2020.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<h2 id="i3c_target_entdaa_it-example-description"><b>I3C_Target_ENTDAA_IT Example Description</b></h2>
+<p>How to handle an ENTDAA procedure between an I3C Controller and two I3C Targets.</p>
+<pre><code>  - Board: NUCLEO-H503RB (embeds a STM32H503RB device)
+  - SCL Pin: PB6 (Arduino SCL/D15 CN5 pin 10, Morpho CN10 pin3)
+  - SDA Pin: PB7 (Arduino SDA/D14 CN5 pin 9, Morpho CN10 pin5)
+  Connect GND between each board
+  Use short wire as possible between the boards or twist an independent ground wire on each I3C lines
+  mean one GND twist around SCL and one GND twist around SDA to help communication at 12.5Mhz.</code></pre>
+<p>At the beginning of the main program the HAL_Init() function is called to reset all the peripherals, initialize the Flash interface and the systick. Then the SystemClock_Config() function is used to configure the system clock (SYSCLK) to run at 250 MHz.</p>
+<p>The I3C peripheral configuration is ensured by the HAL_I3C_Init() function. This later is calling the HAL_I3C_MspInit()function which core is implementing the configuration of the needed I3C resources according to the used hardware (CLOCK, GPIO and NVIC). You may update this function to change I3C configuration.</p>
+<p>The I3C communication is then initiated. The project is split in two workspace: the Controller Board (I3C_Controller_ENTDAA_IT) and the Target Boards (I3C_Target_ENTDAA_IT)</p>
+<ul>
+<li>Target Boards The HAL_I3C_Tgt_Config(), the HAL_I3C_SetConfigFifo(), and the HAL_I3C_ActivateNotification() functions allow respectively the configuration of the Target payload value, the configuration of the internal hardware FIFOs and the enabling of Dynamic Address catch event in Target mode using Interrupt.</li>
+</ul>
+<p>To simulate different Target with the same project, user can change value of DEVICE_ID, to change the MIPIIdentifier part of the payload data. Then download the different project on associated Target board.</p>
+<p>Target side:</p>
+<p>In a first step, until Dynamic Address Assignment procedure from the Controller, the Target wait in a no activity loop. Then, at reception of the Dynamic Address Assignment procedure from the Controller, each Target start the sending of its payload until it lost the communication, where a Target when lost the transaction it must quit the communication.</p>
+<p>A lost of communication, or better naming arbitration lost, arrived on Target which have lowest number of bits 0 in their payload. More bits 0 on the payload win the transaction, as this exchange operate in Open-drain phases.</p>
+<p>This payload sending procedure and arbitration lost is totally manage by internal hardware state machine, only end of assignment procedure is treated on software part through the callback HAL_I3C_NotifyCallback().</p>
+<p>The end of this Dynamic Address Assignment is monitored by the reception of HAL_I3C_NotifyCallback() on Target side.</p>
+<p>NUCLEO-H503RB’s LEDs can be used to monitor the transfer status:</p>
+<ul>
+<li>LED2 is ON when the Dynamic Address Assignment process is complete.</li>
+<li>LED2 toggle slowly when there is an error in Dynamic Address Assignment process.</li>
+</ul>
+<h4 id="notes"><b>Notes</b></h4>
+<ol type="1">
+<li><p>Care must be taken when using HAL_Delay(), this function provides accurate delay (in milliseconds) based on variable incremented in SysTick ISR. This implies that if HAL_Delay() is called from a peripheral ISR process, then the SysTick interrupt must have higher priority (numerically lower) than the peripheral interrupt. Otherwise the caller ISR process will be blocked. To change the SysTick interrupt priority you have to use HAL_NVIC_SetPriority() function.</p></li>
+<li><p>The application need to ensure that the SysTick time base is always set to 1 millisecond to have correct HAL operation.</p></li>
+</ol>
+<h3 id="keywords"><b>Keywords</b></h3>
+<p>Connectivity, Communication, I3C, Interrupt, Controller, Target, Dynamic Address Assignment, Transmission, Reception</p>
+<h3 id="directory-contents"><b>Directory contents</b></h3>
+<ul>
+<li>I3C/I3C_Target_ENTDAA_IT/Inc/stm32h5xx_nucleo_conf.h BSP configuration file</li>
+<li>I3C/I3C_Target_ENTDAA_IT/Inc/stm32h5xx_hal_conf.h HAL configuration file</li>
+<li>I3C/I3C_Target_ENTDAA_IT/Inc/stm32h5xx_it.h I3C interrupt handlers header file</li>
+<li>I3C/I3C_Target_ENTDAA_IT/Inc/main.h Header for main.c module</li>
+<li>I3C/I3C_Target_ENTDAA_IT/Src/stm32h5xx_it.c I3C interrupt handlers</li>
+<li>I3C/I3C_Target_ENTDAA_IT/Src/main.c Main program</li>
+<li>I3C/I3C_Target_ENTDAA_IT/Src/system_stm32h5xx.c STM32H5xx system source file</li>
+<li>I3C/I3C_Target_ENTDAA_IT/Src/stm32h5xx_hal_msp.c HAL MSP file</li>
+</ul>
+<h3 id="hardware-and-software-environment"><b>Hardware and Software environment</b></h3>
+<ul>
+<li><p>This example runs on STM32H503RB devices.</p></li>
+<li><p>This example has been tested with NUCLEO-H503RB board and can be easily tailored to any other supported device and development board.</p></li>
+<li><p>NUCLEO-H503RB Set-up</p>
+<ul>
+<li>Use short wire as possible between the boards or twist an independent ground wire on each I3C lines mean one GND twist around SCL and one GND twist around SDA to help communication at 12.5Mhz.</li>
+<li>Connect I3C_SCL line of Controller board (PB6 Arduino SCL/D15 CN5 pin 10, Morpho CN10 pin3) to I3C_SCL line of Target Board (PB6 Arduino SCL/D15 CN5 pin 10, Morpho CN10 pin3).</li>
+<li>Connect I3C_SDA line of Controller board (PB7 Arduino SDA/D14 CN5 pin 9, Morpho CN10 pin5) to I3C_SDA line of Target Board (PB7 Arduino SDA/D14 CN5 pin 9, Morpho CN10 pin5).</li>
+<li>Connect GND of Controller board to GND of Target Boards.</li>
+</ul></li>
+</ul>
+<h3 id="how-to-use-it"><b>How to use it ?</b></h3>
+<p>In order to make the program work, you must do the following :</p>
+<ul>
+<li>Rebuild all files and load your image into Controller memory (I3C_Controller_ENTDAA_IT)</li>
+<li>Then rebuild all files and load your image into Target memory (I3C_Target_ENTDAA_IT)</li>
+<li>Run the Controller before run the Target, this will let a false startup phase on Target side as there is no high level on the bus, if the Target is started before the Controller.</li>
+</ul>
+</body>
+</html>

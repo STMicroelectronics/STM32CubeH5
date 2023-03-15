@@ -1,0 +1,9 @@
+[ProjectFiles]
+HeaderPath=..\..\..\..\..\..\Drivers\BSP\STM32H573I-DK;
+[Others]
+Define=TCPP0203_SUPPORT
+HALModule=
+[Groups]
+Drivers/BSP/STM32H573I-DK=../../../../../../Drivers/BSP/STM32H573I-DK/stm32h573i_discovery.c; ../../../../../../Drivers/BSP/STM32H573I-DK/stm32h573i_discovery_bus.c; ../../../../../../Drivers/BSP/STM32H573I-DK/stm32h573i_discovery_sd.c; ../../../../../../Drivers/BSP/STM32H573I-DK/stm32h573i_discovery_usbpd_pwr.c;
+Drivers/BSP/Components=../../../../../../Drivers/BSP/Components/tcpp0203/tcpp0203.c; ../../../../../../Drivers/BSP/Components/tcpp0203/tcpp0203_reg.c;
+Doc=../README.md;
