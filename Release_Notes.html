@@ -45,7 +45,7 @@
 </figure>
 <p>The <strong>drivers</strong> provided within this package <strong>support</strong> the <strong>STM32H573xx / STM32H563xx / STM32H562xx / STM32H503xx lines.</strong></p>
 <ul>
-<li>For quick getting started with the STM32CubeH5 firmware package, refer to <a href="https://www.st.com/resource/en/user_manual/dm00906547.pdf">UM3065</a> you can download firmware updates and all the latest documentation from <a href="www.st.com/stm32cubeH5">www.st.com/stm32cubeH5</a></li>
+<li>For quick getting started with the STM32CubeH5 firmware package, refer to <a href="https://www.st.com/resource/en/user_manual/dm00906547.pdf">UM3065</a> you can download firmware updates and all the latest documentation from <a href="https://www.st.com/en/embedded-software/stm32cubeh5.html">www.st.com/stm32cubeH5</a></li>
 <li>Below links to the most useful documents:
 <ul>
 <li><a href="https://www.st.com/resource/en/user_manual/dm00906547.pdf">UM3065: Getting started with STM32CubeH5 for STM32H5 Series</a></li>
@@ -61,13 +61,29 @@
 <div class="col-sm-12 col-lg-8">
 <h2 id="update-history"><strong>Update History</strong></h2>
 <div class="collapse">
-<input type="checkbox" id="collapse-section1" checked aria-hidden="true"> <label for="collapse-section1" checked aria-hidden="true"><strong>V1.0.0 / 10-February-2023</strong></label>
+<input type="checkbox" id="collapse-section2" checked aria-hidden="true"> <label for="collapse-section2" checked aria-hidden="true"><strong>V1.0.1 / 31-March-2023</strong></label>
 <div>
 <h2 id="main-changes">Main Changes</h2>
 <ul>
-<li>First Official Release of <span style="font-weight: bold;">STM32CubeH5</span> Firmware Package</li>
+<li>Patch release of <span style="font-weight: bold;">STM32CubeH5</span> Firmware Package</li>
+<li>Fix DA obk provisioning failure when TZ disabled on NUCLEO-H563ZI board</li>
 </ul>
 <h2 id="contents">Contents</h2>
+<p>The same contents as for V1.0.0 except modifications done on the following files to fix above issue:</p>
+<ul>
+<li>NUCLEO-H563ZI/ROT_Provisioning/DA/Binary/DA_ConfigWithPassword.obk</li>
+<li>NUCLEO-H563ZI/ROT_Provisioning/DA/Binary/DA_ConfigWithPassword.xml</li>
+</ul>
+</div>
+</div>
+<div class="collapse">
+<input type="checkbox" id="collapse-section1" checked aria-hidden="true"> <label for="collapse-section1" checked aria-hidden="true"><strong>V1.0.0 / 10-February-2023</strong></label>
+<div>
+<h2 id="main-changes-1">Main Changes</h2>
+<ul>
+<li>First Official Release of <span style="font-weight: bold;">STM32CubeH5</span> Firmware Package</li>
+</ul>
+<h2 id="contents-1">Contents</h2>
 <h3 id="features"><strong>Features</strong></h3>
 <p>STM32CubeH5 gathers in one single package all the generic embedded software components required to develop an application on STM32H5 microcontrollers.</p>
 <ul>
