@@ -1,6 +1,6 @@
 #
 # ****************************************************************************
-# @file    main.c
+# @file    main.py
 # @author  MCD Application Team
 # @brief   Main application file.
 # ****************************************************************************
@@ -15,15 +15,13 @@
 #
 # ****************************************************************************
 
-
 import sys
 import click
 import os
 import math
 from struct import pack
-import AppliCfg
-from AppliCfg import xml_parser
 from AppliCfg.utils import *
+from AppliCfg import xml_parser
 
 MIN_PYTHON_VERSION = (3, 10)
 if sys.version_info < MIN_PYTHON_VERSION:
@@ -39,7 +37,7 @@ class BasedIntAllParamType(click.ParamType):
         try:
             return convert_to_integer(value)
         except ValueError:
-            self.fail('(%s) is not a valid integer. Retype the data and/orc'
+            self.fail('(%s) is not a valid integer. Retype the data and/or'
                       'prefixed with 0b/0B, 0o/0O, or 0x/0X as necessary.'
                       % value, param, ctx)
 
@@ -57,11 +55,11 @@ class BasedIntAllParamType(click.ParamType):
 @click.option('-m', '--macro', default="",
               help='macro symbol to search in the preprocessed file')
 @click.option('-n', '--name', required=True,
-              help='symbol to search in the linker file. If the symbol is founded'
+              help='symbol to search in the linker file. If the symbol is found'
               'The symbol value will be modified')
 @click.option('-e', '--expression', default="",
-              help='Expression in order to modify the value founded. The --constant'
-              'argument is optional. The value founded is declared as "value", the'
+              help='Expression in order to modify the value found. The --constant'
+              'argument is optional. The value found is declared as "value", the'
               'others values are declared as cons1, cons2....cons3'
               'Example 1: ((value + cons1)/cons2) - cons3'
               'If using multiple values they need to be defined as val1, val2 ...'
@@ -77,7 +75,7 @@ class BasedIntAllParamType(click.ParamType):
 def linker(infile, xml, xml_name, layout, macro, name, expression, constants, vb):
     # Verify if the input files exist
     if not os.path.isfile(infile):
-        LOG.error("File (%s) not founded" % infile)
+        LOG.error("File (%s) not found" % infile)
     LOG.info("############## Executing linker command ##############", vb)
     parse_command_input(sys.argv, vb)
     values=[]
@@ -90,7 +88,7 @@ def linker(infile, xml, xml_name, layout, macro, name, expression, constants, vb
         for xname in xml_name:
             value = xml_obj.get_value(xname, "Value")
             if not value:
-                LOG.error("Not value founded for '%s'. Output file can not be modified"
+                LOG.error("Not value found for '%s'. Output file can not be modified"
                     % xname)
             values.append(value)
     elif os.path.isfile(layout): # Recover value from macro_preprocessed file
@@ -99,7 +97,7 @@ def linker(infile, xml, xml_name, layout, macro, name, expression, constants, vb
         # Compute and return value from macro file
         value = get_macro_value(macro, layout, vb)
         if value is None:
-            LOG.error("Macro variable (%s) not founded" % macro)
+            LOG.error("Macro variable (%s) not found" % macro)
         value = hex(value)
         values.append(value)
     else:
@@ -136,7 +134,7 @@ def linker(infile, xml, xml_name, layout, macro, name, expression, constants, vb
     LOG.info(str_debug, vb)
     # Modify linker value
     if not modify_file_value(infile, begin_line, search_value, value, vb):
-        LOG.error("Linker option (%s) not founded in the file" % name)
+        LOG.error("Linker option (%s) not found in the file" % name)
 
 
 @click.argument('infile')
@@ -168,10 +166,10 @@ def xmlen(infile, layout, macro, enable, name, command, vb):
         if not macro:
             LOG.error("--macro argument was not defined")
         # if macro value layout is defined, the tag Enable will have the value
-        # founded in the file
+        # found in the file
         param_en_status = get_macro_value(macro, layout, vb)
         if param_en_status is None:
-            LOG.error("Macro variable (%s) not founded" % macro)
+            LOG.error("Macro variable (%s) not found" % macro)
     else:
         if enable:
             param_en_status = convert_to_integer(enable)
@@ -250,7 +248,7 @@ def xmlparam(infile, layout, macro, name, type, link, value, command, enable,
         # be get it from this file
         macro_value = get_macro_value(macro, layout, vb)
         if macro_value is None:
-            LOG.error("Macro variable (%s) not founded" % macro)
+            LOG.error("Macro variable (%s) not found" % macro)
         param_option = "add" if macro_value > 0 else "rm"
     else:
         if option:
@@ -266,7 +264,7 @@ def xmlparam(infile, layout, macro, name, type, link, value, command, enable,
         tag_content = command if command else name
         if not xml_obj.remove_param_item(tag, tag_content):
             tag_structure = "<%s>" % tag + tag_content + "</%s>" % tag
-            LOG.error("The parameter '%s' was not removed or not founded" %
+            LOG.error("The parameter '%s' was not removed or not found" %
                       tag_structure)
         # Modified and save the xml modified
         xml_obj.save_file()
@@ -319,7 +317,7 @@ def xmlparam(infile, layout, macro, name, type, link, value, command, enable,
 @click.option('-b_d_sz', '--binary_data_size',
               type=BasedIntAllParamType(), default=8,
               help='Binary data size in bits')
-@click.option('-b_d_e', '--binary_data_endianess', default="big",
+@click.option('-b_d_e', '--binary_data_endianness', default="big",
               help='Data binary endianess format (little or big)')
 @click.option('-nxml_el_idx', '--xml_name_layout_index', default="",
               help='Tag <Name> content in the xml file. This will allow to '
@@ -327,36 +325,36 @@ def xmlparam(infile, layout, macro, name, type, link, value, command, enable,
 @click.option('-xml', '--xml', metavar='filename', default="",
               help='Location of the file that contains the RoT configuration')
 @click.option('-nxml', '--xml_name', default=[], multiple=True,
-              help='Tag <Name> content in the xml file. If the parameter is'
-                   'founded the tag value content will be used')
+              help='Tag <Name> content in the xml file. If the parameter is '
+                   'found the tag value content will be used')
 @click.option('-txml', '--xml_tag', default="",
               help='Tag content in the xml file to modify. By default the content'
               'of tag <Value></Value> will be modified'
               'if --name or --command are not defined, --txml will be used to search'
               'the tag to be modified. Attention : The tag must be the only one existing'
-              'in the xml file otherwise the first tag founded will be modified')
+              'in the xml file otherwise the first tag found will be modified')
 @click.option('-sm', '--second_macro', default="",
-              help='Use the second_macro value if value founded with macro variable'
+              help='Use the second_macro value if value found with macro variable'
                   'is different to equals_to argument')
 @click.option('-v', '--value', default=[], multiple=True,
               help='New value content of the parameter selected'
                    'If second_macro is defined, this arguments will help to define'
-                   'witch value will be used. If the value founded for macro symbol'
+                   'witch value will be used. If the value found for macro symbol'
                    'is equals to the value argument, this value will be used.'
-                   'Otherwise the value founded for second_macro will be used')
+                   'Otherwise the value found for second_macro will be used')
 @click.option('-n', '--name', default="",
-              help='Tag <Name> content in the xml file. If the tag is founded'
-                   'The tag <Value> content will be modified')
+              help='Tag <Name> content in the xml file. If the tag is found, '
+                   'the tag <Value> content will be modified')
 @click.option('-c', '--command', default="",
-              help='Tag <Command> content in the xml file. If the tag is founded'
+              help='Tag <Command> content in the xml file. If the tag is found'
                    'The tag <Value> content will be modified')
 @click.option('-cond', '--condition', default="",
               help='Expression in order to verify if expression condition must be'
               'executed.'
               'Example : (val2 > 0 and val2  % 2== 0 )')
 @click.option('-e', '--expression', default="",
-              help='Expression in order to modify the value founded. The --constant'
-              'argument is optional. The value founded is declared as "value", the'
+              help='Expression in order to modify the value found. The --constant'
+              'argument is optional. The value found is declared as "value", the'
               'others values are declared as cons1, cons2....cons3'
               'Example 1: ((value + cons1)/cons2) - cons3'
               'If using multiple values they need to be defined as val1, val2 ...'
@@ -378,7 +376,7 @@ def xmlparam(infile, layout, macro, name, type, link, value, command, enable,
                'More information in the README file')
 def xmlval(infile, xml, xml_name, layout, macro, second_macro, value, binary_file,
            binary_element_index, binary_element_size, binary_data_size,
-           binary_data_endianess, xml_name_layout_index, xml_tag, name, command,
+           binary_data_endianness, xml_name_layout_index, xml_tag, name, command,
            condition, expression, constants, decimal, string, vb):
     if decimal and string:
         LOG.error("Choose only one format option")
@@ -396,7 +394,7 @@ def xmlval(infile, xml, xml_name, layout, macro, second_macro, value, binary_fil
         # Compute and return value from macro file
         xml_value = get_macro_value(macro, layout, vb)
         if xml_value is None:
-            LOG.error("Macro variable (%s) not founded" % macro)
+            LOG.error("Macro variable (%s) not found" % macro)
         # if macro arguments are defined, it is necessary to verify witch value use
         if second_macro and value:
             str_debug = "Choosing between the value of %s" % macro + \
@@ -406,7 +404,7 @@ def xmlval(infile, xml, xml_name, layout, macro, second_macro, value, binary_fil
                 str_debug = "The value of %s will be used" %second_macro
                 xml_value = get_macro_value(second_macro, layout, vb)
                 if xml_value is None:
-                    LOG.error("Macro variable (%s) not founded" % macro)
+                    LOG.error("Macro variable (%s) not found" % macro)
         xml_value = hex(xml_value)
         xml_values.append(xml_value)
     elif os.path.isfile(xml):  # Recover value from xml file
@@ -418,7 +416,7 @@ def xmlval(infile, xml, xml_name, layout, macro, second_macro, value, binary_fil
         for xname in xml_name:
             xml_value = xml_obj.get_value(xname, "Value")
             if not xml_value:
-                LOG.error("Not value founded for '%s'. Output file can not be modified"
+                LOG.error("Not value found for '%s'. Output file can not be modified"
                     % xname)
             xml_values.append(xml_value)
     elif os.path.isfile(binary_file):
@@ -432,9 +430,9 @@ def xmlval(infile, xml, xml_name, layout, macro, second_macro, value, binary_fil
         xml_obj.get_items("Name")
         layout_config_index = xml_obj.get_value(xml_name_layout_index, "Value")
         if not layout_config_index:
-            LOG.error("Not value founded for '%s'" %xml_name_layout_index)
+            LOG.error("Not value found for '%s'" %xml_name_layout_index)
 
-        # Transform founded data to integer
+        # Transform found data to integer
         layout_config_index = convert_to_integer(layout_config_index)
 
         # Get the started index of the element
@@ -456,14 +454,14 @@ def xmlval(infile, xml, xml_name, layout, macro, second_macro, value, binary_fil
         if end_idx > len(binary_conf_element) :
               LOG.error("Data overflow (data to recover outside of element)")
         binary_data = binary_conf_element[start_idx : end_idx]
-        xml_value = data_format(binary_data, binary_data_endianess)
+        xml_value = data_format(binary_data, binary_data_endianness)
 
         # Get extra xml input values
         xml_values = [xml_value] # The binary value will be always the first xml value
         for xname in xml_name:
             extra_xml_value = xml_obj.get_value(xname, "Value")
             if not extra_xml_value:
-                LOG.error("Not value founded for '%s'. Output file can not be modified"
+                LOG.error("Not value found for '%s'. Output file can not be modified"
                     % xname)
             xml_values.append(extra_xml_value)
     else:
@@ -529,17 +527,17 @@ def xmlval(infile, xml, xml_name, layout, macro, second_macro, value, binary_fil
               help='macro symbol to search in the preprocessed file')
 @click.option('-v', '--value', default=None, type=BasedIntAllParamType(),
               help='If --second_name is defined, this arguments will help to define'
-                   'witch tag <Name> will be used. If the value founded for macro symbol'
+                   'witch tag <Name> will be used. If the value found for macro symbol'
                    'is equals to the --value argument, the --second_name will be used.'
                    'Otherwise the --name will be used')
 @click.option('-n', '--name', default="", required=True,
               help='New Tag <Name> content in the xml file')
 @click.option('-sn', '--second_name', default="",
               help='Define a second option of tag <Name> content. If the value'
-              'founded in the macro preprocessed file is different to --value'
+              'found in the macro preprocessed file is different to --value'
               'argument the second_name will be used')
 @click.option('-c', '--command', default="", required=True,
-              help='Tag <Command> content in the xml file. If the tag is founded'
+              help='Tag <Command> content in the xml file. If the tag is found'
                    'The name content will be modified')
 @click.option('--vb', default=False, is_flag=True,
               help='Define if debug traces will be displayed')
@@ -561,7 +559,7 @@ def xmlname(infile, layout, macro, value, name, second_name, command, vb):
         # Compute and return value from macro file
         xml_value = get_macro_value(macro, layout, vb)
         if xml_value is None:
-            LOG.error("Macro variable (%s) not founded" % macro)
+            LOG.error("Macro variable (%s) not found" % macro)
         # if two macro arguments are defined, it is necessary to verify witch value use
         new_name = name
         if second_name :
@@ -598,20 +596,20 @@ def xmlname(infile, layout, macro, value, name, second_name, command, vb):
 @click.option('-xml', '--xml', metavar='filename', default="", required=True,
               help='Location of the file that contains the ST-iRoT configuration')
 @click.option('-ob', '--option_byte', required=True,
-              help='Define the Rot protection SECWM, SRAM2_RST or SRAM2_ECC')
+              help='Define the Rot protection : SECWM, SRAM2_RST, SRAM2_ECC, WRPS')
 @click.option('-sp', '--secure_pattern', required=True,
               help='Principal Tag <Name> content of the Rot protection')
 @click.option('-co', '--code_offset', default="",
-              help='Tag <Name> content for the primary code offset.information'
-              'To set SECWM it est necessary to get the value of the parameter '
+              help='Tag <Name> content for the primary code offset.information. '
+              'To set SECWM it is necessary to get the value of the parameter '
               'with tag selected')
 @click.option('-cs', '--code_size', default="",
-              help='Tag <Name> content for the primary code size information'
-              'To set SECWM it est necessary to get the value of the parameter '
+              help='Tag <Name> content for the primary code size information. '
+              'To set SECWM it is necessary to get the value of the parameter '
               'with tag selected')
 @click.option('-fs', '--full_sec', default="",
               help='Tag <Name> content for the full secure information.'
-              'To set SECWM it est necessary to get the value of the parameter '
+              'To set SECWM it is necessary to get the value of the parameter '
               'with tag selected')
 @click.option('-d', '--division', type=BasedIntAllParamType(), default=0x2000,
               help='Define the microcontroller sector size')
@@ -619,6 +617,8 @@ def xmlname(infile, layout, macro, value, name, second_name, command, vb):
               help='Define the microcontroller bank size')
 @click.option('-b', '--begin', default="stm32programmercli",
               help='begin of line to replace ')
+@click.option('-img', '--image_number', default="",
+              help='number of managed images')
 @click.option('--vb', default=False, is_flag=True,
               help='Define if debug traces will be displayed')
 @click.command(help='Modify the protections of the RoT script'
@@ -626,7 +626,7 @@ def xmlname(infile, layout, macro, value, name, second_name, command, vb):
                     '--code_size, --code_offset and --full_secure are required'
                     'More information in the README file')
 def obscript(infile, xml, begin, option_byte, secure_pattern, code_size, code_offset,
-             full_sec, division, bank_size, vb):
+             full_sec, division, bank_size, image_number, vb):
     # Verify if the input files exist
     if not os.path.isfile(infile):
         LOG.error("The script file (%s) was not found" % infile)
@@ -635,7 +635,7 @@ def obscript(infile, xml, begin, option_byte, secure_pattern, code_size, code_of
     LOG.info("############## Executing obscript command ##############", vb)
     parse_command_input(sys.argv, vb)
     # Options available for execution
-    xml_in = ["SECWM", "SRAM2_RST", "SRAM2_ECC"]
+    xml_in = ["SECWM", "SRAM2_RST", "SRAM2_ECC", "WRPS"]
     if not option_byte in xml_in:
         LOG.error("Invalid option byte (%s)" % option_byte)
 
@@ -645,10 +645,26 @@ def obscript(infile, xml, begin, option_byte, secure_pattern, code_size, code_of
     xml_obj.get_items("Name")
     # Get the value of the Rot protection
     value = xml_obj.get_value(secure_pattern, "Value")
-    if not value:
-        LOG.error("Not value founded for '%s'" % secure_pattern)
+    if value is None:
+        LOG.error("Not value found for '%s'" % secure_pattern)
+    if "WRPS" in option_byte:
+        if not code_offset:
+            LOG.error("Tag <Name> content to get the code offset was not defined")
+        if not code_size:
+            LOG.error("Tag <Name> content to get the code size was not defined")
 
-    if "SECWM" in option_byte:
+        sec_val_size = value
+        code_offset = xml_obj.get_value(code_offset, "Value")
+
+        ## If the firmware is full secure, it this necessary to get the size
+        ## of "Firmware area size" instead the "Size of the secure area"
+        if code_offset and sec_val_size :
+            replace_val["WRPS"] = stirot_compute_wrps(code_offset, code_size,
+                                            division, bankSize, vb)
+        else :
+            LOG.error("Code primary offset or secure value size are empty")
+        
+    elif "SECWM" in option_byte:
         if not code_offset:
             LOG.error("Tag <Name> content to get the primary code offset was not defined")
         if not full_sec:
@@ -698,9 +714,72 @@ def obscript(infile, xml, begin, option_byte, secure_pattern, code_size, code_of
             protections_error.append(ob_pattern)
         ret &= status
     if not ret:
-        LOG.error("Protections (%s) not founded in the file" %
+        LOG.error("Protections (%s) not found in the file" %
                  ",".join(protections_error))
 
+
+@click.argument('infile')
+@click.option('-xml', '--xml', metavar='filename', default="", required=True,
+              help='Location of the file that contains the ST-iRoT configuration')
+@click.option('-bxml', '--begin_xml', required=True,
+              help='Macro symbol for the start protection value. The symbol'
+              'will be searched in the preprocessed file')
+@click.option('-m', '--memory', required=True,
+              help='Macro symbol for the end protection value. The symbol'
+              'will be searched in the preprocessed file')
+@click.option('-sxml', '--size_xml', default="", required=True,
+               help='Macro symbol for the sector number value. The symbol'
+              'will be searched in the preprocessed file')
+@click.option('-s', '--slot', default="", required=True,
+              help='Line start pattern to replace ')
+@click.option('-d', '--division', type=BasedIntAllParamType(),
+              help='Sector group size')
+@click.option('--vb', default=False, is_flag=True,
+              help='Define if debug traces will be displayed')
+@click.command(help='command to set specific Option Byte'
+                    'More information in the README file')
+def sectorerase(infile, xml, slot, begin_xml, size_xml, memory, division, vb):
+    # Verify if the input files exist
+    if not os.path.isfile(infile):
+        LOG.error("File (%s) not found" % infile)
+    if not slot.startswith("primary") and not slot.startswith("secondary"):
+        LOG.error("Slot '%s' not supported" % slot)
+    if not memory.startswith("ext_nvm"):
+        LOG.error("Memory type '%s' not supported" % memory)
+    parse_command_input(sys.argv, vb)
+    erase = {"start": begin_xml,
+             "size": size_xml}
+    LOG.info("Obtaining the input values to calculate the sectors to erase '%s' area" %slot, vb)
+    LOG.info("Searching for '%s' area" %erase["start"], vb)
+
+    if not os.path.isfile(xml): # Recover values from xml file
+        LOG.error("xml or layout file were not defined")
+
+    xml_obj = xml_parser.XML_APPLI(xml, vb)
+    xml_obj.get_items("Name")
+    start_value = xml_obj.get_value(begin_xml, "Value")
+    start_value = xml_obj.get_value(erase["start"], "Value")
+    size_value = xml_obj.get_value(erase["size"], "Value")
+
+    if start_value is None:
+        LOG.error("Variable (%s) not founded or not computed" % erase["start"])
+    if size_value is None:
+        LOG.error("Variable (%s) not founded or not computed" % erase["size"])
+
+    # When using .bat files the variable needs to be set
+    erase_line = "set "+ memory + "_" + slot if infile.endswith('.bat') else memory + "_" + slot
+    erase_slots_area  = compute_sector_area( start_value, size_value, vb, division)
+    erase_line_start = erase_line + "_start="
+    erase_line_stop = erase_line + "_stop="
+
+    str_debug = "erase slot \"%s\" " % erase_line_start +\
+                    "will be updated with value \"%s\"" % erase_slots_area[0]
+    if not modify_file_line(infile, erase_line_start, str(erase_slots_area[0]), vb):
+                LOG.error("Initial pattern (%s) not founded" % begin_line)
+    str_debug = "erase slot \"%s\" " % erase_line_stop +\
+                    "will be updated with value \"%s\"" % erase_slots_area[1]
+    if not modify_file_line(infile, erase_line_stop, str(erase_slots_area[1]), vb):
+                LOG.error("Initial pattern (%s) not founded" % begin_line)
 
 @click.argument('infile')
 @click.option('-l', '--layout', metavar='filename', default="", required=True,
@@ -711,7 +790,7 @@ def obscript(infile, xml, begin, option_byte, secure_pattern, code_size, code_of
               help='Location of the file that contains the RoT configuration')
 @click.option('-nxml', '--xml_name', default=[], multiple=True,
               help='Tag <Name> content in the xml file. If the parameter is'
-                   'founded the tag value content will be used')
+                   'found the tag value content will be used')
 @click.option('-n', '--name', required=True,
               help='#define variable to be modified')
 @click.option('--parenthesis', default=False, is_flag=True,
@@ -724,8 +803,8 @@ def obscript(infile, xml, begin, option_byte, secure_pattern, code_size, code_of
               help='Define it if the value to be replaced is in string format'
                    'by default the value to replace is in hex format')
 @click.option('-e', '--expression', default="",
-              help='Expression in order to modify the value founded. The --constant'
-              'argument is optional. The value founded is declared as "value", the'
+              help='Expression in order to modify the value found. The --constant'
+              'argument is optional. The value found is declared as "value", the'
               'others values are declared as cons1, cons2....cons3'
               'Example 1: ((value + cons1)/cons2) - cons3'
               'If using multiple values they need to be defined as val1, val2 ...'
@@ -753,7 +832,7 @@ def definevalue(infile, layout, macro, xml, xml_name, name, parenthesis,
         # Compute and return value from macro file
         value = get_macro_value(macro, layout, vb)
         if value is None:
-            LOG.error("Macro variable (%s) not founded" % macro)
+            LOG.error("Macro variable (%s) not found" % macro)
         value = hex(value)
         values.append(value)
     elif os.path.isfile(xml): # Recover values from xml file
@@ -765,7 +844,7 @@ def definevalue(infile, layout, macro, xml, xml_name, name, parenthesis,
         for xname in xml_name:
             value = xml_obj.get_value(xname, "Value")
             if not value:
-                LOG.error("Not value founded for '%s'. Output file can not be modified"
+                LOG.error("Not value found for '%s'. Output file can not be modified"
                     % xml_name)
             values.append(value)
     else:
@@ -804,7 +883,7 @@ def definevalue(infile, layout, macro, xml, xml_name, name, parenthesis,
     LOG.info(str_debug, vb)
     ret = modify_file_value(infile, begin_pattern, search_value, value, vb)
     if not ret:
-        LOG.error("Define variable (%s) not founded in the file" % name)
+        LOG.error("Define variable (%s) not found in the file" % name)
 
 
 @click.argument('infile')
@@ -824,7 +903,7 @@ def definevalue(infile, layout, macro, xml, xml_name, name, parenthesis,
               help='Define variable to be modified in the H file')
 @click.option('-nxml', '--xml_name', default="",
               help='Tag <Name> content in the xml file. If the parameter is'
-                   'founded the tag value content will be used')
+                   'found the tag value content will be used')
 @click.option('--vb', default=False, is_flag=True,
               help='Define if debug traces will be displayed')
 @click.command(help='Comment/Uncomment a #define variable in a project file'
@@ -845,7 +924,7 @@ def setdefine(infile, xml, xml_name, layout, macro, action, value, name, vb):
         xml_obj.get_items("Name")
         xml_value = xml_obj.get_value(xml_name, "Value")
         if not xml_value:
-            LOG.error("Not value founded for '%s'. Include file can not be modified"
+            LOG.error("Not value found for '%s'. Include file can not be modified"
                      % xml_name)
         try:
             file_value = convert_to_integer(xml_value)
@@ -858,7 +937,7 @@ def setdefine(infile, xml, xml_name, layout, macro, action, value, name, vb):
         # Compute and return value from macro file
         macro_value = get_macro_value(macro, layout, vb)
         if macro_value is None:
-            LOG.error("Macro variable (%s) not founded" % macro)
+            LOG.error("Macro variable (%s) not found" % macro)
         file_value = macro_value
         action = "uncomment" if file_value == value else "comment"
     else:
@@ -883,7 +962,7 @@ def setdefine(infile, xml, xml_name, layout, macro, action, value, name, vb):
 @click.option('-m', '--macro', required=True, default="",
               help='macro symbol to search in the preprocessed file')
 @click.option('-n', '--name', required=True,
-              help='Tag <Name> content in the xml file.  If the tag is founded'
+              help='Tag <Name> content in the xml file.  If the tag is found'
                    'The tag <KeyType> content will be modified')
 @click.option('--vb', default=False, is_flag=True,
               help='Define if debug traces will be displayed')
@@ -900,7 +979,7 @@ def keyconfig(infile, layout, macro, name, vb):
     # Compute and return value from macro file
     value = get_macro_value(macro, layout, vb)
     if value is None:
-        LOG.error("Macro variable (%s) not founded" % macro)
+        LOG.error("Macro variable (%s) not found" % macro)
     cryptoscheme = str(value)
 
     cs = {"0": "rsa_2048", "1": "rsa_3072", "2": "ecdsa-p256"}
@@ -928,7 +1007,7 @@ def keyconfig(infile, layout, macro, name, vb):
               help='Location of the file that contains the RoT configuration')
 @click.option('-n', '-nxml','--name', "--xml_name", default=[], multiple=True,
               help='Tag <Name> content in the xml file. If the parameter is'
-                  'founded the tag value content will be used'
+                  'found the tag value content will be used'
                   'It is possible to use more of one argument. Recommended to '
                   'use with the --expression option')
 @click.option('-b', '--begin', required=True,
@@ -941,8 +1020,8 @@ def keyconfig(infile, layout, macro, name, vb):
               help='Define it if the value to be replaced es in decimal format'
                    'by default the value to replace is in hex format')
 @click.option('-e', '--expression', default="",
-              help='Expression in order to modify the value founded. The --constant'
-              'argument is optional. The value founded is declared as "value", the'
+              help='Expression in order to modify the value found. The --constant'
+              'argument is optional. The value found is declared as "value", the'
               'others values are declared as cons1, cons2....cons3'
               'Example 1: ((value + cons1)/cons2) - cons3'
               'If using multiple values they need to be defined as val1, val2 ...'
@@ -968,14 +1047,14 @@ def flash(infile, xml, layout, macro, name, begin, save_result, division, decima
         for xml_name in name:
             value = xml_obj.get_value(xml_name, "Value")
             if not value:
-                LOG.error("Not value founded for '%s'. Output file can not be modified"
+                LOG.error("Not value found for '%s'. Output file can not be modified"
                     % xml_name)
             values.append(value)
     elif os.path.isfile(layout): # Recover value from macro_preprocessed file
         # Compute and return value from macro file
         value = get_macro_value(macro, layout, vb)
         if value is None:
-            LOG.error("Macro variable (%s) not founded" % macro)
+            LOG.error("Macro variable (%s) not found" % macro)
         value = hex(value)
         values.append(value)
     else:
@@ -1020,7 +1099,7 @@ def flash(infile, xml, layout, macro, name, begin, save_result, division, decima
                 "will be updated with value \"%s\"" %value
     LOG.info(str_debug, vb)
     if not modify_file_line(infile, begin_line, new_value, vb):
-        LOG.error("Initial pattern (%s) not founded" % begin_line)
+        LOG.error("Initial pattern (%s) not found" % begin_line)
     if save_result :
         LOG.info("The value %s will be saved in the %s file" % (value, save_result), vb)
         f = open(save_result, "w")
@@ -1044,18 +1123,20 @@ def flash(infile, xml, layout, macro, name, begin, save_result, division, decima
               help='Line start pattern to replace ')
 @click.option('-d', '--division', type=BasedIntAllParamType(), default=0x2000,
               help='Sector group size')
+@click.option('-pa', '--protected_area', type=BasedIntAllParamType(), default=0x10000,
+              help='Define the protected area size')
 @click.option('--vb', default=False, is_flag=True,
               help='Define if debug traces will be displayed')
 @click.command(help='command to set specific Option Byte'
                     'More information in the README file')
 def setob(infile, layout, begin, macro_start, macro_end, macro_sectors,
-          division, vb):
+          division, vb, protected_area):
     # Verify if the input files exist
     if not os.path.isfile(infile):
         LOG.error("File (%s) not found" % infile)
     if not os.path.isfile(layout): # Recover value from macro_preprocessed file
         LOG.error("File (%s) not found" % layout)
-    if not begin.startswith("wrp") and not begin.startswith("hdp"):
+    if not begin.startswith("wrp") and not begin.startswith("hdp") and not begin.startswith("OEMiLoader_address"):
         LOG.error("Option Byte '%s' not supported" % begin)
     LOG.info("############## Executing setob command ##############", vb)
     parse_command_input(sys.argv, vb)
@@ -1070,11 +1151,11 @@ def setob(infile, layout, begin, macro_start, macro_end, macro_sectors,
     secnbr_value = get_macro_value(ob["secnbr"], layout, vb)
 
     if start_value is None:
-        LOG.error("Variable (%s) not founded or not computed" % ob["start"])
+        LOG.error("Variable (%s) not found or not computed" % ob["start"])
     if end_value is None:
-        LOG.error("Variable (%s) not founded or not computed" % ob["end"])
+        LOG.error("Variable (%s) not found or not computed" % ob["end"])
     if secnbr_value is None:
-        LOG.error("Variable (%s) not founded or not computed" % ob["secnbr"])
+        LOG.error("Variable (%s) not found or not computed" % ob["secnbr"])
 
     # When using .bat files the variable needs to be set
     begin_line = "set " + begin if infile.endswith('.bat') else begin
@@ -1093,14 +1174,30 @@ def setob(infile, layout, begin, macro_start, macro_end, macro_sectors,
         value = "=" + get_hex(wrp_value)
         if not modify_file_line(infile, begin_line, value, vb):
             LOG.error("Initial pattern (%s) not founded" % begin_line)
+    elif begin == "wrps":
+        wrps_group_nb = int(protected_area / division)
+        protected_sector_size = int((secnbr_value - division) / division)
+        wrps_str = int(start_value / division)
+        wrps_end = int(wrps_str + protected_sector_size)
+        LOG.info("Flash sectors to set under WRP from %d to %d" % (wrps_str, wrps_end), vb)
+        wrps_enable = 0
+        wrps_disable = 1
+        for i in range(wrps_group_nb):
+            # When using .bat files the variable needs to be set
+            begin_line = "set " + begin + str(i) + "=" if infile.endswith('.bat') else begin + str(i)
+            if (i >= wrps_str) and (i <= wrps_end):
+                wrps_state = wrps_enable
+            else:
+                wrps_state = wrps_disable
+            if not modify_file_line(infile, begin_line, str(wrps_state), vb):
+                LOG.error("Initial pattern (%s) not founded" % begin_line)
 
     # Calculation of value for hdp start/end
-    elif begin == "hdp1_start" or begin == "hdp1_end" or begin == "hdp2_start" or begin == "hdp2_end":
-        hdp1, hdp2 = compute_hdp_protection( start_value, end_value,
-                                            secnbr_value,vb)
-        if begin == "hdp1_start":
+    elif (begin == "hdp1_start" or begin == "hdp1_end" or begin == "hdp2_start" or begin == "hdp2_end") or (begin == "hdp_start" or begin == "hdp_end"):
+        hdp1, hdp2 = compute_hdp_protection( start_value, end_value, secnbr_value, vb, division)
+        if begin in ["hdp1_start", "hdp_start"]:
             hdp_value = hdp1[0]
-        elif begin == "hdp1_end":
+        elif begin in ["hdp1_end", "hdp_end"]:
             hdp_value = hdp1[1]
         elif begin == "hdp2_start":
             hdp_value = hdp2[0]
@@ -1114,6 +1211,16 @@ def setob(infile, layout, begin, macro_start, macro_end, macro_sectors,
         LOG.info("File to update '%s'" % infile_dbg, vb)
         LOG.info(str_debug, vb)
         value = "=" + get_hex(hdp_value)
+        if not modify_file_line(infile, begin_line, value, vb):
+            LOG.error("Initial pattern (%s) not found" % begin_line)
+    elif begin == "OEMiLoader_address":
+        iLoader_add = convert_to_integer(0x08000000) + convert_to_integer(start_value)
+        str_debug = "Protection variable \"%s\" " % begin +\
+                    "will be updated with value \"%s\"" % get_hex(iLoader_add)
+        infile_dbg = infile.split("\\")[-1] if "\\" in infile else infile
+        LOG.info("File to update '%s'" % infile_dbg, vb)
+        LOG.info(str_debug, vb)
+        value = "=" + get_hex(iLoader_add)
         if not modify_file_line(infile, begin_line, value, vb):
             LOG.error("Initial pattern (%s) not founded" % begin_line)
     else:
@@ -1201,16 +1308,16 @@ def iofile(infile, layout, macro_encrypted, macro_image, xml, input_bin,
     # 2 impossible for data images, only available for app
     LOG.info("############## Executing iofile command ##############", vb)
     parse_command_input(sys.argv, vb)
-    LOG.info("Obtaining the input values to get the input/ouput binary name", vb)
+    LOG.info("Obtaining the input values to get the input/output binary name", vb)
     image_cfg = get_macro_value(macro_image, layout, vb)
     enc_mode = get_macro_value(macro_encrypted, layout, vb)
     is_oneimage = False
     is_nsimage = False
 
     if image_cfg is None:
-        LOG.error("Macro variable (%s) not founded" % macro_image)
+        LOG.error("Macro variable (%s) not found" % macro_image)
     if enc_mode is None:
-        LOG.error("Macro variable (%s) not founded" %macro_encrypted)
+        LOG.error("Macro variable (%s) not found" %macro_encrypted)
 
     img_enc_mode = "_enc_sign.hex" if enc_mode else "_sign.hex"
     enc_status = "1" if enc_mode else "0"
@@ -1303,8 +1410,87 @@ def iofile(infile, layout, macro_encrypted, macro_image, xml, input_bin,
 
     new_value = new_file_name
     if not modify_file_line(infile, begin_line, new_value, vb):
-        LOG.error("Initial pattern (%s) not founded" % begin_line)
+        LOG.error("Initial pattern (%s) not found" % begin_line)
 
+@click.argument('infile')
+@click.option('-xml', '--xml', metavar='filename', default="",
+              help='Location of the file that contains the RoT configuration')
+@click.option('-nxml', '--xml_name', default="",
+              help='Tag <Name> content in the xml file. If the parameter is'
+                   'found the tag value content will be used')
+@click.option('-v', '--value', default="",
+              help='New value to replace in file')
+@click.option('-var', '--variable', required=True,
+              help='Name of the variable whose value will be modified')
+@click.option('-sft', '--shift', type=BasedIntAllParamType(), default=None,
+              help='Shift to define value position')
+@click.option('-del', '--delimiter', default=',',
+              help='Name of the variable whose value will be modified')
+@click.option('--upper', default=False, is_flag=True,
+              help='Define value output in capital letters')
+@click.option('--str', default=False, is_flag=True,
+              help='Define if value to modify is a string value')
+@click.option('--vb', default=False, is_flag=True,
+              help='Define if debug traces will be displayed')
+@click.command(help='Modify the variable value of an external file')
+def modifyfilevalue(infile, xml, xml_name, value, variable, shift, delimiter,
+                    upper, str, vb):
+    # Verify if the input files exist
+    if not os.path.isfile(infile):
+        LOG.error("File (%s) not found" % infile)
+    LOG.info("########## Executing modifyfilevalue command #########", vb)
+    parse_command_input(sys.argv, vb)
+    # Define value or values to use
+    if os.path.isfile(xml):  # Recover value from xml file
+        if not xml_name:
+            LOG.error("--xml_name argument was not defined")
+        # Initialize xml object
+        xml_obj = xml_parser.XML_APPLI(xml, vb)
+        xml_obj.get_items("Name")
+        xml_value = xml_obj.get_value(xml_name, "Value")
+        if not xml_value:
+            LOG.error("Not value found for '%s'. Output file can not be modified"
+                % xml_name)
+    else:
+        if value is None:
+            LOG.error("Value option or xml file were not defined")
+        else:
+            xml_value = value
+
+    if str :
+        # Define pattern to search
+        # When using .bat files the variable needs to be set
+        begin_line = variable + delimiter
+        new_value = value
+        infile_dbg = infile.split("\\")[-1] if "\\" in infile else infile
+        LOG.info("File to update '%s'" % infile_dbg, vb)
+        str_debug = "Script variable \"%s\" " % variable +\
+                    "will be updated with value \"%s\"" %value
+        LOG.info(str_debug, vb)
+        if not modify_file_line(infile, begin_line, new_value, vb, delimiter=delimiter):
+           LOG.error("File variable (%s) not modified in the file" % variable)
+        sys.exit(0)
+
+    # Define pattern to search
+    infile_dbg = infile.split("\\")[-1] if "\\" in infile else infile
+    begin_line = variable + delimiter
+    search_value = variable + '\s*' + delimiter + '\s*'
+    if shift is not None:
+        LOG.info("Searching old variable %s value in file '%s'" % (variable, infile_dbg), vb)
+        search_value = variable + "\s*" + delimiter
+        old_value = get_file_value(infile, begin_line, search_value)
+        new_hex_value = modify_hex_value(old_value, xml_value, shift)
+        old_value_sz = len(old_value) - 2 if "0x" in old_value else len(old_value)
+        new_hex_value = get_hex(new_hex_value, size=old_value_sz, upper_format=upper)
+    else :
+        new_hex_value = xml_value
+
+    LOG.info("File to update '%s'" % infile_dbg, vb)
+    str_debug = "File variable \"%s\" " % variable +\
+                "will be updated with value \"%s\"" %new_hex_value
+    LOG.info(str_debug, vb)
+    if not modify_file_value(infile, begin_line, search_value, new_hex_value, vb):
+        LOG.error("File variable (%s) not found in the file" % variable)
 
 @click.argument('infile')
 @click.option('-o', '--offset', type=BasedIntAllParamType(), default=0,
@@ -1345,11 +1531,11 @@ def hashcontent(infile, input_data, da_bin_file, header, offset, create, vb):
     #Format header information
     if header:
       header_in_bytes = b""
-      # Format DA adress in little endien
+      # Format DA address in little endian
       da_addr_size = math.ceil(len(header)/2)
       da_addr_size = da_addr_size - 1 if "0x" in header.lower() else  da_addr_size
       header_da_bytes = data_to_bytes(header, "little", da_addr_size)
-      # Format user password size in little endien
+      # Format user password size in little endian
       payload_size = hex(len(data))
       payload_bytes = data_to_bytes(payload_size, "little", 4)
       # Create DA file
@@ -1372,7 +1558,6 @@ def hashcontent(infile, input_data, da_bin_file, header, offset, create, vb):
 def AppliCfg():
     pass
 
-
 AppliCfg.add_command(xmlen)
 AppliCfg.add_command(xmlval)
 AppliCfg.add_command(xmlparam)
@@ -1387,5 +1572,5 @@ AppliCfg.add_command(setob)
 AppliCfg.add_command(oneimage)
 AppliCfg.add_command(iofile)
 AppliCfg.add_command(hashcontent)
-
-AppliCfg()
+AppliCfg.add_command(modifyfilevalue)
+AppliCfg.add_command(sectorerase)

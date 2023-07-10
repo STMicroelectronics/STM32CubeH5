@@ -65,7 +65,7 @@
 	</Data>
 	<Data>
 		<Name>Firmware download area offset</Name>
-		<Value>0x001F0000</Value>
+		<Value>0x001E8000</Value>
 		<Width>4</Width>
 		<Default>0x001F0000</Default>
 		<Slot>start#2</Slot>
@@ -73,9 +73,9 @@
 	</Data>
 	<Data>
 		<Name>Firmware area size</Name>
-		<Value>0x00010000</Value>
+		<Value>0x00018000</Value>
 		<Width>4</Width>
-		<Default>0x00010000</Default>
+		<Default>0x00018000</Default>
 		<Slot>size#1</Slot>
 		<Slot>size#2</Slot>
 		<Tooltip>Enter the size of the firmware for both download and execution areas (aligned on sector size)</Tooltip>
@@ -102,9 +102,9 @@
 	</Data>
 	<Data>
 		<Name>Data download area offset</Name>
-		<Value>0x001EE000</Value>
+		<Value>0x001E6000</Value>
 		<Width>4</Width>
-		<Default>0x001EE000</Default>
+		<Default>0x001E6000</Default>
 		<Slot>start#3</Slot>
 		<Dependency>Image,0x02</Dependency>
 		<Tooltip>Enter the offset of the data download area from the beginning of the user flash (aligned on sector start address)</Tooltip>

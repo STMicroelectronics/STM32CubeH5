@@ -1073,7 +1073,7 @@
         <group>
             <name>EWARM</name>
             <file>
-                <name>$PROJ_DIR$\startup_stm32h563xx.s</name>
+                <name>$PROJ_DIR$\..\startup_stm32h563xx.s</name>
             </file>
         </group>
         <group>

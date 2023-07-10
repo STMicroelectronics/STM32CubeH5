@@ -42,6 +42,7 @@
 		<Value>0xA0000</Value>
 		<Type>Data</Type>
 		<Command>-S</Command>
+		<Hidden>1</Hidden>
 		<Default>0xa0000</Default>
 	</Param>
 	<Param>
@@ -99,7 +100,7 @@
 	</Param>
 	<Param>
 		<Name>Firmware download area offset</Name>
-		<Value>0x80C0000</Value>
+		<Value>0x80C4000</Value>
 		<Type>Data</Type>
 		<Command>-x</Command>
 		<Hidden>1</Hidden>
@@ -107,10 +108,10 @@
 	</Param>
 	<Param>
 		<Name>Firmware binary input file</Name>
-		<Value>../../../Applications/ROT/OEMiROT_Appli_TrustZone/EWARM/NonSecure/STM32H573I-DK_NS/Exe/Project.bin</Value>
+		<Value>../../../Applications/ROT/OEMiROT_Appli_TrustZone/Binary/rot_tz_ns_app.bin</Value>
 		<Type>File</Type>
 		<Tooltip>Select the firmware binary file to be processed for the image generation</Tooltip>
-		<Default>../../../Applications/ROT/OEMiROT_Appli_TrustZone/EWARM/NonSecure/STM32H573I-DK_NS/Exe/Project.bin</Default>
+		<Default>../../../Applications/ROT/OEMiROT_Appli_TrustZone/Binary/rot_tz_ns_app.bin</Default>
 	</Param>
 	<Output>
 		<Name>Image output file</Name>

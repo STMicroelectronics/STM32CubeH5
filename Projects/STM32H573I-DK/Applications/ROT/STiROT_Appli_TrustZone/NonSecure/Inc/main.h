@@ -24,7 +24,6 @@
 #include "stm32h5xx_hal.h"
 #include "com.h"
 #include "appli_flash_layout.h"
-
 /* Exported types ------------------------------------------------------------*/
 /* Exported constants --------------------------------------------------------*/
 /* Exported macros -----------------------------------------------------------*/

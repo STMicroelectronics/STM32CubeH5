@@ -44,7 +44,7 @@ extern "C" {
 /**
   * @brief  Flow Control : Steps definition
   */
-#ifdef OEMIROT_BOOT_MPU_PROTECTION
+#ifdef OEMIROT_MPU_PROTECTION
 #define FLOW_STEP_MPU_I_EN_R0       0x00006787U        /*!< Step MPU  Region 0 Init enable value */
 #define FLOW_STEP_MPU_I_EN_R1       0x00007999U        /*!< Step MPU  Region 1 Init enable value */
 #define FLOW_STEP_MPU_I_EN_R2       0x0000aab5U        /*!< Step MPU  Region 2 Init enable value */
@@ -58,7 +58,7 @@ extern "C" {
 #define FLOW_STEP_MPU_I_EN          0x0000e3dcU        /*!< Step MPU Secure Init enable value */
 #define FLOW_STEP_MPU_NS_I_EN_R0    0x00000000U        /*!< No effect on control flow */
 #define FLOW_STEP_MPU_NS_I_EN       0x00000000U        /*!< No effect on control flow */
-#else /* OEMIROT_BOOT_MPU_PROTECTION */
+#else /* OEMIROT_MPU_PROTECTION */
 #define FLOW_STEP_MPU_I_EN_R0       0x00000000U        /*!< No effect on control flow */
 #define FLOW_STEP_MPU_I_EN_R1       0x00000000U        /*!< No effect on control flow */
 
@@ -74,7 +74,7 @@ extern "C" {
 #define FLOW_STEP_MPU_I_EN          0x00000000U        /*!< No effect on control flow */
 #define FLOW_STEP_MPU_NS_I_EN_R0    0x00000000U        /*!< No effect on control flow */
 #define FLOW_STEP_MPU_NS_I_EN       0x00000000U        /*!< No effect on control flow */
-#endif /* OEMIROT_BOOT_MPU_PROTECTION */
+#endif /* OEMIROT_MPU_PROTECTION */
 
 #define FLOW_STEP_SAU_I_EN_R0       0x00000000U        /*!< No effect on control flow */
 #define FLOW_STEP_SAU_I_EN_R1       0x00000000U        /*!< No effect on control flow */
@@ -113,7 +113,7 @@ extern "C" {
 #define FLOW_STEP_RAMCFG_I_EN1      0x00000000U        /*!< No effect on control flow */
 #endif /* OEMIROT_SECURE_USER_SRAM2_ECC || OEMIROT_SECURE_USER_SRAM1_ECC */
 
-#ifdef OEMIROT_BOOT_MPU_PROTECTION
+#ifdef OEMIROT_MPU_PROTECTION
 #define FLOW_STEP_MPU_I_CH_R0       0x0001d0eeU        /*!< Step MPU  Region 0 Init check value */
 #define FLOW_STEP_MPU_I_CH_R1       0x0001e1e1U        /*!< Step MPU  Region 1 Init check value */
 #define FLOW_STEP_MPU_I_CH_R2       0x0001ffffU        /*!< Step MPU  Region 2 Init check value */
@@ -128,7 +128,7 @@ extern "C" {
 #define FLOW_STEP_MPU_I_CH          0x0002e8fbU        /*!< Step MPU  Init check value */
 #define FLOW_STEP_MPU_NS_I_CH_R0    0x00000000U        /*!< No effect on control flow */
 #define FLOW_STEP_MPU_NS_I_CH       0x00000000U        /*!< No effect on control flow */
-#else /* OEMIROT_BOOT_MPU_PROTECTION */
+#else /* OEMIROT_MPU_PROTECTION */
 #define FLOW_STEP_MPU_I_CH_R0       0x00000000U        /*!< No effect on control flow */
 #define FLOW_STEP_MPU_I_CH_R1       0x00000000U        /*!< No effect on control flow */
 #define FLOW_STEP_MPU_I_CH_R2       0x00000000U        /*!< No effect on control flow */
@@ -142,7 +142,7 @@ extern "C" {
 #define FLOW_STEP_MPU_I_CH          0x00000000U        /*!< No effect on control flow */
 #define FLOW_STEP_MPU_NS_I_CH_R0    0x00000000U        /*!< No effect on control flow */
 #define FLOW_STEP_MPU_NS_I_CH       0x00000000U        /*!< No effect on control flow */
-#endif /* OEMIROT_BOOT_MPU_PROTECTION */
+#endif /* OEMIROT_MPU_PROTECTION */
 
 #define FLOW_STEP_SAU_I_CH_R0       0x00000000U        /*!< No effect on control flow */
 #define FLOW_STEP_SAU_I_CH_R1       0x00000000U        /*!< No effect on control flow */
@@ -181,7 +181,7 @@ extern "C" {
 #define FLOW_STEP_RAMCFG_I_CH1      0x00000000U        /*!< No effect on control flow */
 #endif /* OEMIROT_SECURE_USER_SRAM2_ECC || OEMIROT_SECURE_USER_SRAM1_ECC */
 
-#ifdef OEMIROT_BOOT_MPU_PROTECTION
+#ifdef OEMIROT_MPU_PROTECTION
 #define FLOW_STEP_MPU_A_EN_R1       0x000ac741U        /*!< Step MPU Region 1 Appli enable value */
 #define FLOW_STEP_MPU_A_CH_R1       0x000b3642U        /*!< Step MPU Region 1 Appli check value */
 #define FLOW_STEP_MPU_A_EN_R2       0x000b2437U        /*!< Step MPU Region 2 Appli enable value */
@@ -200,7 +200,7 @@ extern "C" {
 #define FLOW_STEP_MPU_A_CH_R2       0x00000000U        /*!< No effect on control flow */
 #define FLOW_STEP_MPU_A_EN_R3       0x00000000U        /*!< No effect on control flow */
 #define FLOW_STEP_MPU_A_CH_R3       0x00000000U        /*!< No effect on control flow */
-#endif /* OEMIROT_BOOT_MPU_PROTECTION */
+#endif /* OEMIROT_MPU_PROTECTION */
 
 #ifdef MCUBOOT_EXT_LOADER
 #define FLOW_STEP_GTZC_L_EN_MPCBB1  0x000a0a73U        /*!< Step GTZC MPCBB1 Configuration enable */
@@ -217,7 +217,7 @@ extern "C" {
 #define FLOW_STEP_GPIO_L_EN         0x00000000U        /*!< No effect on control flow */
 #define FLOW_STEP_GPIO_L_CH         0x00000000U        /*!< No effect on control flow */
 
-#if defined(MCUBOOT_EXT_LOADER) && defined(OEMIROT_BOOT_MPU_PROTECTION)
+#if defined(MCUBOOT_EXT_LOADER) && defined(OEMIROT_MPU_PROTECTION)
 #define FLOW_STEP_MPU_L_EN_R7       0x000c12a7U        /*!< Step Loader Region 7 enable value */
 #define FLOW_STEP_MPU_L_CH_R7       0x000c64e2U        /*!< Step Loader Region 7 check value */
 #define FLOW_STEP_MPU_L_LCK         0x000a624fU        /*!< Step GTZC Lock Configuration enable */

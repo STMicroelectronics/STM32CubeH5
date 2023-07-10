@@ -359,11 +359,11 @@ void Activate_COMP(void)
   }
 
   /* Clear comparator interruption flag */
-  COMP1->ICFR = COMP_ICFR_CC1IF;
+  LL_COMP_ClearFlag_OutputTrig(COMP1);
   NVIC_ClearPendingIRQ(COMP1_IRQn);
 
   /* Enable comparator interruption */
-  SET_BIT(COMP1->CFGR1, COMP_CFGR1_ITEN);  
+  LL_COMP_EnableIT_OutputTrig(COMP1);
 }
 
 /**

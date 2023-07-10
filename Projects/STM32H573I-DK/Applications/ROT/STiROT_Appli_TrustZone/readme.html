@@ -20,7 +20,7 @@
 <div class="row">
 <div class="col-sm-12 col-lg-8">
 <h2 id="stirot_appli_trustzone-application-description"><b>STiROT_Appli_TrustZone application Description</b></h2>
-<p>This project provides a STiROT boot path application example. Boot is performed through STiROT boot path after authenticity and integrity checks of the project firmware and project data
+<p>This project provides a STiROT boot path application example. Boot is performed through STiROT boot path after authenticity and the integrity checks of the project firmware and project data
 images.</p>
 <p>This project is composed of two sub-projects:</p>
 <ul>
@@ -44,7 +44,7 @@ of the application firmware and the application data images.
 At next reset, the STiROT will decrypt and install these new versions after successful check of the authenticity and the integrity of each image.</p>
 <p>The maximum system clock frequency at 250Mhz is configured in non-secure application.</p>
 <h3 id="keywords"><b>Keywords</b></h3>
-<p>TrustZone, STiROT, Boot path, Root Of Trust, MPU</p>
+<p>TrustZone, STiROT, boot path, Root Of Trust, MPU</p>
 <h3 id="directory-contents"><b>Directory contents</b></h3>
 <ul>
 <li>ROT/STiROT_Appli_TrustZone/Secure/Src/main.c                         Secure Main program</li>
@@ -74,10 +74,10 @@ At next reset, the STiROT will decrypt and install these new versions after succ
 </ul>
 <h3 id="hardware-and-software-environment"><b>Hardware and Software environment</b></h3>
 <ul>
-<li>This example runs on STM32H573xx devices with security enabled (TZEN=B4).</li>
+<li>This example runs on STM32H573xx devices with security enabled (TZEN=B4).<br /></li>
 <li>This example has been tested with STMicroelectronics STM32H573I-DK (MB1677)
 board and can be easily tailored to any other supported device
-and development board.  </li>
+and development board.</li>
 <li>To print the application menu in your UART console you have to configure it using these parameters:
 Speed: 115200, Data: 8bits, Parity: None, stop bits: 1, Flow control: none.</li>
 </ul>
@@ -85,31 +85,10 @@ Speed: 115200, Data: 8bits, Parity: None, stop bits: 1, Flow control: none.</li>
 <p>This project is targeted to boot through <b>STiROT boot path</b>.</p>
 <p><u>Before compiling the project, you should first start the provisioning process</u>. During the provisioning process, the linker files
 of Project_s and Project_ns as well as the postbuild command of Project_ns will be automatically updated.</p>
-<p>The <b>provisioning process</b> (ROT_Provisioning/STiROT/provisioning.bat) is divided in 3 majors steps :</p>
-<ul>
-<li><p>Step 1 : Configuration management</p>
-<ul>
-<li>STiRoT_Config.obk generation with TrustedPackageCreator (tab H5-OBkey)</li>
-<li>DA_Config.obk generation with TrustedPackageCreator (tab H5-OBkey)</li>
-<li>Automatic update of the option bytes flash programming script with regards of the defined configuration</li>
-<li>Automatic update of the project files (.icf, .ewp) with regards of the defined configuration</li>
-</ul>
-</li>
-<li><p>Step 2 : Images generation</p>
-<ul>
-<li>Code firmware image generation: automatically generated at the end of the project_ns compilation (postbuild command of Project_ns)</li>
-<li>Data image generation with TrustedPackageCreator (tab H5-Image Gen)</li>
-</ul>
-</li>
-<li><p>Step 3 : Provisioning  </p>
-<ul>
-<li>Programming the option bytes </li>
-<li>Flashing the images </li>
-<li>Programming the OBkeys </li>
-<li>Setting the product state</li>
-</ul>
-</li>
-</ul>
+<p>Before starting the provisioning process, select the application project to use (application example or template),
+through stirot_boot_path_project variable in ROT_Provisioning/env.bat or env.sh.
+Then start provisioning process by running ROT_Provisioning/STiROT/provisioning.bat or provisioning.sh, and follow its instructions.
+</p>
 <p>If the product state set to PROVISIONED, TZ-CLOSED or CLOSED, it is still possible to open the debug or to execute a full/partial regression
 with the Debug Authentication feature. To do it, scripts (regression.bat &amp; dbg_auth.bat) are available in the ROT_provisioning/DA folder.</p>
 <p>For more details, refer to Wiki article available here : <a href="https://wiki.st.com/stm32mcu/wiki/Category:Security">Link to Security Wiki</a></p>

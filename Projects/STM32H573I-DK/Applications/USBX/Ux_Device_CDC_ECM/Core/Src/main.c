@@ -103,9 +103,6 @@ int main(void)
   SystemClock_Config();
 
   /* USER CODE BEGIN SysInit */
-  /* Initialize LED */
-  BSP_LED_Init(LED_GREEN);
-  BSP_LED_Init(LED_RED);
 
   /* USER CODE END SysInit */
 
@@ -460,7 +457,6 @@ void MX_USB_PCD_Init(void)
   /* USER CODE END USB_Init 1 */
   hpcd_USB_DRD_FS.Instance = USB_DRD_FS;
   hpcd_USB_DRD_FS.Init.dev_endpoints = 8;
-  hpcd_USB_DRD_FS.Init.Host_channels = 8;
   hpcd_USB_DRD_FS.Init.speed = USBD_FS_SPEED;
   hpcd_USB_DRD_FS.Init.phy_itface = PCD_PHY_EMBEDDED;
   hpcd_USB_DRD_FS.Init.Sof_enable = DISABLE;
@@ -500,7 +496,17 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOH_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(LED2_GPIO_Port, LED2_Pin, GPIO_PIN_SET);
+
+  /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOF, GPIO_PIN_4, GPIO_PIN_RESET);
+
+  /*Configure GPIO pin : LED2_Pin */
+  GPIO_InitStruct.Pin = LED2_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+  HAL_GPIO_Init(LED2_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pin : PF4 */
   GPIO_InitStruct.Pin = GPIO_PIN_4;
@@ -572,11 +578,9 @@ void Error_Handler(void)
 {
   /* USER CODE BEGIN Error_Handler_Debug */
   /* User can add his own implementation to report the HAL error return state */
-  BSP_LED_Off(LED_GREEN);
   while (1)
   {
-    BSP_LED_Toggle(LED_RED);
-    HAL_Delay(1000);
+    HAL_GPIO_WritePin(LED2_GPIO_Port, LED2_Pin, GPIO_PIN_RESET);
   }
   /* USER CODE END Error_Handler_Debug */
 }

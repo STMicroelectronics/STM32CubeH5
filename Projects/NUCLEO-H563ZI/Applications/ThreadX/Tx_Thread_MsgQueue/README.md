@@ -1,5 +1,5 @@
 
-##  <b>Tx_Thread_MsgQueue application Description</b>
+##  <b>Tx_Thread_MsgQueue Application Description</b>
 
 This application provides an example of Azure RTOS ThreadX stack usage, it shows how to develop an application using the ThreadX message queue APIs.
 It demonstrates how to send and receive messages between threads using ThreadX message queue APIs. In addition, it shows how to use the event chaining feature.

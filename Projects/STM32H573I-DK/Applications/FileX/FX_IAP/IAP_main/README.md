@@ -1,5 +1,5 @@
 
-## <b>IAP_main application Description</b>
+## <b>IAP_main Application Description</b>
 
 This application provides an example of Azure RTOS FileX stack usage on STM32H573I-DK board, it implements an In-Application programming (IAP) demonstrating FileX's SD file access capabilities.
 The application is designed to erase and write to on-chip flash memory, it provides all required software code for handling SD card and flash memory I/O operations.

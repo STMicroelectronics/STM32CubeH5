@@ -120,7 +120,8 @@
 
 #include "stm32h5xx.h"
 #include "partition_stm32h5xx.h"  /* Trustzone-M core secure attributes */
-extern uint32_t __ICFEDIT_intvec_start__;
+#include "main.h"
+
 /**
   * @}
   */
@@ -221,7 +222,7 @@ void SystemInit(void)
     SCB_NS->CPACR |= ((3UL << 20U)|(3UL << 22U));  /* set CP10 and CP11 Full Access */
 #endif
   /* Configure the Vector Table location ------------------*/
-  SCB->VTOR = (uint32_t)&(__ICFEDIT_intvec_start__); /* Vector Table Relocation in Internal FLASH */
+  SCB->VTOR = S_CODE_START; /* Vector Table Relocation in Internal FLASH */
 }
 
 /**

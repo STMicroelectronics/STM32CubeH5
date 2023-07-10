@@ -414,8 +414,6 @@ VOID USBX_APP_Host_Init(VOID)
                              (ULONG)&hhcd_USB_DRD_FS);
 
   /* USER CODE BEGIN USB_Host_Init_PreTreatment1 */
-  /* Initialize user_button to handle sending data */
-  BSP_PB_Init(BUTTON_KEY, BUTTON_MODE_EXTI);
 
   /* Start Application Message */
   USBH_UsrLog("**** USB DRD CDC Host ****\n");

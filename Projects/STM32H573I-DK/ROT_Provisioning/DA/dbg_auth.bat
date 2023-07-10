@@ -1,25 +1,26 @@
-@ECHO OFF 
-IF [%1] NEQ [AUTO] call ../env.bat
+@echo off
+call %~dp0../env.bat
 
-set /p "tzen_state= The TrustZone feature is enabled ? %USERREG% [ y | n ]: "
-if /i "%tzen_state%" == "y" (
-%stm32programmercli% -c port=SWD debugauth=2
-%stm32programmercli% -c port=SWD speed=fast key=.\Keys\key_3_leaf.pem cert=.\Certificates\cert_leaf_chain.b64 debugauth=1
-IF %errorlevel% NEQ 0 goto :error
+:: Enable delayed expansion
+setlocal EnableDelayedExpansion
 
-) else (
-    if /i "%tzen_state%" == "n" (
-    %stm32programmercli% -c port=SWD debugauth=2
-    %stm32programmercli% -c port=SWD pwd=.\Binary\password.bin debugauth=1
-    IF %errorlevel% NEQ 0 goto :error
-    )
-)
+:: Select Key/certificate (if TZEN enabled) and password (if TZEN disabled)
+set key=Keys/key_3_leaf.pem
+set cert=Certificates/cert_leaf_chain.b64
+set pass=Binary/password.bin
 
-echo "regression script success"
-cmd /k
+:: Command with both key/certificate (if TZEN enabled) and password (if TZEN disabled)
+set permission=
+IF [%1] NEQ [] set permission="per=%1"
+
+%stm32programmercli% -c port=SWD %permission% key=%key% cert=%cert% pwd=%pass% debugauth=1
+IF !errorlevel! NEQ 0 goto :error
+
+echo "dbg_auth script success"
+IF [%2] NEQ [AUTO] cmd /k
 exit 0
 
 :error
-echo "regression script failed"
-cmd /k
+echo "dbg_auth script failed"
+IF [%2] NEQ [AUTO] cmd /k
 exit 1

@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-* @file    GTZC/GTZC_MPCWM_IllegalAccess_TrustZone/Secure/Inc/hal_external_memory_helper.h
+* @file    GTZC/GTZC_MPCWM_IllegalAccess_TrustZone/Secure/Inc/external_memory_helper.h
 * @author  MCD Application Team
 * @brief   This file contains the headers of the external memory helper.
   ******************************************************************************
@@ -17,21 +17,17 @@
   */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef HAL_EXTERNAL_MEM_HELPER
-#define HAL_EXTERNAL_MEM_HELPER
+#ifndef EXTERNAL_MEM_HELPER
+#define EXTERNAL_MEM_HELPER
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-/* ******************** FMC SRAM **********************************************/
+/* ******************** OCTOSPI FLASH **********************************************/
 /* Exported constants --------------------------------------------------------*/
   /* USER CODE BEGIN EC */
     /* MX25LM512ABA1G12 Macronix memory */
-/* Size of the flash */
-#define OSPI_FLASH_SIZE             26
-#define OSPI_PAGE_SIZE              256
-
 /* Flash commands */
 #define OCTAL_IO_READ_CMD           0xEC13
 #define OCTAL_PAGE_PROG_CMD         0x12ED
@@ -74,4 +70,4 @@ uint32_t extMemory_Config(void);
 }
 #endif
 
-#endif /* HAL_EXTERNAL_MEM_HELPER */
+#endif /* EXTERNAL_MEM_HELPER */

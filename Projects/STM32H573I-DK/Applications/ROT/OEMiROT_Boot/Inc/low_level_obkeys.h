@@ -26,14 +26,14 @@ extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
-#include "flash_layout.h"
 #include "stm32h5xx_hal.h"
 #include "mcuboot_config/mcuboot_config.h"
 #include "../../platform/include/tfm_plat_nv_counters.h"
 #include "Driver_Flash.h"
+#include "flash_layout.h"
 
 /* Exported constants --------------------------------------------------------*/
-#ifdef OEMUROT_ENABLE
+#if  defined(OEMUROT_ENABLE)
 #define OBK_HDPL2_CFG_OFFSET      (OBK_HDPL2_OFFSET) /* First OBkey Hdpl 2 for updatable config */
 #define OBK_HDPL2_CFG_SIZE        (sizeof(OBK_Hdpl2Config)) /* Size for OBkey Hdpl 2 cfg section */
 #define OBK_HDPL2_DATA_OFFSET     (OBK_HDPL2_CFG_OFFSET + OBK_HDPL2_CFG_SIZE) /* First OBkey Hdpl 2 for data section */
@@ -70,7 +70,7 @@ extern "C" {
 
 /* Exported types ------------------------------------------------------------*/
 
-#ifdef OEMUROT_ENABLE
+#if  defined(OEMUROT_ENABLE)
 /* Hdpl 2 updatable section : to be aligned on FLASH_PROG_UNIT (16 bytes) */
 typedef struct __attribute__((__packed__))
 {
@@ -160,7 +160,7 @@ typedef struct
 /* External variables --------------------------------------------------------*/
 extern OBK_LowLevelDevice OBK_FLASH0_DEV;
 extern ARM_DRIVER_FLASH OBK_Driver_FLASH0;
-#ifdef OEMUROT_ENABLE
+#if  defined(OEMUROT_ENABLE)
 extern OBK_Hdpl2Config OBK_Hdpl2_Cfg;
 #else
 extern OBK_Hdpl1Config OBK_Hdpl1_Cfg;
@@ -179,6 +179,7 @@ HAL_StatusTypeDef OBK_ReadHdpl1Data(OBK_Hdpl1Data *pOBK_Hdpl1Data);
 HAL_StatusTypeDef OBK_UpdateHdpl1Data(OBK_Hdpl1Data *pOBK_Hdpl1Data);
 void OBK_VerifyHdpl1Config(OBK_Hdpl1Config *pOBK_Hdpl1Cfg);
 #endif
+
 HAL_StatusTypeDef OBK_UpdateNVCounter(enum tfm_nv_counter_t CounterId, uint32_t Counter);
 HAL_StatusTypeDef OBK_GetNVCounter(enum tfm_nv_counter_t CounterId, uint32_t *pCounter);
 void OBK_InitDHUK(void);

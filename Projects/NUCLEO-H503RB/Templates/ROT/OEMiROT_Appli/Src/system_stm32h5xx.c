@@ -110,7 +110,7 @@
   */
 
 #include "stm32h5xx.h"
-
+#include "main.h"
 /**
   * @}
   */
@@ -126,8 +126,6 @@
 /** @addtogroup STM32H5xx_System_Private_Defines
   * @{
   */
-extern uint32_t __ICFEDIT_intvec_start__;
-
 #if !defined  (HSE_VALUE)
   #define HSE_VALUE    (25000000UL) /*!< Value of the External oscillator in Hz */
 #endif /* HSE_VALUE */
@@ -252,7 +250,7 @@ void SystemInit(void)
   RCC->CIER = 0U;
 
   /* Configure the Vector Table location ------------------*/
-  SCB->VTOR = 0x8012400/*(uint32_t)&(__ICFEDIT_intvec_start__)*/; /* Vector Table Relocation in Internal FLASH */
+  SCB->VTOR = S_CODE_START; /* Vector Table Relocation in Internal FLASH */
 
   /* Check OPSR register to verify if there is an ongoing swap or option bytes update interrupted by a reset */
   reg_opsr = FLASH->OPSR & FLASH_OPSR_CODE_OP;

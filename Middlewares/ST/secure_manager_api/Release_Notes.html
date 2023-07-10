@@ -43,7 +43,28 @@
 <div class="col-sm-12 col-lg-8">
 <h1 id="update-history">Update history</h1>
 <div class="collapse">
-<input type="checkbox" id="collapse-section1" checked aria-hidden="true"> <label for="collapse-section1" checked aria-hidden="true"><strong>V1.0.0 / 08-February-2023</strong></label>
+<input type="checkbox" id="collapse-section2" checked aria-hidden="true"> <label for="collapse-section2" checked aria-hidden="true"><strong>V2.0.0 / 30-May-2023</strong></label>
+<div>
+<h2 id="main-changes">Main Changes</h2>
+<li>Implementation of lock mechanism in psa api</li>
+<li>MISRA compliance</li>
+<li>Update of the middleware file tree</li>
+<h2 id="known-limitations">Known Limitations</h2>
+<ul>
+<li>psa_sign_hash() is not compatible with mutex implementation through ns_ipc_seq_begin()</li>
+</ul>
+<h2 id="backward-compatibility">Backward Compatibility</h2>
+<ul>
+<li>Break of compatibility with SMAK_Appli of STM32CubeH5 Firmware Package V1.0.0.</li>
+</ul>
+<h2 id="dependencies">Dependencies</h2>
+<ul>
+<li>Secure Manager binary have to be programmed on STM32 devices to enable PSA services. Please download package on <a href="https://www.st.com/content/st_com/en/ecosystems/stm32trust.html">STM32Trust</a>.</li>
+</ul>
+</div>
+</div>
+<div class="collapse">
+<input type="checkbox" id="collapse-section1" aria-hidden="true"> <label for="collapse-section1" checked aria-hidden="true"><strong>V1.0.0 / 08-February-2023</strong></label>
 <div>
 <h2 id="main-changes">Main Changes</h2>
 <p>First official release of Secure Manager API Middleware.</p>

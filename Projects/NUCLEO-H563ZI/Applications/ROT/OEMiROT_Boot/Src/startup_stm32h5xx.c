@@ -508,12 +508,9 @@ __no_init volatile uint32_t TamperEventCleared;
 void Reset_Handler(void)
 {
   __set_MSPLIM((uint32_t)(&__STACK_LIMIT));
-
-  uint32_t reg;
-
   /* CMSIS System Initialization */
   SystemInit();
-
+  uint32_t reg;
   /* Update current and alternate selectors on interruption of OBK swap sector request */
   reg = READ_BIT(FLASH->OPSR, FLASH_OPSR_CODE_OP);
   if ((reg == FLASH_OPERATION_TYPE_OBKSWAP) || (reg == FLASH_OPERATION_TYPE_OPTIONCHANGE))
@@ -529,7 +526,6 @@ void Reset_Handler(void)
     (void) HAL_FLASH_OB_Lock();
     (void) HAL_FLASH_Lock();
   }
-
   /* enable access to tamper register */
   HAL_PWR_EnableBkUpAccess();
   __HAL_RCC_RTC_ENABLE();

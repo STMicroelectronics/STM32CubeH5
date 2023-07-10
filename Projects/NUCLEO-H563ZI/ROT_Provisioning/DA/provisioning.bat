@@ -1,7 +1,8 @@
-@ECHO OFF
-:: Getting the CubeProgammer_cli path
+@echo off
 call ../env.bat
 
+:: Enable delayed expansion
+setlocal EnableDelayedExpansion
 
 :: CubeProgammer path and input files
 set ob_programming="ob_programming.bat"
@@ -15,7 +16,7 @@ set connect_reset=-c port=SWD speed=fast ap=1 mode=Hotplug -hardRst
 
 echo.
 echo =====
-echo ===== Provisioning of Legacy DA
+echo ===== Provisioning of DA
 echo =====
 echo.
 ::Define a BS variable containing a backspace (0x08) character
@@ -32,7 +33,7 @@ if /i "%tzen_state%" == "y" (set "ps_option=[ PROVISIONED | TZ-CLOSED | CLOSED |
 echo    * %da_file%.obk generation:
 echo        From TrustedPackageCreator (tab H5-OBkey).
 echo        Select %da_file%.xml (Default path is \ROT_Provisioning\DA\Config\%da_file%.xml)
-echo        Update the configuration (if/as needed) then generate %da_file%.xml file
+echo        Update the configuration (if/as needed) then generate %da_file%.obk file
 echo        Press any key to continue...
 echo.
 pause >nul
@@ -75,7 +76,7 @@ goto provisioning_step
 
 :: Provisioning the obk file step
 :provisioning_step
-set "action=Provisionning the .obk file ..."
+set "action=Provisioning the .obk file ..."
 set current_log_file=%obk_provisioning_log%
 set "command=start /w /b call %obk_provisioning% %tzen_state% AUTO"
 echo    * %action%
@@ -88,37 +89,42 @@ echo.
 
 :provisioning
 :: ================================================ Final product state selection =========================================================
+:product_state_choice
 for /f %%A in ('"prompt $H & echo on & for %%B in (1) do rem"') do set "BS=%%A"
 set "action=Define product state value"
 echo    * %action%
 set /p "product_state=%BS%       %ps_option%: "
-echo.
 
 if /i "%product_state%" == "PROVISIONED" (
+echo.
 set ps_value=0x2E
 goto set_final_ps
 )
 
 if /i "%tzen_state%" == "y" (
 if /i "%product_state%" == "TZ-CLOSED" (
+echo.
 set ps_value=0xC6
 goto set_final_ps
 )
 )
 
-
 if /i "%product_state%" == "CLOSED" (
+echo.
 set ps_value=0x72
 goto set_final_ps
 )
 
 if /i "%product_state%" == "LOCKED" (
+echo.
 set ps_value=0x5C
 goto set_final_ps
 )
 
-echo "Wrong product state %product_state%"
-goto step_error
+echo        WRONG product state selected
+set current_log_file="./*.log files "
+echo;
+goto product_state_choice
 
 : Set the final product state of the STM32H5 product
 :set_final_ps

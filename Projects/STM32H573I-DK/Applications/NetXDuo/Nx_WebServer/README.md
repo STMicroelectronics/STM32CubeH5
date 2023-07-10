@@ -1,5 +1,5 @@
 
-## <b>Nx_WebServer application Description</b>
+## <b>Nx_WebServer Application Description</b>
 
 This application provides an example of Azure RTOS NetX Duo stack usage on STM32H573G-DK board, it shows how to develop Web HTTP server based application.
 The application is designed to load files and dyncamic web pages stored in SD card using a Web HTTP server, the code provides all required features to build a compliant Web HTTP Server.

@@ -63,12 +63,12 @@ class XML_APPLI():
         for option in self.xml_options:
             current_tag_content = option.find(tag_filter).text
             if current_tag_content:
-                # Verify if expected item content exists in the current item founded
+                # Verify if expected item content exists in the current item found
                 if tag_content in current_tag_content:
                     sub_tag_content = option.find(sub_tag).text
                     if sub_tag_content is not None: # subtag exists but with an empty value
                         subtag_str = "<%s>" % sub_tag + sub_tag_content +"</%s>" % sub_tag
-                        debug_str = "Parameter founded. Extracting information" + \
+                        debug_str = "Parameter found. Extracting information" + \
                                     " from '%s'" % subtag_str
                         LOG.info(debug_str, self.is_debug)
                         LOG.info("The content recovered is '%s'" % sub_tag_content, 
@@ -104,7 +104,7 @@ class XML_APPLI():
                 if tag == sub_tag:
                     current_element = option.find(tag)
                     if current_element is not None:
-                        tag_str = "Parameter founded. Verifying information of '"
+                        tag_str = "Parameter found. Verifying information of '"
                         tag_str += "<%s>" %tag + current_element.text + "</%s>'" %tag
                         LOG.info(tag_str, self.is_debug)
                         if current_element.text == new_sub_tag_content :
@@ -128,7 +128,7 @@ class XML_APPLI():
                                 current_tag_content.replace('-', '', 2) == tag_content:
                             current_element = option.find(sub_tag)
                             if current_element is not None:
-                                tag_str = "Parameter founded. Verifying information of '"
+                                tag_str = "Parameter found. Verifying information of '"
                                 current_element_content = ""
                                 if current_element.text is not None :
                                      current_element_content = current_element.text
@@ -169,7 +169,7 @@ class XML_APPLI():
                     return True # Value was modified
 
         # Modify trace as an error
-        LOG.info("The parameter or the tag content were not founded", self.is_debug)
+        LOG.info("The parameter or the tag content were not found", self.is_debug)
         return False
 
     def remove_param_item(self, tag, tag_content):
@@ -200,7 +200,7 @@ class XML_APPLI():
                         except Exception as e :
                             LOG.info(e, self.is_debug)
                             return False
-        LOG.info("Parameter not founded. perhaps it has already been removed", self.is_debug)
+        LOG.info("Parameter not found. Perhaps it has already been removed", self.is_debug)
         self.do_save_file = False
         return True
 
@@ -231,8 +231,8 @@ class XML_APPLI():
                     child = ET.SubElement(new_param, element)
                     child.text = param_dictionary[element]
                 # Format the subitem
-                ET.indent(new_param, space='    ', level=1)
-                new_param.tail = '\n    '
+                ET.indent(new_param, space='	', level=1)
+                new_param.tail = '\n	'
                 # Insert to the principal structure
                 LOG.info("Adding new parameter at the second position", self.is_debug)
                 root_node.insert(param_idx, new_param)

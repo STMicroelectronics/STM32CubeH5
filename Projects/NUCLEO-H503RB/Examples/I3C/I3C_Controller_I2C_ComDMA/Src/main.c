@@ -196,7 +196,7 @@ int main(void)
                              &aPrivateDescriptor[I3C_IDX_FRAME_2],
                              &aContextBuffers[I3C_IDX_FRAME_2],
                              aContextBuffers[I3C_IDX_FRAME_2].CtrlBuf.Size,
-                             I2C_PRIVATE_WITH_ARB_STOP) != HAL_OK)
+                             I2C_PRIVATE_WITHOUT_ARB_STOP) != HAL_OK)
   {
     /* Error_Handler() function is called when error occurs. */
     Error_Handler();

@@ -6,7 +6,7 @@ lang: en
 ::: {.row}
 ::: {.col-sm-12 .col-lg-8}
 
-##  <b>Nx_Iperf application Description</b>
+##  <b>Nx_Iperf Application Description</b>
 
 This application provides an example of Azure RTOS NetXDuo stack usage .
 It shows performance when using different modes : TCP_server, UDP_server, TCP_client and UDP_client.
@@ -14,7 +14,7 @@ The main entry function tx_application_define() is then called by ThreadX during
 
  + A NX_PACKET_POOL **NxAppPool** is allocated
  + A NX_IP instance **NetXDuoEthIpInstance** using that pool is initialized
- + A NX_PACKET_POOL **WebServerSPool** is allocated
+ + A NX_PACKET_POOL **WebServerPool** is allocated
  + The ARP, ICMP and protocols (TCP and UDP) are enabled for the NX_IP instance
  + A DHCP client is created.
 

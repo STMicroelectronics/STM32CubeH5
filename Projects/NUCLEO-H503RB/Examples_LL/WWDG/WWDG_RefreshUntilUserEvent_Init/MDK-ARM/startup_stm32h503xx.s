@@ -89,8 +89,8 @@ __Vectors       DCD     __initial_sp                     ; Top of Stack
                 DCD     EXTI1_IRQHandler                 ; EXTI Line1 interrupt
                 DCD     EXTI2_IRQHandler                 ; EXTI Line2 interrupt
                 DCD     EXTI3_IRQHandler                 ; EXTI Line3 interrupt
-                DCD     0                                ; Reserved
-                DCD     0                                ; Reserved
+                DCD     EXTI4_IRQHandler                 ; EXTI Line4 interrupt
+                DCD     EXTI5_IRQHandler                 ; EXTI Line5 interrupt
                 DCD     EXTI6_IRQHandler                 ; EXTI Line6 interrupt
                 DCD     EXTI7_IRQHandler                 ; EXTI Line7 interrupt
                 DCD     EXTI8_IRQHandler                 ; EXTI Line8 interrupt

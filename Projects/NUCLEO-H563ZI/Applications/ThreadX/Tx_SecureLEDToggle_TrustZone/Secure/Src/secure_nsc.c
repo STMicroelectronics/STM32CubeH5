@@ -23,12 +23,12 @@
 #include "main.h"
 #include "secure_nsc.h"
 /** @addtogroup STM32H5xx_HAL_Examples
-* @{
-*/
+  * @{
+  */
 
 /** @addtogroup Templates
-* @{
-*/
+  * @{
+  */
 
 /* Global variables ----------------------------------------------------------*/
 void *pSecureFaultCallback = NULL;   /* Pointer to secure fault callback in Non-secure */
@@ -42,36 +42,44 @@ void *pSecureErrorCallback = NULL;   /* Pointer to secure error callback in Non-
 /* Private functions ---------------------------------------------------------*/
 
 /**
-* @brief  Secure registration of non-secure callback.
-* @param  CallbackId  callback identifier
-* @param  func        pointer to non-secure function
-* @retval None
-*/
+  * @brief  Secure registration of non-secure callback.
+  * @param  CallbackId  callback identifier
+  * @param  func        pointer to non-secure function
+  * @retval None
+  */
 CMSE_NS_ENTRY void SECURE_RegisterCallback(SECURE_CallbackIDTypeDef CallbackId, void *func)
 {
   if(func != NULL)
   {
     switch(CallbackId)
     {
-    case SECURE_FAULT_CB_ID:           /* SecureFault Interrupt occurred */
-      pSecureFaultCallback = func;
-      break;
-    case GTZC_ERROR_CB_ID:             /* GTZC Interrupt occurred */
-      pSecureErrorCallback = func;
-      break;
-    default:
-      /* unknown */
-      break;
+      case SECURE_FAULT_CB_ID:           /* SecureFault Interrupt occurred */
+        pSecureFaultCallback = func;
+        break;
+      case GTZC_ERROR_CB_ID:             /* GTZC Interrupt occurred */
+        pSecureErrorCallback = func;
+        break;
+      default:
+        /* unknown */
+        break;
     }
   }
 }
 
 /**
-* @}
-*/
+  * @brief  Secure treatment of non-secure push button interrupt.
+  * @retval None
+  */
+CMSE_NS_ENTRY void SECURE_LEDToggle(void)
+{
+  HAL_GPIO_TogglePin(LED_GREEN_GPIO_Port, LED_GREEN_Pin);
+}
+/**
+  * @}
+  */
 
 /**
-* @}
-*/
+  * @}
+  */
 /* USER CODE END Non_Secure_CallLib */
 

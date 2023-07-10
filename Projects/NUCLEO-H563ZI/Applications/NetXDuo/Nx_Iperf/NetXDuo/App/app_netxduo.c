@@ -86,7 +86,7 @@ UINT MX_NetXDuo_Init(VOID *memory_ptr)
   TX_BYTE_POOL *byte_pool = (TX_BYTE_POOL*)memory_ptr;
 
    /* USER CODE BEGIN App_NetXDuo_MEM_POOL */
-printf("Nx_Iperf application started..\n");
+  printf("Nx_Iperf application started..\n");
 
   /* USER CODE END App_NetXDuo_MEM_POOL */
   /* USER CODE BEGIN 0 */
@@ -379,7 +379,7 @@ static VOID App_Link_Thread_Entry(ULONG thread_input)
 
   while(1)
   {
-    /* Get Physical Link stackavailtus. */
+    /* Get Physical Link status. */
     status = nx_ip_interface_status_check(&NetXDuoEthIpInstance, 0, NX_IP_LINK_ENABLED,
                                       &actual_status, 10);
 

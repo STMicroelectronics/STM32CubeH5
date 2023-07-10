@@ -1,4 +1,4 @@
-## <b>Ux_Device_DFU application Description</b>
+## <b>Ux_Device_DFU Application Description</b>
 
 This application provides an example of Azure RTOS USBX stack usage on STM32H573I-DK board,
 it shows how to develop USB Device Firmware Upgrade "DFU" based application.
@@ -67,7 +67,7 @@ User is familiar with USB 2.0 "Universal Serial BUS" Specification and DFU class
 The remote wakeup feature is not yet implemented (used to bring the USB suspended bus back to the active condition).
 
 ### <b>Notes</b>
-- Select 'Skip flash erase before programming' option when updating binary file in Cube Programmer.
+
 #### <b>ThreadX usage hints</b>
 
  - ThreadX uses the Systick as time base, thus it is mandatory that the HAL uses a separate time base through the TIM IPs.

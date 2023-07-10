@@ -83,26 +83,9 @@ This project is targeted to boot through <b>STiROT boot path</b>.
 <u>Before compiling the project, you should first start the provisioning process</u>. During the provisioning process, the linker files
 of Project_s and Project_ns as well as the postbuild command of Project_ns will be automatically updated.
 
-The <b>provisioning process</b> (ROT_Provisioning/STiROT/provisioning.bat) is divided in 3 majors steps :
-
-  - Step 1 : Configuration management
-
-     - STiRoT_Config.obk generation with TrustedPackageCreator (tab H5-OBkey)
-     - DA_Config.obk generation with TrustedPackageCreator (tab H5-OBkey)
-     - Automatic update of the option bytes flash programming script with regards of the defined configuration
-     - Automatic update of the project files (.icf, .ewp) with regards of the defined configuration
-
-  - Step 2 : Images generation
-
-     - Code firmware image generation: automatically generated at the end of the project_ns compilation (postbuild command of Project_ns)
-     - Data image generation with TrustedPackageCreator (tab H5-Image Gen)
-
-  - Step 3 : Provisioning
-
-     - Programming the option bytes
-     - Flashing the images
-     - Programming the OBkeys
-     - Setting the product state
+Before starting the provisioning process, select the application project to use (application example or template),
+through stirot_boot_path_project variable in ROT_Provisioning/env.bat or env.sh.
+Then start provisioning process by running ROT_Provisioning/STiROT/provisioning.bat or provisioning.sh, and follow its instructions.
 
 If the product state set to PROVISIONED, TZ-CLOSED or CLOSED, it is still possible to open the debug or to execute a full/partial regression
 with the Debug Authentication feature. To do it, scripts (regression.bat & dbg_auth.bat) are available in the ROT_provisioning/DA folder.

@@ -42,6 +42,7 @@
 		<Value>0xA0000</Value>
 		<Type>Data</Type>
 		<Command>-S</Command>
+		<Hidden>1</Hidden>
 		<Default>0xa0000</Default>
 	</Param>
 	<Param>
@@ -99,7 +100,7 @@
 	</Param>
 	<Param>
 		<Name>Firmware download area offset</Name>
-		<Value>0x80C0000</Value>
+		<Value>0x80BC000</Value>
 		<Type>Data</Type>
 		<Command>-x</Command>
 		<Hidden>1</Hidden>

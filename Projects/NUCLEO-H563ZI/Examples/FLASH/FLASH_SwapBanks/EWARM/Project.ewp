@@ -642,11 +642,11 @@
                 </option>
                 <option>
                     <name>OCOutputOverride</name>
-                    <state>0</state>
+                    <state>1</state>
                 </option>
                 <option>
                     <name>OOCOutputFile</name>
-                    <state>Project.bin</state>
+                    <state>FLASH_BANK1.bin</state>
                 </option>
                 <option>
                     <name>OOCCommandLineProducer</name>
@@ -757,7 +757,7 @@
                 </option>
                 <option>
                     <name>IlinkIcfFile</name>
-                    <state>$PROJ_DIR$\stm32h563xx_flash_bank1.icf</state>
+                    <state>$PROJ_DIR$\stm32h563xx_flash.icf</state>
                 </option>
                 <option>
                     <name>IlinkIcfFileSlave</name>
@@ -1705,11 +1705,11 @@
                 </option>
                 <option>
                     <name>OCOutputOverride</name>
-                    <state>0</state>
+                    <state>1</state>
                 </option>
                 <option>
                     <name>OOCOutputFile</name>
-                    <state>Project.bin</state>
+                    <state>FLASH_BANK2.bin</state>
                 </option>
                 <option>
                     <name>OOCCommandLineProducer</name>
@@ -1820,7 +1820,7 @@
                 </option>
                 <option>
                     <name>IlinkIcfFile</name>
-                    <state>$PROJ_DIR$\stm32h563xx_flash_bank2.icf</state>
+                    <state>$PROJ_DIR$\stm32h563xx_flash.icf</state>
                 </option>
                 <option>
                     <name>IlinkIcfFileSlave</name>
@@ -2130,7 +2130,7 @@
     <group>
         <name>Doc</name>
         <file>
-            <name>$PROJ_DIR$\..\readme.md</name>
+            <name>$PROJ_DIR$\..\README.md</name>
         </file>
     </group>
     <group>

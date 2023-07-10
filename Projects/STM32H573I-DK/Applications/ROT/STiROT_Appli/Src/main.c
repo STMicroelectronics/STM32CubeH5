@@ -38,9 +38,10 @@ int iar_fputc(int ch);
 #define PUTCHAR_PROTOTYPE int iar_fputc(int ch)
 #elif defined ( __CC_ARM ) || defined(__ARMCC_VERSION)
 /* ARM Compiler 5/6*/
-#define PUTCHAR_PROTOTYPE int fputc(int ch, FILE *f)
+int io_putchar(int ch);
+#define PUTCHAR_PROTOTYPE int io_putchar(int ch)
 #elif defined(__GNUC__)
-#define PUTCHAR_PROTOTYPE int __io_putchar(int ch)
+#define PUTCHAR_PROTOTYPE int32_t uart_putc(int32_t ch)
 #endif /* __ICCARM__ */
 /* Private includes ----------------------------------------------------------*/
 /* Private typedef -----------------------------------------------------------*/
@@ -51,6 +52,8 @@ uint8_t *pUserAppId;
 const uint8_t UserAppId = 'A';
 
 /* Private function prototypes -----------------------------------------------*/
+static void SystemClock_Config(void);
+
 void FW_APP_PrintMainMenu(void);
 void FW_APP_Run(void);
 void LOADER_Run(void);
@@ -70,7 +73,7 @@ FILE __stdout;
 int fputc(int ch, FILE *f)
 {
   /* Send byte to USART */
-  uart_putc(ch);
+  io_putchar(ch);
 
   /* Return character written */
   return ch;
@@ -131,7 +134,7 @@ int main(void)
   COM_Init();
 
   printf("\r\n======================================================================");
-  printf("\r\n=              (C) COPYRIGHT 2022 STMicroelectronics                 =");
+  printf("\r\n=              (C) COPYRIGHT 2023 STMicroelectronics                 =");
   printf("\r\n=                                                                    =");
   printf("\r\n=                          User App #%c                               =", *pUserAppId);
   printf("\r\n======================================================================");

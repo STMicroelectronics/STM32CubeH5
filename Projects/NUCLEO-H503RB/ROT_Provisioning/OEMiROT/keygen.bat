@@ -19,6 +19,24 @@ set mcuboot_dir=%cd%
 popd
 set "keys_c=%keys_c_dir%\keys.c"
 
+:: Keys backup
+for /f %%# in ('wmic os get localdatetime^|findstr .') do if "%%#" neq "" set date=%%#
+set date=%date:~,4%_%date:~4,2%_%date:~6,2%_%date:~8,2%_%date:~10,2%_%date:~12,2%
+set "key_pem_backup_dir=%keys_pem_dir%\%date%_keybkp"
+set "cmdcreatedirpem=mkdir %key_pem_backup_dir%
+%cmdcreatedirpem%
+IF %ERRORLEVEL% NEQ 0 goto :error_key
+set "key_c_backup_dir=%keys_c_dir%\%date%_keybkp"
+set "cmdcreatedirc=mkdir %key_c_backup_dir%
+%cmdcreatedirc%
+IF %ERRORLEVEL% NEQ 0 goto :error_key
+set "cmdcpypem=copy %keys_pem_dir%\*.pem %key_pem_backup_dir%"
+%cmdcpypem%
+IF %ERRORLEVEL% NEQ 0 goto :error_key
+set "cmdcpyc=copy %keys_c% %key_c_backup_dir%"
+%cmdcpyc%
+IF %ERRORLEVEL% NEQ 0 goto :error_key
+
 :start
 goto exe:
 goto py:
@@ -37,8 +55,6 @@ set "imgtool=%mcuboot_dir%\scripts\imgtool.py"
 set "python=python "
 
 :cont
-@set cnt=0
-
 :keygen
 ::ecc 256 auth key
 set "key_ecc=%keys_pem_dir%\OEMiRoT_Authentication.pem"
@@ -67,7 +83,3 @@ echo "%command_key% : failed"
 echo Script failure
 cmd /k
 exit 1
-
-:rsa_key_error
-@set /a "cnt=%cnt%+1"
-IF %cnt% GEQ 2 (goto :error_key) else (goto :keygen)

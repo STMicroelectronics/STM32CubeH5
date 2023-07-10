@@ -4,7 +4,7 @@
 	<GlobalParam>
 		<Command>sign</Command>
 		<Title>Firmware secure image generation</Title>
-        <LinkedXML>../Config/OEMuRoT_Config_1.xml</LinkedXML>
+        <LinkedXML>../Config/OEMuRoT_Config_Keys.xml</LinkedXML>
 	</GlobalParam>	
 	<Param>
 		<Name>Authentication secure key</Name>
@@ -43,6 +43,7 @@
 		<Value>0x6000</Value>
 		<Type>Data</Type>
 		<Command>-S</Command>
+		<Hidden>1</Hidden>
 		<Default>0x6000</Default>
 	</Param>
 	<Param>
@@ -101,18 +102,18 @@
 	</Param>
 	<Param>
 		<Name>Firmware download area offset</Name>
-		<Value>0x80BA000</Value>
+		<Value>0x80BE000</Value>
 		<Type>Data</Type>
 		<Command>-x</Command>
 		<Hidden>1</Hidden>
-		<Default>0x8020000</Default>
+		<Default>0x80BE000</Default>
 	</Param>
 	<Param>
 		<Name>Firmware binary input file</Name>
-		<Value>../../../Applications/ROT/OEMiROT_Appli_TrustZone/EWARM/Secure/STM32H573I-DK_S/Exe/Project.bin</Value>
+		<Value>../../../Applications/ROT/OEMiROT_Appli_TrustZone/Binary/rot_tz_s_app.bin</Value>
 		<Type>File</Type>
 		<Tooltip>Select the firmware binary file to be processed for the image generation</Tooltip>
-		<Default>../../../Applications/ROT/OEMiROT_Appli_TrustZone/EWARM/Secure/STM32H573I-DK_S/Exe/Project.bin</Default>
+		<Default>../../../Applications/ROT/OEMiROT_Appli_TrustZone/Binary/rot_tz_s_app.bin</Default>
 	</Param>
 	<Output>
 		<Name>Image output file</Name>

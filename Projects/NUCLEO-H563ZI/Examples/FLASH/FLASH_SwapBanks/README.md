@@ -11,9 +11,8 @@ The SystemClock_Config() function is used to configure the system clock for STM3
 
 Below are the steps to run this example:
 
-1- Choose the FLASH_SwapBanks_Bank2 project and run it, this project will be loaded
-   in the bank2 of the flash: at the address 0x08100000
-
+1- Choose the FLASH_SwapBanks_Bank2 project and build it using your preferred toolchain (EWARM, MDK-ARM, STM32CubeIDE),then use STM32CubeProgrammer to flash the 
+  generated binary file FLASH_BANK2.bin into the bank2 at the address 0x08100000.
 ##### <b>note:</b>
       You have to configure your preferred toolchain in order to generate the binary
       file after compiling the project.
@@ -70,5 +69,24 @@ Memory, FLASH, Swap, Bank, Dual bank, Program, Sector, LED
 In order to make the program work, you must do the following :
 
   - Open your preferred toolchain.
-  - Rebuild all files and load your image into target memory.
-  - Run the example.
+   - Rebuild all files.
+  - Load the binary file generated with FLASH_SwapBanks_Bank2 into
+    the BANK2 at address 0x08100000 using STM32CubeProgrammer.
+  - Choose the FLASH_SwapBanks_Bank1 project and run the example.
+
+  <b>STM32CubeIDE</b>
+ One linker script is needed for this example where the FLASH shall be defined at origin: 0x8000000
+	This is because The CPU expects all code to be executed from this address.
+	The SWAP_BANK bit simply “toggles” which bank is located at @0x8000000.
+	To actually load one of the binaries into 0x8100000 you have to setup the debug config to load one bin-file with 0x100000:
+	select "Debug configuration" or "Run configuration" in function of the active build FLASH_SwapBanks_Bank1 configuration
+   - Double click on “STM32 Cortex-M C/C++ Application”
+   - Select  “Startup” >  “Add” > 
+   - Select the FLASH_SwapBanks_Bank2 project 
+   - Uncheck Perform build option
+   - Add 0x100000 to Use download offset hex
+   - Click Debug/Run to debug/run the example
+   STM32CubeIDE loses debug connection when the application toggles the SWAP_BANK option bit. Example can be compiled and executed on target, but debug does not work. 
+   Target is not responding, retrying...
+   Target is not responding, retrying...
+   Shutting down...

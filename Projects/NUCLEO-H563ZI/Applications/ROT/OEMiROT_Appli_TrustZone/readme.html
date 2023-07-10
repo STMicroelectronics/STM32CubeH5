@@ -20,7 +20,8 @@
 <div class="row">
 <div class="col-sm-12 col-lg-8">
 <h2 id="oemirot_appli_trustzone-application-description"><b>OEMiROT_Appli_TrustZone application Description</b></h2>
-<p>This project provides a OEMiROT bootpath application example. Boot is performed through OEMiROT bootpath after authenticity and the integrity checks of the project firmware and data images.</p>
+<p>This project provides a OEMiROT boot path application example. Boot is performed through OEMiROT boot path after authenticity and the integrity checks of the project firmware and project data
+images.</p>
 <p>This project is composed of two sub-projects:</p>
 <ul>
 <li><p>One for the secure application part (Project_s)</p>
@@ -30,8 +31,8 @@
 </ul>
 <p>Please remember that on system with security enabled, the system always boots in secure and
 the secure application is responsible for launching the non-secure application. When the secure application is started the MPU
-is already configured (by OEMiROT) to limit the execution area to the project firmware execution slot. This is done in order to avoid 
-any malicious code execution from an unauthorised area (RAM, out of execution slot in user flash ...). Once started, it is up to the secure 
+is already configured (by OEMiROT) to limit the execution area to the project firmware execution slot. This is done in order to avoid
+any malicious code execution from an unauthorised area (RAM, out of execution slot in user flash ...). Once started, it is up to the secure
 application to adapt the security configuration to its needs. In this example, the MPU is simply disabled.</p>
 <p>This project mainly shows how to switch from secure application to non-secure application
 thanks to the system isolation performed to split the internal Flash and internal SRAM memories.
@@ -43,41 +44,41 @@ of the application firmware and the application data images.
 At next reset, the OEMiROT will decrypt and install these new versions after successful check of the authenticity and the integrity of each image.</p>
 <p>The maximum system clock frequency at 250Mhz is configured in non-secure application.</p>
 <h3 id="keywords"><b>Keywords</b></h3>
-<p>TrustZone, OEMiROT, Boot path, Root Of Trust, MPU</p>
+<p>TrustZone, OEMiROT, boot path, Root Of Trust, MPU</p>
 <h3 id="directory-contents"><b>Directory contents</b></h3>
 <ul>
-<li>ROT/OEMiROT_Appli_TrustZone/Secure/Src/low_level_flash.c Secure Low level flash driver</li>
-<li>ROT/OEMiROT_Appli_TrustZone/Secure/Src/main.c Secure Main program</li>
-<li>ROT/OEMiROT_Appli_TrustZone/Secure/Src/secure_nsc.c Secure Non-Secure Callable (NSC) module</li>
-<li>ROT/OEMiROT_Appli_TrustZone/Secure/Src/stm32h5xx_it.c Secure Interrupt handlers</li>
-<li>ROT/OEMiROT_Appli_TrustZone/Secure/Src/system_stm32h5xx_s.c Secure STM32H5xx system clock configuration file</li>
-<li>ROT/OEMiROT_Appli_TrustZone/Secure/Src/low_level_flash.h Secure Low level flash driver header file</li>
-<li>ROT/OEMiROT_Appli_TrustZone/Secure/Inc/main.h Secure Main program header file</li>
-<li>ROT/OEMiROT_Appli_TrustZone/Secure/Inc/partition_stm32h563xx.h STM32H5 Device System Configuration file</li>
-<li>ROT/OEMiROT_Appli_TrustZone/Secure/Inc/stm32h5xx_hal_conf.h Secure HAL Configuration file</li>
-<li>ROT/OEMiROT_Appli_TrustZone/Secure/Inc/stm32h5xx_it.h Secure Interrupt handlers header file</li>
-<li>ROT/OEMiROT_Appli_TrustZone/Secure_nsclib/appli_flash_layout.h Flash layout header file</li>
-<li>ROT/OEMiROT_Appli_TrustZone/Secure_nsclib/secure_nsc.h Secure Non-Secure Callable (NSC) module header file</li>
-<li>ROT/OEMiROT_Appli_TrustZone/NonSecure/Src/com.c Non-secure Communication</li>
-<li>ROT/OEMiROT_Appli_TrustZone/NonSecure/Src/common.c Non-secure common</li>
-<li>ROT/OEMiROT_Appli_TrustZone/NonSecure/Src/low_level_flash.c Non-Secure Low level flash driver</li>
-<li>ROT/OEMiROT_Appli_TrustZone/NonSecure/Src/main.c Non-secure Main program</li>
-<li>ROT/OEMiROT_Appli_TrustZone/NonSecure/Src/stm32h5xx_it.c Non-secure Interrupt handlers</li>
-<li>ROT/OEMiROT_Appli_TrustZone/NonSecure/Src/system_stm32h5xx_ns.c Non-secure STM32H5xx system clock configuration file</li>
-<li>ROT/OEMiROT_Appli_TrustZone/NonSecure/Src/com.h Non-secure Communication header file</li>
-<li>ROT/OEMiROT_Appli_TrustZone/NonSecure/Src/common.h Non-secure common header file</li>
-<li>ROT/OEMiROT_Appli_TrustZone/NonSecure/Src/low_level_flash.h Non-Secure Low level flash driver header file</li>
-<li>ROT/OEMiROT_Appli_TrustZone/NonSecure/Inc/main.h Non-secure Main program header file</li>
-<li>ROT/OEMiROT_Appli_TrustZone/NonSecure/Inc/stm32h5xx_hal_conf.h Non-secure HAL Configuration file</li>
-<li>ROT/OEMiROT_Appli_TrustZone/NonSecure/Inc/stm32h5xx_it.h Non-secure Interrupt handlers header file</li>
-<li>ROT/OEMiROT_Appli_TrustZone/Binary Application firmware image (application binary + MCUBoot header and metadata)</li>
+<li>ROT/OEMiROT_Appli_TrustZone/Secure/Src/low_level_flash.c              Secure Low level flash driver</li>
+<li>ROT/OEMiROT_Appli_TrustZone/Secure/Src/main.c                         Secure Main program</li>
+<li>ROT/OEMiROT_Appli_TrustZone/Secure/Src/secure_nsc.c                   Secure Non-Secure Callable (NSC) module</li>
+<li>ROT/OEMiROT_Appli_TrustZone/Secure/Src/stm32h5xx_it.c                 Secure Interrupt handlers</li>
+<li>ROT/OEMiROT_Appli_TrustZone/Secure/Src/system_stm32h5xx_s.c           Secure STM32H5xx system clock configuration file</li>
+<li>ROT/OEMiROT_Appli_TrustZone/Secure/Src/low_level_flash.h              Secure Low level flash driver header file</li>
+<li>ROT/OEMiROT_Appli_TrustZone/Secure/Inc/main.h                         Secure Main program header file</li>
+<li>ROT/OEMiROT_Appli_TrustZone/Secure/Inc/partition_stm32h563xx.h        STM32H5xx Device System Configuration file</li>
+<li>ROT/OEMiROT_Appli_TrustZone/Secure/Inc/stm32h5xx_hal_conf.h           Secure HAL Configuration file</li>
+<li>ROT/OEMiROT_Appli_TrustZone/Secure/Inc/stm32h5xx_it.h                 Secure Interrupt handlers header file</li>
+<li>ROT/OEMiROT_Appli_TrustZone/Secure_nsclib/appli_flash_layout.h        Flash layout header file</li>
+<li>ROT/OEMiROT_Appli_TrustZone/Secure_nsclib/secure_nsc.h                Secure Non-Secure Callable (NSC) module header file</li>
+<li>ROT/OEMiROT_Appli_TrustZone/NonSecure/Src/com.c                       Non-secure Communication</li>
+<li>ROT/OEMiROT_Appli_TrustZone/NonSecure/Src/common.c                    Non-secure common</li>
+<li>ROT/OEMiROT_Appli_TrustZone/NonSecure/Src/low_level_flash.c           Non-Secure Low level flash driver</li>
+<li>ROT/OEMiROT_Appli_TrustZone/NonSecure/Src/main.c                      Non-secure Main program</li>
+<li>ROT/OEMiROT_Appli_TrustZone/NonSecure/Src/stm32h5xx_it.c              Non-secure Interrupt handlers</li>
+<li>ROT/OEMiROT_Appli_TrustZone/NonSecure/Src/system_stm32h5xx_ns.c       Non-secure STM32H5xx system clock configuration file</li>
+<li>ROT/OEMiROT_Appli_TrustZone/NonSecure/Src/com.h                       Non-secure Communication header file</li>
+<li>ROT/OEMiROT_Appli_TrustZone/NonSecure/Src/common.h                    Non-secure common header file</li>
+<li>ROT/OEMiROT_Appli_TrustZone/NonSecure/Src/low_level_flash.h           Non-Secure Low level flash driver header file</li>
+<li>ROT/OEMiROT_Appli_TrustZone/NonSecure/Inc/main.h                      Non-secure Main program header file</li>
+<li>ROT/OEMiROT_Appli_TrustZone/NonSecure/Inc/stm32h5xx_hal_conf.h        Non-secure HAL Configuration file</li>
+<li>ROT/OEMiROT_Appli_TrustZone/NonSecure/Inc/stm32h5xx_it.h              Non-secure Interrupt handlers header file</li>
+<li>ROT/OEMiROT_Appli_TrustZone/Binary                                    Application firmware image (application binary + MCUBoot header and metadata)</li>
 </ul>
 <h3 id="hardware-and-software-environment"><b>Hardware and Software environment</b></h3>
 <ul>
-<li>This example runs on STM32H563xx devices with security enabled (TZEN=B4).</li>
+<li>This example runs on STM32H563xx devices with security enabled (TZEN=B4).<br /></li>
 <li>This example has been tested with STMicroelectronics NUCLEO-H563ZI (MB1404)
 board and can be easily tailored to any other supported device
-and development board.  </li>
+and development board.</li>
 <li>To print the application menu in your UART console you have to configure it using these parameters:
 Speed: 115200, Data: 8bits, Parity: None, stop bits: 1, Flow control: none.</li>
 </ul>
@@ -85,30 +86,10 @@ Speed: 115200, Data: 8bits, Parity: None, stop bits: 1, Flow control: none.</li>
 <p>This project is targeted to boot through <b>OEMiROT boot path</b>.</p>
 <p><u>Before compiling the project, you should first start the provisioning process</u>. During the provisioning process, the linker files
 of Project_s and Project_ns as well as the postbuild commands will be automatically updated.</p>
-<p>The <b>provisioning process</b> (ROT_Provisioning/OEMiROT/provisioning.bat) is divided in 3 majors steps :</p>
-<ul>
-<li><p>Step 1 : Configuration management</p>
-<ul>
-<li>OEMiRoT_Config.obk generation with TrustedPackageCreator (tab H5-OBkey)</li>
-<li>DA_Config.obk generation with TrustedPackageCreator (tab H5-OBkey)</li>
-</ul>
-</li>
-<li><p>Step 2 : Images generation</p>
-<ul>
-<li>OEMiROT binary: build OEMiROT_Boot project</li>
-<li>Code firmware images generation: automatically generated at the end of the project_s and project_ns compilation (postbuild commands)</li>
-<li>Data images generation with TrustedPackageCreator (tab H5-Image Gen), if data images enabled</li>
-</ul>
-</li>
-<li><p>Step 3 : Provisioning  </p>
-<ul>
-<li>Programming the option bytes </li>
-<li>Flashing the images </li>
-<li>Programming the OBkeys </li>
-<li>Setting the product state</li>
-</ul>
-</li>
-</ul>
+<p>Before starting the provisioning process, select the application project to use (application example or template),
+through oemirot_boot_path_project variable in ROT_Provisioning/env.bat or env.sh.
+Then start provisioning process by running ROT_Provisioning/OEMiROT/provisioning.bat or provisioning.sh, and follow its instructions.
+</p>
 <p>If the product state set to PROVISIONED, TZ-CLOSED or CLOSED, it is still possible to open the debug or to execute a full/partial regression
 with the Debug Authentication feature. To do it, scripts (regression.bat &amp; dbg_auth.bat) are available in the ROT_provisioning/DA folder.</p>
 <p>For more details, refer to Wiki article available here : <a href="https://wiki.st.com/stm32mcu/wiki/Category:Security">Link to Security Wiki</a></p>
@@ -128,13 +109,13 @@ with the Debug Authentication feature. To do it, scripts (regression.bat &amp; d
 </ul>
 <h4 id="notes"><b>Notes:</b></h4>
 <ol>
-<li><p>The most efficient way to develop and debug an application is to boot directly on user flash in the Open product state by setting with 
+<li><p>The most efficient way to develop and debug an application is to boot directly on user flash in the Open product state by setting with
 STM32CubeProgrammer the UBE to 0xB4 and the SECBOOTADD to (0x0C000400 + offset of the firmware execution slot).</p>
 </li>
-<li><p>Two versions of ROT_AppliConfig are available: windows executable and python version. By default, the windows executable is selected. It 
+<li><p>Two versions of ROT_AppliConfig are available: windows executable and python version. By default, the windows executable is selected. It
 is possible to switch to python version by:  </p>
 <ul>
-<li>installing python (Python 3.10 or newer) with the required modules listed in requirements.txt.  <pre><code>pip install -r requirements.txt  
+<li>installing python (Python 3.10 or newer) with the required modules listed in requirements.txt.  <pre><code>pip install -r requirements.txt
 </code></pre>
 </li>
 <li>having python in execution path variable  </li>

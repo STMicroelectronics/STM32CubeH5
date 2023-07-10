@@ -1,5 +1,5 @@
 
-## <b>Tx_CMSIS_Wrapper application Description</b>
+## <b>Tx_CMSIS_Wrapper Application Description</b>
 
 This application provides an example of CMSIS RTOS adaptation layer for Azure RTOS ThreadX, it shows how to develop an application using the CMSIS RTOS 2 APIs.
 It demonstrates how to create multiple threads using CMSIS RTOS 2 for ThreadX APIs.
@@ -65,11 +65,11 @@ None
     + For MDK-ARM:
 	```
     either define the RW_IRAM1 region in the ".sct" file
-    or modify the line below in "tx_low_level_initilize.S to match the memory region being used
+    or modify the line below in "tx_initialize_low_level.S" to match the memory region being used
         LDR r1, =|Image$$RW_IRAM1$$ZI$$Limit|
 	```
     + For STM32CubeIDE add the following section into the .ld file:
-	``` 
+	```
     ._threadx_heap :
       {
          . = ALIGN(8);

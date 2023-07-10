@@ -66,7 +66,7 @@ ULONG                    NetMask;
 
 CHAR                     buffer[64];
 
-CHAR                    *pointer;
+
 struct tm timeInfos;
 /* RTC handler declaration */
 RTC_HandleTypeDef RtcHandle;
@@ -310,6 +310,8 @@ static VOID App_Main_Thread_Entry (ULONG thread_input)
   if (ret != NX_SUCCESS)
   {
     /* USER CODE BEGIN IP address change callback error */
+
+    /* Error, call error handler.*/
     Error_Handler();
 
     /* USER CODE END IP address change callback error */
@@ -320,6 +322,8 @@ static VOID App_Main_Thread_Entry (ULONG thread_input)
   if (ret != NX_SUCCESS)
   {
     /* USER CODE BEGIN DHCP client start error */
+
+    /* Error, call error handler.*/
     Error_Handler();
 
     /* USER CODE END DHCP client start error */
@@ -329,6 +333,8 @@ static VOID App_Main_Thread_Entry (ULONG thread_input)
   if(tx_semaphore_get(&DHCPSemaphore, NX_APP_DEFAULT_TIMEOUT) != TX_SUCCESS)
   {
     /* USER CODE BEGIN DHCPSemaphore get error */
+
+    /* Error, call error handler.*/
     Error_Handler();
 
     /* USER CODE END DHCPSemaphore get error */
@@ -368,14 +374,14 @@ UINT dns_create(NX_DNS *dns_ptr)
   /* Create a DNS instance for the Client */
   ret = nx_dns_create(dns_ptr, &NetXDuoEthIpInstance, (UCHAR *)"DNS Client");
 
-  if (ret)
+  if (ret != NX_SUCCESS)
   {
     Error_Handler();
   }
 
   /* Initialize DNS instance with the DNS server Address */
   ret = nx_dns_server_add(dns_ptr, USER_DNS_ADDRESS);
-  if (ret)
+  if (ret != NX_SUCCESS)
   {
     Error_Handler();
   }
@@ -650,7 +656,7 @@ static VOID App_Link_Thread_Entry(ULONG thread_input)
 
   while(1)
   {
-    /* Get Physical Link stackavailtus. */
+    /* Get Physical Link status. */
     status = nx_ip_interface_status_check(&NetXDuoEthIpInstance, 0, NX_IP_LINK_ENABLED,
                                       &actual_status, 10);
 
@@ -665,8 +671,8 @@ static VOID App_Link_Thread_Entry(ULONG thread_input)
         {
           /* The network cable is connected again. */
           printf("The network cable is connected again.\n");
-          /* Print MQTT Client is available again. */
-          printf("MQTT Client is available again.\n");
+          /* Print SNTP Client is available again. */
+          printf("SNTP Client is available again.\n");
         }
         else
         {

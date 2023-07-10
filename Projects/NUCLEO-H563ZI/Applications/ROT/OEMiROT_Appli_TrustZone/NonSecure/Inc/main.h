@@ -25,8 +25,7 @@
 #include "com.h"
 #include "appli_flash_layout.h"
 
-#define NS_DATA_IMAGE_EN
-
+/*#define NS_DATA_IMAGE_EN*/
 /* Exported types ------------------------------------------------------------*/
 /* Exported constants --------------------------------------------------------*/
 /* Exported macros -----------------------------------------------------------*/

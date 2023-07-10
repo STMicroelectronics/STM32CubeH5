@@ -40,7 +40,6 @@ extern "C" {
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "app_usbx_host.h"
-#include "stm32h573i_discovery.h"
 #include "stm32h573i_discovery_usbpd_pwr.h"
 /* USER CODE END Includes */
 
@@ -61,15 +60,15 @@ extern "C" {
 
 /* Exported functions prototypes ---------------------------------------------*/
 void Error_Handler(void);
+void MX_USB_HCD_Init(void);
 
 /* USER CODE BEGIN EFP */
 
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
-void MX_USB_HCD_Init(void);
-/* USER CODE BEGIN Private defines */
 
+/* USER CODE BEGIN Private defines */
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus

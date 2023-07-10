@@ -1,4 +1,4 @@
-## <b>Nx_Network_Basics_wifi application Description</b>
+## <b>Nx_Network_Basics_wifi Application Description</b>
 
 This application demonstrates WiFi connectivity on MXCHIP EMW3080 module for the STM32H573I-DK board from STMicroelectronics.
 

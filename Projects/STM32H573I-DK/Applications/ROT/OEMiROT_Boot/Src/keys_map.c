@@ -40,10 +40,7 @@ const unsigned int rsa2048_pub_key_len  = 270;
 #if (MCUBOOT_APP_IMAGE_NUMBER == 2) || (MCUBOOT_NS_DATA_IMAGE_NUMBER == 1)
 const unsigned int rsa2048_pub_key_len_1  = 270;
 #endif
-#if defined(__ICCARM__)
-#pragma location=".bootutil_key"
-#endif /* __ICCARM__ */
-const struct bootutil_key bootutil_keys[] __attribute__((section(".bootutil_key"))) = {
+const struct bootutil_key bootutil_keys[] = {
     {
         .key = OBK_Hdpl1_Cfg.Hdpl3SecureAuthenticationPubKey,
         .len = &rsa2048_pub_key_len,
@@ -72,10 +69,7 @@ const unsigned int rsa3072_pub_key_len  = 398;
 #if (MCUBOOT_APP_IMAGE_NUMBER == 2) || (MCUBOOT_NS_DATA_IMAGE_NUMBER == 1)
 const unsigned int rsa3072_pub_key_len_1 = 398;
 #endif
-#if defined(__ICCARM__)
-#pragma location=".bootutil_key"
-#endif /* __ICCARM__ */
-const struct bootutil_key bootutil_keys[] __attribute__((section(".bootutil_key"))) = {
+const struct bootutil_key bootutil_keys[] = {
     {
         .key = OBK_Hdpl1_Cfg.Hdpl3SecureAuthenticationPubKey,
         .len = &rsa3072_pub_key_len,
@@ -105,12 +99,9 @@ const unsigned int ecdsa_pub_key_len = 91;
 #if (MCUBOOT_APP_IMAGE_NUMBER == 2) || (MCUBOOT_NS_DATA_IMAGE_NUMBER == 1)
 const unsigned int ecdsa_pub_key_len_1 = 91;
 #endif
-#if defined(__ICCARM__)
-#pragma location=".bootutil_key"
-#endif /* __ICCARM__ */
-const struct bootutil_key bootutil_keys[] __attribute__((section(".bootutil_key"))) = {
+const struct bootutil_key bootutil_keys[] = {
     {
-#ifdef OEMUROT_ENABLE
+#if  defined(OEMUROT_ENABLE)
         .key = OBK_Hdpl2_Cfg.Hdpl3SecureAuthenticationPubKey,
 #else
         .key = OBK_Hdpl1_Cfg.Hdpl3SecureAuthenticationPubKey,
@@ -119,7 +110,7 @@ const struct bootutil_key bootutil_keys[] __attribute__((section(".bootutil_key"
     },
 #if (MCUBOOT_APP_IMAGE_NUMBER == 2)
     {
-#ifdef OEMUROT_ENABLE
+#if  defined(OEMUROT_ENABLE)
         .key = OBK_Hdpl2_Cfg.Hdpl3NonSecureAuthenticationPubKey,
 #else
         .key = OBK_Hdpl1_Cfg.Hdpl3NonSecureAuthenticationPubKey,
@@ -129,7 +120,7 @@ const struct bootutil_key bootutil_keys[] __attribute__((section(".bootutil_key"
 #endif
 #if (MCUBOOT_S_DATA_IMAGE_NUMBER == 1)
     {
-#ifdef OEMUROT_ENABLE
+#if  defined(OEMUROT_ENABLE)
         .key = OBK_Hdpl2_Cfg.Hdpl3SecureAuthenticationPubKey,
 #else
         .key = OBK_Hdpl1_Cfg.Hdpl3SecureAuthenticationPubKey,
@@ -139,7 +130,7 @@ const struct bootutil_key bootutil_keys[] __attribute__((section(".bootutil_key"
 #endif
 #if (MCUBOOT_NS_DATA_IMAGE_NUMBER == 1)
     {
-#ifdef OEMUROT_ENABLE
+#if  defined(OEMUROT_ENABLE)
         .key = OBK_Hdpl2_Cfg.Hdpl3NonSecureAuthenticationPubKey,
 #else
         .key = OBK_Hdpl1_Cfg.Hdpl3NonSecureAuthenticationPubKey,
@@ -151,27 +142,19 @@ const struct bootutil_key bootutil_keys[] __attribute__((section(".bootutil_key"
 #else
 #error "No public key available for given signing algorithm."
 #endif
-#if defined(__ICCARM__)
-#pragma location=".bootutil_key_cnt"
-#endif /* __ICCARM__ */
-const int bootutil_key_cnt __attribute__((section(".bootutil_key_cnt"))) = MCUBOOT_IMAGE_NUMBER;
+const int bootutil_key_cnt = MCUBOOT_IMAGE_NUMBER;
 #if defined(MCUBOOT_ENC_IMAGES)
 #if defined(MCUBOOT_ENCRYPT_RSA)
 const unsigned int enc_rsa_priv_key_len = 1192;
-#if defined(__ICCARM__)
-#pragma location=".bootutil_enc_key"
-#endif /* __ICCARM__ */
-const struct bootutil_key bootutil_enc_key __attribute__((section(".bootutil_enc_key"))) = {
+const struct bootutil_key bootutil_enc_key = {
     .key = OBK_Hdpl1_Cfg.Hdpl3EncryptionPrivKey,
     .len = &enc_rsa_priv_key_len,
 };
 #elif defined(MCUBOOT_ENCRYPT_EC256)
+
 const unsigned int enc_ec256_priv_key_len = 70;
-#if defined(__ICCARM__)
-#pragma location=".bootutil_enc_key"
-#endif /* __ICCARM__ */
-const struct bootutil_key bootutil_enc_key __attribute__((section(".bootutil_enc_key"))) = {
-#ifdef OEMUROT_ENABLE
+const struct bootutil_key bootutil_enc_key = {
+#if  defined(OEMUROT_ENABLE)
     .key = OBK_Hdpl2_Cfg.Hdpl3EncryptionPrivKey,
 #else
     .key = OBK_Hdpl1_Cfg.Hdpl3EncryptionPrivKey,
@@ -180,10 +163,7 @@ const struct bootutil_key bootutil_enc_key __attribute__((section(".bootutil_enc
 };
 #endif /* MCUBOOT_ENCRYPT_RSA */
 #else
-#if defined(__ICCARM__)
-#pragma location=".bootutil_enc_key"
-#endif /* __ICCARM__ */
-const struct bootutil_key bootutil_enc_key __attribute__((section(".bootutil_enc_key"))) = {
+const struct bootutil_key bootutil_enc_key = {
     .key = (const unsigned char *)0,
     .len = (const unsigned int *)0,
 };

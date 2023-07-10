@@ -101,6 +101,12 @@ int main(void)
   USBPD_PreInitOs();
   /* USER CODE BEGIN 2 */
 
+  /* Disable instruction cache prior to internal cacheable memory update by GUI_INTERFACE */
+  if (HAL_ICACHE_Disable() != HAL_OK)
+  {
+    Error_Handler();
+  }
+
   /* USER CODE END 2 */
 
   MX_ThreadX_Init();

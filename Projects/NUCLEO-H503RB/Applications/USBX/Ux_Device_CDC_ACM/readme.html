@@ -19,7 +19,7 @@
 <body>
 <div class="row">
 <div class="col-sm-12 col-lg-8">
-<h2 id="ux_device_cdc_acm-application-description"><b>Ux_Device_CDC_ACM application Description </b></h2>
+<h2 id="ux_device_cdc_acm-application-description"><b>Ux_Device_CDC_ACM Application Description </b></h2>
 <p>This application provides an example of Azure RTOS USBX stack usage on NUCLEO-H503RB board, it shows how to develop USB Device communication Class “CDC_ACM” based application. The application is designed to emulate an USB-to-UART bridge following the Virtual COM Port (VCP) implementation, the code provides all required device descriptors framework and associated Class descriptor report to build a compliant USB CDC_ACM device. At the beginning ThreadX call the entry function tx_application_define(), at this stage, all USBx resources are initialized, the CDC_ACM Class driver is registered and the application creates 3 threads with the same priorities :</p>
 <ul>
 <li>app_ux_device_thread_entry (Prio : 10; PreemptionPrio : 10) used to initialize USB DRD HAL PCD driver and start the device.</li>
@@ -45,7 +45,6 @@
 <p>When plugged to PC host, the NUCLEO-H503RB must be properly enumerated as an USB Serial device and an STlink Com port. During the enumeration phase, the device must provide host with the requested descriptors (Device descriptor, configuration descriptor, string descriptors). Those descriptors are used by host driver to identify the device capabilities. Once NUCLEO-H503RB USB device successfully completed the enumeration phase, Open two hyperterminals (USB com port and UART com port(USB STLink VCP)) to send/receive data to/from host from/to device.</p>
 <h4 id="error-behaviors"><b>Error behaviors</b></h4>
 <p>Host PC shows that USB device does not operate as designed (CDC Device enumeration failed, PC and Device can not communicate over VCP ports).</p>
-<p>The Red LED is toggling to indicate any error that has occurred.</p>
 <h4 id="assumptions-if-any"><b>Assumptions if any</b></h4>
 <p>User is familiar with USB 2.0 “Universal Serial BUS” Specification and CDC_ACM class Specification.</p>
 <h4 id="known-limitations"><b> Known limitations</b></h4>

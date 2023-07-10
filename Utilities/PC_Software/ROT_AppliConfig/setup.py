@@ -1,15 +1,20 @@
 import setuptools
 
+with open("README.md", 'r') as f:
+    long_description = f.read()
+
 setuptools.setup(
     name="AppliCfg",
+    version="1.0.1",
     description=("Update application project files"),
-    packages=setuptools.find_packages(),
+    long_description=long_description,
+    long_description_content_type="text/markdown",
+    packages=["AppliCfg"],
     python_requires='>=3.10',
     install_requires=[
         'click',
     ],
-    packages=["AppliCfg"],
     entry_points={
-        "console_scripts": ["AppliCfg=AppliCfg.main:AppliCfg"]
+        "console_scripts": ["AppliCfg=main:main"]
     },
 )

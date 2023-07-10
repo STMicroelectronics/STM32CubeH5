@@ -1,4 +1,4 @@
-IF [%1] NEQ [AUTO] call ../env.bat
+call ../env.bat
 
 :: Enable delayed expansion
 setlocal EnableDelayedExpansion
@@ -21,7 +21,6 @@ echo %action%
 
 :: Write OTP data soc mask
 %stm32programmercli% %connect_no_reset% -w %otp_data_soc_mask% %address_data_soc_mask%
-IF !errorlevel! NEQ 0 goto :error
 
 :: =============================================== Write password =========================================================================
 set "action=Write Password"
@@ -29,6 +28,13 @@ echo %action%
 
 :: Write password
 %stm32programmercli% %connect_no_reset% -w %board_password% %address_password%
+%stm32programmercli% %connect_reset%
+
+set "action=Lock OTP with write protection"
+echo %action%
+
+:: Lock OTP values to prevent data corruption (case of double provisioning with different password)
+%stm32programmercli% %connect_no_reset% -ob LOCKBL=0x1
 IF !errorlevel! NEQ 0 goto :error
 %stm32programmercli% %connect_reset%
 

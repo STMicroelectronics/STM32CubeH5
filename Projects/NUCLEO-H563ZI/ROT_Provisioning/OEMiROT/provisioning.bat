@@ -15,31 +15,25 @@ set ob_flash_log="ob_flash_programming.log"
 set obkey_programming_log="obkey_programming.log"
 set provisioning_log="provisioning.log"
 
-:: Get config updated by OEMiROT_Boot
-set tmp_file=%projectdir%/tmp_config.bat
-echo set app_image_number= > %tmp_file%
-echo set s_data_image_number= >> %tmp_file%
-echo set ns_data_image_number= >> %tmp_file%
+if "%isGeneratedByCubeMX%" == "true" (
+set appli_dir=%oemirot_boot_path_project%
+) else (
+set appli_dir=../../../%oemirot_boot_path_project%
+)
 
+:: Get config updated by OEMiROT_Boot
+set tmp_file=%projectdir%/img_config.bat
 
 set fw_in_bin="Firmware binary input file"
 set fw_out_bin="Image output file"
-set ns_app_bin="%oemirot_boot_path_project%\Binary\rot_tz_ns_app.bin"
-set ns_app_bin=%ns_app_bin:\=/%
-set s_app_bin="%oemirot_boot_path_project%\Binary\rot_tz_s_app.bin"
-set s_app_bin=%s_app_bin:\=/%
-set app_bin="%oemirot_boot_path_project%\Binary\rot_tz_app.bin"
-set app_bin=%app_bin:\=/%
+set ns_app_bin="%appli_dir%/Binary/rot_tz_ns_app.bin"
+set s_app_bin="%appli_dir%/Binary/rot_tz_s_app.bin"
 set s_code_image_file="%projectdir%Images\OEMiROT_S_Code_Image.xml"
 set ns_code_image_file="%projectdir%Images\OEMiROT_NS_Code_Image.xml"
 set s_data_xml="%projectdir%Images\OEMiROT_S_Data_Image.xml"
 set ns_data_xml="%projectdir%Images\OEMiROT_NS_Data_Image.xml"
-set ns_app_enc_sign_hex="%oemirot_boot_path_project%\Binary\rot_tz_ns_app_enc_sign.hex"
-set ns_app_enc_sign_hex=%ns_app_enc_sign_hex:\=/%
-set s_app_enc_sign_hex="%oemirot_boot_path_project%\Binary\rot_tz_s_app_enc_sign.hex"
-set s_app_enc_sign_hex=%s_app_enc_sign_hex:\=/%
-set app_enc_sign_hex="%oemirot_boot_path_project%\Binary\rot_tz_app_enc_sign.hex"
-set app_enc_sign_hex=%app_enc_sign_hex:\=/%
+set ns_app_enc_sign_hex="%appli_dir%/Binary/rot_tz_ns_app_enc_sign.hex"
+set s_app_enc_sign_hex="%appli_dir%/Binary/rot_tz_s_app_enc_sign.hex"
 
 :: Initial configuration
 set product_state=OPEN
@@ -91,14 +85,17 @@ echo.
 if [%1] neq [AUTO] pause >nul
 :: =============================================== Steps to create the DA_Config.obk file ===================================================
 echo    * DA_Config.obk generation:
-echo        From TrustedPackageCreator (tab H5-OBkey).
-echo        Select DA_Config.xml(Default path is \ROT_Provisioning\DA\DA_Config.xml)
 echo        Warning: Default keys must NOT be used in a product. Make sure to regenerate your own keys!
-echo        Update the configuration (if/as needed) then generate DA_Config.xml file
+echo        From TrustedPackageCreator (tab H5-DA CertifGen),
+echo        update the keys(s) (in \ROT_Provisioning\DA\Keys) and permissions (if/as needed)
+echo        then regenerate the certificate(s)
+echo        From TrustedPackageCreator (tab H5-OBKey),
+echo        Select DA_Config.xml (in \ROT_Provisioning\DA\Config)
+echo        Update the configuration (if/as needed) then generate DA_Config.obk file
 echo        Press any key to continue...
 echo.
 if [%1] neq [AUTO] pause >nul
-
+:cubemx
 :: ========================================================= Images generation steps ========================================================
 echo Step 2 : Images generation
 echo    * Boot firmware image generation
@@ -107,12 +104,11 @@ echo        Press any key to continue...
 echo.
 if [%1] neq [AUTO] pause >nul
 ::update xml file
+if "%isGeneratedByCubeMX%" == "true" goto :cubemx1
 call %tmp_file%
 if  "%app_image_number%" == "2" goto :next
-set ns_app_enc_sign_hex="%oemirot_boot_path_project%\Binary\rot_tz_app_enc_sign.hex"
-set ns_app_enc_sign_hex=%ns_app_enc_sign_hex:\=/%
-set ns_app_bin="%oemirot_boot_path_project%\Binary\rot_tz_app.bin"
-set ns_app_bin=%ns_app_bin:\=/%
+set ns_app_enc_sign_hex="%appli_dir%/Binary/rot_tz_app_enc_sign.hex"
+set ns_app_bin="%appli_dir%/Binary/rot_tz_app.bin"
 :next
 set "command=%python%%applicfg% xmlval -v %s_app_bin% --string -n %fw_in_bin% %s_code_image_file%"
 %command%
@@ -127,7 +123,8 @@ set "command=%python%%applicfg% xmlval -v %ns_app_enc_sign_hex% --string -n %fw_
 %command%
 IF !errorlevel! NEQ 0 goto :step_error
 echo    * Code firmware image generation
-echo        Open the OEMiROT_Appli_TrustZone project with preferred toolchain and rebuild all files.
+echo        Open the OEMiROT_Appli_TrustZone project with preferred toolchain.
+echo        Rebuild all files. The appli_enc_sign.hex file is generated with the postbuild command.
 echo        Press any key to continue...
 echo.
 if [%1] neq [AUTO] pause >nul
@@ -143,7 +140,7 @@ if !errorlevel! neq 0 goto :step_error
 :no_s_data
 
 echo    * Data non secure generation (if Data non secure image is enabled)
-echo        Select OEMiRoT_NS_Data_Image.xml(Default path is \ROT_Provisioning\OEMiROT\Images\OEMiRoT_NS_Data_Image.xml)
+echo        Select OEMiROT_NS_Data_Image.xml(Default path is \ROT_Provisioning\OEMiROT\Images\OEMiROT_NS_Data_Image.xml)
 echo        Generate the data_enc_sign.hex image
 echo        Press any key to continue...
 echo.
@@ -154,7 +151,7 @@ if !errorlevel! neq 0 goto :step_error
 :no_ns_data
 
 :: ========================================================= Board provisioning steps =======================================================
-:cubemx
+:cubemx1
 echo Step 3 : Provisioning
 echo    * BOOT0 pin should be disconnected from VDD
 echo        (NUCLEO-H563ZI: disconnect CN4/pin5 from CN4/pin7)
@@ -289,7 +286,7 @@ if [%1] neq [AUTO] pause >nul
 echo =====
 echo ===== The board is correctly configured.
 if "%isGeneratedByCubeMX%" == "true" goto :no_menu
-echo ===== Connect UART console (11500 baudrate) to get application menu.
+echo ===== Connect UART console (115200 baudrate) to get application menu.
 
 :no_menu
 echo =====

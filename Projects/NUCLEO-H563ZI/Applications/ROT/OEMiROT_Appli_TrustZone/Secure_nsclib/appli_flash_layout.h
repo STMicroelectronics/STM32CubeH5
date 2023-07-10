@@ -26,39 +26,39 @@
 #define MCUBOOT_APP_IMAGE_NUMBER       0x2      /* 1: S and NS application binaries are assembled in one single image.
                                                    2: Two separated images for S and NS application binaries. */
 
-#define MCUBOOT_S_DATA_IMAGE_NUMBER    0x1      /* 1: S data image for S application.
+#define MCUBOOT_S_DATA_IMAGE_NUMBER    0x0      /* 1: S data image for S application.
                                                    0: No S data image. */
 
-#define MCUBOOT_NS_DATA_IMAGE_NUMBER   0x1      /* 1: NS data image for NS application.
+#define MCUBOOT_NS_DATA_IMAGE_NUMBER   0x0      /* 1: NS data image for NS application.
                                                    0: No NS data image. */
 
-#define FLASH_AREA_0_OFFSET            0x12000 /* Secure app image primary slot offset */
+#define FLASH_AREA_0_OFFSET            0x18000 /* Secure app image primary slot offset */
 
 #define FLASH_AREA_0_SIZE              0x6000   /* Secure app image primary slot size */
 
-#define FLASH_AREA_1_OFFSET            0x18000  /* Non-secure app image primary slot offset */
+#define FLASH_AREA_1_OFFSET            0x1E000  /* Non-secure app image primary slot offset */
 
 #define FLASH_AREA_1_SIZE              0xA0000   /* Non-secure app image primary slot size */
 
-#define FLASH_AREA_2_OFFSET            0xBA000  /* Secure app image secondary slot */
+#define FLASH_AREA_2_OFFSET            0xBE000  /* Secure app image secondary slot */
 
 #define FLASH_AREA_2_SIZE              0x6000   /* Secure app image secondary slot size */
 
-#define FLASH_AREA_4_OFFSET            0x10000 /* Secure data image primary slot offset */
+#define FLASH_AREA_4_OFFSET            0x0 /* Secure data image primary slot offset */
 
-#define FLASH_AREA_4_SIZE              0x2000   /* Secure data image primary slot size */
+#define FLASH_AREA_4_SIZE              0x0   /* Secure data image primary slot size */
 
-#define FLASH_AREA_5_OFFSET            0xB8000  /* Non-secure data image primary slot offset */
+#define FLASH_AREA_5_OFFSET            0x0  /* Non-secure data image primary slot offset */
 
-#define FLASH_AREA_5_SIZE              0x2000   /* Non-secure data image primary slot size */
+#define FLASH_AREA_5_SIZE              0x0   /* Non-secure data image primary slot size */
 
-#define FLASH_AREA_6_OFFSET            0x160000 /* Non-secure data image primary slot offset */
+#define FLASH_AREA_6_OFFSET            0x0 /* Non-secure data image primary slot offset */
 
-#define FLASH_AREA_6_SIZE              0x2000   /* Non-secure data image primary slot size */
+#define FLASH_AREA_6_SIZE              0x0   /* Non-secure data image primary slot size */
 
-#define FLASH_AREA_7_OFFSET            0x162000 /* Non-secure data image primary slot offset */
+#define FLASH_AREA_7_OFFSET            0x0 /* Non-secure data image primary slot offset */
 
-#define FLASH_AREA_7_SIZE              0x2000   /* Non-secure data image primary slot size */
+#define FLASH_AREA_7_SIZE              0x0   /* Non-secure data image primary slot size */
 
 #define FLASH_PARTITION_SIZE           0xA6000  /* Secure and Non Secure partition size */
 
@@ -66,9 +66,9 @@
 
 #define FLASH_S_PARTITION_SIZE         0x6000   /* secure partition size */
 
-#define FLASH_S_DATA_PARTITION_SIZE    0x2000   /* secure data partition size */
+#define FLASH_S_DATA_PARTITION_SIZE    0x0   /* secure data partition size */
 
-#define FLASH_NS_DATA_PARTITION_SIZE   0x2000   /* non secure data partition size */
+#define FLASH_NS_DATA_PARTITION_SIZE   0x0   /* non secure data partition size */
 
 #define FLASH_B_SIZE                   0x100000   /* flash bank size: 1 MBytes*/
 

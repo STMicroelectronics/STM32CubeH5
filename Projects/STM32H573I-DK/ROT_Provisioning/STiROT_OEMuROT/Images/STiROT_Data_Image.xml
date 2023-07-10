@@ -74,11 +74,11 @@
 	</Param>
 		<Param>
 		<Name>Data download area offset</Name>
-		<Value>0x81EE000</Value>
+		<Value>0x81E6000</Value>
 		<Type>Data</Type>
 		<Command>-x</Command>
 		<Hidden>1</Hidden>
-		<Default>0x81EE000</Default>
+		<Default>0x81E6000</Default>
 	</Param>
 	<Param>
 		<Name>Data binary input file</Name>

@@ -40,7 +40,7 @@
       <li>A Template project is provided to allow user to quickly build any firmware application on a given board.</li>
     </ul>
 
-    <p>The examples are located under STM32Cube_FW_H5_V1.0.0\Projects\, and all of them have the same structure:</p>
+    <p>The examples are located under STM32Cube_FW_H5_V1.1.0\Projects\, and all of them have the same structure:</p>
 
     <ul>
       <li>\Inc folder that contains all header files.</li>
@@ -74,33 +74,11 @@
 				<td><b>Module Name</b></td>
 				<td><b>Project Name</b></td>
 				<td class="descriptionColumn"><b>Description</b></td>
+				<td>STM32H5_CUSTOM_HW</td>
 				<td>STM32H573I-DK</td>
 				<td>NUCLEO-H563ZI</td>
 				<td>NUCLEO-H503RB</td>
 			</tr>
-      <tr align=center>
-        <td style="background-repeat: no-repeat;background-position: right center;background-color: #39A9DC;color: #FFF;" rowspan=2><p id="Demonstration">Demonstration</p></td>
-        <td align=left rowspan=1><p id="-">-</p></td>
-        <td align=left><p id="Demo">Demo</p></td>
-        <td align=left>
-The STM32Cube demonstration platform comes on top of the STM32Cube as a
-firmware package that offers a full set of software components based on a modular
-architecture. All modules can be reused separately in standalone applications. All 
-these modules are managed by the STM32Cube demonstration kernel that allows to 
-dynamically add new modules and access common resources (storage, memory management,
-real-time operating system). The STM32Cube demonstration platform is built around a 
-basic GUI interface. It is based on the STM32Cube HAL BSP and several middleware components.
-</td>
-        <td><font size="5" color=green>X</font></td>
-        <td>-</td>
-        <td>-</td>
-      </tr>
-      <tr style="background-repeat: no-repeat;background-position: right center;background-color: #39A9DC;color: #FFF;" align=center>
-        <td colspan="3"><b>Total number of demonstration: 1</b></td>
-        <td>1</td>
-        <td>0</td>
-        <td>0</td>
-      </tr>
       <tr align=center>
         <td style="background-repeat: no-repeat;background-position: right center;background-color: #39A9DC;color: #FFF;" rowspan=9><p id="Templates">Templates</p></td>
         <td align=left rowspan=3><p id="-">-</p></td>
@@ -111,6 +89,7 @@ to build any firmware application.
 </td>
         <td>-</td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>X</font></td>
       </tr>
       <tr align=center>
@@ -119,6 +98,7 @@ to build any firmware application.
 - This project provides a reference template based on the STM32Cube HAL API that can be used
 to build any firmware application when security is not enabled (TZEN=C3).  
 </td>
+        <td>-</td>
         <td><font size="5" color=green>X</font></td>
         <td><font size="5" color=green>X</font></td>
         <td>-</td>
@@ -129,6 +109,7 @@ to build any firmware application when security is not enabled (TZEN=C3).
 - This project provides a reference template based on the STM32Cube HAL API that can be used
 to build any firmware application when TrustZone security is activated (TZEN=B4).
 </td>
+        <td>-</td>
         <td><font size="5" color=green>X</font></td>
         <td><font size="5" color=green>X</font></td>
         <td>-</td>
@@ -142,6 +123,7 @@ images.
 </td>
         <td>-</td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>X</font></td>
       </tr>
       <tr align=center>
@@ -150,6 +132,7 @@ images.
 This project provides a OEMiROT boot path reference template. Boot is performed through OEMiROT boot path after authenticity and integrity checks of the project firmware and project data
 images.
 </td>
+        <td>-</td>
         <td><font size="5" color=green>X</font></td>
         <td><font size="5" color=green>X</font></td>
         <td>-</td>
@@ -160,6 +143,7 @@ images.
 This project provides a Secure Manager boot path reference template. Boot is performed through Secure Manager boot path after authenticity and integrity checks of the project firmware
 images.
 </td>
+        <td>-</td>
         <td><font size="5" color=green>X</font></td>
         <td>-</td>
         <td>-</td>
@@ -170,6 +154,7 @@ images.
 This project provides a STiROT boot path reference template. Boot is performed through STiROT boot path after authenticity and the integrity checks of the project firmware and data
 images.
 </td>
+        <td>-</td>
         <td><font size="5" color=green>X</font></td>
         <td>-</td>
         <td>-</td>
@@ -180,15 +165,42 @@ images.
 This project provides a STiROT boot path reference template. Boot is performed through STiROT boot path after authenticity and integrity checks of the project firmware and project data
 images.
 </td>
+        <td>-</td>
         <td><font size="5" color=green>X</font></td>
         <td>-</td>
         <td>-</td>
       </tr>
       <tr style="background-repeat: no-repeat;background-position: right center;background-color: #39A9DC;color: #FFF;" align=center>
         <td colspan="3"><b>Total number of templates: 11</b></td>
+        <td>0</td>
         <td>6</td>
         <td>3</td>
         <td>2</td>
+      </tr>
+      <tr align=center>
+        <td style="background-repeat: no-repeat;background-position: right center;background-color: #39A9DC;color: #FFF;" rowspan=2><p id="Demonstration">Demonstration</p></td>
+        <td align=left rowspan=1><p id="-">-</p></td>
+        <td align=left><p id="Demo">Demo</p></td>
+        <td align=left>
+The STM32Cube demonstration platform comes on top of the STM32Cube as a
+firmware package that offers a full set of software components based on a modular
+architecture. All modules can be reused separately in standalone applications. All 
+these modules are managed by the STM32Cube demonstration kernel that allows to 
+dynamically add new modules and access common resources (storage, memory management,
+real-time operating system). The STM32Cube demonstration platform is built around a 
+basic GUI interface. It is based on the STM32Cube HAL BSP and several middleware components.
+</td>
+        <td>-</td>
+        <td><font size="5" color=green>X</font></td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+      <tr style="background-repeat: no-repeat;background-position: right center;background-color: #39A9DC;color: #FFF;" align=center>
+        <td colspan="3"><b>Total number of demonstration: 1</b></td>
+        <td>0</td>
+        <td>1</td>
+        <td>0</td>
+        <td>0</td>
       </tr>
       <tr align=center>
         <td style="background-repeat: no-repeat;background-position: right center;background-color: #39A9DC;color: #FFF;" rowspan=3><p id="Templates_LL">Templates_LL</p></td>
@@ -200,6 +212,7 @@ to build any firmware application.
 </td>
         <td>-</td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>X</font></td>
       </tr>
       <tr align=center>
@@ -208,23 +221,26 @@ to build any firmware application.
 This projects provides a reference template through the LL API that can be used
 to build any firmware application.
 </td>
+        <td>-</td>
         <td><font size="5" color=green>X</font></td>
         <td><font size="5" color=green>X</font></td>
         <td>-</td>
       </tr>
       <tr style="background-repeat: no-repeat;background-position: right center;background-color: #39A9DC;color: #FFF;" align=center>
         <td colspan="3"><b>Total number of templates_ll: 3</b></td>
+        <td>0</td>
         <td>1</td>
         <td>1</td>
         <td>1</td>
       </tr>
       <tr align=center>
-        <td style="background-repeat: no-repeat;background-position: right center;background-color: #39A9DC;color: #FFF;" rowspan=130><p id="Examples">Examples</p></td>
+        <td style="background-repeat: no-repeat;background-position: right center;background-color: #39A9DC;color: #FFF;" rowspan=139><p id="Examples">Examples</p></td>
         <td align=left rowspan=1><p id="-">-</p></td>
         <td align=left><p id="BSP">BSP</p></td>
         <td align=left>
 How to use the different BSP drivers of the board.
 </td>
+        <td>-</td>
         <td><font size="5" color=green>X</font></td>
         <td>-</td>
         <td>-</td>
@@ -238,6 +254,7 @@ and detect when the corresponding conversion data is outside the window
 thresholds.
 </td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
       </tr>
@@ -248,6 +265,7 @@ How to use an ADC peripheral to perform a single ADC conversion on a channel
 at each software start. Converted data is transferred by DMA
 into a table in RAM memory.
 </td>
+        <td>-</td>
         <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
@@ -260,6 +278,7 @@ conversion performed using programming model: interrupt.
 </td>
         <td>-</td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
       </tr>
       <tr align=center>
@@ -269,6 +288,7 @@ conversion performed using programming model: interrupt.
 This example shows how to configure and use the CEC peripheral to receive and 
 transmit messages.
 </td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
         <td>-</td>
@@ -279,6 +299,7 @@ transmit messages.
 This example shows how to configure and use the CEC peripheral to receive and 
 transmit messages.
 </td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
         <td>-</td>
@@ -293,6 +314,7 @@ regulation upon short current spikes at the beginning of the PWM period.
 </td>
         <td>-</td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
       </tr>
       <tr align=center>
@@ -301,6 +323,7 @@ regulation upon short current spikes at the beginning of the PWM period.
         <td align=left>
 How to use the CORDIC peripheral to calculate array of sines in DMA mode.
 </td>
+        <td>-</td>
         <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
@@ -313,6 +336,7 @@ MPU regions then configures a memory area as privileged read-only, and attempts 
 perform read and write operations in different modes.
 </td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
       </tr>
@@ -323,6 +347,7 @@ How to modify the Thread mode privilege access and stack. Thread mode is entered
 on reset or when returning from an exception.
 </td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
       </tr>
@@ -331,6 +356,7 @@ on reset or when returning from an exception.
         <td align=left>
 How to use the default SysTick configuration with a 1 ms timebase to toggle LEDs.
 </td>
+        <td>-</td>
         <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td><font size="5" color=green>CubeMx</font></td>
@@ -347,6 +373,7 @@ Network, IEC 60870-5[17].
 </td>
         <td>-</td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
       </tr>
       <tr align=center>
@@ -356,6 +383,7 @@ How to configure the CRC using the HAL API. The CRC (cyclic
 redundancy check) calculation unit computes the CRC code of a given buffer of
 32-bit data words, using a fixed generator polynomial (0x4C11DB7).
 </td>
+        <td>-</td>
         <td>-</td>
         <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
@@ -368,6 +396,7 @@ redundancy check) calculation unit computes the 8-bit CRC code for a given
 buffer of 32-bit data words, based on a user-defined generating polynomial.
 </td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
       </tr>
@@ -378,6 +407,7 @@ buffer of 32-bit data words, based on a user-defined generating polynomial.
 How to use the CRYPTO peripheral to encrypt and decrypt data using AES with
 cipher block chaining-message authentication code(CCM).
 </td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
         <td>-</td>
@@ -388,6 +418,7 @@ cipher block chaining-message authentication code(CCM).
 How to use the CRYPTO peripheral to encrypt and decrypt data using AES with
 Galois/Counter mode (GCM).
 </td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
         <td>-</td>
@@ -398,6 +429,7 @@ Galois/Counter mode (GCM).
 How to use the Secure AES co-processor (SAES) peripheral to encrypt and decrypt data
 using AES ECB and CBC algorithms.
 </td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
         <td>-</td>
@@ -408,6 +440,7 @@ using AES ECB and CBC algorithms.
 How to use the Secure AES co-processor (SAES) peripheral to share application keys
 with AES peripheral.
 </td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
         <td>-</td>
@@ -418,6 +451,7 @@ with AES peripheral.
 How to use the Secure AES co-processor (SAES) peripheral to wrap application keys
 using hardware secret key DHUK then use it to encrypt in polling mode.
 </td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
         <td>-</td>
@@ -430,6 +464,7 @@ How to use the DAC peripheral to generate several signals using the DMA
 controller and the DAC internal wave generator.
 </td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
       </tr>
@@ -439,7 +474,19 @@ controller and the DAC internal wave generator.
 How to use the DAC peripheral to do a simple conversion.
 </td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
+        <td>-</td>
+      </tr>
+      <tr align=center>
+        <td align=left rowspan=1><p id="DCACHE">DCACHE</p></td>
+        <td align=left><p id="DCACHE_Maintenance">DCACHE_Maintenance</p></td>
+        <td align=left>
+How to do Data-Cache maintenance on a shared memory buffer accessed by 2 masters (CPU and DMA).
+</td>
+        <td>-</td>
+        <td><font size="5" color=green>CubeMx</font></td>
+        <td>-</td>
         <td>-</td>
       </tr>
       <tr align=center>
@@ -448,6 +495,7 @@ How to use the DAC peripheral to do a simple conversion.
         <td align=left>
 How to use Delay Block (DLYB) with a Fast Tuning.
 </td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
         <td>-</td>
@@ -460,6 +508,7 @@ How to use the DMA Controller to do data handling between transferred data from 
 the destination through the HAL API.
 </td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
       </tr>
@@ -469,6 +518,7 @@ the destination through the HAL API.
 How to use a DMA to transfer a word data buffer from Flash memory to embedded
 SRAM through the HAL API.
 </td>
+        <td>-</td>
         <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td><font size="5" color=green>CubeMx</font></td>
@@ -481,6 +531,7 @@ each time the current transfer ends the DMA automatically reload the next transf
 and starts it (without CPU intervention).
 </td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
       </tr>
@@ -489,6 +540,7 @@ and starts it (without CPU intervention).
         <td align=left>
 How to configure and use the DMA HAL API to perform repeated block transactions.
 </td>
+        <td>-</td>
         <td>-</td>
         <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
@@ -500,6 +552,7 @@ How to configure and use the DMA HAL API to perform DMA triggered transactions.
 </td>
         <td>-</td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
       </tr>
       <tr align=center>
@@ -508,6 +561,17 @@ How to configure and use the DMA HAL API to perform DMA triggered transactions.
         <td align=left>
 How to configure and use the DTS to get the temperature of the die.
 </td>
+        <td>-</td>
+        <td>-</td>
+        <td><font size="5" color=green>CubeMx</font></td>
+        <td>-</td>
+      </tr>
+      <tr align=center>
+        <td align=left rowspan=1><p id="FDCAN">FDCAN</p></td>
+        <td align=left><p id="FDCAN_Loopback">FDCAN_Loopback</p></td>
+        <td align=left>How to configure the FDCAN to operate in loopback mode.
+</td>
+        <td>-</td>
         <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
@@ -518,6 +582,7 @@ How to configure and use the DTS to get the temperature of the die.
         <td align=left>
 How to configure and use the FLASH HAL API to erase and program the FLASH high-cycle data area.
 </td>
+        <td>-</td>
         <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
@@ -531,6 +596,7 @@ At the beginning of the main program the HAL_Init() function is called to reset
 all the peripherals, initialize the Flash interface and the systick.
 </td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td><font size="5" color=green>CubeMx</font></td>
       </tr>
@@ -541,6 +607,7 @@ How to configure and use the FLASH HAL API to erase and program the internal
 Flash memory when TrustZone security is activated **(Option bit TZEN=B4)**.
 </td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
       </tr>
@@ -549,6 +616,7 @@ Flash memory when TrustZone security is activated **(Option bit TZEN=B4)**.
         <td align=left>
 How to configure and use the FLASH HAL API to erase and program the FLASH OBKeys: secure key storage area.
 </td>
+        <td>-</td>
         <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
@@ -561,6 +629,7 @@ Guide through the configuration steps to program internal Flash memory bank 1
 and bank 2, and to swap between both of them by mean of the FLASH HAL API.
 </td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>X</font></td>
         <td>-</td>
       </tr>
@@ -571,7 +640,29 @@ and bank 2, and to swap between both of them by mean of the FLASH HAL API.
 How to use the FMAC peripheral to perform an IIR filter from polling mode to DMA mode.
 </td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
+        <td>-</td>
+      </tr>
+      <tr align=center>
+        <td align=left rowspan=2><p id="FMC">FMC</p></td>
+        <td align=left><p id="FMC_NOR">FMC_NOR</p></td>
+        <td align=left>
+This example describes how to configure the FMC controller to access the NOR memory..
+</td>
+        <td><font size="5" color=green>CubeMx</font></td>
+        <td>-</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+      <tr align=center>
+        <td align=left><p id="FMC_SRAM">FMC_SRAM</p></td>
+        <td align=left>
+This example describes how to configure the FMC controller to access the SRAM memory.
+</td>
+        <td><font size="5" color=green>CubeMx</font></td>
+        <td>-</td>
+        <td>-</td>
         <td>-</td>
       </tr>
       <tr align=center>
@@ -581,6 +672,7 @@ How to use the FMAC peripheral to perform an IIR filter from polling mode to DMA
 How to configure external interrupt lines.
 </td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
       </tr>
@@ -589,6 +681,7 @@ How to configure external interrupt lines.
         <td align=left>
 How to configure and use GPIOs through the HAL API.
 </td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td><font size="5" color=green>CubeMx</font></td>
@@ -599,6 +692,7 @@ How to configure and use GPIOs through the HAL API.
 How to use HAL GPIO to toggle secure and unsecure IOs when TrustZone security is activated (Option bit TZEN=B4).
 </td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
       </tr>
@@ -608,6 +702,7 @@ How to use HAL GPIO to toggle secure and unsecure IOs when TrustZone security is
         <td align=left>
 - How to use GTZC MPCWM-TZIC to build any example when TrustZone security is activated **(Option bit TZEN=0xB4)**.
 </td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
         <td>-</td>
@@ -617,6 +712,7 @@ How to use HAL GPIO to toggle secure and unsecure IOs when TrustZone security is
         <td align=left>
 How to use HAL GTZC MPCBB to build any example with illegal Access detection when TrustZone security is activated **(Option bit TZEN=B4)**.
 </td>
+        <td>-</td>
         <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
@@ -629,6 +725,7 @@ How to customize HAL using RTC alarm as main source of time base,
 instead of Systick.
 </td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
       </tr>
@@ -638,6 +735,7 @@ instead of Systick.
 How to customize HAL using RTC wakeup as main source of time base, 
 instead of Systick.
 </td>
+        <td>-</td>
         <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
@@ -649,6 +747,7 @@ How to customize HAL using a general-purpose timer as main source of time base
 instead of Systick.
 </td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
       </tr>
@@ -659,6 +758,7 @@ instead of Systick.
 hash data using long key and SHA_384 Algorithm.
 </td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
       </tr>
@@ -667,6 +767,7 @@ hash data using long key and SHA_384 Algorithm.
         <td align=left>This example provides a short description of how to use the HASH peripheral to 
 hash data using long Key and SHA_512 Algorithm.
 </td>
+        <td>-</td>
         <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
@@ -678,6 +779,7 @@ This example provides a short description of how to use the HASH peripheral to
 hash data using SHA_256 Algorithm.
 </td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
       </tr>
@@ -687,6 +789,7 @@ hash data using SHA_256 Algorithm.
 This example provides a short description of how to use the HASH peripheral to 
 hash data using SHA_384 Algorithm.
 </td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
@@ -697,6 +800,7 @@ hash data using SHA_384 Algorithm.
 This example provides a short description of how to use the HASH peripheral to 
 hash data using SHA512 Algorithms.
 </td>
+        <td>-</td>
         <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
@@ -710,6 +814,7 @@ a master and a slave device, using an interrupt.
 </td>
         <td>-</td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
       </tr>
       <tr align=center>
@@ -717,6 +822,7 @@ a master and a slave device, using an interrupt.
         <td align=left>
 How to handle I2C data buffer transmission/reception between two boards via DMA.
 </td>
+        <td>-</td>
         <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
@@ -729,6 +835,7 @@ using an interrupt.
 </td>
         <td>-</td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
       </tr>
       <tr align=center>
@@ -737,6 +844,7 @@ using an interrupt.
 How to handle I2C data buffer transmission/reception between two boards, 
 in polling mode.
 </td>
+        <td>-</td>
         <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
@@ -747,6 +855,7 @@ in polling mode.
 How to perform multiple I2C data buffer transmission/reception between two boards, 
 in interrupt mode and with restart condition.
 </td>
+        <td>-</td>
         <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
@@ -759,6 +868,7 @@ in interrupt mode and with restart condition.
 </td>
         <td>-</td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
       </tr>
       <tr align=center>
@@ -768,16 +878,18 @@ How to handle I2C data buffer transmission/reception between two boards,
 using an interrupt when the device is in Stop mode.
 </td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
       </tr>
       <tr align=center>
-        <td align=left rowspan=16><p id="I3C">I3C</p></td>
+        <td align=left rowspan=20><p id="I3C">I3C</p></td>
         <td align=left><p id="I3C_Controller_Direct_Command_DMA">I3C_Controller_Direct_Command_DMA</p></td>
         <td align=left>
 How to handle a Direct Command procedure between an I3C Controller and an I3C Target,
 using DMA.
 </td>
+        <td>-</td>
         <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
@@ -787,6 +899,7 @@ using DMA.
         <td align=left>
 How to handle an ENTDAA procedure between an I3C Controller and two I3C Targets.
 </td>
+        <td>-</td>
         <td>-</td>
         <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
@@ -803,6 +916,7 @@ How to handle an ENTDAA procedure between an I3C Controller and two I3C Targets.
       mean one GND twist around SCL and one GND twist around SDA to help communication at 12.5Mhz.
 </td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
       </tr>
@@ -813,7 +927,24 @@ How to handle I2C communication as I3C Controller data buffer transmission/recep
 </td>
         <td>-</td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
+      </tr>
+      <tr align=center>
+        <td align=left><p id="I3C_Controller_IBI_Wakeup_IT">I3C_Controller_IBI_Wakeup_IT</p></td>
+        <td align=left>How to handle an In-Band-Interrupt event between an I3C Controller in Low Power Mode and I3C Targets
+
+      - Board: NUCLEO-H563ZI's (embeds a STM32H563ZI device)
+      - SCL Pin: PB8 (Arduino SCL/D15 CN6 pin 2, Morpho CN5 pin3)
+      - SDA Pin: PB9 (Arduino SDA/D14 CN6 pin 4, Morpho CN5 pin5)
+      Connect GND between each board
+      Use short wire as possible between the boards or twist an independent ground wire on each I3C lines
+      mean one GND twist around SCL and one GND twist around SDA to help communication at 12.5Mhz.
+</td>
+        <td>-</td>
+        <td>-</td>
+        <td><font size="5" color=green>CubeMx</font></td>
+        <td>-</td>
       </tr>
       <tr align=center>
         <td align=left><p id="I3C_Controller_InBandInterrupt_IT">I3C_Controller_InBandInterrupt_IT</p></td>
@@ -828,6 +959,7 @@ How to handle I2C communication as I3C Controller data buffer transmission/recep
 </td>
         <td>-</td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
       </tr>
       <tr align=center>
@@ -835,6 +967,7 @@ How to handle I2C communication as I3C Controller data buffer transmission/recep
         <td align=left>
 How to handle I3C as Controller data buffer transmission/reception between two boards, using interrupt.
 </td>
+        <td>-</td>
         <td>-</td>
         <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
@@ -845,6 +978,7 @@ How to handle I3C as Controller data buffer transmission/reception between two b
 How to handle a Controller Role Request Direct Command procedure between an I3C Controller and an I3C Target,
 using Interrupt.
 </td>
+        <td>-</td>
         <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
@@ -857,6 +991,29 @@ using interrupt.
 </td>
         <td>-</td>
         <td>-</td>
+        <td>-</td>
+        <td><font size="5" color=green>CubeMx</font></td>
+      </tr>
+      <tr align=center>
+        <td align=left><p id="I3C_Sensor_Direct_Command_DMA">I3C_Sensor_Direct_Command_DMA</p></td>
+        <td align=left>
+How to handle a Direct Command procedure between STM32H5xx Nucleo and X-NUCLEO-IKS01A3,
+using DMA.
+</td>
+        <td>-</td>
+        <td>-</td>
+        <td>-</td>
+        <td><font size="5" color=green>CubeMx</font></td>
+      </tr>
+      <tr align=center>
+        <td align=left><p id="I3C_Sensor_Private_Command_IT">I3C_Sensor_Private_Command_IT</p></td>
+        <td align=left>
+How to handle I3C as Controller data buffer transmission/reception between STM32H5xx Nucleo and X-NUCLEO-IKS01A3,
+using interrupt.
+</td>
+        <td>-</td>
+        <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
       </tr>
       <tr align=center>
@@ -866,6 +1023,7 @@ How to handle a Direct Command procedure between an I3C Controller and an I3C Ta
 using Controller in DMA.
 </td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
       </tr>
@@ -874,6 +1032,7 @@ using Controller in DMA.
         <td align=left>
 How to handle an ENTDAA procedure between an I3C Controller and two I3C Targets.
 </td>
+        <td>-</td>
         <td>-</td>
         <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
@@ -890,6 +1049,7 @@ How to handle an ENTDAA procedure between an I3C Controller and two I3C Targets.
       mean one GND twist around SCL and one GND twist around SDA to help communication at 12.5Mhz.
 </td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
       </tr>
@@ -901,7 +1061,24 @@ using an interrupt.
 </td>
         <td>-</td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
+      </tr>
+      <tr align=center>
+        <td align=left><p id="I3C_Target_IBI_Wakeup_IT">I3C_Target_IBI_Wakeup_IT</p></td>
+        <td align=left>How to handle a In Band Interrupt procedure to an I3C Controller in Stop Mode
+
+      - Board: NUCLEO-H563ZI's (embeds a STM32H563ZI device)
+      - SCL Pin: PB8 (Arduino SCL/D15 CN6 pin 2, Morpho CN5 pin3)
+      - SDA Pin: PB9 (Arduino SDA/D14 CN6 pin 4, Morpho CN5 pin5)
+      Connect GND between each board
+      Use short wire as possible between the boards or twist an independent ground wire on each I3C lines
+      mean one GND twist around SCL and one GND twist around SDA to help communication at 12.5Mhz.
+</td>
+        <td>-</td>
+        <td>-</td>
+        <td><font size="5" color=green>CubeMx</font></td>
+        <td>-</td>
       </tr>
       <tr align=center>
         <td align=left><p id="I3C_Target_InBandInterrupt_IT">I3C_Target_InBandInterrupt_IT</p></td>
@@ -916,6 +1093,7 @@ using an interrupt.
 </td>
         <td>-</td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
       </tr>
       <tr align=center>
@@ -923,6 +1101,7 @@ using an interrupt.
         <td align=left>
 How to handle I3C as Target data buffer transmission/reception between two boards, using interrupt.
 </td>
+        <td>-</td>
         <td>-</td>
         <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
@@ -939,6 +1118,7 @@ How to handle I3C as Target data buffer transmission/reception between two board
       mean one GND twist around SCL and one GND twist around SDA to help communication at 12.5Mhz.
 </td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
       </tr>
@@ -950,7 +1130,19 @@ using interrupt.
 </td>
         <td>-</td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
+      </tr>
+      <tr align=center>
+        <td align=left rowspan=1><p id="ICACHE">ICACHE</p></td>
+        <td align=left><p id="ICACHE_External_Memory_Remap">ICACHE_External_Memory_Remap</p></td>
+        <td align=left>
+How to execute code from an external Flash remapped region configured through the ICACHE HAL driver.
+</td>
+        <td>-</td>
+        <td><font size="5" color=green>CubeMx</font></td>
+        <td>-</td>
+        <td>-</td>
       </tr>
       <tr align=center>
         <td align=left rowspan=2><p id="IWDG">IWDG</p></td>
@@ -959,6 +1151,7 @@ using interrupt.
 How to handle the IWDG reload counter and simulate a software fault that generates
 an MCU IWDG reset after a preset laps of time.
 </td>
+        <td>-</td>
         <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
@@ -971,6 +1164,7 @@ an MCU IWDG reset after a preset laps of time.
 </td>
         <td>-</td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
       </tr>
       <tr align=center>
@@ -981,6 +1175,7 @@ How to configure and use, through the HAL LPTIM API, the LPTIM peripheral using 
 as counter clock, to generate a PWM signal, in a low-power mode.
 </td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
       </tr>
@@ -990,6 +1185,7 @@ as counter clock, to generate a PWM signal, in a low-power mode.
         <td align=left>
 How to use an OSPI NOR memory in Automatic polling mode.
 </td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
         <td>-</td>
@@ -999,6 +1195,7 @@ How to use an OSPI NOR memory in Automatic polling mode.
         <td align=left>
 How to use a OSPI NOR memory in memory-mapped mode.
 </td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
         <td>-</td>
@@ -1008,6 +1205,7 @@ How to use a OSPI NOR memory in memory-mapped mode.
         <td align=left>
 How to use a OSPI NOR memory in DMA mode.
 </td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
         <td>-</td>
@@ -1019,6 +1217,7 @@ How to use a OSPI NOR memory in DMA mode.
 How to configure the OPAMP peripheral in follower mode interconnected
 with DAC and COMP.
 </td>
+        <td>-</td>
         <td>-</td>
         <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
@@ -1033,6 +1232,7 @@ The leds of the STM32H573I-DK board are used to monitor the status as following:
 
 - LED_GREEN is ON when the checked data is correct.
 </td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
         <td>-</td>
@@ -1045,6 +1245,7 @@ How to use the PKA to run ECC Double Base Ladder operation
 
 This project is targeted to run on STM32H573IIKxQ devices on STM32H573I-DK board from STMicroelectronics.
 </td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
         <td>-</td>
@@ -1056,6 +1257,7 @@ How to use the PKA to run ECC Projective to Affine operation
 
 This project is targeted to run on STM32H573IIKxQ devices on STM32H573I-DK board from STMicroelectronics.
 </td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
         <td>-</td>
@@ -1066,6 +1268,7 @@ This project is targeted to run on STM32H573IIKxQ devices on STM32H573I-DK board
 How to compute a signed message regarding the Elliptic curve digital signature algorithm
 (ECDSA).
 </td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
         <td>-</td>
@@ -1076,6 +1279,7 @@ How to compute a signed message regarding the Elliptic curve digital signature a
 How to use the PKA peripheral to execute modular exponentiation. This 
 allows ciphering/deciphering a text in interrupt mode.
 </td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
         <td>-</td>
@@ -1087,6 +1291,7 @@ allows ciphering/deciphering a text in interrupt mode.
 How to Use the Standby IO Retention.
 </td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
       </tr>
@@ -1097,6 +1302,7 @@ How to enter the system to different available low power modes and wake up from
 these modes by using an interrupt from RTC wakeup timer.
 </td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
       </tr>
@@ -1105,6 +1311,7 @@ these modes by using an interrupt from RTC wakeup timer.
         <td align=left>
 How to enter the Sleep mode and wake up from this mode by using an interrupt.
 </td>
+        <td>-</td>
         <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
@@ -1116,6 +1323,7 @@ How to enter the Standby mode and wake up from this mode by using an external
 reset or the WKUP pin.
 </td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td><font size="5" color=green>CubeMx</font></td>
       </tr>
@@ -1125,6 +1333,7 @@ reset or the WKUP pin.
 How to enter the Standby mode and wake-up from this mode by using an external 
 reset or the RTC wakeup timer.
 </td>
+        <td>-</td>
         <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td><font size="5" color=green>CubeMx</font></td>
@@ -1136,6 +1345,7 @@ reset or the RTC wakeup timer.
 How to configure and use the RAMCFG HAL API to manage ECC errors via RAMCFG peripheral.
 </td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
       </tr>
@@ -1145,6 +1355,7 @@ How to configure and use the RAMCFG HAL API to manage ECC errors via RAMCFG peri
 How to configure and use the RAMCFG HAL API to configure RAMCFG SRAM write
 protection page.
 </td>
+        <td>-</td>
         <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td><font size="5" color=green>CubeMx</font></td>
@@ -1156,6 +1367,7 @@ protection page.
 Configuration of the clock recovery system (CRS) in Interrupt mode, using the RCC/CRS HAL APIs.
 </td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
       </tr>
@@ -1163,6 +1375,7 @@ Configuration of the clock recovery system (CRS) in Interrupt mode, using the RC
         <td align=left><p id="RCC_CRS_Synchronization_Polling">RCC_CRS_Synchronization_Polling</p></td>
         <td align=left>Configuration of the clock recovery system (CRS) in Polling mode, using the RCC HAL API.
 </td>
+        <td>-</td>
         <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
@@ -1172,6 +1385,7 @@ Configuration of the clock recovery system (CRS) in Interrupt mode, using the RC
         <td align=left>
 Configuration of the system clock (SYSCLK) and modification of the clock settings in Run mode, using the RCC HAL API.
 </td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td><font size="5" color=green>CubeMx</font></td>
@@ -1183,6 +1397,7 @@ Enabling/disabling of the low-speed external(LSE) RC oscillator (about 32 KHz) a
 </td>
         <td>-</td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
       </tr>
       <tr align=center>
@@ -1190,6 +1405,7 @@ Enabling/disabling of the low-speed external(LSE) RC oscillator (about 32 KHz) a
         <td align=left>
 How to enable/disable the low-speed internal (LSI) RC oscillator (about 32 KHz) at run time, using the RCC HAL API.
 </td>
+        <td>-</td>
         <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
@@ -1201,6 +1417,7 @@ How to enable/disable the low-speed internal (LSI) RC oscillator (about 32 KHz) 
 Configuration of the RNG using the HAL API. This example uses the RNG to generate 32-bit long random numbers.
 </td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
       </tr>
@@ -1209,6 +1426,7 @@ Configuration of the RNG using the HAL API. This example uses the RNG to generat
         <td align=left>
 Configuration of the RNG using the HAL API. This example uses RNG interrupts to generate 32-bit long random numbers.
 </td>
+        <td>-</td>
         <td>-</td>
         <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
@@ -1220,6 +1438,7 @@ Configuration of the RNG using the HAL API. This example uses RNG interrupts to 
 Configuration of the active tamper detection with backup registers erase.
 </td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
       </tr>
@@ -1229,6 +1448,7 @@ Configuration of the active tamper detection with backup registers erase.
 Configuration and generation of an RTC alarm using the RTC HAL API.
 </td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
       </tr>
@@ -1237,6 +1457,7 @@ Configuration and generation of an RTC alarm using the RTC HAL API.
         <td align=left>
 Configuration of the calendar using the RTC HAL API.
 </td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
         <td>-</td>
@@ -1247,6 +1468,7 @@ Configuration of the calendar using the RTC HAL API.
 Use of the LSI clock source autocalibration to get a precise RTC clock. 
 </td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
       </tr>
@@ -1255,6 +1477,7 @@ Use of the LSI clock source autocalibration to get a precise RTC clock.
         <td align=left>
 How to periodically enter and wake up from STANDBY mode thanks to the RTC Wake-Up Timer (WUT).
 </td>
+        <td>-</td>
         <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
@@ -1266,6 +1489,7 @@ Configuration of the tamper detection with backup registers erase.
 </td>
         <td>-</td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
       </tr>
       <tr align=center>
@@ -1273,6 +1497,7 @@ Configuration of the tamper detection with backup registers erase.
         <td align=left>
 Configuration of the RTC HAL API to demonstrate the timestamp feature.
 </td>
+        <td>-</td>
         <td>-</td>
         <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
@@ -1284,6 +1509,7 @@ How to configure the TrustZone-aware RTC peripheral when TrustZone security is a
 of the RTC can be secure while the others are non-secure.
 </td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
       </tr>
@@ -1294,6 +1520,7 @@ of the RTC can be secure while the others are non-secure.
 This example shows how to use the SAI HAL API to play an audio file using the DMA
 circular mode and how to handle the buffer update.
 </td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
         <td>-</td>
@@ -1305,6 +1532,7 @@ circular mode and how to handle the buffer update.
 This example performs some write and read transfers to SD Card with SDMMC IP internal
 DMA mode based on Linked list feature.
 </td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
         <td>-</td>
@@ -1318,6 +1546,7 @@ in interrupt mode.
 </td>
         <td>-</td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
       </tr>
       <tr align=center>
@@ -1326,6 +1555,7 @@ in interrupt mode.
 How to handle SMBUS data buffer transmission/reception between two boards,
 in interrupt mode.
 </td>
+        <td>-</td>
         <td>-</td>
         <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
@@ -1338,6 +1568,7 @@ Data buffer transmission/reception between two boards via SPI using DMA.
 </td>
         <td>-</td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
       </tr>
       <tr align=center>
@@ -1345,6 +1576,7 @@ Data buffer transmission/reception between two boards via SPI using DMA.
         <td align=left>
 Data buffer transmission/reception between two boards via SPI using DMA.
 </td>
+        <td>-</td>
         <td>-</td>
         <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
@@ -1355,6 +1587,7 @@ Data buffer transmission/reception between two boards via SPI using DMA.
 Data buffer transmission/reception between two boards via SPI using Interrupt mode.
 </td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
       </tr>
@@ -1363,6 +1596,7 @@ Data buffer transmission/reception between two boards via SPI using Interrupt mo
         <td align=left>
 Data buffer transmission/reception between two boards via SPI using Interrupt mode.
 </td>
+        <td>-</td>
         <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
@@ -1374,6 +1608,7 @@ Data buffer transmission/reception between two boards via SPI using Polling mode
 </td>
         <td>-</td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
       </tr>
       <tr align=center>
@@ -1381,6 +1616,7 @@ Data buffer transmission/reception between two boards via SPI using Polling mode
         <td align=left>
 Data buffer transmission/reception between two boards via SPI using Polling mode.
 </td>
+        <td>-</td>
         <td>-</td>
         <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
@@ -1391,6 +1627,7 @@ Data buffer transmission/reception between two boards via SPI using Polling mode
         <td align=left>
 How to use the TIM peripheral to measure an external signal frequency.
 </td>
+        <td>-</td>
         <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
@@ -1403,6 +1640,7 @@ Configuration of the TIM peripheral in Output Compare Active mode
 pin is set to its active state).
 </td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
       </tr>
@@ -1412,6 +1650,7 @@ pin is set to its active state).
 Configuration of the TIM peripheral in Output Compare Inactive mode 
 with the corresponding Interrupt requests for each channel.
 </td>
+        <td>-</td>
         <td>-</td>
         <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
@@ -1424,6 +1663,7 @@ signals at four different frequencies.
 </td>
         <td>-</td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
       </tr>
       <tr align=center>
@@ -1432,6 +1672,7 @@ signals at four different frequencies.
 How to use the TIM peripheral to measure the frequency and 
 duty cycle of an external signal.
 </td>
+        <td>-</td>
         <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
@@ -1442,6 +1683,7 @@ duty cycle of an external signal.
 This example shows how to configure the TIM peripheral in PWM (Pulse Width Modulation) 
 mode.
 </td>
+        <td>-</td>
         <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
@@ -1454,6 +1696,7 @@ Re-routing of the C library printf function to the UART.
 </td>
         <td>-</td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
       </tr>
       <tr align=center>
@@ -1461,6 +1704,7 @@ Re-routing of the C library printf function to the UART.
         <td align=left>
 How to use the HAL UART API for reception to IDLE event in circular DMA mode.
 </td>
+        <td>-</td>
         <td>-</td>
         <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
@@ -1473,6 +1717,7 @@ between two boards.
 </td>
         <td>-</td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
       </tr>
       <tr align=center>
@@ -1480,6 +1725,7 @@ between two boards.
         <td align=left>
 UART transmission (transmit/receive) in DMA mode using linkedlist between two boards.
 </td>
+        <td>-</td>
         <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
@@ -1491,6 +1737,7 @@ UART transmission (transmit/receive) in Interrupt mode between two boards.
 </td>
         <td>-</td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
       </tr>
       <tr align=center>
@@ -1499,6 +1746,7 @@ UART transmission (transmit/receive) in Interrupt mode between two boards.
 UART transmission (transmit/receive) in Polling mode 
 between two boards.
 </td>
+        <td>-</td>
         <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
@@ -1512,6 +1760,7 @@ boards where the USART is configured as a slave.
 </td>
         <td>-</td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
       </tr>
       <tr align=center>
@@ -1520,6 +1769,7 @@ boards where the USART is configured as a slave.
 This example describes an USART-SPI communication (transmit/receive) with DMA between two
 boards where the USART is configured as a slave.
 </td>
+        <td>-</td>
         <td>-</td>
         <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
@@ -1533,16 +1783,18 @@ generates an MCU WWDG reset when a predefined time period has elapsed.
 </td>
         <td>-</td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
       </tr>
       <tr style="background-repeat: no-repeat;background-position: right center;background-color: #39A9DC;color: #FFF;" align=center>
-        <td colspan="3"><b>Total number of examples: 140</b></td>
-        <td>24</td>
-        <td>68</td>
-        <td>48</td>
+        <td colspan="3"><b>Total number of examples: 149</b></td>
+        <td>2</td>
+        <td>26</td>
+        <td>71</td>
+        <td>50</td>
       </tr>
       <tr align=center>
-        <td style="background-repeat: no-repeat;background-position: right center;background-color: #39A9DC;color: #FFF;" rowspan=64><p id="Examples_LL">Examples_LL</p></td>
+        <td style="background-repeat: no-repeat;background-position: right center;background-color: #39A9DC;color: #FFF;" rowspan=65><p id="Examples_LL">Examples_LL</p></td>
         <td align=left rowspan=4><p id="ADC">ADC</p></td>
         <td align=left><p id="ADC_AnalogWatchdog_Init">ADC_AnalogWatchdog_Init</p></td>
         <td align=left>
@@ -1550,6 +1802,7 @@ How to use an ADC peripheral with an ADC analog watchdog to monitor a channel
 and detect when the corresponding conversion data is outside the window
 thresholds.
 </td>
+        <td>-</td>
         <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
@@ -1561,6 +1814,7 @@ How to use an ADC peripheral with oversampling.
 </td>
         <td>-</td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
       </tr>
       <tr align=center>
@@ -1569,6 +1823,7 @@ How to use an ADC peripheral with oversampling.
 How to use ADC to convert a single channel at each SW start,
 conversion performed using programming model: interrupt.
 </td>
+        <td>-</td>
         <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
@@ -1579,6 +1834,7 @@ conversion performed using programming model: interrupt.
 How to use ADC to convert a single channel at each SW start,
 conversion performed using programming model: polling.
 </td>
+        <td>-</td>
         <td>-</td>
         <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
@@ -1592,6 +1848,7 @@ a GPIO pin to the the internal voltage reference (VrefInt), in interrupt mode.
 </td>
         <td>-</td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
       </tr>
       <tr align=center>
@@ -1601,6 +1858,7 @@ a GPIO pin to the the internal voltage reference (VrefInt), in interrupt mode.
 MPU regions then configures a memory area as privileged read-only, and attempts to
 perform read and write operations in different modes.
 </td>
+        <td>-</td>
         <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td><font size="5" color=green>CubeMx</font></td>
@@ -1615,6 +1873,7 @@ peripheral initialization is done using LL unitary service functions for
 optimization purposes (performance and size).
 </td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
       </tr>
@@ -1628,6 +1887,7 @@ optimization purposes (performance and size).
 </td>
         <td>-</td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
       </tr>
       <tr align=center>
@@ -1637,6 +1897,7 @@ optimization purposes (performance and size).
 STM32H5xx CRS LL API. The peripheral initialization uses LL unitary
 service functions for optimization purposes (performance and size).
 </td>
+        <td>-</td>
         <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
@@ -1649,6 +1910,7 @@ service functions for optimization purposes (performance and size).
 </td>
         <td>-</td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
       </tr>
       <tr align=center>
@@ -1659,6 +1921,7 @@ How to use a DMA channel to transfer a word data buffer
 from Flash memory to embedded SRAM. The peripheral initialization uses LL
 initialization functions to demonstrate LL init usage.
 </td>
+        <td>-</td>
         <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td><font size="5" color=green>CubeMx</font></td>
@@ -1675,6 +1938,7 @@ initialization function to demonstrate LL init usage.
 </td>
         <td>-</td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
       </tr>
       <tr align=center>
@@ -1686,17 +1950,31 @@ every 250 ms. This example is based on the STM32H5xx LL API. The peripheral
 is initialized with LL initialization function to demonstrate LL init usage.
 </td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
       </tr>
       <tr align=center>
-        <td align=left rowspan=6><p id="I2C">I2C</p></td>
+        <td align=left rowspan=7><p id="I2C">I2C</p></td>
+        <td align=left><p id="I2C_OneBoard_AdvCommunication_DMAAndIT_Init">I2C_OneBoard_AdvCommunication_DMAAndIT_Init</p></td>
+        <td align=left>
+How to exchange data between an I2C master device in DMA mode and an I2C slave
+device in interrupt mode. The peripheral is initialized with LL unitary service
+functions to optimize for performance and size.
+</td>
+        <td>-</td>
+        <td>-</td>
+        <td><font size="5" color=green>CubeMx</font></td>
+        <td>-</td>
+      </tr>
+      <tr align=center>
         <td align=left><p id="I2C_OneBoard_Communication_DMAAndIT_Init">I2C_OneBoard_Communication_DMAAndIT_Init</p></td>
         <td align=left>
 How to transmit data bytes from an I2C master device using DMA mode
 to an I2C slave device using interrupt mode. The peripheral is initialized with
 LL unitary service functions to optimize for performance and size.
 </td>
+        <td>-</td>
         <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
@@ -1709,6 +1987,7 @@ by an I2C master device. Both devices operate in interrupt mode. The peripheral 
 with LL initialization function to demonstrate LL init usage.
 </td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
       </tr>
@@ -1719,6 +1998,7 @@ How to transmit data bytes from an I2C master device using polling mode
 to an I2C slave device using interrupt mode. The peripheral is initialized
 with LL unitary service functions to optimize for performance and size.
 </td>
+        <td>-</td>
         <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
@@ -1733,6 +2013,7 @@ and size.
 </td>
         <td>-</td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
       </tr>
       <tr align=center>
@@ -1742,6 +2023,7 @@ How to transmit data bytes from an I2C master device using DMA mode
 to an I2C slave device using DMA mode. The peripheral is initialized
 with LL unitary service functions to optimize for performance and size.
 </td>
+        <td>-</td>
         <td>-</td>
         <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
@@ -1755,6 +2037,7 @@ with LL unitary service functions to optimize for performance and size.
 </td>
         <td>-</td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
       </tr>
       <tr align=center>
@@ -1766,6 +2049,7 @@ using IT.
 </td>
         <td>-</td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
       </tr>
       <tr align=center>
@@ -1774,6 +2058,7 @@ using IT.
 How to handle a Direct Command procedure between an I3C Controller and an I3C Target,
 using DMA.
 </td>
+        <td>-</td>
         <td>-</td>
         <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
@@ -1791,6 +2076,7 @@ using DMA.
 </td>
         <td>-</td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
       </tr>
       <tr align=center>
@@ -1805,6 +2091,7 @@ using DMA.
       mean one GND twist around SCL and one GND twist around SDA to help communication at 12.5Mhz.
 </td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
       </tr>
@@ -1814,6 +2101,7 @@ using DMA.
 How to handle I3C as Controller data buffer transmission/reception between two boards, using interrupt.
 </td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
       </tr>
@@ -1822,6 +2110,7 @@ How to handle I3C as Controller data buffer transmission/reception between two b
         <td align=left>
 How to handle I3C as Controller data buffer transmission/reception between a Target in Stop Mode, using interrupt.
 </td>
+        <td>-</td>
         <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
@@ -1834,6 +2123,7 @@ using Controller in Interrupt.
 </td>
         <td>-</td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
       </tr>
       <tr align=center>
@@ -1842,6 +2132,7 @@ using Controller in Interrupt.
 How to handle a Direct Command procedure between an I3C Controller and an I3C Target,
 using Controller in Polling.
 </td>
+        <td>-</td>
         <td>-</td>
         <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
@@ -1859,6 +2150,7 @@ using Controller in Polling.
 </td>
         <td>-</td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
       </tr>
       <tr align=center>
@@ -1873,6 +2165,7 @@ using Controller in Polling.
       mean one GND twist around SCL and one GND twist around SDA to help communication at 12.5Mhz.
 </td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
       </tr>
@@ -1882,6 +2175,7 @@ using Controller in Polling.
 How to handle I3C as Target data buffer transmission/reception between two boards, using interrupt.
 </td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
       </tr>
@@ -1890,6 +2184,7 @@ How to handle I3C as Target data buffer transmission/reception between two board
         <td align=left>
 How to handle I3C as Target data buffer transmission/reception between two boards, using interrupt.
 </td>
+        <td>-</td>
         <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
@@ -1903,6 +2198,7 @@ generate an MCU IWDG reset when a USER push-button is pressed. The peripheral
 is initialized with LL unitary service functions to optimize
 for performance and size.
 </td>
+        <td>-</td>
         <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
@@ -1918,6 +2214,7 @@ function to demonstrate LL init usage.
 </td>
         <td>-</td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
       </tr>
       <tr align=center>
@@ -1931,6 +2228,7 @@ initialization function to demonstrate LL init usage.
 </td>
         <td>-</td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
       </tr>
       <tr align=center>
@@ -1941,6 +2239,7 @@ How to enter the Standby mode and wake up from this mode by using an external
 reset or a wakeup pin.
 </td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
       </tr>
@@ -1949,6 +2248,7 @@ reset or a wakeup pin.
         <td align=left>
 How to enter the Stop mode.
 </td>
+        <td>-</td>
         <td>-</td>
         <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
@@ -1961,6 +2261,7 @@ Configuration of MCO pin (PA8) to output the system clock.
 </td>
         <td>-</td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
       </tr>
       <tr align=center>
@@ -1968,6 +2269,7 @@ Configuration of MCO pin (PA8) to output the system clock.
         <td align=left>
 Use of the RCC LL API to start the HSE and use it as system clock.
 </td>
+        <td>-</td>
         <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
@@ -1977,6 +2279,7 @@ Use of the RCC LL API to start the HSE and use it as system clock.
         <td align=left>
 Modification of the PLL parameters in run time.
 </td>
+        <td>-</td>
         <td>-</td>
         <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
@@ -1990,6 +2293,7 @@ initialization uses the LL initialization function.
 </td>
         <td>-</td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
       </tr>
       <tr align=center>
@@ -1999,6 +2303,7 @@ Configuration of the LL API to set the RTC calendar. The peripheral initializati
 functions for optimization purposes (performance and size).
 </td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
       </tr>
@@ -2007,6 +2312,7 @@ functions for optimization purposes (performance and size).
         <td align=left>
 How to periodically enter and wake up from STANDBY mode thanks to the RTC Wakeup Timer (WUT).
 </td>
+        <td>-</td>
         <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
@@ -2019,6 +2325,7 @@ uses LL unitary service functions for optimization purposes (performance and siz
 </td>
         <td>-</td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
       </tr>
       <tr align=center>
@@ -2027,6 +2334,7 @@ uses LL unitary service functions for optimization purposes (performance and siz
 Configuration of the Timestamp using the RTC LL API. The peripheral initialization
 uses LL unitary service functions for optimization purposes (performance and size).
 </td>
+        <td>-</td>
         <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
@@ -2041,6 +2349,7 @@ is based on the STM32H5xx SPI LL API. The peripheral initialization uses
 LL unitary service functions for optimization purposes (performance and size).
 </td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
       </tr>
@@ -2053,6 +2362,7 @@ initialization uses LL unitary service functions for optimization purposes (perf
 </td>
         <td>-</td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
       </tr>
       <tr align=center>
@@ -2062,6 +2372,7 @@ Data buffer transmission and receptionvia SPI using Interrupt mode. This
 example is based on the STM32H5xx SPI LL API. The peripheral
 initialization uses LL unitary service functions for optimization purposes (performance and size).
 </td>
+        <td>-</td>
         <td>-</td>
         <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
@@ -2078,6 +2389,7 @@ and lock the break and dead-time configuration.
 </td>
         <td>-</td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
       </tr>
       <tr align=center>
@@ -2091,6 +2403,7 @@ for optimization purposes (performance and size).
 </td>
         <td>-</td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
       </tr>
       <tr align=center>
@@ -2101,6 +2414,7 @@ Output Compare mode with a length of tPULSE and after a delay of tDELAY. This ex
 is based on the STM32H5xx TIM LL API. The peripheral initialization uses
 LL initialization function to demonstrate LL Init.
 </td>
+        <td>-</td>
         <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
@@ -2114,6 +2428,7 @@ STM32H5xx TIM LL API.
 </td>
         <td>-</td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
       </tr>
       <tr align=center>
@@ -2124,6 +2439,7 @@ PWM output signal and update the PWM duty cycle. This example is based on the
 STM32H5xx TIM LL API. The peripheral initialization uses 
 LL initialization function to demonstrate LL Init.
 </td>
+        <td>-</td>
         <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
@@ -2137,6 +2453,7 @@ uses LL unitary service functions for optimization purposes (performance and siz
 </td>
         <td>-</td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
       </tr>
       <tr align=center>
@@ -2147,6 +2464,7 @@ This example shows how to configure GPIO and USART peripheral for continuously r
 from HyperTerminal (PC) in Asynchronous mode using Interrupt mode. Peripheral initialization is
 done using LL unitary services functions for optimization purpose (performance and size).
 </td>
+        <td>-</td>
         <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
@@ -2160,6 +2478,7 @@ done using LL unitary services functions for optimization purpose (performance a
 </td>
         <td>-</td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
       </tr>
       <tr align=center>
@@ -2169,6 +2488,7 @@ This example shows how to configure GPIO and USART peripheral for receiving char
 from HyperTerminal (PC) in Asynchronous mode using Interrupt mode. Peripheral initialization is done
 using LL initialization function to demonstrate LL init usage.
 </td>
+        <td>-</td>
         <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
@@ -2182,6 +2502,7 @@ STM32H5xx USART LL API. Peripheral initialization is done using LL unitary servi
 functions for optimization purpose (performance and size).
 </td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
       </tr>
@@ -2193,6 +2514,7 @@ asynchronously to HyperTerminal (PC) in Interrupt mode. This example is based on
 STM32H5xx USART LL API. Peripheral initialization is done using LL unitary services
 functions for optimization purpose (performance and size).
 </td>
+        <td>-</td>
         <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
@@ -2209,6 +2531,7 @@ initialization is done using LL unitary services functions for optimization purp
 </td>
         <td>-</td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
       </tr>
       <tr align=center>
@@ -2223,6 +2546,7 @@ initialization is done using LL unitary services functions for optimization purp
 </td>
         <td>-</td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
       </tr>
       <tr align=center>
@@ -2231,6 +2555,7 @@ initialization is done using LL unitary services functions for optimization purp
         <td align=left>
 Use of UTILS LL API to configure the system clock using PLL with HSI as source clock. 
 </td>
+        <td>-</td>
         <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td><font size="5" color=green>CubeMx</font></td>
@@ -2241,6 +2566,7 @@ Use of UTILS LL API to configure the system clock using PLL with HSI as source c
 This example reads the UID, Device ID and Revision ID and saves
 them into a global information buffer.
 </td>
+        <td>-</td>
         <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td><font size="5" color=green>CubeMx</font></td>
@@ -2255,12 +2581,14 @@ uses the LL unitary service functions for optimization purposes (performance and
 </td>
         <td>-</td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
       </tr>
       <tr style="background-repeat: no-repeat;background-position: right center;background-color: #39A9DC;color: #FFF;" align=center>
-        <td colspan="3"><b>Total number of examples_ll: 67</b></td>
+        <td colspan="3"><b>Total number of examples_ll: 68</b></td>
         <td>0</td>
-        <td>31</td>
+        <td>0</td>
+        <td>32</td>
         <td>36</td>
       </tr>
       <tr align=center>
@@ -2271,6 +2599,7 @@ uses the LL unitary service functions for optimization purposes (performance and
 How to use ADC to convert a single channel at each SW start,
 conversion performed using programming model: interrupt.
 </td>
+        <td>-</td>
         <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td><font size="5" color=green>CubeMx</font></td>
@@ -2284,6 +2613,7 @@ SRAM through the STM32H5xx DMA HAL and LL API. The LL API is used for
 performance improvement.
 </td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td><font size="5" color=green>CubeMx</font></td>
       </tr>
@@ -2294,6 +2624,7 @@ performance improvement.
 How to handle I3C as Controller data buffer transmission/reception between two boards, using interrupt.
 </td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
       </tr>
@@ -2302,6 +2633,7 @@ How to handle I3C as Controller data buffer transmission/reception between two b
         <td align=left>
 How to handle I3C as Target data buffer transmission/reception between two boards, using interrupt.
 </td>
+        <td>-</td>
         <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
@@ -2315,6 +2647,7 @@ reset or wakeup interrupt (all the RCC function calls use RCC LL API
 for minimizing footprint and maximizing performance).
 </td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td><font size="5" color=green>CubeMx</font></td>
       </tr>
@@ -2325,6 +2658,7 @@ for minimizing footprint and maximizing performance).
 Data buffer transmission/reception between two boards via SPI using Polling mode.
 </td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td><font size="5" color=green>CubeMx</font></td>
       </tr>
@@ -2333,6 +2667,7 @@ Data buffer transmission/reception between two boards via SPI using Polling mode
         <td align=left>
 Data buffer transmission/reception between two boards via SPI using Polling mode.
 </td>
+        <td>-</td>
         <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td><font size="5" color=green>CubeMx</font></td>
@@ -2344,6 +2679,7 @@ Data buffer transmission/reception between two boards via SPI using Polling mode
 Use of the TIM peripheral to measure an external signal frequency and
 duty cycle.
 </td>
+        <td>-</td>
         <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td><font size="5" color=green>CubeMx</font></td>
@@ -2358,6 +2694,7 @@ describes how to use the USART peripheral through the STM32H5xx UART HAL
 and LL API, the LL API being used for performance improvement.
 </td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
       </tr>
@@ -2371,10 +2708,12 @@ the STM32H5xx UART HAL and LL API, the LL API being used for performance improve
 </td>
         <td>-</td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
       </tr>
       <tr style="background-repeat: no-repeat;background-position: right center;background-color: #39A9DC;color: #FFF;" align=center>
         <td colspan="3"><b>Total number of examples_mix: 16</b></td>
+        <td>0</td>
         <td>0</td>
         <td>9</td>
         <td>7</td>
@@ -2387,6 +2726,7 @@ the STM32H5xx UART HAL and LL API, the LL API being used for performance improve
 This application exploits OpenBootloader Middleware to demonstrate how to develop an IAP application
 and how use it.
 </td>
+        <td>-</td>
         <td><font size="5" color=green>X</font></td>
         <td>-</td>
         <td>-</td>
@@ -2397,6 +2737,7 @@ and how use it.
         <td align=left>
 This application provides an example of Azure RTOS FileX stack usage on STM32H573I-DK board, it implements an In-Application programming (IAP) demonstrating FileX's SD file access capabilities.
 </td>
+        <td>-</td>
         <td><font size="5" color=green>X</font></td>
         <td>-</td>
         <td>-</td>
@@ -2406,6 +2747,7 @@ This application provides an example of Azure RTOS FileX stack usage on STM32H57
         <td align=left>
 This application provide user a working example of two storage media managed by two independent instances of FileX/LevelX running on STM32H573I-DK board.
 </td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
         <td>-</td>
@@ -2415,6 +2757,7 @@ This application provide user a working example of two storage media managed by 
         <td align=left>
 This application provides an example of FileX stack usage on STM32H573I-DK board, running in standalone mode (without ThreadX). It demonstrates how to create a Fat File system on the SD card memory using FileX API.
 </td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
         <td>-</td>
@@ -2424,6 +2767,7 @@ This application provides an example of FileX stack usage on STM32H573I-DK board
         <td align=left>
 This application provides an example of Azure RTOS FileX stack usage on STM32H573I-DK board, it demonstrates the FileX's concurrent file access capabilities. The application is designed to execute file operations on the SD card device, the code provides all required software code for handling SD card I/O operations.
 </td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
         <td>-</td>
@@ -2437,6 +2781,7 @@ a Fat File system on the NOR flash using FileX alongside LevelX. The application
 
 NOR flash device, the code provides all required software code for properly managing it.
 </td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
         <td>-</td>
@@ -2448,6 +2793,7 @@ This application provides an example of Azure RTOS FileX stack usage on STM32H57
 
 operations application.
 </td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
         <td>-</td>
@@ -2459,6 +2805,7 @@ operations application.
 This application provides an example of Azure RTOS NetXDuo stack usage .
 </td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
       </tr>
@@ -2467,6 +2814,7 @@ This application provides an example of Azure RTOS NetXDuo stack usage .
         <td align=left>
 This application is a network traffic tool for measuring TCP and UDP performance with metrics around both throughput and latency.
 </td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
         <td>-</td>
@@ -2476,6 +2824,7 @@ This application is a network traffic tool for measuring TCP and UDP performance
         <td align=left>
 This application provides an example of Azure RTOS NetX/NetXDuo stack usage.
 </td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
         <td>-</td>
@@ -2485,6 +2834,7 @@ This application provides an example of Azure RTOS NetX/NetXDuo stack usage.
         <td align=left>
 This application demonstrates WiFi connectivity on MXCHIP EMW3080 module for the STM32H573I-DK board from STMicroelectronics.
 </td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
         <td>-</td>
@@ -2495,6 +2845,7 @@ This application demonstrates WiFi connectivity on MXCHIP EMW3080 module for the
 This application provides an example of Azure RTOS NetX/NetXDuo stack usage. 
 </td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
       </tr>
@@ -2503,6 +2854,7 @@ This application provides an example of Azure RTOS NetX/NetXDuo stack usage.
         <td align=left>
 This application provides an example of Azure RTOS NetX/NetXDuo stack usage .
 </td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
         <td>-</td>
@@ -2512,6 +2864,7 @@ This application provides an example of Azure RTOS NetX/NetXDuo stack usage .
         <td align=left>
 This application provides an example of Azure RTOS NetX/NetXDuo stack usage .
 </td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
         <td>-</td>
@@ -2522,6 +2875,7 @@ This application provides an example of Azure RTOS NetX/NetXDuo stack usage .
 This application provides an example of Azure RTOS NetX/NetXDuo stack usage.
 </td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
       </tr>
@@ -2531,6 +2885,7 @@ This application provides an example of Azure RTOS NetX/NetXDuo stack usage.
 This application provides an example of Azure RTOS NetX/NetXDuo stack usage.
 </td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
       </tr>
@@ -2539,6 +2894,7 @@ This application provides an example of Azure RTOS NetX/NetXDuo stack usage.
         <td align=left>
 This application provides an example of Azure RTOS NetX Duo stack usage on STM32H573G-DK board, it shows how to develop Web HTTP server based application.
 </td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
         <td>-</td>
@@ -2547,9 +2903,10 @@ This application provides an example of Azure RTOS NetX Duo stack usage on STM32
         <td align=left rowspan=7><p id="ROT">ROT</p></td>
         <td align=left><p id="OEMiROT_Appli">OEMiROT_Appli</p></td>
         <td align=left>
-This project provides a OEMiROT boot path application example. Boot is performed through OEMiROT bootpath after authenticity and integrity checks of the project firmware and project data
+This project provides a OEMiROT boot path application example. Boot is performed through OEMiROT boot path after authenticity and the integrity checks of the project firmware and project data
 images.
 </td>
+        <td>-</td>
         <td>-</td>
         <td>-</td>
         <td><font size="5" color=green>X</font></td>
@@ -2557,19 +2914,18 @@ images.
       <tr align=center>
         <td align=left><p id="OEMiROT_Appli_TrustZone">OEMiROT_Appli_TrustZone</p></td>
         <td align=left>
-This project provides a OEMiROT boot path application example. Boot is performed through OEMiROT boot path after authenticity and integrity checks of the project firmware and project data
+This project provides a OEMiROT boot path application example. Boot is performed through OEMiROT boot path after authenticity and the integrity checks of the project firmware and project data
 images.
 </td>
+        <td>-</td>
         <td><font size="5" color=green>X</font></td>
         <td><font size="5" color=green>X</font></td>
         <td>-</td>
       </tr>
       <tr align=center>
         <td align=left><p id="OEMiROT_Boot">OEMiROT_Boot</p></td>
-        <td align=left>
-This project provides an OEMiROT example. OEMiROT boot path performs authenticity and integrity checks of the project firmware and data
-images.
-</td>
+        <td align=left></td>
+        <td>-</td>
         <td><font size="5" color=green>X</font></td>
         <td><font size="5" color=green>X</font></td>
         <td><font size="5" color=green>X</font></td>
@@ -2580,6 +2936,7 @@ images.
 This project provides a Secure Manager boot path application example. Boot is performed through Secure Manager boot path after authenticity and integrity checks of the project firmware
 images.
 </td>
+        <td>-</td>
         <td><font size="5" color=green>X</font></td>
         <td>-</td>
         <td>-</td>
@@ -2587,9 +2944,10 @@ images.
       <tr align=center>
         <td align=left><p id="STiROT_Appli">STiROT_Appli</p></td>
         <td align=left>
-This project provides a STiROT boot path application example. Boot is performed through STiROT boot path after authenticity and integrity checks of the project firmware and project data
+This project provides a STiROT boot path application example. Boot is performed through STiROT boot path after authenticity and the integrity checks of the project firmware and project data
 images.
 </td>
+        <td>-</td>
         <td><font size="5" color=green>X</font></td>
         <td>-</td>
         <td>-</td>
@@ -2597,9 +2955,10 @@ images.
       <tr align=center>
         <td align=left><p id="STiROT_Appli_TrustZone">STiROT_Appli_TrustZone</p></td>
         <td align=left>
-This project provides a STiROT boot path application example. Boot is performed through STiROT boot path after authenticity and integrity checks of the project firmware and project data
+This project provides a STiROT boot path application example. Boot is performed through STiROT boot path after authenticity and the integrity checks of the project firmware and project data
 images.
 </td>
+        <td>-</td>
         <td><font size="5" color=green>X</font></td>
         <td>-</td>
         <td>-</td>
@@ -2609,6 +2968,7 @@ images.
         <td align=left>
 For STiROT_OEMuROT boot path, no dedicated project are provided. The projects OEMiROT_Boot and OEMiROT_Appli_TrustZone are used to demonstrate this boot path.
 </td>
+        <td>-</td>
         <td><font size="5" color=green>X</font></td>
         <td>-</td>
         <td>-</td>
@@ -2621,6 +2981,7 @@ This application provides an example of CMSIS RTOS adaptation layer for Azure RT
 </td>
         <td>-</td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>X</font></td>
       </tr>
       <tr align=center>
@@ -2628,6 +2989,7 @@ This application provides an example of CMSIS RTOS adaptation layer for Azure RT
         <td align=left>
 This application provides an example of Azure RTOS ThreadX stack usage, it shows how to develop an application using the FreeRTOS adaptation layer for ThreadX.
 </td>
+        <td>-</td>
         <td>-</td>
         <td><font size="5" color=green>X</font></td>
         <td>-</td>
@@ -2638,6 +3000,7 @@ This application provides an example of Azure RTOS ThreadX stack usage, it shows
 This application provides an example of Azure RTOS ThreadX stack usage, it shows how to develop an application using ThreadX lowpower feature.
 </td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
       </tr>
@@ -2646,6 +3009,7 @@ This application provides an example of Azure RTOS ThreadX stack usage, it shows
         <td align=left>
 This application provides an example of Azure RTOS ThreadX stack usage, it shows how to develop an application using the ThreadX Module feature.
 </td>
+        <td>-</td>
         <td><font size="5" color=green>X</font></td>
         <td>-</td>
         <td>-</td>
@@ -2656,6 +3020,7 @@ This application provides an example of Azure RTOS ThreadX stack usage, it shows
 This application provides an example of Azure RTOS ThreadX stack usage, it shows how to develop an application using the ThreadX when the TrustZone feature is enabled (TZEN=B4).
 </td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
       </tr>
@@ -2664,6 +3029,7 @@ This application provides an example of Azure RTOS ThreadX stack usage, it shows
         <td align=left>
 This application provides an example of Azure RTOS ThreadX stack usage, it shows how to develop an application using the ThreadX thread management APIs.
 </td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
         <td>-</td>
@@ -2674,6 +3040,7 @@ This application provides an example of Azure RTOS ThreadX stack usage, it shows
 This application provides an example of Azure RTOS ThreadX stack usage, it shows how to develop an application using the ThreadX message queue APIs.
 </td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
       </tr>
@@ -2682,6 +3049,7 @@ This application provides an example of Azure RTOS ThreadX stack usage, it shows
         <td align=left>
 This application provides an example of Azure RTOS ThreadX stack usage, it shows how to develop an application using the ThreadX synchronization APIs.
 </td>
+        <td>-</td>
         <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
@@ -2693,6 +3061,7 @@ This application provides an example of Azure RTOS ThreadX stack usage, it shows
 This application is a USBPD type C Consumer using Azure RTOS.
 </td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
       </tr>
@@ -2703,6 +3072,7 @@ This application provides an example of Azure RTOS USBX stack usage on STM32H563
 it shows how to develop USB Device Human Interface "HID" mouse based application.
 </td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
       </tr>
@@ -2711,6 +3081,7 @@ it shows how to develop USB Device Human Interface "HID" mouse based application
         <td align=left>
 This application is a USBPD type C Provider using Azure RTOS.
 </td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
         <td>-</td>
@@ -2720,6 +3091,7 @@ This application is a USBPD type C Provider using Azure RTOS.
         <td align=left>
 This application is a USBPD type C Provider and USB Host using Azure RTOS USBX stack. It shows how to develop a USBPD type C Provider in the case of an USB host application based on Mass Storage "MSC" which is able to enumerate and communicates with a removable usb flash disk.
 </td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
         <td>-</td>
@@ -2730,6 +3102,7 @@ This application is a USBPD type C Provider and USB Host using Azure RTOS USBX s
         <td align=left>
 This application provides an example of Azure RTOS USBX stack usage on NUCLEO-H503RB board, it shows how to develop USB Device communication Class "CDC_ACM" based application.
 </td>
+        <td>-</td>
         <td>-</td>
         <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
@@ -2745,6 +3118,7 @@ the NX_IP instance and the Web HTTP server are created and configured, then the 
 
   - app_ux_device_thread_entry (Prio : 10; PreemptionPrio : 10) used to initialize USB DRD HAL PCD driver and start the device.
 </td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
         <td>-</td>
@@ -2755,6 +3129,7 @@ the NX_IP instance and the Web HTTP server are created and configured, then the 
 This application provides an example of Azure RTOS USBX stack usage on STM32H573I-DK board,
 it shows how to develop USB Device Firmware Upgrade "DFU" based application.
 </td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
         <td>-</td>
@@ -2766,6 +3141,7 @@ This application provides an example of Azure RTOS USBX stack usage on STM32H563
 it shows how to develop USB Device Human Interface "HID" mouse based application.
 </td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
       </tr>
@@ -2776,6 +3152,7 @@ This application provides an example of Azure RTOS USBX stack usage on NUCLEO-H5
 Class "HID" and "CDC_ACM" based application.
 </td>
         <td>-</td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
       </tr>
@@ -2785,6 +3162,7 @@ Class "HID" and "CDC_ACM" based application.
 This application provides an example of Azure RTOS USBX stack usage on STM32H563xx board,
 it shows how to develop USB Device Human Interface "HID" mouse based bare metal application.
 </td>
+        <td>-</td>
         <td>-</td>
         <td><font size="5" color=green>X</font></td>
         <td>-</td>
@@ -2798,6 +3176,7 @@ application. The application is designed to emulate an USB MSC device, the code 
 
 descriptor report to build a compliant USB MSC device.
 </td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
         <td>-</td>
@@ -2807,6 +3186,7 @@ descriptor report to build a compliant USB MSC device.
         <td align=left>
 This application provides an example of Azure RTOS USBX stack usage .
 </td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
         <td>-</td>
@@ -2816,6 +3196,7 @@ This application provides an example of Azure RTOS USBX stack usage .
         <td align=left>
 This application provides an example of Azure RTOS USBX stack usage. 
 </td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
         <td>-</td>
@@ -2825,6 +3206,7 @@ This application provides an example of Azure RTOS USBX stack usage.
         <td align=left>
 This application provides an example of Azure RTOS USBX stack usage .
 </td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
         <td>-</td>
@@ -2834,6 +3216,7 @@ This application provides an example of Azure RTOS USBX stack usage .
         <td align=left>
 This application provides an example of Azure RTOS USBX stack usage.
 </td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
         <td>-</td>
@@ -2843,6 +3226,7 @@ This application provides an example of Azure RTOS USBX stack usage.
         <td align=left>
 This application provides an example of Azure RTOS USBX stack usage .
 </td>
+        <td>-</td>
         <td><font size="5" color=green>X</font></td>
         <td>-</td>
         <td>-</td>
@@ -2852,21 +3236,24 @@ This application provides an example of Azure RTOS USBX stack usage .
         <td align=left>
 This application provides an example of Azure RTOS USBX stack usage. It shows how to develop USB Host Mass Storage "MSC" able to enumerate and communicates with a removable usb flash disk.
 </td>
+        <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
         <td>-</td>
         <td>-</td>
       </tr>
       <tr style="background-repeat: no-repeat;background-position: right center;background-color: #39A9DC;color: #FFF;" align=center>
         <td colspan="3"><b>Total number of applications: 52</b></td>
+        <td>0</td>
         <td>32</td>
         <td>16</td>
         <td>4</td>
       </tr>
       <tr style="background-repeat: no-repeat;background-position: right center;background-color: #39A9DC;color: #FFF;" align=center>
-      	<td colspan="4"><b>Total number of projects: 290</b></td>
-      	<td>64</td>
-      	<td>128</td>
-      	<td>98</td>
+      	<td colspan="4"><b>Total number of projects: 300</b></td>
+      	<td>2</td>
+      	<td>66</td>
+      	<td>132</td>
+      	<td>100</td>
       </tr>
     </table>
   </body>

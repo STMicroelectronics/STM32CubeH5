@@ -43,6 +43,7 @@ extern "C" {
 /** @defgroup COM_UART  UART Configuration
   * @{
   */
+
 #define COM_UART                                USART3
 #define COM_UART_CLK_ENABLE()                   __HAL_RCC_USART3_CLK_ENABLE()
 #define COM_UART_CLK_DISABLE()                  __HAL_RCC_USART3_CLK_DISABLE()

@@ -78,7 +78,8 @@ int iar_fputc(int ch);
 #define PUTCHAR_PROTOTYPE int iar_fputc(int ch)
 #elif defined ( __CC_ARM ) || defined(__ARMCC_VERSION)
 /* ARM Compiler 5/6*/
-#define PUTCHAR_PROTOTYPE int fputc(int ch, FILE *f)
+int io_putchar(int ch);
+#define PUTCHAR_PROTOTYPE int io_putchar(int ch)
 #elif defined(__GNUC__)
 #define PUTCHAR_PROTOTYPE int32_t uart_putc(int32_t ch)
 #endif /* __ICCARM__ */
@@ -97,7 +98,7 @@ FILE __stdout;
 int fputc(int ch, FILE *f)
 {
   /* Send byte to USART */
-  uart_putc(ch);
+  io_putchar(ch);
 
   /* Return character written */
   return ch;
@@ -166,7 +167,7 @@ int main(int argc, char **argv)
   COM_Init();
 
   printf("\r\n======================================================================");
-  printf("\r\n=              (C) COPYRIGHT 2022 STMicroelectronics                 =");
+  printf("\r\n=              (C) COPYRIGHT 2023 STMicroelectronics                 =");
   printf("\r\n=                                                                    =");
   printf("\r\n=                          User App #%c                               =", *pUserAppId);
   printf("\r\n======================================================================");
@@ -254,10 +255,13 @@ static void SystemClock_Config(void)
   */
 void FW_APP_PrintMainMenu(void)
 {
-  printf("\r\n=================== Main Menu ============================\r\n\n");
-  printf("  Start BootLoader -------------------------------------- 1\r\n\n");
+  printf("\r\n=============================== Main Menu ============================\r\n\n");
+  printf("\r\n\033[91m Warning: For confidentiality reasons, before starting BootLoader,\033[0m");
+  printf("\r\n\033[91m code image and data image (if enabled) will be erased, and have \033[0m");
+  printf("\r\n\033[91m to be installed again to reach application menu\033[0m\r\n\n");
+  printf("  Start BootLoader -------------------------------------------------- 1\r\n\n");
 #if (MCUBOOT_DATA_IMAGE_NUMBER == 1)
-  printf("  Display Data ------------------------------------------ 2\r\n\n");
+  printf("  Display Data ------------------------------------------------------ 2\r\n\n");
 #endif /* defined(MCUBOOT_DATA_IMAGE_NUMBER) */
   printf("  Selection :\r\n\n");
 }
@@ -379,36 +383,30 @@ void LOADER_Run(void)
   /* Corrupt active image (primary only slot) then reset, to ensure boot stage
      detects invalid image, then erase them for confidentiality prior entering BL */
   printf("\r\n  Standard Bootloader will start");
-  printf("\r\n  If you want to connect through USART device, disconnect your TeraTerm");
-  printf("\r\n  Start download with STM32CubeProgrammer through supported device (USART/SPI/I2C/I3C/USB/FDCAN)\r\n");
+  printf("\r\n  If you want to connect through USART interface, disconnect your TeraTerm");
+  printf("\r\n  Start download with STM32CubeProgrammer through supported interfaces (USART/SPI/I2C/USB)\r\n");
   printf("\r\n");
-
   /* disable MPU */
   MPU->CTRL = 0;
-
   /* Unlock the Flash to enable the flash control register access *************/
   HAL_FLASH_Unlock();
-
   /* Get the 1st sector of image to erase */
   FirstSector = GetSector(CODE_IMAGE_PRIMARY_PARTITION_ADDRESS);
-
   /* Get the bank */
   BankNumber = GetBank(CODE_IMAGE_PRIMARY_PARTITION_ADDRESS);
-
   /* Fill EraseInit structure*/
   EraseInitStruct.TypeErase     = FLASH_TYPEERASE_SECTORS;
   EraseInitStruct.Banks         = BankNumber;
   EraseInitStruct.Sector        = FirstSector;
   EraseInitStruct.NbSectors     = 1U;
-
   if (HAL_FLASHEx_Erase(&EraseInitStruct, &SectorError) != HAL_OK)
   {
     /* Infinite loop */
     while (1);
   }
-
   NVIC_SystemReset();
 }
+
 
 #if (MCUBOOT_DATA_IMAGE_NUMBER == 1)
 /**
@@ -421,11 +419,11 @@ void DATA_Display(void)
   uint8_t *data1;
   data1 = (uint8_t*)(DATA_IMAGE_PRIMARY_PARTITION_ADDRESS + DATA_HEADER_SIZE);
 
-  printf("  -- NS Data: %08lx%08lx..%08lx%08lx\r\n\n",
-               *((uint32_t *)(&data1[0])),
-               *((uint32_t *)(&data1[4])),
-               *((uint32_t *)(&data1[DATA_IMAGE_DATA1_SIZE - 8])),
-               *((uint32_t *)(&data1[DATA_IMAGE_DATA1_SIZE - 4]))
+  printf("  -- Data: %08x%08x..%08x%08x\r\n\n",
+               *((int *)(&data1[0])),
+               *((int *)(&data1[4])),
+               *((int *)(&data1[DATA_IMAGE_DATA1_SIZE - 8])),
+               *((int *)(&data1[DATA_IMAGE_DATA1_SIZE - 4]))
               );
 }
 #endif

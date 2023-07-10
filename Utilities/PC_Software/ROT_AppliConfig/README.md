@@ -69,8 +69,8 @@ Example :
 ```
 xmlen -l image_macros_preprocessed_bl2.c -m RE_ENCRYPTION -c E OEMiRoT_Secure_Code.xml
 ```    
-*Then the OEMiRoT_Secure_Code.xml will be filtered by the tag \<Command\>. If the command "E" is founded,
-the tag <Enable> content will be replaced by the value founded in the image_macros_preprocessed_bl2 file.*
+*Then the OEMiRoT_Secure_Code.xml will be filtered by the tag \<Command\>. If the command "E" is found,
+the tag <Enable> content will be replaced by the value found in the image_macros_preprocessed_bl2 file.*
 
 If the user want to force the Enable modification it is possible to use the following options :
 
@@ -85,7 +85,7 @@ Example :
 ```
 xmlen -e 0 -c E OEMiRoT_Secure_Code.xml
 ```
-*This means the OEMiRoT_Secure_Code.xml will be filtered by the tag \<Command\>. If the command "E" is founded,
+*This means the OEMiRoT_Secure_Code.xml will be filtered by the tag \<Command\>. If the command "E" is found,
 the tag <Enable> content will be replaced by 0*
 
 ### Modify xml content 
@@ -106,10 +106,10 @@ Example:
 xmlval -l image_macros_preprocessed_bl2.c -m RE_IMAGE_FLASH_SECURE_IMAGE_SIZE -c -S OEMiRoT_Secure_Code.xml
 ```
 *This means the RE_IMAGE_FLASH_SECURE_IMAGE_SIZE symbol will be searched in the image_macros_preprocessed_bl2.c file.
-If the symbol is founded, its value will be stored (otherwise an error will be displayed)*
+If the symbol is found, its value will be stored (otherwise an error will be displayed)*
 
-*Then the OEMiRoT_Secure_Code.xml will be filtered by the tag \<Command\>. If the command "E" is founded,
-the tag \<Value\> content will be replaced by the value founded in the image_macros_preprocessed_bl2 file.*
+*Then the OEMiRoT_Secure_Code.xml will be filtered by the tag \<Command\>. If the command "E" is found,
+the tag \<Value\> content will be replaced by the value found in the image_macros_preprocessed_bl2 file.*
 
 #### Modifying the \<Name\> content from another xml file
 **xmlval**
@@ -124,14 +124,22 @@ Example :
 ```
 xmlval -xml OEMiRoT_Secure_Code.xml -nxml Firmware area size -c S OEMiRoT_NonSecure_Code.xml
 ```
-*This means the OEMiRoT_Secure_Code.xml will be filtered by the tag \<Name\>. If the content "Firmware area size" is founded,
+*This means the OEMiRoT_Secure_Code.xml will be filtered by the tag \<Name\>. If the content "Firmware area size" is found,
 the tag \<Value\> content will be stored.*
 
-*The OEMiRoT_NonSecure_Code.xml will be filtered by the tag \<Command\>. If the command "S" is founded. The content of \<Value\> will be
-modified with the value founded in the OEMiRoT_Secure_Code.xml file.*
+*The OEMiRoT_NonSecure_Code.xml will be filtered by the tag \<Command\>. If the command "S" is found. The content of \<Value\> will be
+modified with the value found in the OEMiRoT_Secure_Code.xml file.*
 
 #### Modifying he \<Name\> with a function option
 If the user want to force the Value modification it is possible to use the following options :
+
+**xmlname**
+Modify the Tag <Name> content of an xml parameter. The modification could be executed with the --layout and --macro arguments. Or by defining the --name argument
+-n (--name)     New name
+-c (--command)  Tag <Command> content in the xml file. If the tag is found the name content will be modified
+* xml file to modified
+
+*Modify the Tag <Name> content of an xml parameter. The modification could be executed with the --layout and --macro arguments. Or by defining the --name argument
 
 **xmlval**
 * -v (--value)    New value input
@@ -144,7 +152,7 @@ Example :
 ```
 xmval -v 0x6500 -c -S OEMiRoT_Secure_Code.xml
 ```
-*This means the OEMiRoT_Secure_Code.xml will be filtered by the tag \<Command\>. If the command "S" is founded,
+*This means the OEMiRoT_Secure_Code.xml will be filtered by the tag \<Command\>. If the command "S" is found,
 the tag \<Value\> content will be replaced by 0x6500*
 
 #### Modifying the xml content from a binary file
@@ -153,7 +161,7 @@ the tag \<Value\> content will be replaced by 0x6500*
 * -b_el_idx    (--binary_element_index) Element to recover from the binary file
 * -b_el_sz     (--binary_element_size) Size of the binary element (By default 48 bytes)
 * -b_d_sz      (--binary_data_size) Data size to recover from the binary element
-* -b_d_e       (--binary_data_endianess) Data binary endianness format (little or big)
+* -b_d_e       (--binary_data_endianness) Data binary endianness format (little or big)
 * -nxml_el_idx (--xml_name_layout_index)' . Recover the value of the parameter with the \<\Name> selected.
                                             This will allow the element number to recover from the binary file
 * -n (--name)    Filter xml parameters by \<Name\>. The value of the parameter selected will be modified
@@ -163,7 +171,7 @@ Example :
 ```
  xmlval -b AreaAPayload.bin -b_el_idx 48 -b_d_sz 16 -b_el_sz 64 -b_d_e little -nxml_el_idx "Flash Layout configuration index" -n "NS FileSystem Size" SMAK_Config_part2.xml
 ```
-*This means the SMAK_Config_part2.xml will be filtered by the tag \<Name\>. If the name "Flash Layout configuration index" is founded,
+*This means the SMAK_Config_part2.xml will be filtered by the tag \<Name\>. If the name "Flash Layout configuration index" is found,
 the tag \<Value\> content will be used to recover the element from the AreaPayload.bin file.
 
 The size of the element to extract will be 64 bytes. The start index of the data to recover will be the 48 and the size will be 16 bits (2 bytes) in little endian format :
@@ -188,7 +196,7 @@ It this possible to modify the input value. To do this, it is necessary to use t
 * -cond (--condition)  Condition expression in order to define if the expression command need to be executed.
                        The conditions must be in python format (example : and, or, xor, not)
 * -e    (--expression) Mathematical formula to modify the value. 
-  * value : To define the value founded
+  * value : To define the value found
   * val"x" : When using multiple input values
   * const"x" : Define the value of the constant to use. 
 * -xml_name it could be defined multiple times. This will help to search different values from a xml file and and use the values in the expression function
@@ -197,19 +205,19 @@ Example :
 ```
 xmlval -v 0x6500 -c -S -e "(value + cons1 + cons2)/cons3" -cons 0x50 -cons 0x200 -cons 0x2  OEMiRoT_Secure_Code.xml
 ```
-*This means the OEMiRoT_Secure_Code.xml will be filtered by the tag \<Command\>. If the command "S" is founded,
+*This means the OEMiRoT_Secure_Code.xml will be filtered by the tag \<Command\>. If the command "S" is found,
 the tag \<Value\> content will be replaced by (0x6500 + 0x50 + 0x200)/0x2 = 0x32A8*
 
 It is also possible to modify the output format. By default the value will be in hex format
---decimal : The value founded will be converted in decimal format
---string : The value founded will be converted to string
+--decimal : The value found will be converted in decimal format
+--string : The value found will be converted to string
 
 * -txml (--xml_tag) By default, the tag content to modify is <Value>. But it is possible to define the content tag to modify.
 Example :
 ```
 xmval -v resign -c sign -xml_tag Command --string OEMiRoT_Secure_Code.xml
 ```
-*This means the OEMiRoT_Secure_Code.xml will be filtered by the tag \<Command\>. If the command "sign" is founded,
+*This means the OEMiRoT_Secure_Code.xml will be filtered by the tag \<Command\>. If the command "sign" is found,
 the tag \<Command\> content will be replaced by sign*
 
 ### Add or remove parameter
@@ -235,12 +243,12 @@ Example :
 xmlparam -l  image_macros_preprocessed_bl2.c -m RE_CRYPTO_SCHEME -n "Encryption key" -link GetPublic -t File -c -E -h 0 OEMiRoT_Secure_Code.xml
 ```
 *This means the RE_CRYPTO_SCHEME symbol will be searched in the image_macros_preprocessed_bl2.c file.
-If the symbol is founded, its value will be stored (otherwise an error will be displayed)*
+If the symbol is found, its value will be stored (otherwise an error will be displayed)*
 
-*The OEMiRoT_NonSecure_Code.xml will be filtered by the tag \<Name\>. If the name content "Encryption key" is founded. The parameter will be stored*
+*The OEMiRoT_NonSecure_Code.xml will be filtered by the tag \<Name\>. If the name content "Encryption key" is found. The parameter will be stored*
 
 *Four options are possible :*
-* *If the value of RE_CRYPTO_SCHEME is equals to 0 and the parameter was founded. The entire parameter will be erased.*
+* *If the value of RE_CRYPTO_SCHEME is equals to 0 and the parameter was found. The entire parameter will be erased.*
 ```bash
 	<Param>
 		<Name>Encryption key</Name>
@@ -248,9 +256,9 @@ If the symbol is founded, its value will be stored (otherwise an error will be d
         ....
 	</Param>
 ```
-* *If the value of RE_CRYPTO_SCHEME is equals to 0 and the parameter was not founded. Nothing will be erased*
-* *If the value of RE_CRYPTO_SCHEME is different to 0 and the parameter was not founded. Nothing will be added*
-* *If the value of RE_CRYPTO_SCHEME is different to 0 and the parameter was  founded. The follow structure will be added*
+* *If the value of RE_CRYPTO_SCHEME is equals to 0 and the parameter was not found. Nothing will be erased*
+* *If the value of RE_CRYPTO_SCHEME is different to 0 and the parameter was not found. Nothing will be added*
+* *If the value of RE_CRYPTO_SCHEME is different to 0 and the parameter was found. The follow structure will be added*
 ```bash
 	<Param>
 		<Name>Encryption key</Name>
@@ -297,9 +305,9 @@ The following options must be defined:
 linker -l image_macros_preprocessed_bl2.c -m RE_IMAGE_FLASH_NON_SECURE_IMAGE_SIZE -link S_CODE_SIZE stm32h573xx_flash_s.icf
 ```
 *This means the RE_IMAGE_FLASH_NON_SECURE_IMAGE_SIZE symbol will be searched in the image_macros_preprocessed_bl2.c file.
-If the symbol is founded, its value will be stored (otherwise an error will be displayed)*.
+If the symbol is found, its value will be stored (otherwise an error will be displayed)*.
 
-*The variable S_CODE_SIZE in the icf file will be updated with the value founded in the image_macros_preprocessed_bl2 file.*
+*The variable S_CODE_SIZE in the icf file will be updated with the value found in the image_macros_preprocessed_bl2 file.*
 
 #### Modifying the values with a xml file
 **linker**
@@ -312,13 +320,13 @@ If the symbol is founded, its value will be stored (otherwise an error will be d
 ```
 linker -xml OEMiRoT_Secure_Code.xml -nxml Firmware area size -n CODE_SIZE stm32h573xx_flash_s.icf
 ```
-*This means the OEMiRoT_Secure_Code.xml will be filtered by the tag \<Name\>. If the content "Firmware area size" is founded,
+*This means the OEMiRoT_Secure_Code.xml will be filtered by the tag \<Name\>. If the content "Firmware area size" is found,
 the tag \<Value\> content will be used to update the value of "CODE_SIZE" variable in the stm32h573xx_flash_s.icf file.*
 
 #### Extra options
 It this possible to modify the input value. To do this, it is necessary to use the following options :
 * -e    (--expression) Mathematical formula to modify the value. 
-  * value : To define the value founded
+  * value : To define the value found
   * val"x" : When using multiple input values
   * const"x" : Define the value of the constant to use. 
 * -cons (--constant) Define the constant value. It is necessary to use the same argument to define multiple constants
@@ -329,7 +337,7 @@ linker -xml OEMiRoT_Secure_Code.xml -nxml Firmware area size -nxml Firmware area
 ```
 *This means the OEMiRoT_Secure_Code.xml will be filtered by the tag \<Name\>.*
 
- *If the content "Firmware area size" is founded,the tag \<Value\> content will be used. The value will be used in the expression function.
+ *If the content "Firmware area size" is found,the tag \<Value\> content will be used. The value will be used in the expression function.
  In this case the value will be added by itself. The the value results will be divided by 0x50. The final result will be used to update the "CODE_SIZE" variable in the stm32h573xx_flash_s.icf file.*
 
 
@@ -347,9 +355,9 @@ Example :
 definevalue -l image_macros_preprocessed_bl2.c -m RE_IMAGE_FLASH_ADDRESS_SECURE -n FLASH_ADDRESS_SECURE rot_variables.h
 ```
 *This means the RE_IMAGE_FLASH_ADDRESS_SECURE symbol will be searched in the image_macros_preprocessed_bl2.c file.
-If the symbol is founded, its value will be stored (otherwise an error will be displayed).*
+If the symbol is found, its value will be stored (otherwise an error will be displayed).*
 
-*The variable FLASH_ADDRESS_SECURE in the include file will be updated with the value founded in the image_macros_preprocessed_bl2 file.*
+*The variable FLASH_ADDRESS_SECURE in the include file will be updated with the value found in the image_macros_preprocessed_bl2 file.*
 
 #### Modifying the values with a xml file
 **definevalue**
@@ -360,13 +368,13 @@ If the symbol is founded, its value will be stored (otherwise an error will be d
 ```
 definevalue -xml OEMiRoT_Secure_Code.xml -nxml Firmware area size -n FLASH_ADDRESS_SECURE rot_variables.h
 ```
-*This means the OEMiRoT_Secure_Code.xml will be filtered by the tag \<Name\>. If the content "Firmware area size" is founded,
+*This means the OEMiRoT_Secure_Code.xml will be filtered by the tag \<Name\>. If the content "Firmware area size" is found,
 the tag \<Value\> content will be used to update the value of "FLASH_ADDRESS_SECURE" variable in the rot_variables.h file*
 
 #### Extra options : 
 It this possible to modify the value. To do this, it is necessary to use the following options :
 * -e    (--expression) Mathematical formula to modify the value. 
-  * value : To define the value founded
+  * value : To define the value found
   * val"x" : When using multiple input values
   * const"x" : Define the value of the constant to use. 
 * -xml_name it could be defined multiple times. This will help to search different values from a xml file and and use the values in the expression function
@@ -374,14 +382,14 @@ It this possible to modify the value. To do this, it is necessary to use the fol
 It is also possible to modify the output format. By default the value will be in hex format
 * -cons (--constant) Define the constant value. It is necessary to use the same argument to define multiple constants
 * --decimal : Optional flag, used when the format value is en decimal. By default the format is in hex
-* --string : The value founded will be converted to string
+* --string : The value found will be converted to string
 
 ```
 definevalue -xml OEMiRoT_Secure_Code.xml -nxml "Firmware area size" -nxml "Firmware area size" -e "(val1 * val2)/0x500" -n FLASH_ADDRESS_SECURE rot_variables.h
 ```
 *This means the OEMiRoT_Secure_Code.xml will be filtered by the tag \<Name\>.*
 
- *If the content "Firmware area size" is founded,the tag \<Value\> content will be used. The value will be used in the expression function.
+ *If the content "Firmware area size" is found,the tag \<Value\> content will be used. The value will be used in the expression function.
  In this case the value will be multiplied by itself. The the value results will be divided by 0x500. The final result will be used to update the "FLASH_ADDRESS_SECURE" variable in the rot_variables.h file.*
 
 ### Comment or uncomment define variable
@@ -399,9 +407,9 @@ It is possible to comment or uncomment the # defines variables in a include file
 setdefine -l image_macros_preprocessed_bl2.c -m RE_OVER_WRITE -name MCUBOOT_OVERWRITE_ONLY -v 1 File.h
 ```
 *This means the RE_OVER_WRITE symbol will be searched in the image_macros_preprocessed_bl2.c file.
-If the symbol is founded, its value will be stored (otherwise an error will be displayed).*
+If the symbol is found, its value will be stored (otherwise an error will be displayed).*
 
-*The flag MCUBOOT_OVERWRITE_ONLY will be commented if the value founded in the image_macros_preprocessed_bl2.c file is equals to the --value option. Otherwise the flag be uncommented.*
+*The flag MCUBOOT_OVERWRITE_ONLY will be commented if the value found in the image_macros_preprocessed_bl2.c file is equals to the --value option. Otherwise the flag be uncommented.*
 
 #### Comment/Uncomment with xml file
 **setdefine**
@@ -413,7 +421,7 @@ If the symbol is founded, its value will be stored (otherwise an error will be d
 ```
 setdefine -xml STiRoT_Config.xml -nxml Number of images managed -n DATA_IMAGE_EN -v 0x02 File.h
 ```
-*This means the STiRoT_Config.xml will be filtered by the tag \<Name\>. If the content "Number of images managed" is founded,
+*This means the STiRoT_Config.xml will be filtered by the tag \<Name\>. If the content "Number of images managed" is found,
 the tag \<Value\> content will be stored. If the value is equals to --value option the flag "CODE_SIZE" will be commented (otherwise it will be uncommented)*
 
 #### ***Limitation*** :
@@ -428,6 +436,7 @@ will be taken from STiRoT_Config.xml file. To update the values the following op
   * SECWM   : Modify watermarks protections
   * SRAM2_RST : Modify SRAM2 erased in case of reset
   * SRAM2_ECC : Modify hack tentative detection
+  * WPRS : Modify write protection memory area
 * -sp (--secure_pattern) : Principal secure information. This is the tag \<Name\> content in order to filter the xml file and get the tag \<Value\> content
 * -b (--begin) : Pattern to choose one line in the script file. Default "stm32programmercli"
 
@@ -450,7 +459,7 @@ Example :
 ```
 obscript --xml STiRoT_Config.xml -ob SRAM2_RST -sp "SRAM2 erasing in case of reset" -b "" programming.bat
 ```
-*This means the SRAM2_RST protections will be modified. The STiRoT_Config.xml will be filtered by the tag \<Name\>. If the content "SRAM2 erasing in case of reset" is founded,
+*This means the SRAM2_RST protections will be modified. The STiRoT_Config.xml will be filtered by the tag \<Name\>. If the content "SRAM2 erasing in case of reset" is found,
 the tag \<Value\> content will be stored. Depending of the value, the option byte protection SRAM2_RST will be modified in the programming.bat file*
 
 
@@ -462,7 +471,7 @@ It is possible to modify the protections of the Rot Project. To update the prote
 * -ms (--macro_start) Macro symbol to define the start protection
 * -me (--macro_end) Macro symbol to define the end protection
 * -msec (--macro_sector) Macro symbol to define number of sector in the board
-* -b (--begin)   Value to modify in the script file (wrpgrp1,wrpgrp2,hdp1...)
+* -b (--begin)   Value to modify in the script file (wrpgrp1,wrpgrp2, hdp_start, hdp_end, hdp1_start, hdp1_end, ...)
 * --division :   Sector group size
 * Rot script to be modified
 
@@ -477,7 +486,7 @@ searched in the image_macros_preprocessed_bl2.c file.*
 Finally the wrpgrp1 protection will be updated in the ob_flash_programming.bat script*
 
 ### Modify the script variable value
-It is possible to modify the value of one variable in the Rot scripts. 
+It is possible to modify the value of one variable in the Rot scripts.
 
 To update the values the following options must be defined :
 
@@ -488,12 +497,12 @@ To update the values the following options must be defined :
 * -b (--begin)   Value to modify in the script file
 * OEMxRot script to be modified
 
-Example : 
+Example :
 ```
 flash --layout image_macros_preprocessed_bl2.c -m RE_BL2_BOOT_ADDRESS -b nsbootadd hardening.bat
 ```
 *This means the RE_BL2_BOOT_ADDRESS symbol will be searched in the image_macros_preprocessed_bl2.c file.
-If the symbol is founded, its value will be stored (otherwise an error will be displayed).*
+If the symbol is found, its value will be stored (otherwise an error will be displayed).*
 
 *The value of the nsbootadd variable in the hardening.bat file will be updated.*
 
@@ -507,7 +516,7 @@ If the symbol is founded, its value will be stored (otherwise an error will be d
 ```
 flash -xml OEMiRoT_Secure_Code.xml -n "Image output file" -b s_code_image ob_flash_programming.bat
 ```
-*This means the OEMiRoT_Secure_Code.xml will be filtered by the tag \<Name\>. If the content "Image output file" is founded,
+*This means the OEMiRoT_Secure_Code.xml will be filtered by the tag \<Name\>. If the content "Image output file" is found,
 the tag \<Value\> content will be used to update the value of "s_code_image" in the ob_flash_programming.bat file*
 
 #### Extra options
@@ -516,7 +525,7 @@ the tag \<Value\> content will be used to update the value of "s_code_image" in 
 
 It this possible to modify the input value. To do this, it is necessary to use the following options :
 * -e    (--expression) Mathematical formula to modify the value. 
-  * value : To define the value founded
+  * value : To define the value found
   * val"x" : When using multiple input values
   * const"x" : Define the value of the constant to use. 
 * -cons (--constant) Define the constant value. It is necessary to use the same argument to define multiple constants
@@ -527,9 +536,60 @@ flash -xml OEMiRoT_Secure_Code.xml -n "Firmware area size" -nxml "Firmware area 
 ```
 *This means the OEMiRoT_Secure_Code.xml will be filtered by the tag \<Name\>.*
 
- *If the content "Firmware area size" is founded,the tag \<Value\> content will be used. The value will be used in the expression function.
+ *If the content "Firmware area size" is found,the tag \<Value\> content will be used. The value will be used in the expression function.
  In this case the value will be multiplied by itself. The the value results will be divided by 0x500. The final result will be used to update the "s_code_image" variable ob_flash_programming.bat file.*
 
+
+### Modify a file variable value
+It is possible to modify the value of one variable in the Rot scripts.
+
+To update the values the following options must be defined :
+
+#### Modifying the values with image_macros_preprocessed_bl2.c file
+**modifyfilevalue**
+* -xml (--xml)  Path of xml file configuration
+* -xml (--name_name) The value of the parameter with tag \<Name\> will be used to modify the file value.
+* -var (--variable) The variable name to modify
+* -sft (--shift) The value recovered from the xml will be shifted to the left (in bit unit)
+* File to be modified
+
+Example :
+```
+flash -xml "SMAK_Config_General.xml" -n "Product state minimal allowed" -var "OPTSR_PRG" -sft "8" Option_Bytes.csv
+```
+*This means the SMAK_Config_General.xml will be filtered by the tag \<Name\>. If the content "Product state minimal allowed" is found,
+the tag \<Value\> content will be used to update the value of "OPTSR_PRG" in the Option_Bytes.csv file*
+
+*The shift value will shift to the left the value recovered from the xml file. The value shifted will be replaced the value in the Option_Bytes.csv file. Example :*
+
+  CSV file :
+  ```
+  OPTSR_PRG,0x30f0edf8
+  ```
+
+  XML file :
+  ```
+  <List>
+      <Name>Product state minimal allowed</Name>
+      <Value>0xC6</Value>
+      .....
+      ....
+  ```
+
+  Shift value
+  ```
+  8
+  ```
+
+  New CSV file value
+  ```
+  OPTSR_PRG,0x30f0c6f8
+  ```
+
+
+#### Extra options
+* -del (--delimiter) Special char between variable name and value. Ex : (,), (;), (=).... By default the delimiter (,) is used.
+* --upper . Special flag to define if the output value will be in capital letter. By default the value is false
 
 ## Assembly secure and non secure images
 It is possible to assembly two binaries in one. This steps are required when 
@@ -611,9 +671,9 @@ iofile --layout image_macros_preprocessed_bl2.c -mi RE_APP_IMAGE_NUMBER -me RE_E
 ```
 
 *This means the RE_APP_IMAGE_NUMBER symbol will be searched in the image_macros_preprocessed_bl2.c file.
-If the symbol is founded, its value will be stored (otherwise an error will be displayed).
+If the symbol is found, its value will be stored (otherwise an error will be displayed).
 The RE_ENCRYPTION symbol will be also searched in the image_macros_preprocessed_bl2.c file.
-If the symbol is founded, its value will be stored (otherwise an error will be displayed).*
+If the symbol is found, its value will be stored (otherwise an error will be displayed).*
 
 *The OEMiRoT_NonSecure_Code file will be filtered by \<Name\> in order to get the follow elements :*
 ```
@@ -639,7 +699,7 @@ If the symbol is founded, its value will be stored (otherwise an error will be d
 		<Default>../../ROT_Appli_TrustZone/Binary/rot_tz_ns_app_enc_sign.hex</Default>
 	</Output>
 ```
-*If the value founded for RE_APP_IMAGE_NUMBER is equals to "1" and the value founded for RE_ENCRYPTION is equals to "0", the elements will be updated :*
+*If the value found for RE_APP_IMAGE_NUMBER is equals to "1" and the value found for RE_ENCRYPTION is equals to "0", the elements will be updated :*
 ```
 	<Param>
 		<Name>Encryption key</Name>
@@ -725,9 +785,9 @@ python3 -m pip install pyinstaller
 In the root folder, execute the command :
 
 ```
-pyinstaller AppliCfg/main.py --onefile --name AppliCfg
+pyinstaller AppliCfg.py --onedir --name AppliCfg
 ```
 
-The executable file will be founded in the dist folder.
+The executable file will be found in the dist folder.
 
 For more information,  see the pyinstaller documentation

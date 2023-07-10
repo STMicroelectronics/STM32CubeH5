@@ -23,9 +23,8 @@
 
 /* Private typedef -----------------------------------------------------------*/
 /* Private defines -----------------------------------------------------------*/
-#define SBS_EXT_EPOCHSELCR_EPOCH_SEL_S_EPOCH (1U << SBS_EPOCHSELCR_EPOCH_SEL_Pos )
-#define MAX_SIZE                             (0x100)
-#define ST_SHA256_TIMEOUT                    ((uint32_t) 3U)
+#define SBS_EXT_EPOCHSELCR_EPOCH_SEL_S_EPOCH    (1U << SBS_EPOCHSELCR_EPOCH_SEL_Pos)
+#define MAX_SIZE                                (0x100)
 
 /* Private variables ---------------------------------------------------------*/
 
@@ -42,18 +41,12 @@
 int32_t OBK_Flash_ReadEncrypted(uint32_t Offset, void *pData, uint32_t Length)
 {
   uint32_t i = 0U;
-#if defined(BL2_HW_ACCEL_ENABLE)
   CRYP_HandleTypeDef hcryp = { 0U };
   uint32_t SaesTimeout = 100U;
   uint8_t DataEncrypted[MAX_SIZE] = {0U};
-#endif /* BL2_HW_ACCEL_ENABLE */
   uint8_t *p_source = (uint8_t *) (FLASH_OBK_BASE_S + Offset);
-#if defined(BL2_HW_ACCEL_ENABLE)
   uint8_t *p_destination = (uint8_t *) DataEncrypted;
   uint32_t a_aes_iv[4] = {0x8001D1CEU, 0xD1CED1CEU, 0xD1CE8001U, 0xCED1CED1U};
-#else
-  uint8_t *p_destination = (uint8_t *) pData;
-#endif /* BL2_HW_ACCEL_ENABLE */
 
   /* Check Length param */
   if (Length > MAX_SIZE)
@@ -66,7 +59,6 @@ int32_t OBK_Flash_ReadEncrypted(uint32_t Offset, void *pData, uint32_t Length)
     *p_destination = *p_source;
   }
 
-#if defined(BL2_HW_ACCEL_ENABLE)
   __HAL_RCC_SBS_CLK_ENABLE();
   __HAL_RCC_SAES_CLK_ENABLE();
 
@@ -101,7 +93,6 @@ int32_t OBK_Flash_ReadEncrypted(uint32_t Offset, void *pData, uint32_t Length)
     return ARM_DRIVER_ERROR_SPECIFIC;
   }
   __HAL_RCC_SAES_CLK_DISABLE();
-#endif /* BL2_HW_ACCEL_ENABLE */
 
   return ARM_DRIVER_OK;
 }

@@ -2534,6 +2534,9 @@
         <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\STM32_USBPD_Library\Core\lib\USBPDCORE_NOPD_CM33_wc32.a</name>
       </file>
       <file>
+        <name>$PROJ_DIR$/../../../../../../Middlewares/ST/STM32_USBPD_Library/Core/lib/USBPDCORE_NOPD_CM33_Keil.lib</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\STM32_USBPD_Library\Core\src\usbpd_trace.c</name>
       </file>
       <file>

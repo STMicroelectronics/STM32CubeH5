@@ -1,4 +1,4 @@
-## <b>Tx_LowPower application Description</b>
+## <b>Tx_LowPower Application Description</b>
 
 This application provides an example of Azure RTOS ThreadX stack usage, it shows how to develop an application using ThreadX lowpower feature.
 It demonstrates how to configure the LowPower feature of Azure RTOS ThreadX stack. In addition, it shows how to use ThreadX MACRO related to the LowPower feature.
@@ -49,7 +49,7 @@ For keeping track of time while in low power mode, there are two possibilities:
     Note that in this situation, a low power clock must be used in order to wake up the CPU for the next ThreadX timer expiration.
 
     Therefore an alternative clock must be programmed. Program the hardware timer source such that the next timer interrupt is equal to: *tx_low_power_next_expiration* tick_frequency.
-    The *tick_frequency* is application-specific and typically set up in **tx_low_level_initialize**.
+    The *tick_frequency* is application-specific and typically set up in **tx_initialize_low_level**.
 
     1.2. There are no ThreadX timers active: Function **tx_timer_get_next** returns **TX_FALSE**.
 

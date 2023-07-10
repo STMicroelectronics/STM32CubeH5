@@ -7,6 +7,7 @@ setlocal EnableDelayedExpansion
 
 set "projectdir=%~dp0"
 set isGeneratedByCubeMX=%PROJECT_GENERATED_BY_CUBEMX%
+
 :: CubeProgammer path and input files
 set ob_flash_programming="ob_flash_programming.bat"
 set obkey_programming="obkey_programming.bat"
@@ -15,22 +16,30 @@ set ob_flash_log="ob_flash_programming.log"
 set obkey_programming_log="obkey_programming.log"
 set provisioning_log="provisioning.log"
 
+if "%isGeneratedByCubeMX%" == "true" (
+set appli_dir=%oemirot_boot_path_project%
+) else (
+set appli_dir=../../../%oemirot_boot_path_project%
+)
+
 set "flash_layout=%cube_fw_path%\Projects\STM32H573I-DK\Applications\ROT\OEMiROT_Boot\Inc\flash_layout.h"
+
+:: Get config updated by OEMiROT_Boot
+set tmp_file=%cube_fw_path%/Projects/STM32H573I-DK/ROT_Provisioning/img_config.bat
 
 set fw_in_bin="Firmware binary input file"
 set fw_out_bin="Image output file"
-set ns_app_bin="%oemirot_boot_path_project%\EWARM\NonSecure\STM32H573I-DK_NS\Exe\Project.bin"
-set ns_app_bin=%ns_app_bin:\=/%
-set s_app_bin="%oemirot_boot_path_project%\EWARM\Secure\STM32H573I-DK_S\Exe\Project.bin"
-set s_app_bin=%s_app_bin:\=/%
+set ns_app_bin="%appli_dir%/Binary/rot_tz_ns_app.bin"
+set s_app_bin="%appli_dir%/Binary/rot_tz_s_app.bin"
 set s_code_image_file="%projectdir%Images\OEMiROT_S_Code_Image.xml"
 set ns_code_image_file="%projectdir%Images\OEMiROT_NS_Code_Image.xml"
-set ns_app_enc_sign_hex="%oemirot_boot_path_project%\Binary\rot_tz_ns_app_enc_sign.hex"
-set ns_app_enc_sign_hex=%ns_app_enc_sign_hex:\=/%
-set s_app_enc_sign_hex="%oemirot_boot_path_project%\Binary\rot_tz_s_app_enc_sign.hex"
-set s_app_enc_sign_hex=%s_app_enc_sign_hex:\=/%
+set s_data_xml="%projectdir%Images\OEMiROT_S_Data_Image.xml"
+set ns_data_xml="%projectdir%Images\OEMiROT_NS_Data_Image.xml"
+set ns_app_enc_sign_hex="%appli_dir%/Binary/rot_tz_ns_app_enc_sign.hex"
+set s_app_enc_sign_hex="%appli_dir%/Binary/rot_tz_s_app_enc_sign.hex"
 
 :: Initial configuration
+set product_state=OPEN
 set connect_no_reset=-c port=SWD speed=fast ap=1 mode=Hotplug
 
 goto exe:
@@ -67,6 +76,7 @@ echo ===== please modify the env.bat to set the right path
 goto step_error
 )
 
+:: ====================================================== STM32H5 product preparation ======================================================
 :: =============================================== Steps to create the OEMiROT_Config.obk file ==============================================
 echo Step 1 : Configuration management
 echo    * OEMiROT_Config.obk generation:
@@ -79,18 +89,22 @@ echo.
 if [%1] neq [AUTO] pause >nul
 :: =============================================== Steps to create the DA_Config.obk file ===================================================
 echo    * DA_Config.obk generation:
-echo        From TrustedPackageCreator (tab H5-OBkey).
-echo        Select DA_Config.xml(Default path is \ROT_Provisioning\DA\DA_Config.xml)
 echo        Warning: Default keys must NOT be used in a product. Make sure to regenerate your own keys!
-echo        Update the configuration (if/as needed) then generate DA_Config.xml file
+echo        From TrustedPackageCreator (tab H5-DA CertifGen),
+echo        update the keys(s) (in \ROT_Provisioning\DA\Keys) and permissions (if/as needed)
+echo        then regenerate the certificate(s)
+echo        From TrustedPackageCreator (tab H5-OBKey),
+echo        Select DA_Config.xml (in \ROT_Provisioning\DA\Config)
+echo        Update the configuration (if/as needed) then generate DA_Config.obk file
 echo        Press any key to continue...
 echo.
 if [%1] neq [AUTO] pause >nul
 :: ========================================================= Images generation steps ========================================================
+:cubemx
+:: Configure OEMIROT_Boot project as OEMIROT
 set "command=%python%%applicfg% setdefine -a comment -n OEMUROT_ENABLE -v 1 %flash_layout%"
 %command%
 IF !errorlevel! NEQ 0 goto :step_error
-:cubemx
 echo Step 2 : Images generation
 echo    * Boot firmware image generation
 echo        Open the OEMiROT_Boot project with preferred toolchain and rebuild all files.
@@ -100,6 +114,11 @@ echo.
 if [%1] neq [AUTO] pause >nul
 ::update xml file
 if "%isGeneratedByCubeMX%" == "true" goto :cubemx1
+call %tmp_file%
+if  "%app_image_number%" == "2" goto :next
+set ns_app_enc_sign_hex="%appli_dir%/Binary/rot_tz_app_enc_sign.hex"
+set ns_app_bin="%appli_dir%/Binary/rot_tz_app.bin"
+:next
 set "command=%python%%applicfg% xmlval -v %s_app_bin% --string -n %fw_in_bin% %s_code_image_file%"
 %command%
 IF !errorlevel! NEQ 0 goto :step_error
@@ -124,12 +143,21 @@ echo        Generate the data_enc_sign.hex image
 echo        Press any key to continue...
 echo.
 if [%1] neq [AUTO] pause >nul
+if "%s_data_image_number%" == "0" (goto :no_s_data)
+%stm32tpccli% -pb %s_data_xml% >> %provisioning_log%
+if !errorlevel! neq 0 goto :step_error
+:no_s_data
+
 echo    * Data non secure generation (if Data non secure image is enabled)
-echo        Select OEMiRoT_NS_Data_Image.xml(Default path is \ROT_Provisioning\OEMiROT\Images\OEMiRoT_NS_Data_Image.xml)
+echo        Select OEMiROT_NS_Data_Image.xml(Default path is \ROT_Provisioning\OEMiROT\Images\OEMiROT_NS_Data_Image.xml)
 echo        Generate the data_enc_sign.hex image
 echo        Press any key to continue...
 echo.
 if [%1] neq [AUTO] pause >nul
+if "%ns_data_image_number%" == "0" (goto :no_ns_data)
+%stm32tpccli% -pb %ns_data_xml% >> %provisioning_log%
+if !errorlevel! neq 0 goto :step_error
+:no_ns_data
 :cubemx1
 :: ========================================================= Board provisioning steps =======================================================
 echo Step 3 : Provisioning
@@ -266,7 +294,7 @@ if [%1] neq [AUTO] pause >nul
 echo =====
 echo ===== The board is correctly configured.
 if "%isGeneratedByCubeMX%" == "true" goto :no_menu
-echo ===== Connect UART console (11500 baudrate) to get application menu.
+echo ===== Connect UART console (115200 baudrate) to get application menu.
 
 :no_menu
 echo =====

@@ -39,6 +39,11 @@
 			<locationURI>PARENT-1-PROJECT_LOC/Nx_Iperf.ioc</locationURI>
 		</link>
 		<link>
+			<name>Doc/README.md</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/README.md</locationURI>
+		</link>
+		<link>
 			<name>Drivers/CMSIS/system_stm32h5xx.c</name>
 			<type>1</type>
 			<locationURI>PARENT-1-PROJECT_LOC/Core/Src/system_stm32h5xx.c</locationURI>
@@ -4109,6 +4114,16 @@
 			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/ST/threadx/ports/cortex_m33/gnu/src/tx_thread_interrupt_control.S</locationURI>
 		</link>
 		<link>
+			<name>Middlewares/ThreadX/Core/tx_thread_interrupt_disable.S</name>
+			<type>1</type>
+			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/ST/threadx/ports/cortex_m33/gnu/src/tx_thread_interrupt_disable.S</locationURI>
+		</link>
+		<link>
+			<name>Middlewares/ThreadX/Core/tx_thread_interrupt_restore.S</name>
+			<type>1</type>
+			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/ST/threadx/ports/cortex_m33/gnu/src/tx_thread_interrupt_restore.S</locationURI>
+		</link>
+		<link>
 			<name>Middlewares/ThreadX/Core/tx_thread_preemption_change.c</name>
 			<type>1</type>
 			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/ST/threadx/common/src/tx_thread_preemption_change.c</locationURI>
@@ -4606,7 +4621,7 @@
 		<link>
 			<name>Application/User/NetXDuo/App/nx_iperf.c</name>
 			<type>1</type>
-			<location>PARENT-6-PROJECT_LOC/Middlewares/ST/netxduo/utility/iperf/nx_iperf.c</location>
+			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/ST/netxduo/utility/iperf/nx_iperf.c</locationURI>
 		</link>
 	</linkedResources>
 </projectDescription>

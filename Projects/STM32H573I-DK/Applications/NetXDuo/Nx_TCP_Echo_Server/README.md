@@ -1,5 +1,5 @@
 
-##  <b>Nx_TCP_Echo_Server application Description</b>
+##  <b>Nx_TCP_Echo_Server Application Description</b>
 
 This application provides an example of Azure RTOS NetX/NetXDuo stack usage .
 It shows how to develop a NetX TCP server to communicate with a remote client using
@@ -147,9 +147,9 @@ In order to make the program work, you must do the following :
 
  - Run the [echotool](https://github.com/PavelBansky/EchoTool/releases/tag/v1.5.0.0) utility on a windows console as following:
 
-       c:\> echotool.exe  <the board IP address> /p tcp  /r  <DEFAULT_PORT> /n 10 /d "Hello World"
+       c:\> echotool.exe  <the board IP address> /p tcp  /r  <DEFAULT_PORT> /n 10 /t 60 /d "Hello World"
 
-       Example : c:\> echotool.exe 192.168.1.2 /p tcp /r 6000 /n 10 /d "Hello World"
+       Example : c:\> echotool.exe 192.168.1.2 /p tcp /r 6000 /n 10 /t 60 /d "Hello World"
 
  - Rebuild all files and load your image into target memory
  - Run the application

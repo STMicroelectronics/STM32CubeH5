@@ -20,6 +20,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+
 /* USER CODE BEGIN Includes */
 
 /* USER CODE END Includes */
@@ -31,7 +32,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN Define */
- 
+
 /* USER CODE END Define */
 
 /* Private macro -------------------------------------------------------------*/
@@ -94,10 +95,10 @@ void HAL_XSPI_MspInit(XSPI_HandleTypeDef* hxspi)
     PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_OSPI;
     PeriphClkInitStruct.PLL2.PLL2Source = RCC_PLL2_SOURCE_HSI;
     PeriphClkInitStruct.PLL2.PLL2M = 8;
-    PeriphClkInitStruct.PLL2.PLL2N = 40;
+    PeriphClkInitStruct.PLL2.PLL2N = 45;
     PeriphClkInitStruct.PLL2.PLL2P = 2;
     PeriphClkInitStruct.PLL2.PLL2Q = 2;
-    PeriphClkInitStruct.PLL2.PLL2R = 5;
+    PeriphClkInitStruct.PLL2.PLL2R = 2;
     PeriphClkInitStruct.PLL2.PLL2RGE = RCC_PLL2_VCIRANGE_3;
     PeriphClkInitStruct.PLL2.PLL2VCOSEL = RCC_PLL2_VCORANGE_WIDE;
     PeriphClkInitStruct.PLL2.PLL2FRACN = 0;

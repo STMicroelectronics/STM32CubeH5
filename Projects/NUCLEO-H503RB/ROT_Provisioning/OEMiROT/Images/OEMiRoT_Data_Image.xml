@@ -35,7 +35,7 @@
 	</Param>
 	<Param>
 		<Name>Data download slot size</Name>
-		<Value>0x2000</Value>
+		<Value>0x0</Value>
 		<Type>Data</Type>
 		<Command>-S</Command>
 		<Hidden>1</Hidden>
@@ -103,7 +103,7 @@
 	</Param>
 	<Param>
 		<Name>Hex format</Name>
-		<Value>0x801E000</Value>
+		<Value>0x0</Value>
 		<Type>Data</Type>
 		<Command>-x</Command>
 		<Hidden>1</Hidden>

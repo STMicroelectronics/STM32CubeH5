@@ -34,7 +34,6 @@ extern "C" {
 #define ARM_DRIVER_VERSION_MAJOR_MINOR(major,minor) (((major) << 8) | (minor))
 
 #define ARM_FLASH_API_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR(2,1)  /* API version */
-extern struct low_level_device FLASH0_DEV;
 
 struct flash_range
 {
@@ -58,10 +57,10 @@ struct low_level_device
 #endif
 };
 
+extern struct low_level_device FLASH0_DEV;
 
 #if !defined(LOCAL_LOADER_CONFIG)
 void NMI_Handler(void);
-void memcpy_flash(void *dest, const void *src, size_t n);
 #endif
 
 /**

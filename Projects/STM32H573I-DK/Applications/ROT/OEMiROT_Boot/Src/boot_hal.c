@@ -127,12 +127,14 @@ void boot_platform_noimage(void)
   /* Update run time protections for application execution */
   LL_SECU_UpdateLoaderRunTimeProtections();
 
+
   /* Check Flow control */
   FLOW_CONTROL_CHECK(uFlowProtectValue, FLOW_CTRL_STAGE_3_L);
   uFlowStage = FLOW_STAGE_CHK;
 
   /* Second function call to resist to basic hardware attacks */
   LL_SECU_UpdateLoaderRunTimeProtections();
+
 
   /* Check Flow control */
   FLOW_CONTROL_CHECK(uFlowProtectValue, FLOW_CTRL_STAGE_4_L);
@@ -293,14 +295,13 @@ void boot_clear_bl2_ram_area(void)
   */
 int boot_hash_ref_store(void)
 {
-#ifdef OEMUROT_ENABLE
+#if  defined(OEMUROT_ENABLE)
   OBK_Hdpl2Data OBK_hdpl2_data = { 0U };
 #else
   OBK_Hdpl1Data OBK_hdpl1_data = { 0U };
 #endif
-
   /* Read all OBK hdpl1/2 data & control SHA256 */
-#ifdef OEMUROT_ENABLE
+#if  defined(OEMUROT_ENABLE)
   if (OBK_ReadHdpl2Data(&OBK_hdpl2_data) !=  HAL_OK)
 #else
   if (OBK_ReadHdpl1Data(&OBK_hdpl1_data) !=  HAL_OK)
@@ -310,14 +311,14 @@ int boot_hash_ref_store(void)
   }
 
   /* update hash references */
-#ifdef OEMUROT_ENABLE
+#if  defined(OEMUROT_ENABLE)
   memcpy(&OBK_hdpl2_data.Image0SHA256[0], ImageValidHashRef, (SHA256_LENGTH * MCUBOOT_IMAGE_NUMBER));
 #else
   memcpy(&OBK_hdpl1_data.Image0SHA256[0], ImageValidHashRef, (SHA256_LENGTH * MCUBOOT_IMAGE_NUMBER));
 #endif
 
   /* Update all OBK hdpl1 data with associated hash references */
-#ifdef OEMUROT_ENABLE
+#if  defined(OEMUROT_ENABLE)
   if (OBK_UpdateHdpl2Data(&OBK_hdpl2_data) != HAL_OK)
 #else
   if (OBK_UpdateHdpl1Data(&OBK_hdpl1_data) != HAL_OK)
@@ -335,14 +336,14 @@ int boot_hash_ref_store(void)
   */
 int boot_hash_ref_load(void)
 {
-#ifdef OEMUROT_ENABLE
+#if  defined(OEMUROT_ENABLE)
   OBK_Hdpl2Data OBK_hdpl2_data = { 0U };
 #else
   OBK_Hdpl1Data OBK_hdpl1_data = { 0U };
 #endif
 
   /* Read all OBK hdpl1 data & control SHA256 */
-#ifdef OEMUROT_ENABLE
+#if  defined(OEMUROT_ENABLE)
   if (OBK_ReadHdpl2Data(&OBK_hdpl2_data) != HAL_OK)
 #else
   if (OBK_ReadHdpl1Data(&OBK_hdpl1_data) != HAL_OK)
@@ -352,7 +353,7 @@ int boot_hash_ref_load(void)
   }
 
   /* update hash references */
-#ifdef OEMUROT_ENABLE
+#if  defined(OEMUROT_ENABLE)
   memcpy(ImageValidHashRef, &OBK_hdpl2_data.Image0SHA256[0], (SHA256_LENGTH * MCUBOOT_IMAGE_NUMBER));
 #else
   memcpy(ImageValidHashRef, &OBK_hdpl1_data.Image0SHA256[0], (SHA256_LENGTH * MCUBOOT_IMAGE_NUMBER));
@@ -501,7 +502,6 @@ int32_t boot_platform_init(void)
          - Low Level Initialization
        */
     HAL_Init();
-
 #ifdef OEMIROT_DEV_MODE
     /* Init for log */
     stdio_init();
@@ -516,8 +516,7 @@ int32_t boot_platform_init(void)
     RNG_Init();
 
     (void)fih_delay_init();
-
-#ifdef OEMUROT_ENABLE
+#if  defined(OEMUROT_ENABLE)
     /* disable and clean STiROT mpu config */
     LL_SECU_DisableCleanMpu();
 #endif
@@ -529,13 +528,12 @@ int32_t boot_platform_init(void)
 
     /* get descriptor address to support new and old descriptor */
     getDescriptorAdd();
-#if  defined(BL2_HW_ACCEL_ENABLE)
+
     /* Init DHUK */
     OBK_InitDHUK();
-#endif
 
     /* Configure keys */
-#ifdef OEMUROT_ENABLE
+#if  defined(OEMUROT_ENABLE)
     OBK_ReadHdpl2Config(&OBK_Hdpl2_Cfg);
 #else
     OBK_ReadHdpl1Config(&OBK_Hdpl1_Cfg);
@@ -552,7 +550,7 @@ int32_t boot_platform_init(void)
     LL_SECU_CheckStaticProtections();
 
     /* Control Hdpl1/2 config */
-#ifdef OEMUROT_ENABLE
+#if  defined(OEMUROT_ENABLE)
     OBK_VerifyHdpl2Config(&OBK_Hdpl2_Cfg);
 #else
     OBK_VerifyHdpl1Config(&OBK_Hdpl1_Cfg);

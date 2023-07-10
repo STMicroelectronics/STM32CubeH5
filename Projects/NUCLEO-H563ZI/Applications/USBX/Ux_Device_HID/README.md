@@ -1,4 +1,4 @@
-## <b>Ux_Device_HID application Description</b>
+## <b>Ux_Device_HID Application Description</b>
 
 This application provides an example of Azure RTOS USBX stack usage on STM32H563xx board,
 it shows how to develop USB Device Human Interface "HID" mouse based application.

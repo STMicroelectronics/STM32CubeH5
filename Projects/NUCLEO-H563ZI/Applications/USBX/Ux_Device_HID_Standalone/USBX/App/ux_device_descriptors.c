@@ -5,7 +5,7 @@
   * @author  MCD Application Team
   * @brief   USBX Device descriptor header file
   ******************************************************************************
-  * @attention
+   * @attention
   *
   * Copyright (c) 2023 STMicroelectronics.
   * All rights reserved.
@@ -53,14 +53,14 @@ uint8_t UserHIDInterface[] = {
 };
 
 /* The generic device descriptor buffer that will be filled by builder
-Size of the buffer is the maximum possible device FS descriptor size. */
+   Size of the buffer is the maximum possible device FS descriptor size. */
 #if defined ( __ICCARM__ ) /* IAR Compiler */
 #pragma data_alignment=4
 #endif /* defined ( __ICCARM__ ) */
 __ALIGN_BEGIN static uint8_t DevFrameWorkDesc_FS[USBD_FRAMEWORK_MAX_DESC_SZ] __ALIGN_END = {0};
 
 /* The generic device descriptor buffer that will be filled by builder
-Size of the buffer is the maximum possible device HS descriptor size. */
+   Size of the buffer is the maximum possible device HS descriptor size. */
 #if defined ( __ICCARM__ ) /* IAR Compiler */
 #pragma data_alignment=4
 #endif /* defined ( __ICCARM__ ) */
@@ -74,9 +74,9 @@ static uint8_t *pDevFrameWorkDesc_HS = DevFrameWorkDesc_HS;
 /* USER CODE END PV0 */
 
 /* String Device Framework :
-Byte 0 and 1 : Word containing the language ID : 0x0904 for US
-Byte 2       : Byte containing the index of the descriptor
-Byte 3       : Byte containing the length of the descriptor string
+ Byte 0 and 1 : Word containing the language ID : 0x0904 for US
+ Byte 2       : Byte containing the index of the descriptor
+ Byte 3       : Byte containing the length of the descriptor string
 */
 #if defined ( __ICCARM__ ) /* IAR Compiler */
 #pragma data_alignment=4
@@ -85,9 +85,9 @@ __ALIGN_BEGIN UCHAR USBD_string_framework[USBD_STRING_FRAMEWORK_MAX_LENGTH]
 __ALIGN_END = {0};
 
 /* Multiple languages are supported on the device, to add
-a language besides English, the Unicode language code must
-be appended to the language_id_framework array and the length
-adjusted accordingly. */
+   a language besides English, the Unicode language code must
+   be appended to the language_id_framework array and the length
+   adjusted accordingly. */
 
 #if defined ( __ICCARM__ ) /* IAR Compiler */
 #pragma data_alignment=4
@@ -191,12 +191,12 @@ static void USBD_FrameWork_HID_Desc(USBD_DevClassHandleTypeDef *pdev,
 /* USER CODE END 0 */
 
 /**
-* @brief  USBD_Get_Device_Framework_Speed
-*         Return the device speed descriptor
-* @param  Speed : HIGH or FULL SPEED flag
-* @param  length : length of HIGH or FULL SPEED array
-* @retval Pointer to descriptor buffer
-*/
+  * @brief  USBD_Get_Device_Framework_Speed
+  *         Return the device speed descriptor
+  * @param  Speed : HIGH or FULL SPEED flag
+  * @param  length : length of HIGH or FULL SPEED array
+  * @retval Pointer to descriptor buffer
+  */
 uint8_t *USBD_Get_Device_Framework_Speed(uint8_t Speed, ULONG *Length)
 {
   uint8_t *pFrameWork = NULL;
@@ -231,11 +231,11 @@ uint8_t *USBD_Get_Device_Framework_Speed(uint8_t Speed, ULONG *Length)
 }
 
 /**
-* @brief  USBD_Get_String_Framework
-*         Return the language_id_framework
-* @param  Length : Length of String_Framework
-* @retval Pointer to language_id_framework buffer
-*/
+  * @brief  USBD_Get_String_Framework
+  *         Return the language_id_framework
+  * @param  Length : Length of String_Framework
+  * @retval Pointer to language_id_framework buffer
+  */
 uint8_t *USBD_Get_String_Framework(ULONG *Length)
 {
   uint16_t len = 0U;
@@ -282,11 +282,11 @@ uint8_t *USBD_Get_String_Framework(ULONG *Length)
 }
 
 /**
-* @brief  USBD_Get_Language_Id_Framework
-*         Return the language_id_framework
-* @param  Length : Length of Language_Id_Framework
-* @retval Pointer to language_id_framework buffer
-*/
+  * @brief  USBD_Get_Language_Id_Framework
+  *         Return the language_id_framework
+  * @param  Length : Length of Language_Id_Framework
+  * @retval Pointer to language_id_framework buffer
+  */
 uint8_t *USBD_Get_Language_Id_Framework(ULONG *Length)
 {
   uint8_t count = 0U;
@@ -302,12 +302,12 @@ uint8_t *USBD_Get_Language_Id_Framework(ULONG *Length)
 }
 
 /**
-* @brief  USBD_Get_Interface_Number
-*         Return interface number
-* @param  class_type : Device class type
-* @param  interface_type : Device interface type
-* @retval interface number
-*/
+  * @brief  USBD_Get_Interface_Number
+  *         Return interface number
+  * @param  class_type : Device class type
+  * @param  interface_type : Device interface type
+  * @retval interface number
+  */
 uint16_t USBD_Get_Interface_Number(uint8_t class_type, uint8_t interface_type)
 {
   uint8_t itf_num = 0U;
@@ -334,12 +334,12 @@ uint16_t USBD_Get_Interface_Number(uint8_t class_type, uint8_t interface_type)
 }
 
 /**
-* @brief  USBD_Get_Configuration_Number
-*         Return configuration number
-* @param  class_type : Device class type
-* @param  interface_type : Device interface type
-* @retval configuration number
-*/
+  * @brief  USBD_Get_Configuration_Number
+  *         Return configuration number
+  * @param  class_type : Device class type
+  * @param  interface_type : Device interface type
+  * @retval configuration number
+  */
 uint16_t USBD_Get_Configuration_Number(uint8_t class_type, uint8_t interface_type)
 {
   uint8_t cfg_num = 1U;
@@ -357,11 +357,11 @@ uint16_t USBD_Get_Configuration_Number(uint8_t class_type, uint8_t interface_typ
 
 #if USBD_HID_CLASS_ACTIVATED == 1U
 /**
-* @brief  USBD_HID_ReportDesc
-*         Return the device HID Report Descriptor
-* @param  hid_type : HID Device type
-* @retval Pointer to HID Report Descriptor buffer
-*/
+  * @brief  USBD_HID_ReportDesc
+  *         Return the device HID Report Descriptor
+  * @param  hid_type : HID Device type
+  * @retval Pointer to HID Report Descriptor buffer
+  */
 uint8_t *USBD_HID_ReportDesc(uint8_t hid_type)
 {
   uint8_t *pHidReportDesc = NULL;
@@ -372,12 +372,11 @@ uint8_t *USBD_HID_ReportDesc(uint8_t hid_type)
 
   switch(hid_type)
   {
-  case INTERFACE_HID_MOUSE:
-    pHidReportDesc = USBD_HID_MOUSE_ReportDesc;
-    break;
-
-  default:
-    break;
+    case INTERFACE_HID_MOUSE:
+      pHidReportDesc = USBD_HID_MOUSE_ReportDesc;
+      break;
+    default:
+      break;
   }
 
   /* USER CODE HidReportDesc1 */
@@ -388,11 +387,11 @@ uint8_t *USBD_HID_ReportDesc(uint8_t hid_type)
 }
 
 /**
-* @brief  USBD_HID_ReportDesc_length
-*         Return the device HID Report Descriptor
-* @param  hid_type : HID Device type
-* @retval Size of HID Report Descriptor buffer
-*/
+  * @brief  USBD_HID_ReportDesc_length
+  *         Return the device HID Report Descriptor
+  * @param  hid_type : HID Device type
+  * @retval Size of HID Report Descriptor buffer
+  */
 uint16_t USBD_HID_ReportDesc_length(uint8_t hid_type)
 {
   uint16_t ReportDesc_Size = 0;
@@ -403,12 +402,11 @@ uint16_t USBD_HID_ReportDesc_length(uint8_t hid_type)
 
   switch(hid_type)
   {
-  case INTERFACE_HID_MOUSE:
-    ReportDesc_Size = sizeof(USBD_HID_MOUSE_ReportDesc);
-    break;
-
-  default:
-    break;
+    case INTERFACE_HID_MOUSE:
+      ReportDesc_Size = sizeof(USBD_HID_MOUSE_ReportDesc);
+      break;
+    default:
+      break;
   }
 
   /* USER CODE ReportDesc_Size1 */
@@ -420,13 +418,13 @@ uint16_t USBD_HID_ReportDesc_length(uint8_t hid_type)
 #endif /* USBD_HID_CLASS_ACTIVATED == 1U */
 
 /**
-* @brief  USBD_Desc_GetString
-*         Convert ASCII string into Unicode one
-* @param  desc : descriptor buffer
-* @param  Unicode : Formatted string buffer (Unicode)
-* @param  len : descriptor length
-* @retval None
-*/
+  * @brief  USBD_Desc_GetString
+  *         Convert ASCII string into Unicode one
+  * @param  desc : descriptor buffer
+  * @param  Unicode : Formatted string buffer (Unicode)
+  * @param  len : descriptor length
+  * @retval None
+  */
 static void USBD_Desc_GetString(uint8_t *desc, uint8_t *unicode, uint16_t *len)
 {
   uint8_t idx = 0U;
@@ -450,11 +448,11 @@ static void USBD_Desc_GetString(uint8_t *desc, uint8_t *unicode, uint16_t *len)
 }
 
 /**
-* @brief  USBD_Desc_GetLen
-*         return the string length
-* @param  buf : pointer to the ASCII string buffer
-* @retval string length
-*/
+  * @brief  USBD_Desc_GetLen
+  *         return the string length
+  * @param  buf : pointer to the ASCII string buffer
+  * @retval string length
+  */
 static uint8_t USBD_Desc_GetLen(uint8_t *buf)
 {
   uint8_t  len = 0U;
@@ -470,14 +468,14 @@ static uint8_t USBD_Desc_GetLen(uint8_t *buf)
 }
 
 /**
-* @brief  USBD_Device_Framework_Builder
-*         Device Framework builder
-* @param  pdev: device instance
-* @param  pDevFrameWorkDesc: Pointer to the device framework descriptor
-* @param  UserClassInstance: type of the class to be added
-* @param  Speed: Speed parameter HS or FS
-* @retval status
-*/
+  * @brief  USBD_Device_Framework_Builder
+  *         Device Framework builder
+  * @param  pdev: device instance
+  * @param  pDevFrameWorkDesc: Pointer to the device framework descriptor
+  * @param  UserClassInstance: type of the class to be added
+  * @param  Speed: Speed parameter HS or FS
+  * @retval status
+  */
 static uint8_t *USBD_Device_Framework_Builder(USBD_DevClassHandleTypeDef *pdev,
                                               uint8_t *pDevFrameWorkDesc,
                                               uint8_t *UserClassInstance,
@@ -532,7 +530,7 @@ static uint8_t *USBD_Device_Framework_Builder(USBD_DevClassHandleTypeDef *pdev,
   {
     if ((pdev->classId < USBD_MAX_SUPPORTED_CLASS) &&
         (pdev->NumClasses < USBD_MAX_SUPPORTED_CLASS) &&
-          (UserClassInstance[Idx_Instance] != CLASS_TYPE_NONE))
+        (UserClassInstance[Idx_Instance] != CLASS_TYPE_NONE))
     {
       /* Call the composite class builder */
       (void)USBD_FrameWork_AddClass(pdev,
@@ -540,9 +538,9 @@ static uint8_t *USBD_Device_Framework_Builder(USBD_DevClassHandleTypeDef *pdev,
                                     0, Speed,
                                     (pDevFrameWorkDesc + pdev->CurrDevDescSz));
 
-       /* Increment the ClassId for the next occurrence */
-       pdev->classId ++;
-       pdev->NumClasses ++;
+      /* Increment the ClassId for the next occurrence */
+      pdev->classId ++;
+      pdev->NumClasses ++;
     }
 
     Idx_Instance++;
@@ -570,20 +568,21 @@ static uint8_t *USBD_Device_Framework_Builder(USBD_DevClassHandleTypeDef *pdev,
 }
 
 /**
-* @brief  USBD_FrameWork_AddClass
-*         Register a class in the class builder
-* @param  pdev: device instance
-* @param  class: type of the class to be added (from USBD_CompositeClassTypeDef)
-* @param  cfgidx: configuration index
-* @param  speed: device speed
-* @param  pCmpstConfDesc: to composite device configuration descriptor
-* @retval status
-*/
+  * @brief  USBD_FrameWork_AddClass
+  *         Register a class in the class builder
+  * @param  pdev: device instance
+  * @param  class: type of the class to be added (from USBD_CompositeClassTypeDef)
+  * @param  cfgidx: configuration index
+  * @param  speed: device speed
+  * @param  pCmpstConfDesc: to composite device configuration descriptor
+  * @retval status
+  */
 uint8_t  USBD_FrameWork_AddClass(USBD_DevClassHandleTypeDef *pdev,
                                  USBD_CompositeClassTypeDef class,
                                  uint8_t cfgidx, uint8_t Speed,
                                  uint8_t *pCmpstConfDesc)
 {
+
   static uint8_t interface_idx = 0U;
 
   if ((pdev->classId < USBD_MAX_SUPPORTED_CLASS) &&
@@ -619,13 +618,13 @@ uint8_t  USBD_FrameWork_AddClass(USBD_DevClassHandleTypeDef *pdev,
 }
 
 /**
-* @brief  USBD_FrameWork_AddToConfDesc
-*         Add a new class to the configuration descriptor
-* @param  pdev: device instance
-* @param  Speed: device speed
-* @param  pCmpstConfDesc: to composite device configuration descriptor
-* @retval status
-*/
+  * @brief  USBD_FrameWork_AddToConfDesc
+  *         Add a new class to the configuration descriptor
+  * @param  pdev: device instance
+  * @param  Speed: device speed
+  * @param  pCmpstConfDesc: to composite device configuration descriptor
+  * @retval status
+  */
 uint8_t  USBD_FrameWork_AddToConfDesc(USBD_DevClassHandleTypeDef *pdev, uint8_t Speed,
                                       uint8_t *pCmpstConfDesc)
 {
@@ -650,71 +649,70 @@ uint8_t  USBD_FrameWork_AddToConfDesc(USBD_DevClassHandleTypeDef *pdev, uint8_t 
 
 #if USBD_HID_CLASS_ACTIVATED == 1U
 
-  case CLASS_TYPE_HID:
+    case CLASS_TYPE_HID:
 
-    switch(pdev->tclasslist[pdev->classId].InterfaceType)
-    {
+      switch(pdev->tclasslist[pdev->classId].InterfaceType)
+      {
 
 #if USBD_HID_MOUSE_ACTIVATED == 1U
 
-    case INTERFACE_HID_MOUSE:
+        case INTERFACE_HID_MOUSE:
 
-      /* Find the first available interface slot and Assign number of interfaces */
-      interface = USBD_FrameWork_FindFreeIFNbr(pdev);
-      pdev->tclasslist[pdev->classId].NumIf = 1U;
-      pdev->tclasslist[pdev->classId].Ifs[0] = interface;
+          /* Find the first available interface slot and Assign number of interfaces */
+          interface = USBD_FrameWork_FindFreeIFNbr(pdev);
+          pdev->tclasslist[pdev->classId].NumIf = 1U;
+          pdev->tclasslist[pdev->classId].Ifs[0] = interface;
 
-      /* Assign endpoint numbers */
-      pdev->tclasslist[pdev->classId].NumEps = 1U; /* EP_IN */
+          /* Assign endpoint numbers */
+          pdev->tclasslist[pdev->classId].NumEps = 1U; /* EP_IN */
 
-      /* Check the current speed to assign endpoint IN */
-      if (pdev->Speed == USBD_HIGH_SPEED)
-      {
-        /* Assign IN Endpoint */
-        USBD_FrameWork_AssignEp(pdev, USBD_HID_MOUSE_EPIN_ADDR,
-                                USBD_EP_TYPE_INTR, USBD_HID_MOUSE_EPIN_HS_MPS);
-      }
-      else
-      {
-        /* Assign IN Endpoint */
-        USBD_FrameWork_AssignEp(pdev, USBD_HID_MOUSE_EPIN_ADDR,
-                                USBD_EP_TYPE_INTR, USBD_HID_MOUSE_EPIN_FS_MPS);
-      }
+          /* Check the current speed to assign endpoint IN */
+          if (pdev->Speed == USBD_HIGH_SPEED)
+          {
+            /* Assign IN Endpoint */
+            USBD_FrameWork_AssignEp(pdev, USBD_HID_MOUSE_EPIN_ADDR,
+                                    USBD_EP_TYPE_INTR, USBD_HID_MOUSE_EPIN_HS_MPS);
+          }
+          else
+          {
+            /* Assign IN Endpoint */
+            USBD_FrameWork_AssignEp(pdev, USBD_HID_MOUSE_EPIN_ADDR,
+                                    USBD_EP_TYPE_INTR, USBD_HID_MOUSE_EPIN_FS_MPS);
+          }
 
-      /* Configure and Append the Descriptor */
-      USBD_FrameWork_HID_Desc(pdev, (uint32_t)pCmpstConfDesc, &pdev->CurrConfDescSz);
+          /* Configure and Append the Descriptor */
+          USBD_FrameWork_HID_Desc(pdev, (uint32_t)pCmpstConfDesc, &pdev->CurrConfDescSz);
 
-      break;
+          break;
 
 #endif /* USBD_HID_MOUSE_ACTIVATED == 1U */
 
-    default:
+        default:
+          break;
+      }
+
       break;
-    }
-
-    break;
 #endif /* USBD_HID_CLASS_ACTIVATED == 1U */
-
     /* USER CODE FrameWork_AddToConfDesc_1 */
 
     /* USER CODE FrameWork_AddToConfDesc_1 */
 
-  default:
-    /* USER CODE FrameWork_AddToConfDesc_2 */
+    default:
+      /* USER CODE FrameWork_AddToConfDesc_2 */
 
-    /* USER CODE FrameWork_AddToConfDesc_2 */
-    break;
+      /* USER CODE FrameWork_AddToConfDesc_2 */
+      break;
   }
 
   return UX_SUCCESS;
 }
 
 /**
-* @brief  USBD_FrameWork_FindFreeIFNbr
-*         Find the first interface available slot
-* @param  pdev: device instance
-* @retval The interface number to be used
-*/
+  * @brief  USBD_FrameWork_FindFreeIFNbr
+  *         Find the first interface available slot
+  * @param  pdev: device instance
+  * @retval The interface number to be used
+  */
 static uint8_t USBD_FrameWork_FindFreeIFNbr(USBD_DevClassHandleTypeDef *pdev)
 {
   uint32_t idx = 0U;
@@ -735,12 +733,12 @@ static uint8_t USBD_FrameWork_FindFreeIFNbr(USBD_DevClassHandleTypeDef *pdev)
 }
 
 /**
-* @brief  USBD_FrameWork_AddConfDesc
-*         Add a new class to the configuration descriptor
-* @param  Conf: configuration descriptor
-* @param  pSze: pointer to the configuration descriptor size
-* @retval none
-*/
+  * @brief  USBD_FrameWork_AddConfDesc
+  *         Add a new class to the configuration descriptor
+  * @param  Conf: configuration descriptor
+  * @param  pSze: pointer to the configuration descriptor size
+  * @retval none
+  */
 static void  USBD_FrameWork_AddConfDesc(uint32_t Conf, uint32_t *pSze)
 {
   /* Intermediate variable to comply with MISRA-C Rule 11.3 */
@@ -758,14 +756,14 @@ static void  USBD_FrameWork_AddConfDesc(uint32_t Conf, uint32_t *pSze)
 }
 
 /**
-* @brief  USBD_FrameWork_AssignEp
-*         Assign and endpoint
-* @param  pdev: device instance
-* @param  Add: Endpoint address
-* @param  Type: Endpoint type
-* @param  Sze: Endpoint max packet size
-* @retval none
-*/
+  * @brief  USBD_FrameWork_AssignEp
+  *         Assign and endpoint
+  * @param  pdev: device instance
+  * @param  Add: Endpoint address
+  * @param  Type: Endpoint type
+  * @param  Sze: Endpoint max packet size
+  * @retval none
+  */
 static void  USBD_FrameWork_AssignEp(USBD_DevClassHandleTypeDef *pdev,
                                      uint8_t Add, uint8_t Type, uint32_t Sze)
 {
@@ -773,7 +771,7 @@ static void  USBD_FrameWork_AssignEp(USBD_DevClassHandleTypeDef *pdev,
 
   /* Find the first available endpoint slot */
   while (((idx < (pdev->tclasslist[pdev->classId]).NumEps) && \
-    ((pdev->tclasslist[pdev->classId].Eps[idx].is_used) != 0U)))
+          ((pdev->tclasslist[pdev->classId].Eps[idx].is_used) != 0U)))
   {
     /* Increment the index */
     idx++;
@@ -788,13 +786,13 @@ static void  USBD_FrameWork_AssignEp(USBD_DevClassHandleTypeDef *pdev,
 
 #if USBD_HID_CLASS_ACTIVATED == 1U
 /**
-* @brief  USBD_FrameWork_HID_Desc
-*         Configure and Append the HID Descriptor
-* @param  pdev: device instance
-* @param  pConf: Configuration descriptor pointer
-* @param  Sze: pointer to the current configuration descriptor size
-* @retval None
-*/
+  * @brief  USBD_FrameWork_HID_Desc
+  *         Configure and Append the HID Descriptor
+  * @param  pdev: device instance
+  * @param  pConf: Configuration descriptor pointer
+  * @param  Sze: pointer to the current configuration descriptor size
+  * @retval None
+  */
 static void  USBD_FrameWork_HID_Desc(USBD_DevClassHandleTypeDef *pdev,
                                      uint32_t pConf, uint32_t *Sze)
 {
@@ -806,49 +804,49 @@ static void  USBD_FrameWork_HID_Desc(USBD_DevClassHandleTypeDef *pdev,
   {
 
 #if USBD_HID_MOUSE_ACTIVATED == 1U
-  case INTERFACE_HID_MOUSE:
+    case INTERFACE_HID_MOUSE:
 
-    /* Append HID Interface descriptor to Configuration descriptor */
-    __USBD_FRAMEWORK_SET_IF(pdev->tclasslist[pdev->classId].Ifs[0], 0U,
-                            (uint8_t)(pdev->tclasslist[pdev->classId].NumEps),
-                            UX_DEVICE_CLASS_HID_CLASS,
-                            0x01U, INTERFACE_HID_MOUSE, 0U);
+      /* Append HID Interface descriptor to Configuration descriptor */
+      __USBD_FRAMEWORK_SET_IF(pdev->tclasslist[pdev->classId].Ifs[0], 0U,
+                              (uint8_t)(pdev->tclasslist[pdev->classId].NumEps),
+                              UX_DEVICE_CLASS_HID_CLASS,
+                              0x01U, INTERFACE_HID_MOUSE, 0U);
 
-    /* Append HID Functional descriptor to Configuration descriptor */
-    pHidDesc = ((USBD_HIDDescTypedef *)(pConf + *Sze));
-    pHidDesc->bLength = (uint8_t)sizeof(USBD_HIDDescTypedef);
-    pHidDesc->bDescriptorType = UX_DEVICE_CLASS_HID_DESCRIPTOR_HID;
-    pHidDesc->bcdHID = 0x0111U;
-    pHidDesc->bCountryCode = 0x00U;
-    pHidDesc->bNumDescriptors = 0x01U;
-    pHidDesc->bHIDDescriptorType = 0x22U;
-    pHidDesc->wDescriptorLength = USBD_HID_ReportDesc_length(INTERFACE_HID_MOUSE);
-    *Sze += (uint32_t)sizeof(USBD_HIDDescTypedef);
+      /* Append HID Functional descriptor to Configuration descriptor */
+      pHidDesc = ((USBD_HIDDescTypedef *)(pConf + *Sze));
+      pHidDesc->bLength = (uint8_t)sizeof(USBD_HIDDescTypedef);
+      pHidDesc->bDescriptorType = UX_DEVICE_CLASS_HID_DESCRIPTOR_HID;
+      pHidDesc->bcdHID = 0x0111U;
+      pHidDesc->bCountryCode = 0x00U;
+      pHidDesc->bNumDescriptors = 0x01U;
+      pHidDesc->bHIDDescriptorType = 0x22U;
+      pHidDesc->wDescriptorLength = USBD_HID_ReportDesc_length(INTERFACE_HID_MOUSE);
+      *Sze += (uint32_t)sizeof(USBD_HIDDescTypedef);
 
-    if (pdev->Speed == USBD_HIGH_SPEED)
-    {
-      /* Append Endpoint descriptor to Configuration descriptor */
-      __USBD_FRAMEWORK_SET_EP(pdev->tclasslist[pdev->classId].Eps[0].add,
-                              USBD_EP_TYPE_INTR,
-                              (uint16_t)pdev->tclasslist[pdev->classId].Eps[0].size,
-                              USBD_HID_MOUSE_EPIN_HS_BINTERVAL,
-                              USBD_HID_MOUSE_EPIN_FS_BINTERVAL);
-    }
-    else
-    {
-      /* Append Endpoint descriptor to Configuration descriptor */
-      __USBD_FRAMEWORK_SET_EP(pdev->tclasslist[pdev->classId].Eps[0].add,
-                              USBD_EP_TYPE_INTR,
-                              (uint16_t)pdev->tclasslist[pdev->classId].Eps[0].size,
-                              USBD_HID_MOUSE_EPIN_HS_BINTERVAL,
-                              USBD_HID_MOUSE_EPIN_FS_BINTERVAL);
-    }
+      if (pdev->Speed == USBD_HIGH_SPEED)
+      {
+        /* Append Endpoint descriptor to Configuration descriptor */
+        __USBD_FRAMEWORK_SET_EP(pdev->tclasslist[pdev->classId].Eps[0].add,
+                                USBD_EP_TYPE_INTR,
+                                (uint16_t)pdev->tclasslist[pdev->classId].Eps[0].size,
+                                USBD_HID_MOUSE_EPIN_HS_BINTERVAL,
+                                USBD_HID_MOUSE_EPIN_FS_BINTERVAL);
+      }
+      else
+      {
+        /* Append Endpoint descriptor to Configuration descriptor */
+        __USBD_FRAMEWORK_SET_EP(pdev->tclasslist[pdev->classId].Eps[0].add,
+                                USBD_EP_TYPE_INTR,
+                                (uint16_t)pdev->tclasslist[pdev->classId].Eps[0].size,
+                                USBD_HID_MOUSE_EPIN_HS_BINTERVAL,
+                                USBD_HID_MOUSE_EPIN_FS_BINTERVAL);
+      }
 
-    break;
+      break;
 #endif /* USBD_HID_MOUSE_ACTIVATED == 1U */
 
-  default:
-    break;
+    default:
+      break;
   }
 
   /* Update Config Descriptor and IAD descriptor */

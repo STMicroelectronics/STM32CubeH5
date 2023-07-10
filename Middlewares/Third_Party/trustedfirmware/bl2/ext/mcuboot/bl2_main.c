@@ -121,8 +121,8 @@ int main(void)
 #endif
     }
 
-    BOOT_LOG_INF("Bootloader chainload address offset: 0x%lx",
-                 rsp.br_image_off);
+    BOOT_LOG_INF("Bootloader chainload address offset: 0x%x",
+                 (int)rsp.br_image_off);
     BOOT_LOG_INF("Jumping to the first image slot");
     do_boot(&rsp);
 

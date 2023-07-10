@@ -83,25 +83,9 @@ This project is targeted to boot through <b>OEMiROT boot path</b>.
 <u>Before compiling the project, you should first start the provisioning process</u>. During the provisioning process, the linker files
 of Project_s and Project_ns as well as the postbuild commands will be automatically updated.
 
-The <b>provisioning process</b> (ROT_Provisioning/OEMiROT/provisioning.bat) is divided in 3 majors steps :
-
-  - Step 1 : Configuration management
-
-     - OEMiRoT_Config.obk generation with TrustedPackageCreator (tab H5-OBkey)
-     - DA_Config.obk generation with TrustedPackageCreator (tab H5-OBkey)
-
-  - Step 2 : Images generation
-
-     - OEMiROT binary: build OEMiROT_Boot project
-     - Code firmware images generation: automatically generated at the end of the project_s and project_ns compilation (postbuild commands)
-     - Data images generation with TrustedPackageCreator (tab H5-Image Gen), if data images enabled
-
-  - Step 3 : Provisioning
-
-     - Programming the option bytes
-     - Flashing the images
-     - Programming the OBkeys
-     - Setting the product state
+Before starting the provisioning process, select the application project to use (application example or template),
+through oemirot_boot_path_project variable in ROT_Provisioning/env.bat or env.sh.
+Then start provisioning process by running ROT_Provisioning/OEMiROT/provisioning.bat or provisioning.sh, and follow its instructions.
 
 If the product state set to PROVISIONED, TZ-CLOSED or CLOSED, it is still possible to open the debug or to execute a full/partial regression
 with the Debug Authentication feature. To do it, scripts (regression.bat & dbg_auth.bat) are available in the ROT_provisioning/DA folder.

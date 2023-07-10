@@ -215,28 +215,28 @@ enum tfm_plat_err_t tfm_plat_init_nv_counter(void)
     BOOT_LOG_ERR("NV Counter Not consistent %d", PLAT_NV_COUNTER_3);
     return TFM_PLAT_ERR_SYSTEM_ERR;
   }
-  BOOT_LOG_INF("Consistent BL2 NV Counter %d  = 0x%lx", PLAT_NV_COUNTER_3, counter_value);
+  BOOT_LOG_INF("Consistent BL2 NV Counter %d  = 0x%x", PLAT_NV_COUNTER_3, (int)counter_value);
   if (tfm_plat_read_nv_counter(PLAT_NV_COUNTER_4, sizeof(counter_value),
                                (uint8_t *)&counter_value) != TFM_PLAT_ERR_SUCCESS)
   {
     BOOT_LOG_ERR("NV Counter Not consistent %d", PLAT_NV_COUNTER_4);
     return TFM_PLAT_ERR_SYSTEM_ERR;
   }
-  BOOT_LOG_INF("Consistent BL2 NV Counter %d  = 0x%lx", PLAT_NV_COUNTER_4, counter_value);
+  BOOT_LOG_INF("Consistent BL2 NV Counter %d  = 0x%x", PLAT_NV_COUNTER_4, (int)counter_value);
   if (tfm_plat_read_nv_counter(PLAT_NV_COUNTER_5, sizeof(counter_value),
                                (uint8_t *)&counter_value) != TFM_PLAT_ERR_SUCCESS)
   {
     BOOT_LOG_ERR("NV Counter Not consistent %d", PLAT_NV_COUNTER_5);
     return TFM_PLAT_ERR_SYSTEM_ERR;
   }
-  BOOT_LOG_INF("Consistent BL2 NV Counter %d  = 0x%lx", PLAT_NV_COUNTER_5, counter_value);
+  BOOT_LOG_INF("Consistent BL2 NV Counter %d  = 0x%x", PLAT_NV_COUNTER_5, (int)counter_value);
   if (tfm_plat_read_nv_counter(PLAT_NV_COUNTER_6, sizeof(counter_value),
                                (uint8_t *)&counter_value) != TFM_PLAT_ERR_SUCCESS)
   {
     BOOT_LOG_ERR("NV Counter Not consistent %d", PLAT_NV_COUNTER_6);
     return TFM_PLAT_ERR_SYSTEM_ERR;
   }
-  BOOT_LOG_INF("Consistent BL2 NV Counter %d  = 0x%lx", PLAT_NV_COUNTER_6, counter_value);
+  BOOT_LOG_INF("Consistent BL2 NV Counter %d  = 0x%x", PLAT_NV_COUNTER_6, (int)counter_value);
 
   /*********************************************************************/
   /* Step 2: Initialize eeprom emulation global variables relative     */
@@ -330,7 +330,7 @@ enum tfm_plat_err_t tfm_plat_set_nv_counter(enum tfm_nv_counter_t CounterId,
   /* Increment global variables relative to write operation done*/
   uwAddressNextWrite += NVCNT_ELEMENT_SIZE;
   uhNbWrittenElements++;
-  BOOT_LOG_INF("Counter %d set to 0x%lx", CounterId, Data);
+  BOOT_LOG_INF("Counter %d set to 0x%x", CounterId, (int)Data);
   return TFM_PLAT_ERR_SUCCESS;
 }
 

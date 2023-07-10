@@ -32,7 +32,7 @@
 ******************************************************************************
 */
 
-S_CODE_OFFSET = 0x12000;                        /* This define is updated automatically by OEMiROT_Boot postbuild */
+S_CODE_OFFSET = 0x18000;                        /* This define is updated automatically by OEMiROT_Boot postbuild */
 S_CODE_SIZE = 0x6000;                           /* This define is updated automatically by OEMiROT_Boot postbuild */
 NS_CODE_SIZE = 0xA0000;                          /* This define is updated automatically by OEMiROT_Boot postbuild */
 NS_CODE_OFFSET = (S_CODE_OFFSET + S_CODE_SIZE); 

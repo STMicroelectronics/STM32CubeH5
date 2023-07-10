@@ -27,7 +27,7 @@ vertical-align: middle;
 <body>
 <div class="row">
 <section id="tx_lowpower-application-description" class="col-sm-12 col-lg-8">
-<h2><b>Tx_LowPower application Description</b></h2>
+<h2><b>Tx_LowPower Application Description</b></h2>
 <p>This application provides an example of Azure RTOS ThreadX stack
 usage, it shows how to develop an application using ThreadX lowpower
 feature. It demonstrates how to configure the LowPower feature of Azure
@@ -86,7 +86,7 @@ to wake up the CPU for the next ThreadX timer expiration.</p>
 hardware timer source such that the next timer interrupt is equal to:
 <em>tx_low_power_next_expiration</em> tick_frequency. The
 <em>tick_frequency</em> is application-specific and typically set up in
-<strong>tx_low_level_initialize</strong>.</p>
+<strong>tx_initialize_low_level</strong>.</p>
 <p>1.2. There are no ThreadX timers active: Function
 <strong>tx_timer_get_next</strong> returns
 <strong>TX_FALSE</strong>.</p>

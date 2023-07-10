@@ -1,4 +1,4 @@
-if [%2] neq [AUTO] call ../env.bat
+call ../env.bat
 
 :: Define TruseZone Configuration
 if "%~1"=="" (set /p "tzen_state= The TrustZone feature is enabled ? %USERREG% [ y | n ]:") else (set tzen_state=%1%)

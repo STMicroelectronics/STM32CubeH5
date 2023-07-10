@@ -284,9 +284,6 @@ static void MX_LPUART1_UART_Init(void)
 
   /* USER CODE BEGIN LPUART1_Init 1 */
 
-  /* Set the wake-up event type : specify wake-up on RXNE flag */
-  LL_LPUART_SetWKUPType(LPUART1, LL_LPUART_WAKEUP_ON_RXNE);
-
   /* USER CODE END LPUART1_Init 1 */
   LPUART_InitStruct.PrescalerValue = LL_LPUART_PRESCALER_DIV1;
   LPUART_InitStruct.BaudRate = 115200;
@@ -299,6 +296,14 @@ static void MX_LPUART1_UART_Init(void)
   LL_LPUART_SetTXFIFOThreshold(LPUART1, LL_LPUART_FIFOTHRESHOLD_1_8);
   LL_LPUART_SetRXFIFOThreshold(LPUART1, LL_LPUART_FIFOTHRESHOLD_1_8);
   LL_LPUART_DisableFIFO(LPUART1);
+
+  /* USER CODE BEGIN WKUPType LPUART1 */
+
+  /* Set the wake-up event type : specify wake-up on RXNE flag */
+  LL_LPUART_SetWKUPType(LPUART1, LL_LPUART_WAKEUP_ON_RXNE);
+
+  /* USER CODE END WKUPType LPUART1 */
+
   LL_LPUART_Enable(LPUART1);
   /* USER CODE BEGIN LPUART1_Init 2 */
 

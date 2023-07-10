@@ -33,8 +33,8 @@ extern funcptr_NS pSecureErrorCallback;
 /* Non-secure Vector table to jump to (internal Flash Bank2 here)             */
 /* Caution: address must correspond to non-secure internal Flash where is     */
 /*          mapped in the non-secure vector table                             */
-#define VTOR_TABLE_NS_START_ADDR  (FLASH_BASE_NS + (uint32_t)&(S_CODE_OFFSET) + \
-                    (uint32_t)&(S_CODE_SIZE) + (uint32_t)&(IMAGE_HEADER_SIZE))
+#define VTOR_TABLE_NS_START_ADDR  (FLASH_BASE_NS + S_CODE_OFFSET + \
+                                   S_CODE_SIZE + IMAGE_HEADER_SIZE)
 
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/

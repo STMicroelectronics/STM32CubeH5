@@ -39,7 +39,7 @@ int iar_fputc(int ch);
 #elif defined(__GNUC__)
 #define PUTCHAR_PROTOTYPE int __io_putchar(int ch)
 #endif /* __ICCARM__ */
- 
+
 
 /* USER CODE END PTD */
 
@@ -81,7 +81,7 @@ static void MX_USART3_UART_Init(void);
 /* USER CODE BEGIN 0 */
 void Success_Handler(void)
 {
-  HAL_GPIO_WritePin (LED_RED_GPIO_Port, LED_RED_Pin, GPIO_PIN_SET);
+  HAL_GPIO_WritePin (LED_RED_GPIO_Port, LED_RED_Pin, GPIO_PIN_RESET);
   while(1)
   {
     HAL_GPIO_TogglePin(LED_GREEN_GPIO_Port, LED_GREEN_Pin);
@@ -190,7 +190,6 @@ void SystemClock_Config(void)
   {
     Error_Handler();
   }
-  HAL_RCC_MCOConfig(RCC_MCO2, RCC_MCO2SOURCE_SYSCLK, RCC_MCODIV_1);
 }
 
 /**
@@ -357,14 +356,6 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(LED_RED_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pin : PC9 */
-  GPIO_InitStruct.Pin = GPIO_PIN_9;
-  GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  GPIO_InitStruct.Alternate = GPIO_AF0_MCO;
-  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
-
 /* USER CODE BEGIN MX_GPIO_Init_2 */
 /* USER CODE END MX_GPIO_Init_2 */
 }
@@ -375,7 +366,7 @@ size_t __write(int file, unsigned char const *ptr, size_t len)
 {
   size_t idx;
   unsigned char const *pdata = ptr;
-  
+
   for (idx = 0; idx < len; idx++)
   {
     iar_fputc((int)*pdata);
@@ -392,6 +383,8 @@ size_t __write(int file, unsigned char const *ptr, size_t len)
 
 PUTCHAR_PROTOTYPE
 {
+  /* Place your implementation of putchar here */
+  /* e.g. write a character to the USART3 and Loop until the end of transmission */
   HAL_UART_Transmit(&huart3, (uint8_t *)&ch, 1, 0xFFFF);
   return ch;
 }
@@ -426,11 +419,12 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 void Error_Handler(void)
 {
   /* USER CODE BEGIN Error_Handler_Debug */
-  HAL_GPIO_WritePin (LED_GREEN_GPIO_Port, LED_GREEN_Pin, GPIO_PIN_SET);
+  /* User can add his own implementation to report the HAL error return state */
+  HAL_GPIO_WritePin (LED_GREEN_GPIO_Port, LED_GREEN_Pin, GPIO_PIN_RESET);
   while (1)
   {
-     HAL_GPIO_TogglePin(LED_RED_GPIO_Port,LED_RED_Pin);
-     HAL_Delay(1000);
+    HAL_GPIO_TogglePin(LED_RED_GPIO_Port,LED_RED_Pin);
+    HAL_Delay(1000);
   }
   /* USER CODE END Error_Handler_Debug */
 }
@@ -448,6 +442,10 @@ void assert_failed(uint8_t *file, uint32_t line)
   /* USER CODE BEGIN 6 */
   /* User can add his own implementation to report the file name and line number,
      ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
+  /* Infinite loop */
+  while (1)
+  {
+  }
   /* USER CODE END 6 */
 }
 #endif /* USE_FULL_ASSERT */

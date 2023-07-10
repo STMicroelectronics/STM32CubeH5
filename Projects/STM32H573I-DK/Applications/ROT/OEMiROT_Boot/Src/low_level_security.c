@@ -69,11 +69,11 @@ const struct mpu_armv8m_region_cfg_t region_cfg_init_s[] = {
 #endif /* FLOW_CONTROL */
   },
 #if  (!defined(MCUBOOT_PRIMARY_ONLY) && !defined(MCUBOOT_OVERWRITE_ONLY))
-  /* Region 1: Allows RW access before BL2 */
+  /* Region 1: Allows RW access for scratch area */
   {
     1,
-    FLASH_BASE_S,
-    FLASH_BASE_S + FLASH_AREA_BL2_OFFSET - 1,
+    FLASH_BASE_S + FLASH_AREA_SCRATCH_OFFSET,
+    FLASH_BASE_S + FLASH_AREA_SCRATCH_OFFSET + FLASH_AREA_SCRATCH_SIZE - 1,
     MPU_ARMV8M_MAIR_ATTR_DATANOCACHE_IDX,
     MPU_ARMV8M_XN_EXEC_NEVER,
     MPU_ARMV8M_AP_RW_PRIV_ONLY,
@@ -221,9 +221,9 @@ const struct mpu_armv8m_region_cfg_t region_cfg_init_s[] = {
 };
 
 const struct mpu_armv8m_region_cfg_t region_cfg_appli_s[] = {
-  /* First region in this list is configured only at this stage,
-     the region will be activated later by RSS jump service. Following regions
-     in this list are configured and activated at this stage. */
+  /* First region in this list is configured only at this stage, */
+  /* the region will be activated later by RSS jump service. Following regions */
+  /*  in this list are configured and activated at this stage. */
 
   /* Region 1: Allows execution of appli */
   {
@@ -408,7 +408,8 @@ static const uint32_t ProductStatePrioList[] = {
 /* USB */
 
 /*----------------------|  FDCAN  |------------------------------------*/
-/* FDCAN1 */
+/* FDCAN2 */
+/* Due to HW constraint, FDCAN1 and FDCAN2 shall be set as non-secure in order to grant FDCAN2 to non-secure (Bootloader). */
 
 /*----------------------|  ICACHE  |------------------------------------*/
 /* ICACHE */
@@ -537,8 +538,8 @@ static const struct sau_cfg_t region_sau_load_cfg[] =
 /* MPCBB : All SRAM block non secure */
 #define GTZC_MPCBB_ALL_NSEC (0x00000000UL)
 
-/* MPCBB : All SRAM block privileged only */
-#define GTZC_MPCBB_ALL_PRIV (0xFFFFFFFFUL)
+/* MPCBB : All SRAM block non privileged + privileged */
+#define GTZC_MPCBB_ALL_NPRIV (0x00000000UL)
 /* MPU configuration
    ================= */
 static const struct mpu_armv8m_region_cfg_t region_cfg_loader_s[] =
@@ -682,9 +683,6 @@ void LL_SECU_CheckStaticProtections(void)
 #ifdef OEMIROT_ENABLE_SET_OB
   HAL_StatusTypeDef ret = HAL_ERROR;
 #endif  /* OEMIROT_ENABLE_SET_OB  */
-#ifdef OEMIROT_WRP_PROTECT_ENABLE
-  uint32_t val;
-#endif
   uint32_t start;
   uint32_t end;
   uint32_t i;
@@ -721,7 +719,7 @@ void LL_SECU_CheckStaticProtections(void)
   }
 
   /* Check BOOT UBE */
-#ifdef OEMUROT_ENABLE
+#if  defined(OEMUROT_ENABLE)
   if ((flash_option_bytes_bank1.USERConfig & FLASH_OPTSR_BOOT_UBE) != OB_UBE_ST_IROT)
 #else
   if ((flash_option_bytes_bank1.USERConfig & FLASH_OPTSR_BOOT_UBE) != OB_UBE_OEM_IROT)
@@ -732,12 +730,14 @@ void LL_SECU_CheckStaticProtections(void)
   }
 
   /* Check secure boot address */
+#if  !defined(OEMUROT_ENABLE)
   if (flash_option_bytes_bank1.BootAddr != BL2_BOOT_VTOR_ADDR)
   {
-    BOOT_LOG_INF("BootAddr 0x%x", flash_option_bytes_bank1.BootAddr);
+    BOOT_LOG_INF("BootAddr 0x%x", (int)flash_option_bytes_bank1.BootAddr);
     BOOT_LOG_ERR("Unexpected value for SEC BOOT Address");
     Error_Handler();
   }
+#endif
 
   /* Check bank1 secure flash protection */
   start = 0;
@@ -750,7 +750,7 @@ void LL_SECU_CheckStaticProtections(void)
       || (end != flash_option_bytes_bank1.WMSecEndSector))
   {
     BOOT_LOG_INF("BANK 1 secure flash [%d, %d] : OB [%d, %d]",
-                 start, end, flash_option_bytes_bank1.WMSecStartSector, flash_option_bytes_bank1.WMSecEndSector);
+                 (int)start, (int)end, (int)flash_option_bytes_bank1.WMSecStartSector, (int)flash_option_bytes_bank1.WMSecEndSector);
 #ifndef OEMIROT_ENABLE_SET_OB
     BOOT_LOG_ERR("Unexpected value for secure flash protection");
     Error_Handler();
@@ -771,7 +771,7 @@ void LL_SECU_CheckStaticProtections(void)
     if ((start != flash_option_bytes_bank2.WMSecStartSector)
         || (end != flash_option_bytes_bank2.WMSecEndSector))
     {
-      BOOT_LOG_INF("BANK 2 secure flash [%d, %d] : OB [%d, %d]", start, end, flash_option_bytes_bank2.WMSecStartSector,
+      BOOT_LOG_INF("BANK 2 secure flash [%d, %d] : OB [%d, %d]", (int)start, (int)end, (int)flash_option_bytes_bank2.WMSecStartSector,
                    flash_option_bytes_bank2.WMSecEndSector);
 #ifndef OEMIROT_ENABLE_SET_OB
       BOOT_LOG_ERR("Unexpected value for secure flash protection");
@@ -787,8 +787,8 @@ void LL_SECU_CheckStaticProtections(void)
   /* the bank 2 must be fully unsecure */
   else if (flash_option_bytes_bank2.WMSecEndSector >= flash_option_bytes_bank2.WMSecStartSector)
   {
-    BOOT_LOG_INF("BANK 2 secure flash [%d, %d] : OB [%d, %d]", PAGE_MAX_NUMBER_IN_BANK, 0, flash_option_bytes_bank2.WMSecStartSector,
-                 flash_option_bytes_bank2.WMSecEndSector);
+    BOOT_LOG_INF("BANK 2 secure flash [%d, %d] : OB [%d, %d]", PAGE_MAX_NUMBER_IN_BANK, 0, (int)flash_option_bytes_bank2.WMSecStartSector,
+                 (int)flash_option_bytes_bank2.WMSecEndSector);
 #ifndef OEMIROT_ENABLE_SET_OB
     BOOT_LOG_ERR("Unexpected value for secure flash protection");
     Error_Handler();
@@ -801,6 +801,7 @@ void LL_SECU_CheckStaticProtections(void)
   }
 
 #ifdef  OEMIROT_WRP_PROTECT_ENABLE
+  uint32_t val;
   /* Check flash write protection */
   start = FLASH_AREA_BL2_OFFSET / PAGE_SIZE;
   end = (FLASH_AREA_BL2_OFFSET + FLASH_AREA_BL2_SIZE - 1) / PAGE_SIZE;
@@ -813,7 +814,7 @@ void LL_SECU_CheckStaticProtections(void)
       || (flash_option_bytes_bank1.WRPSector != val))
   {
     BOOT_LOG_INF("BANK 1 flash write protection group 0x%x: OB 0x%x",
-                 val, flash_option_bytes_bank1.WRPSector);
+                 (int)val, (int)flash_option_bytes_bank1.WRPSector);
 #ifndef OEMIROT_ENABLE_SET_OB
     BOOT_LOG_ERR("Unexpected value for write protection ");
     Error_Handler();
@@ -837,10 +838,10 @@ void LL_SECU_CheckStaticProtections(void)
     || (end != flash_option_bytes_bank1.HDPEndSector))
   {
     BOOT_LOG_INF("BANK 1 hide protection [%d, %d] : OB [%d, %d]",
-                 start,
-                 end,
-                 flash_option_bytes_bank1.HDPStartSector,
-                 flash_option_bytes_bank1.HDPEndSector);
+                 (int)start,
+                 (int)end,
+                 (int)flash_option_bytes_bank1.HDPStartSector,
+                 (int)flash_option_bytes_bank1.HDPEndSector);
 #ifndef OEMIROT_ENABLE_SET_OB
     BOOT_LOG_ERR("Unexpected value for hide protection");
     Error_Handler();
@@ -922,7 +923,7 @@ void LL_SECU_CheckStaticProtections(void)
   /* Check Boot lock protection */
   if (flash_option_bytes_bank1.BootLock != OEMIROT_OB_BOOT_LOCK)
   {
-    BOOT_LOG_INF("BootLock 0x%x", flash_option_bytes_bank1.BootLock);
+    BOOT_LOG_INF("BootLock 0x%x", (int)flash_option_bytes_bank1.BootLock);
     BOOT_LOG_ERR("Unexpected value for SEC BOOT LOCK");
     Error_Handler();
   }
@@ -966,10 +967,8 @@ static void  gtzc_init_cfg(void)
   if (uFlowStage == FLOW_STAGE_CFG)
   {
     __HAL_RCC_GTZC1_CLK_ENABLE();
-
     /* Required peripherals configured secure / privileged */
     GTZC_TZSC1_S->SECCFGR3 = GTZC_CFGR3_SAES_Msk;
-
     /* no FLOW control : this configuration is not part of the security but this is just for functionality */
   }
   /* verification stage */
@@ -1464,6 +1463,7 @@ static void gtzc_loader_cfg(void)
     {
       /*SRAM1 -> MPCBB1*/
       GTZC_MPCBB1_S->SECCFGR[i] = GTZC_MPCBB_ALL_NSEC;
+      GTZC_MPCBB1_S->PRIVCFGR[i] = GTZC_MPCBB_ALL_NPRIV;
     }
 
     /* All bocks of SRAM3 configured non secure / privileged (default value)  */
@@ -1471,15 +1471,21 @@ static void gtzc_loader_cfg(void)
     {
       /*SRAM3 -> MPCBB3*/
       GTZC_MPCBB3_S->SECCFGR[i] = GTZC_MPCBB_ALL_NSEC;
+      GTZC_MPCBB3_S->PRIVCFGR[i] = GTZC_MPCBB_ALL_NPRIV;
     }
 
     /* Execution stopped if flow control failed */
     FLOW_CONTROL_STEP(uFlowProtectValue, FLOW_STEP_GTZC_L_EN_MPCBB1, FLOW_CTRL_GTZC_L_EN_MPCBB1);
 
-    /* Required peripherals configured non secure (default value) / privileged */
-    GTZC_TZSC1_S->PRIVCFGR1 = TZSC_MASK_R1;
-    GTZC_TZSC1_S->PRIVCFGR2 = TZSC_MASK_R2;
-    GTZC_TZSC1_S->PRIVCFGR3 = TZSC_MASK_R3;
+    /* Required peripherals configured non secure / non privileged */
+    GTZC_TZSC1_S->PRIVCFGR1 = ~TZSC_MASK_R1;
+    GTZC_TZSC1_S->PRIVCFGR2 = ~TZSC_MASK_R2;
+    GTZC_TZSC1_S->PRIVCFGR3 = ~TZSC_MASK_R3;
+
+    GTZC_TZSC1_S->SECCFGR1 = ~TZSC_MASK_R1;
+    GTZC_TZSC1_S->SECCFGR2 = ~TZSC_MASK_R2;
+    GTZC_TZSC1_S->SECCFGR3 = ~TZSC_MASK_R3;
+
     /* Execution stopped if flow control failed */
     FLOW_CONTROL_STEP(uFlowProtectValue, FLOW_STEP_GTZC_L_EN_TZSC, FLOW_CTRL_GTZC_L_EN_TZSC);
   }
@@ -1491,7 +1497,7 @@ static void gtzc_loader_cfg(void)
     {
       uint32_t privcfgr = GTZC_MPCBB1->PRIVCFGR[i];
       uint32_t seccfgr = GTZC_MPCBB1_S->SECCFGR[i];
-      if ((seccfgr != GTZC_MPCBB_ALL_NSEC) || (privcfgr != GTZC_MPCBB_ALL_PRIV))
+      if ((seccfgr != GTZC_MPCBB_ALL_NSEC) || (privcfgr != GTZC_MPCBB_ALL_NPRIV))
       {
         Error_Handler();
       }
@@ -1511,11 +1517,11 @@ static void gtzc_loader_cfg(void)
     uint32_t seccfgr3 = GTZC_TZSC1_S->SECCFGR3;
     uint32_t privcfgr3 = GTZC_TZSC1_S->PRIVCFGR3;
     if (((seccfgr1 | ~TZSC_MASK_R1) != ~TZSC_MASK_R1) ||
-        ((privcfgr1 & TZSC_MASK_R1) != TZSC_MASK_R1) ||
+        ((privcfgr1 | ~TZSC_MASK_R1) != ~TZSC_MASK_R1) ||
         ((seccfgr2 | ~TZSC_MASK_R2) != ~TZSC_MASK_R2) ||
-        ((privcfgr2 & TZSC_MASK_R2) != TZSC_MASK_R2) ||
+          ((privcfgr2 | ~TZSC_MASK_R2) != ~TZSC_MASK_R2) ||
         ((seccfgr3 | ~TZSC_MASK_R3) != ~TZSC_MASK_R3) ||
-        ((privcfgr3 & TZSC_MASK_R3) != TZSC_MASK_R3))
+        ((privcfgr3 | ~TZSC_MASK_R3) != ~TZSC_MASK_R3))
     {
       Error_Handler();
     }
@@ -1528,7 +1534,7 @@ static void gtzc_loader_cfg(void)
 }
 #endif /* MCUBOOT_EXT_LOADER && GENERATOR_LOADER_IN_SYSTEM_FLASH */
 
-#ifdef OEMUROT_ENABLE
+#if  defined(OEMUROT_ENABLE)
 void LL_SECU_DisableCleanMpu(void)
 {
   struct mpu_armv8m_dev_t dev_mpu_s = { MPU_BASE };
@@ -1892,7 +1898,7 @@ static void active_tamper(void)
         {
             Error_Handler();
         }
-        BOOT_LOG_INF("TAMPER SEED [0x%x,0x%x,0x%x,0x%x]", Seed[0], Seed[1], Seed[2], Seed[3]);
+        BOOT_LOG_INF("TAMPER SEED [0x%lx,0x%lx,0x%lx,0x%lx]", Seed[0], Seed[1], Seed[2], Seed[3]);
         /* Configure active tamper common parameters  */
         sAllTamper.ActiveFilter = RTC_ATAMP_FILTER_ENABLE;
         sAllTamper.ActiveAsyncPrescaler = RTC_ATAMP_ASYNCPRES_RTCCLK_32;

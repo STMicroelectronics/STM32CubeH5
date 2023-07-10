@@ -99,12 +99,9 @@ int main(void)
   /* Call PreOsInit function */
   USBPD_PreInitOs();
   /* USER CODE BEGIN 2 */
-  /* Configure User push-button */
-  BSP_PB_Init(BUTTON_USER, BUTTON_MODE_GPIO);
-
 
   /* Check if the User push-button is pressed */
-  if (BSP_PB_GetState(BUTTON_USER) != BUTTON_PRESSED)
+  if (HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_13) == GPIO_PIN_RESET)
   {
     /* Test if user code is programmed starting from address 0x08022000 */
     if (((*(__IO uint32_t *) USBD_DFU_APP_DEFAULT_ADDR) & USBD_DFU_APP_MASK) ==
@@ -169,12 +166,12 @@ void SystemClock_Config(void)
   RCC_OscInitStruct.HSI48State = RCC_HSI48_ON;
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
   RCC_OscInitStruct.PLL.PLLSource = RCC_PLL1_SOURCE_HSE;
-  RCC_OscInitStruct.PLL.PLLM = 2;
-  RCC_OscInitStruct.PLL.PLLN = 40;
+  RCC_OscInitStruct.PLL.PLLM = 5;
+  RCC_OscInitStruct.PLL.PLLN = 100;
   RCC_OscInitStruct.PLL.PLLP = 2;
   RCC_OscInitStruct.PLL.PLLQ = 2;
   RCC_OscInitStruct.PLL.PLLR = 2;
-  RCC_OscInitStruct.PLL.PLLRGE = RCC_PLL1_VCIRANGE_3;
+  RCC_OscInitStruct.PLL.PLLRGE = RCC_PLL1_VCIRANGE_2;
   RCC_OscInitStruct.PLL.PLLVCOSEL = RCC_PLL1_VCORANGE_WIDE;
   RCC_OscInitStruct.PLL.PLLFRACN = 0;
   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
@@ -386,7 +383,6 @@ void MX_USB_PCD_Init(void)
   /* USER CODE END USB_Init 1 */
   hpcd_USB_DRD_FS.Instance = USB_DRD_FS;
   hpcd_USB_DRD_FS.Init.dev_endpoints = 8;
-  hpcd_USB_DRD_FS.Init.Host_channels = 8;
   hpcd_USB_DRD_FS.Init.speed = USBD_FS_SPEED;
   hpcd_USB_DRD_FS.Init.phy_itface = PCD_PHY_EMBEDDED;
   hpcd_USB_DRD_FS.Init.Sof_enable = DISABLE;
@@ -413,14 +409,22 @@ void MX_USB_PCD_Init(void)
   */
 static void MX_GPIO_Init(void)
 {
+  GPIO_InitTypeDef GPIO_InitStruct = {0};
 /* USER CODE BEGIN MX_GPIO_Init_1 */
 /* USER CODE END MX_GPIO_Init_1 */
 
   /* GPIO Ports Clock Enable */
   __HAL_RCC_GPIOB_CLK_ENABLE();
   __HAL_RCC_GPIOA_CLK_ENABLE();
+  __HAL_RCC_GPIOC_CLK_ENABLE();
   __HAL_RCC_GPIOH_CLK_ENABLE();
   __HAL_RCC_GPIOF_CLK_ENABLE();
+
+  /*Configure GPIO pin : BUTTON_USER_Pin */
+  GPIO_InitStruct.Pin = BUTTON_USER_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(BUTTON_USER_GPIO_Port, &GPIO_InitStruct);
 
 /* USER CODE BEGIN MX_GPIO_Init_2 */
 /* USER CODE END MX_GPIO_Init_2 */
@@ -459,11 +463,9 @@ void Error_Handler(void)
 {
   /* USER CODE BEGIN Error_Handler_Debug */
   /* User can add his own implementation to report the HAL error return state */
-  BSP_LED_Off(LED_GREEN);
   while (1)
   {
-    BSP_LED_Toggle(LED_RED);
-    HAL_Delay(200);
+
   }
   /* USER CODE END Error_Handler_Debug */
 }

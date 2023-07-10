@@ -30,7 +30,7 @@
                                                To enter it, press user button at reset.
                                       Undefined: Do not use system bootloader. */
 
-#define MCUBOOT_DATA_IMAGE_NUMBER 1     /* 1: Data image for application.
+#define MCUBOOT_DATA_IMAGE_NUMBER 0     /* 1: Data image for application.
                                            0: No data image. */
 
 /* Flash layout configuration : end */

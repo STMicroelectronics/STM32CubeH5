@@ -24,7 +24,10 @@
 #include "stm32h5xx_hal.h"
 #include "com.h"
 #include "appli_flash_layout.h"
-
+#define CODE_OFFSET      0x12000 /* This define is updated automatically from ROT_BOOT project */
+#define CODE_SIZE        0xC000 /* This define is updated automatically from ROT_BOOT project */
+#define IMAGE_HEADER_SIZE  (0x400)  /* mcuboot headre size */
+#define S_CODE_START       (FLASH_BASE_NS + CODE_OFFSET + IMAGE_HEADER_SIZE)
 /* Exported types ------------------------------------------------------------*/
 /* Exported constants --------------------------------------------------------*/
 /* Exported macros -----------------------------------------------------------*/

@@ -104,7 +104,7 @@ RTOS, ThreadX, FileX, LevelX, File System, NOR, OCTOSPI, XSPI, FAT32
 ### <b>Hardware and Software environment</b>
 
   - This application runs on STM32H573xx devices.
-  - This application has been tested with STMicroelectronics STM32H573I-DK boards Revision: MB1677-H573I-A01.
+  - This application has been tested with STMicroelectronics STM32H573I-DK boards Revision: MB1677-H573I-B01.
     and can be easily tailored to any other supported device and development board.
 
   - This application uses USART1 to display logs, the hyperterminal configuration is as follows:

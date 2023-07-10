@@ -43,7 +43,7 @@ extern "C" {
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "stm32h573i_discovery.h"
+
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/

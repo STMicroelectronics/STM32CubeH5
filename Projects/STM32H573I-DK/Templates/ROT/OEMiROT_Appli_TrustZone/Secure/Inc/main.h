@@ -23,11 +23,15 @@
 /* Includes ------------------------------------------------------------------*/
 #include "stm32h5xx_hal.h"
 
+#define S_CODE_OFFSET      0x12000 /* This define is updated automatically from ROT_BOOT project */
+#define NS_CODE_SIZE       0xA0000 /* This define is updated automatically from ROT_BOOT project */
+#define S_CODE_SIZE        0x6000 /* This define is updated automatically from ROT_BOOT project */
+#define NS_CODE_OFFSET     (S_CODE_OFFSET + S_CODE_SIZE) /* Non secure code Offset */
+#define IMAGE_HEADER_SIZE  (0x400)  /* mcuboot headre size */
+#define TRAILER_MAX_SIZE   (0x40)  /* max size trailer */
+#define S_CODE_START       (FLASH_BASE_S + S_CODE_OFFSET + IMAGE_HEADER_SIZE)
+
 /* Private includes ----------------------------------------------------------*/
-extern uint32_t IMAGE_HEADER_SIZE;
-extern uint32_t S_CODE_SIZE;
-extern uint32_t NS_CODE_SIZE;
-extern uint32_t S_CODE_OFFSET;
 
 #if defined ( __ICCARM__ )
 #  define CMSE_NS_CALL  __cmse_nonsecure_call

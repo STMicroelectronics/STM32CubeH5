@@ -67,7 +67,7 @@ static TX_BYTE_POOL nx_app_byte_pool;
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN PFP */
-void Error_Handler(void);
+
 /* USER CODE END PFP */
 
   /**

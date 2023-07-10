@@ -180,7 +180,7 @@ static void ThreadTwo_Entry(void *argument)
     {
       printf("** ThreadTwo : SyncObject acquired ** \n");
 
-      /*Sync object acquired toggle the LED_ORANGE each 200ms for 2s*/
+      /*Sync object acquired toggle the LED_GREEN each 200ms for 2s*/
       Led_Toggle(20);
 
       /*release the sync object*/

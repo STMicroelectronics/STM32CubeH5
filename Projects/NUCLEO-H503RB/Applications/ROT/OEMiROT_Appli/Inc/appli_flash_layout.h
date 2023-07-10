@@ -19,12 +19,12 @@
 #ifndef __APPLI_FLASH_LAYOUT_H__
 #define __APPLI_FLASH_LAYOUT_H__
 
-#define MCUBOOT_DATA_IMAGE_NUMBER    0x1                /* 1: data image
+#define MCUBOOT_DATA_IMAGE_NUMBER    0x0                /* 1: data image
                                                            0: No data image. */
 
 #define CODE_IMAGE_PRIMARY_PARTITION_ADDRESS 0x8012000  /* code image offset */
 
-#define DATA_IMAGE_PRIMARY_PARTITION_ADDRESS 0x801E000  /* data image address */
+#define DATA_IMAGE_PRIMARY_PARTITION_ADDRESS 0x0  /* data image address */
 
 
 #endif /* __FLASH_LAYOUT_H__ */

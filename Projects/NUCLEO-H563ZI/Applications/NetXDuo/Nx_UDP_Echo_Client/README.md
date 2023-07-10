@@ -1,4 +1,4 @@
-## <b>Nx_UDP_Echo_Client application Description</b>
+## <b>Nx_UDP_Echo_Client Application Description</b>
 
 This application provides an example of Azure RTOS NetX/NetXDuo stack usage.
 

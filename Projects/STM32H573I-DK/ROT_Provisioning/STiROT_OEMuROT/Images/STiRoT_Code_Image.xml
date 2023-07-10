@@ -115,10 +115,10 @@
   </Param>
 	<Param>
 		<Name>Firmware binary input file</Name>
-		<Value>./../../../Applications/ROT/OEMiROT_Boot\EWARM\STM32H573I-DK\Exe\project.bin</Value>
+		<Value>./../../../Applications/ROT/OEMiROT_Boot/Binary/OEMiROT_Boot.bin</Value>
 		<Type>File</Type>
 		<Tooltip>Select the firmware binary file to be processed for the image generation</Tooltip>
-		<Default>./../../../Applications/ROT/OEMiROT_Boot\EWARM\STM32H573I-DK\Exe\project.bin</Default>
+		<Default>./../../../Applications/ROT/OEMiROT_Boot/Binary/OEMiROT_Boot.bin</Default>
 	</Param>
 	<Output>
 		<Name>Image output file</Name>

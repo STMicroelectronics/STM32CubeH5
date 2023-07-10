@@ -5,9 +5,9 @@
   * @author  MCD Application Team
   * @brief   USBX Host HID Keyboard applicative source file
   ******************************************************************************
-  * @attention
+    * @attention
   *
-  * Copyright (c) 2020-2021 STMicroelectronics.
+  * Copyright (c) 2023 STMicroelectronics.
   * All rights reserved.
   *
   * This software is licensed under terms that can be found in the LICENSE file
@@ -44,6 +44,7 @@
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN PV */
 extern UX_HOST_CLASS_HID_KEYBOARD *keyboard;
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/

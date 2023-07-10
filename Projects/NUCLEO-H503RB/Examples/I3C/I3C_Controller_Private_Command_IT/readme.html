@@ -29,11 +29,11 @@
 <p>The I3C peripheral configuration is ensured by the HAL_I3C_Init() function. This later is calling the HAL_I3C_MspInit()function which core is implementing the configuration of the needed I3C resources according to the used hardware (CLOCK, GPIO and NVIC). User may update this function to change I3C configuration. To have a better signal startup, the user must adapt the parameter BusFreeDuration depends on its hardware constraint. The value of BusFreeDuration set on this example is link to Nucleo hardware environment.</p>
 <p>The I3C communication is then initiated. The project is split in two workspace: the Controller Board (I3C_Controller_Private_Command_IT) and the Target Board (I3C_Target_Private_Command_IT)</p>
 <ul>
-<li><p>Controller Board The HAL_I3C_Ctrl_DynAddrAssign_IT() function allow the Controller to manage a Dynamic Address Assignment procedure to Targets connected on the bus. This communication is done at 12.5Mhz based on I3C source clock which is at 250 MHz.</p>
+<li><p>Controller Board The HAL_I3C_Ctrl_DynAddrAssign() function allow the Controller to manage a Dynamic Address Assignment procedure to Targets connected on the bus with polling mode. This communication is done at 12.5Mhz based on I3C source clock which is at 250 MHz.</p>
 <p>The HAL_I3C_Ctrl_Receive_IT() and the HAL_I3C_Ctrl_Transmit_IT() functions allow respectively the reception and the transmission of a predefined data buffer in Controller mode using Interrupt at 12.5Mhz during Push-pull phase based on I3C source clock which is at 250 MHz.</p></li>
 </ul>
 <p>For this example the aTxBuffer is predefined and the aRxBuffer size is same as aTxBuffer.</p>
-<p>In a first step after the user press the USER push-button on the Controller Board, I3C Controller starts the communication by initiate the Dynamic Address Assignment procedure through HAL_I3C_Ctrl_DynAddrAssign_IT(). This procedure allows the Controller to associate Dynamic Address to the Target connected on the Bus. User can verify through debug the payload value by watch the content of TargetDesc1 in the field TARGET_BCR_DCR_PID.</p>
+<p>In a first step after the user press the USER push-button on the Controller Board, I3C Controller starts the communication by initiate the Dynamic Address Assignment procedure through HAL_I3C_Ctrl_DynAddrAssign(). This procedure allows the Controller to associate Dynamic Address to the Target connected on the Bus. User can verify through debug the payload value by watch the content of TargetDesc1 in the field TARGET_BCR_DCR_PID.</p>
 <p>Then the I3C Controller continue the communication by sending aTxBuffer through HAL_I3C_Ctrl_Transmit_IT() to I3C Target which receives aRxBuffer through HAL_I3C_Tgt_Receive_IT(). The second step starts when the user press the USER push-button on the Controller Board, the I3C Target sends aTxBuffer through HAL_I3C_Tgt_Transmit_IT() to the I3C Controller which receives aRxBuffer through HAL_I3C_Ctrl_Receive_IT().</p>
 <p>The end of this two steps are monitored through the HAL_I3C_GetState() function result. Finally, aTxBuffer and aRxBuffer are compared through Buffercmp() in order to check buffers correctness.</p>
 <p>NUCLEO-H503RB’s LEDs can be used to monitor the transfer status:</p>
@@ -48,7 +48,7 @@
 <li><p>The application need to ensure that the SysTick time base is always set to 1 millisecond to have correct HAL operation.</p></li>
 </ol>
 <h3 id="keywords"><b>Keywords</b></h3>
-<p>Connectivity, Communication, I3C, Interrupt, Controller, Target, Dynamic Address Assignment, Private, Transmission, Reception</p>
+<p>Connectivity, Communication, I3C, Interrupt, Controller, Target, Dynamic Address Assignment Polling, Private, Transmission, Reception</p>
 <h3 id="directory-contents"><b>Directory contents</b></h3>
 <ul>
 <li>I3C/I3C_Controller_Private_Command_IT/Inc/desc_target1.h Target Descriptor</li>

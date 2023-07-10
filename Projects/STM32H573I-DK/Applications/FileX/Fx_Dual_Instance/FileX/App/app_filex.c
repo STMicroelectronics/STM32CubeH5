@@ -76,7 +76,6 @@ UINT media_memory_ospi[DEFAULT_SECTOR_SIZE / sizeof(uint32_t)];
 FX_FILE         fx_file_sd;
 FX_FILE         fx_file_ospi;
 FX_MEDIA        sdio_disk;
-FX_MEDIA        nor_flash_disk;
 /* Define ThreadX global data structures.  */
 TX_THREAD       fx_thread_one;
 TX_THREAD       fx_thread_two;
@@ -562,7 +561,7 @@ VOID fx_thread_two_entry(ULONG thread_input)
 
   printf("User available NOR Flash disk space size after file is written: %lu bytes.\n", available_space_post);
   printf("The test file occupied a total of %lu cluster(s) (%u per cluster).\n",
-         (available_space_pre - available_space_post) / (nor_ospi_flash_disk.fx_media_bytes_per_sector * nor_flash_disk.fx_media_sectors_per_cluster),
+         (available_space_pre - available_space_post) / (nor_ospi_flash_disk.fx_media_bytes_per_sector * nor_ospi_flash_disk.fx_media_sectors_per_cluster),
          nor_ospi_flash_disk.fx_media_bytes_per_sector * nor_ospi_flash_disk.fx_media_sectors_per_cluster);
 
   /* Check the get available state request status.  */

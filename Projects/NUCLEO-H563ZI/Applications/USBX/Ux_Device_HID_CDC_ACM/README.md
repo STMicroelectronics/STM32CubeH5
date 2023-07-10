@@ -1,4 +1,4 @@
-## <b>Ux_Device_HID_CDC_ACM application Description</b>
+## <b>Ux_Device_HID_CDC_ACM Application Description</b>
 
 This application provides an example of Azure RTOS USBX stack usage on NUCLEO-H563ZI board, it shows how to develop a composite USB Device communication
 Class "HID" and "CDC_ACM" based application.
@@ -58,8 +58,6 @@ When USER_Button is pressed, the device sneds a HID report. Each report sent sho
 #### <b>Error behaviors</b>
 
 Host PC shows that USB device does not operate as designed (Enumeration failed, for example PC Cursor doesn't move or Com port enumeration failed).
-
-The Red LED is toggling to indicate any error that has occurred.
 
 #### <b>Assumptions if any</b>
 

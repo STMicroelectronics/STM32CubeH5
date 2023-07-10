@@ -32,18 +32,11 @@ extern "C" {
 #include "Driver_Flash.h"
 
 /* Exported constants --------------------------------------------------------*/
-#ifdef OEMUROT_ENABLE
-#define OBK_HDPL2_CFG_OFFSET      (OBK_HDPL2_OFFSET) /* First OBkey Hdpl 2 for updatable config */
-#define OBK_HDPL2_CFG_SIZE        (sizeof(OBK_Hdpl2Config)) /* Size for OBkey Hdpl 2 cfg section */
-#define OBK_HDPL2_DATA_OFFSET     (OBK_HDPL2_CFG_OFFSET + OBK_HDPL2_CFG_SIZE) /* First OBkey Hdpl 2 for data section */
-#define OBK_HDPL2_DATA_SIZE       (sizeof(OBK_Hdpl2Data)) /* Size for OBKey Hdpl 1 data section */
-#else
 #define OBK_HDPL1_RES_SIZE        (0x60U) /* Size reserved at start of OBKey Hdpl 1 for RSS DA */
 #define OBK_HDPL1_CFG_OFFSET      (OBK_HDPL1_OFFSET + OBK_HDPL1_RES_SIZE) /* First OBkey Hdpl 1 for immutable config */
 #define OBK_HDPL1_CFG_SIZE        (sizeof(OBK_Hdpl1Config)) /* Size for OBkey Hdpl 1 cfg section */
 #define OBK_HDPL1_DATA_OFFSET     (OBK_HDPL1_CFG_OFFSET + OBK_HDPL1_CFG_SIZE) /* First OBkey Hdpl 1 for data section */
 #define OBK_HDPL1_DATA_SIZE       (sizeof(OBK_Hdpl1Data)) /* Size for OBKey Hdpl 1 data section */
-#endif
 
 #define OBK_FLASH_PROG_UNIT       (0x10U)
 #define ALL_OBKEYS                (0x1FFU)             /* Swap all OBkeys */
@@ -69,38 +62,6 @@ extern "C" {
 
 /* Exported types ------------------------------------------------------------*/
 
-#ifdef OEMUROT_ENABLE
-/* Hdpl 2 updatable section : to be aligned on FLASH_PROG_UNIT (16 bytes) */
-typedef struct __attribute__((__packed__))
-{
-  uint8_t  Header[32];
-  uint8_t  Hdpl3SecureAuthenticationPubKey[AUTH_PUB_KEY_LENGTH];
-  uint8_t  Hdpl3NonSecureAuthenticationPubKey[AUTH_PUB_KEY_LENGTH];
-  uint8_t  Hdpl3EncryptionPrivKey[ENC_PRIV_KEY_LENGTH];
-  uint8_t  Protected_TLV[12];
-  uint8_t  Non_Protected_TLV[8];
-  uint8_t  SHA256[SHA256_LENGTH];
-} OBK_Hdpl2Config;
-
-/* Hdpl 2 data section : to be aligned on FLASH_PROG_UNIT (16 bytes)
-   ================================================================= */
-typedef struct
-{
-  uint8_t  SHA256[SHA256_LENGTH];           /* Mandatory to be first in the structure */
-  uint32_t Image0CurVersion;
-  uint32_t Image0PrevVersion;
-  uint32_t Image1CurVersion;
-  uint32_t Image1PrevVersion;
-  uint32_t Image2CurVersion;
-  uint32_t Image2PrevVersion;
-  uint32_t Image3CurVersion;
-  uint32_t Image3PrevVersion;
-  uint8_t  Image0SHA256[SHA256_LENGTH];
-  uint8_t  Image1SHA256[SHA256_LENGTH];
-  uint8_t  Image2SHA256[SHA256_LENGTH];
-  uint8_t  Image3SHA256[SHA256_LENGTH];
-} OBK_Hdpl2Data;
-#else
 /* Hdpl 1 immutable section : to be aligned on FLASH_PROG_UNIT (16 bytes)
    ====================================================================== */
 typedef struct
@@ -134,7 +95,6 @@ typedef struct
   uint8_t  Image3SHA256[SHA256_LENGTH];
   uint8_t  Reserved[0];                     /* Alignment on 16 bytes */
 } OBK_Hdpl1Data;
-#endif
 /* Driver configuration
    ==================== */
 typedef struct
@@ -159,11 +119,7 @@ typedef struct
 /* External variables --------------------------------------------------------*/
 extern OBK_LowLevelDevice OBK_FLASH0_DEV;
 extern ARM_DRIVER_FLASH OBK_Driver_FLASH0;
-#ifdef OEMUROT_ENABLE
-extern OBK_Hdpl2Config OBK_Hdpl2_Cfg;
-#else
 extern OBK_Hdpl1Config OBK_Hdpl1_Cfg;
-#endif
 
 /* Exported macros -----------------------------------------------------------*/
 /* Exported functions ------------------------------------------------------- */
@@ -178,6 +134,7 @@ HAL_StatusTypeDef OBK_ReadHdpl1Data(OBK_Hdpl1Data *pOBK_Hdpl1Data);
 HAL_StatusTypeDef OBK_UpdateHdpl1Data(OBK_Hdpl1Data *pOBK_Hdpl1Data);
 void OBK_VerifyHdpl1Config(OBK_Hdpl1Config *pOBK_Hdpl1Cfg);
 #endif
+
 HAL_StatusTypeDef OBK_UpdateNVCounter(enum tfm_nv_counter_t CounterId, uint32_t Counter);
 HAL_StatusTypeDef OBK_GetNVCounter(enum tfm_nv_counter_t CounterId, uint32_t *pCounter);
 void OBK_InitDHUK(void);

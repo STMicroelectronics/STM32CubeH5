@@ -1,4 +1,4 @@
-IF [%1] NEQ [AUTO] call ../env.bat
+call ../env.bat
 
 :: Enable delayed expansion
 setlocal EnableDelayedExpansion
@@ -13,7 +13,7 @@ set hdp2_end=0x0
 set bootob=0x80044
 set bootaddress=0x8004000
 set app_image_number=1
-set data_image_number=1
+set data_image_number=0
 set code_image=%oemirot_appli%
 set data_image=data_enc_sign.hex
 
@@ -29,6 +29,7 @@ set erase_all=-e all
 :: ================================================ hardening ===============================================================================
 set hide_protect=HDP1_STRT=%hdp1_start% HDP1_END=%hdp1_end% HDP2_STRT=%hdp2_start% HDP2_END=%hdp2_end%
 set write_protect=WRPSGn1=%wrpgrp1% WRPSGn2=%wrpgrp2%
+set ns_boot_lock=NSBOOT_LOCK=0xB4
 
 :: =============================================== Configure Option Bytes ====================================================================
 
@@ -44,7 +45,7 @@ echo %action%
 if  "%app_image_number%" == "1" (
 set "action=Write OEMiROT_Appli Code"
 echo %action%
-%stm32programmercli% %connect_no_reset% -d %oemirot_boot_path_project%\Binary\%code_image% -v
+%stm32programmercli% %connect_no_reset% -d ../../%oemirot_boot_path_project%/Binary/%code_image% -v
 IF !errorlevel! NEQ 0 goto :error
 
 echo "TZ Appli Written"
@@ -70,7 +71,7 @@ set "action=OEMiROT_Boot Written"
 echo %action%
 
 echo "Configure option Bytes: Write Protection, Hide Protection and boot lock"
-%stm32programmercli% %connect_no_reset% -ob %write_protect% %hide_protect%
+%stm32programmercli% %connect_no_reset% -ob %write_protect% %hide_protect% %ns_boot_lock%
 IF !errorlevel! NEQ 0 goto :error
 
 echo Programming success

@@ -1,7 +1,8 @@
-@ECHO OFF
-:: Getting the CubeProgammer_cli path
+@echo off
 call ../env.bat
 
+:: Enable delayed expansion
+setlocal EnableDelayedExpansion
 
 :: CubeProgammer path and input files
 set ob_programming="ob_programming.bat"
@@ -15,7 +16,7 @@ set connect_reset=-c port=SWD speed=fast ap=1 mode=Hotplug -hardRst
 
 echo.
 echo =====
-echo ===== Provisioning of Legacy DA
+echo ===== Provisioning of DA
 echo =====
 echo.
 ::Define a BS variable containing a backspace (0x08) character
@@ -32,7 +33,7 @@ if /i "%tzen_state%" == "y" (set "ps_option=[ PROVISIONED | TZ-CLOSED | CLOSED |
 echo    * %da_file%.obk generation:
 echo        From TrustedPackageCreator (tab H5-OBkey).
 echo        Select %da_file%.xml (Default path is \ROT_Provisioning\DA\Config\%da_file%.xml)
-echo        Update the configuration (if/as needed) then generate %da_file%.xml file
+echo        Update the configuration (if/as needed) then generate %da_file%.obk file
 echo        Press any key to continue...
 echo.
 pause >nul
@@ -45,7 +46,7 @@ set current_log_file=%ob_programming_log%
 set "command=start /w /b call %ob_programming% %tzen_state% AUTO"
 echo    * %action%
 %command% > %ob_programming_log%
-if %errorlevel% neq 0 goto :step_error
+if !errorlevel! neq 0 goto :step_error
 
 echo        Successful option bytes programming
 echo        (see %ob_programming_log% for details)
@@ -60,7 +61,7 @@ pause >nul
 
 :: ================================================== Provisioning the obk file ===========================================================
 :: Set the product state "Provisioning". This will allow to execute the provisioning step
-:set_provisionning_ps
+:set_provisioning_ps
 set "action=Setting the product state PROVISIONING"
 set current_log_file=%provisioning%
 echo    * %action%
@@ -69,18 +70,18 @@ echo.
 set "command=%stm32programmercli% %connect_no_reset% -ob PRODUCT_STATE=0x17"
 echo %command% > %provisioning%
 %command% >> %provisioning%
-if %errorlevel% neq 0 goto :step_error
+if !errorlevel! neq 0 goto :step_error
 goto provisioning_step
 
 
 :: Provisioning the obk file step
 :provisioning_step
-set "action=Provisionning the .obk file ..."
+set "action=Provisioning the .obk file ..."
 set current_log_file=%obk_provisioning_log%
 set "command=start /w /b call %obk_provisioning% %tzen_state% AUTO"
 echo    * %action%
 %command% > %obk_provisioning_log%
-if %errorlevel% neq 0 goto :step_error
+if !errorlevel! neq 0 goto :step_error
 
 echo        Successful obk provisioning
 echo        (see %obk_provisioning_log% for details)

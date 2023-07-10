@@ -1,4 +1,4 @@
-## <b>Ux_Device_CDC_ACM application Description </b>
+## <b>Ux_Device_CDC_ACM Application Description </b>
 
 This application provides an example of Azure RTOS USBX stack usage on NUCLEO-H503RB board, it shows how to develop USB Device communication Class "CDC_ACM" based application.
 The application is designed to emulate an USB-to-UART bridge following the Virtual COM Port (VCP) implementation, the code provides all required device descriptors framework
@@ -49,8 +49,6 @@ Open two hyperterminals (USB com port and UART com port(USB STLink VCP)) to send
 #### <b>Error behaviors</b>
 
 Host PC shows that USB device does not operate as designed (CDC Device enumeration failed, PC and Device can not communicate over VCP ports).
-
-The Red LED is toggling to indicate any error that has occurred.
 
 #### <b>Assumptions if any</b>
 

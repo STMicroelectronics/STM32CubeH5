@@ -664,7 +664,7 @@
         </option>
         <option>
           <name>OOCOutputFile</name>
-          <state>Project.bin</state>
+          <state>$PROJ_DIR$/../Binary/OEMiROT_Boot.bin</state>
         </option>
         <option>
           <name>OOCCommandLineProducer</name>
@@ -691,7 +691,7 @@
       <archiveVersion>1</archiveVersion>
       <data>
         <prebuild>$PROJ_DIR$\prebuild.cmd "$PROJ_DIR$"</prebuild>
-        <postbuild>cmd /C "cmd /C $PROJ_DIR$\postbuild.bat""</postbuild>
+        <postbuild>cmd /C "cmd /C $PROJ_DIR$\postbuild.bat"</postbuild>
       </data>
     </settings>
     <settings>
@@ -1083,85 +1083,7 @@
     </settings>
   </configuration>
   <group>
-    <name>Application</name>
-    <group>
-      <name>User</name>
-      <file>
-        <name>$PROJ_DIR$\..\Src\bl2_nv_services.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\..\Src\aes_alt.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\..\Src\boot_hal.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\..\Src\ecdsa_alt.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\..\Src\ecp_alt.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\..\Src\ecp_curves_alt.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\..\Src\keys_map.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\..\Src\low_level_com.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\..\Src\low_level_device.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\..\Src\low_level_flash.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\..\Src\low_level_obkeys.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\..\Src\low_level_obkeys_device.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\..\Src\low_level_rng.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\..\Src\low_level_security.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\..\Src\mpu_armv8m_drv.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\..\Src\sha256_alt.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\..\Src\startup_stm32h5xx.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\..\Src\stm32h5xx_hal_msp.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\..\Src\rsa_alt.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\..\Src\tick.c</name>
-      </file>
-    </group>
-  </group>
-  <group>
-    <name>Doc</name>
-    <file>
-      <name>$PROJ_DIR$\..\README.md</name>
-    </file>
-  </group>
-  <group>
     <name>Drivers</name>
-    <group>
-      <name>CMSIS</name>
-      <file>
-        <name>$PROJ_DIR$\..\Src\system_stm32h5xx.c</name>
-      </file>
-    </group>
     <group>
       <name>STM32H5xx_HAL_Driver</name>
       <file>
@@ -1169,12 +1091,6 @@
       </file>
       <file>
         <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_hal_cortex.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_hal_cryp.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_hal_cryp_ex.c</name>
       </file>
       <file>
         <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_hal_dma.c</name>
@@ -1198,13 +1114,7 @@
         <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_hal_gtzc.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_hal_hash.c</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_hal_icache.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_hal_pka.c</name>
       </file>
       <file>
         <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_hal_pwr.c</name>
@@ -1239,10 +1149,94 @@
       <file>
         <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_hal_uart_ex.c</name>
       </file>
+      <file>
+        <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_hal_cryp.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_hal_cryp_ex.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_hal_pka.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_hal_hash.c</name>
+      </file>
+    </group>
+    <group>
+      <name>CMSIS</name>
+      <file>
+        <name>$PROJ_DIR$\..\Src\system_stm32h5xx.c</name>
+      </file>
     </group>
   </group>
   <group>
     <name>Middlewares</name>
+    <group>
+      <name>mcuboot</name>
+      <file>
+        <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\Third_Party\mcuboot\boot\bootutil\src\bootutil_misc.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\Third_Party\mcuboot\boot\bootutil\src\caps.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\Third_Party\mcuboot\boot\bootutil\src\encrypted.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\Third_Party\mcuboot\boot\bootutil\src\image_ec.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\Third_Party\mcuboot\boot\bootutil\src\image_ec256.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\Third_Party\mcuboot\boot\bootutil\src\image_rsa.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\Third_Party\mcuboot\boot\bootutil\src\image_validate.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\Third_Party\mcuboot\boot\bootutil\src\loader.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\Third_Party\mcuboot\boot\bootutil\src\swap_misc.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\Third_Party\mcuboot\boot\bootutil\src\swap_move.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\Third_Party\mcuboot\boot\bootutil\src\swap_scratch.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\Third_Party\mcuboot\boot\bootutil\src\tlv.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\Third_Party\mcuboot\boot\bootutil\src\fault_injection_hardening.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\Third_Party\mcuboot\boot\bootutil\src\fault_injection_hardening_delay_rng_mbedtls.c</name>
+      </file>
+    </group>
+    <group>
+      <name>trustedfirmware</name>
+      <file>
+        <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\Third_Party\trustedfirmware\bl2\ext\mcuboot\bl2_main.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\Third_Party\trustedfirmware\bl2\src\flash_map.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\Third_Party\trustedfirmware\bl2\ext\mcuboot\flash_map_extended.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\Third_Party\trustedfirmware\bl2\ext\mcuboot\flash_map_legacy.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\Third_Party\trustedfirmware\bl2\src\security_cnt.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\Third_Party\trustedfirmware\platform\ext\common\uart_stdout.c</name>
+      </file>
+    </group>
     <group>
       <name>mbed-crypto</name>
       <file>
@@ -1273,9 +1267,6 @@
         <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\Third_Party\mbed-crypto\library\ecp_curves.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\Third_Party\mbed-crypto\library\entropy.c</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\Third_Party\mbed-crypto\library\hkdf.c</name>
       </file>
       <file>
@@ -1299,73 +1290,81 @@
       <file>
         <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\Third_Party\mbed-crypto\library\sha256.c</name>
       </file>
-  </group>
-      <group>
-      <name>mcuboot</name>
       <file>
-        <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\Third_Party\mcuboot\boot\bootutil\src\bootutil_misc.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\Third_Party\mcuboot\boot\bootutil\src\caps.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\Third_Party\mcuboot\boot\bootutil\src\encrypted.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\Third_Party\mcuboot\boot\bootutil\src\fault_injection_hardening.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\Third_Party\mcuboot\boot\bootutil\src\fault_injection_hardening_delay_rng_mbedtls.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\Third_Party\mcuboot\boot\bootutil\src\image_ec.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\Third_Party\mcuboot\boot\bootutil\src\image_ec256.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\Third_Party\mcuboot\boot\bootutil\src\image_rsa.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\Third_Party\mcuboot\boot\bootutil\src\image_validate.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\Third_Party\mcuboot\boot\bootutil\src\loader.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\Third_Party\mcuboot\boot\bootutil\src\swap_misc.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\Third_Party\mcuboot\boot\bootutil\src\swap_move.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\Third_Party\mcuboot\boot\bootutil\src\swap_scratch.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\Third_Party\mcuboot\boot\bootutil\src\tlv.c</name>
+        <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\Third_Party\mbed-crypto\library\entropy.c</name>
       </file>
     </group>
+  </group>
+  <group>
+    <name>Application</name>
     <group>
-      <name>trustedfirmware</name>
+      <name>User</name>
       <file>
-        <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\Third_Party\trustedfirmware\bl2\ext\mcuboot\bl2_main.c</name>
+        <name>$PROJ_DIR$\..\Src\low_level_flash.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\Third_Party\trustedfirmware\bl2\src\flash_map.c</name>
+        <name>$PROJ_DIR$\..\Src\low_level_com.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\Third_Party\trustedfirmware\bl2\ext\mcuboot\flash_map_extended.c</name>
+        <name>$PROJ_DIR$\..\Src\low_level_rng.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\Third_Party\trustedfirmware\bl2\ext\mcuboot\flash_map_legacy.c</name>
+        <name>$PROJ_DIR$\..\Src\low_level_security.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\Third_Party\trustedfirmware\bl2\src\security_cnt.c</name>
+        <name>$PROJ_DIR$\..\Src\tick.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\Third_Party\trustedfirmware\platform\ext\common\uart_stdout.c</name>
+        <name>$PROJ_DIR$\..\Src\boot_hal.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\Src\low_level_device.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\Src\stm32h5xx_hal_msp.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\Src\keys_map.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\Src\mpu_armv8m_drv.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\Src\bl2_nv_services.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\Src\low_level_obkeys.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\Src\low_level_obkeys_device.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\Src\aes_alt.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\Src\ecdsa_alt.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\Src\ecp_alt.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\Src\ecp_curves_alt.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\Src\rsa_alt.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\Src\sha256_alt.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\Src\startup_stm32h5xx.c</name>
       </file>
     </group>
   </group>
-
+  <group>
+    <name>Doc</name>
+    <file>
+      <name>$PROJ_DIR$\..\README.md</name>
+    </file>
+  </group>
 </project>

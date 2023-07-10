@@ -4,7 +4,7 @@
 	<GlobalParam>
 		<Command>sign</Command>
 		<Title>Data image generation</Title>
-		<LinkedXML>../Config/OEMuRoT_Config_1.xml</LinkedXML>
+		<LinkedXML>../Config/OEMuRoT_Config_Keys.xml</LinkedXML>
 	</GlobalParam>
 	<Param>
 		<Name>Authentication secure key</Name>

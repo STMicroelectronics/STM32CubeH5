@@ -1,5 +1,5 @@
 
-##  <b>Nx_TCP_Echo_Client application Description</b>
+##  <b>Nx_TCP_Echo_Client Application Description</b>
 
 This application provides an example of Azure RTOS NetX/NetXDuo stack usage .
 It shows how to develop a NetX TCP client to communicate with a remote server using the NetX TCP socket API.

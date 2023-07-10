@@ -74,6 +74,16 @@ static void MX_ICACHE_Init(void);
 static void MX_USART1_UART_Init(void);
 static void MX_OCTOSPI1_Init(void);
 /* USER CODE BEGIN PFP */
+#if defined (__ICCARM__)
+/* New definition from EWARM V9, compatible with EWARM8 */
+int iar_fputc(int ch);
+#define PUTCHAR_PROTOTYPE int iar_fputc(int ch)
+#elif defined (__CC_ARM)|| defined (__ARMCC_VERSION)
+/*ARM Compiler 5/6 */
+#define PUTCHAR_PROTOTYPE int fputc(int ch,FILE *f)
+#elif defined(__GNUC__)
+#define PUTCHAR_PROTOTYPE int __io_putchar(int ch)
+#endif /* __ICCARM */
 
 /* USER CODE END PFP */
 
@@ -518,12 +528,19 @@ size_t __write(int file, unsigned char const *ptr, size_t len)
   }
   return len;
 }
-int iar_fputc(int ch)
+#endif /* __ICCARM__ */
+
+PUTCHAR_PROTOTYPE
 {
+  /* Place your implementation of fputc here */
+  /* e.g. write a character to the USART1 and Loop until the end of transmission */
   (void)HAL_UART_Transmit(&huart1, (uint8_t *) &ch, 1, 1000);
+
   return ch;
 }
-#endif /* __ICCARM__ */
+
+
+
 /* USER CODE END 4 */
 
 /**

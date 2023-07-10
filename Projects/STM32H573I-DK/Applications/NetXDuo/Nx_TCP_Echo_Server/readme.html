@@ -27,7 +27,7 @@ vertical-align: middle;
 <body>
 <div class="row">
 <section id="nx_tcp_echo_server-application-description" class="col-sm-12 col-lg-8">
-<h2><b>Nx_TCP_Echo_Server application Description</b></h2>
+<h2><b>Nx_TCP_Echo_Server Application Description</b></h2>
 <p>This application provides an example of Azure RTOS NetX/NetXDuo stack
 usage . It shows how to develop a NetX TCP server to communicate with a
 remote client using the NetX TCP socket API.</p>
@@ -203,9 +203,9 @@ configuration is as follows:</p>
 and update the <i>DEFAULT_PORT</i> to connect on</p></li>
 <li><p>Run the <a href="https://github.com/PavelBansky/EchoTool/releases/tag/v1.5.0.0">echotool</a>
 utility on a windows console as following:</p>
-<pre><code>c:\&gt; echotool.exe  &lt;the board IP address&gt; /p tcp  /r  &lt;DEFAULT_PORT&gt; /n 10 /d &quot;Hello World&quot;
+<pre><code>c:\&gt; echotool.exe  &lt;the board IP address&gt; /p tcp  /r  &lt;DEFAULT_PORT&gt; /n 10 /t 60 /d &quot;Hello World&quot;
 
-Example : c:\&gt; echotool.exe 192.168.1.2 /p tcp /r 6000 /n 10 /d &quot;Hello World&quot;</code></pre></li>
+Example : c:\&gt; echotool.exe 192.168.1.2 /p tcp /r 6000 /n 10 /t 60 /d &quot;Hello World&quot;</code></pre></li>
 <li><p>Rebuild all files and load your image into target memory</p></li>
 <li><p>Run the application</p></li>
 </ul>

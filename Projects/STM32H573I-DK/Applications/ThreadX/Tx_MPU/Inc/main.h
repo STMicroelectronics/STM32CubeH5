@@ -19,8 +19,8 @@
 /* USER CODE END Header */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef MAIN_H
-#define MAIN_H
+#ifndef __MAIN_H
+#define __MAIN_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -31,7 +31,6 @@ extern "C" {
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "stm32h573i_discovery.h"
 #include <stdio.h>
 /* USER CODE END Includes */
 
@@ -58,9 +57,13 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
-/* USER CODE BEGIN Private defines */
 #define LED1_Pin GPIO_PIN_9
 #define LED1_GPIO_Port GPIOI
+#define LED2_Pin GPIO_PIN_1
+#define LED2_GPIO_Port GPIOF
+
+/* USER CODE BEGIN Private defines */
+
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus

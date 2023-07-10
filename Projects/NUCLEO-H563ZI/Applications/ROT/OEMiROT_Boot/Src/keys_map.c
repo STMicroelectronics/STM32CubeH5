@@ -135,6 +135,7 @@ const struct bootutil_key bootutil_enc_key = {
     .len = &enc_rsa_priv_key_len,
 };
 #elif defined(MCUBOOT_ENCRYPT_EC256)
+
 const unsigned int enc_ec256_priv_key_len = 70;
 const struct bootutil_key bootutil_enc_key = {
     .key = OBK_Hdpl1_Cfg.Hdpl3EncryptionPrivKey,

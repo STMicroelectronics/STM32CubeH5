@@ -27,8 +27,8 @@ The project is split in two workspace:
 the Controller Board (I3C_Controller_Private_Command_IT) and the Target Board (I3C_Target_Private_Command_IT)
 
 - Controller Board
-  The HAL_I3C_Ctrl_DynAddrAssign_IT() function allow the Controller to
-  manage a Dynamic Address Assignment procedure to Targets connected on the bus.
+  The HAL_I3C_Ctrl_DynAddrAssign() function allow the Controller to manage
+  a Dynamic Address Assignment procedure to Targets connected on the bus with polling mode.
   This communication is done at 12.5Mhz based on I3C source clock which is at 250 MHz.
 
   The HAL_I3C_Ctrl_Receive_IT() and the HAL_I3C_Ctrl_Transmit_IT() functions
@@ -40,7 +40,7 @@ For this example the aTxBuffer is predefined and the aRxBuffer size is same as a
 
 In a first step after the user press the USER push-button on the Controller Board,
 I3C Controller starts the communication by initiate the Dynamic Address Assignment
-procedure through HAL_I3C_Ctrl_DynAddrAssign_IT().
+procedure through HAL_I3C_Ctrl_DynAddrAssign().
 This procedure allows the Controller to associate Dynamic Address to the Target
 connected on the Bus.
 User can verify through debug the payload value by watch the content of TargetDesc1
@@ -76,7 +76,7 @@ NUCLEO-H503RB's LEDs can be used to monitor the transfer status:
 
 ### <b>Keywords</b>
 
-Connectivity, Communication, I3C, Interrupt, Controller, Target, Dynamic Address Assignment, Private,
+Connectivity, Communication, I3C, Interrupt, Controller, Target, Dynamic Address Assignment Polling, Private,
 Transmission, Reception
 
 ### <b>Directory contents</b>

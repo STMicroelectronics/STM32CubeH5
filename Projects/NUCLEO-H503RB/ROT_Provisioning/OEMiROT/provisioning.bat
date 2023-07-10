@@ -17,13 +17,17 @@ set password_programming_log="../DA/password_provisioning.log"
 set create_password_log="../DA/create_password.log"
 set state_change_log="provisioning.log"
 
+if "%isGeneratedByCubeMX%" == "true" (
+set appli_dir=%oemirot_boot_path_project%
+) else (
+set appli_dir=../../../%oemirot_boot_path_project%
+)
+
 :: Variables for image xml configuration
 set fw_in_bin="Firmware binary input file"
 set fw_out_bin="Image output file"
-set app_bin="%oemirot_boot_path_project%\Binary\rot_app.bin"
-set app_bin=%app_bin:\=/%
-set app_enc_sign_hex="%oemirot_boot_path_project%\Binary\rot_app_enc_sign.hex"
-set app_enc_sign_hex=%app_enc_sign_hex:\=/%
+set app_bin="%appli_dir%/Binary/rot_app.bin"
+set app_enc_sign_hex="%appli_dir%/Binary/rot_app_enc_sign.hex"
 set code_image_file="%projectdir%Images\OEMiROT_Code_Image.xml"
 
 :: Initial configuration
@@ -98,7 +102,7 @@ echo        Press any key to continue...
 echo.
 if [%1] neq [AUTO] pause >nul
 echo    * Data generation (if Data image is enabled)
-echo        Select OEMiRoT_Data_Image.xml(Default path is \ROT\Provisioning\OEMiROT\OEMiRoT_Data_Image.xml)
+echo        Select OEMiROT_Data_Image.xml(Default path is \ROT\Provisioning\OEMiROT\OEMiROT_Data_Image.xml)
 echo        Generate the data_enc_sign.hex image
 echo        Press any key to continue...
 echo.
@@ -126,14 +130,14 @@ echo        (see %ob_flash_log% for details)
 echo.
 
 :: ================================================= Final product state selection ==========================================================
-set "action=Is your password already provisioned ?"
+set "action=Password provisioning"
 echo    * %action%
-set /p "password=       (WARNING: This step is done one time, then the password cannot be changed) %USERREG% [y|n]: "
+echo        WARNING: The password is definitively provisioned (in OTP), and cannot be changed even after regression
+echo        Once provisioned, be sure not to change the password anymore (will not work)
+echo        Press any key to continue...
 echo.
-if /i "%password%" == "n" goto :create_password
-if /i "%password%" == "y" goto :define_product_state
-echo         not valid answer
-goto step_error
+pause >nul
+goto create_password
 
 :define_product_state
 set "action=Define final product state value"
@@ -239,7 +243,7 @@ set "command=start /w /b call %password_programming% AUTO"
 if !errorlevel! neq 0 goto :step_error
 
 echo        Successful password provisioning
-echo        (see %password_programming% for details)
+echo        (see %password_programming_log% for details)
 echo.
 if /i "%product_state%" NEQ "OPEN" goto :set_final_ps
 
@@ -256,7 +260,7 @@ if [%1] neq [AUTO] pause >nul
 echo =====
 echo ===== The board is correctly configured.
 if "%isGeneratedByCubeMX%" == "true" goto :no_menu
-echo ===== Connect UART console (11500 baudrate) to get application menu.
+echo ===== Connect UART console (115200 baudrate) to get application menu.
 
 :no_menu
 echo =====

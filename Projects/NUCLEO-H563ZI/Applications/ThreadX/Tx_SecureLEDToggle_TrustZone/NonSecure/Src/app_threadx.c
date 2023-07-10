@@ -5,7 +5,7 @@
   * @author  MCD Application Team
   * @brief   ThreadX applicative file
   ******************************************************************************
-    * @attention
+  * @attention
   *
   * Copyright (c) 2023 STMicroelectronics.
   * All rights reserved.
@@ -24,7 +24,6 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "app_azure_rtos_config.h"
-#include "main.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -84,6 +83,8 @@ CHAR *pointer;
 
   /* USER CODE BEGIN App_ThreadX_Init */
 #endif
+
+   tx_thread_secure_stack_allocate(&tx_app_thread, TX_APP_STACK_SIZE);
   /* USER CODE END App_ThreadX_Init */
 
   return ret;
@@ -97,9 +98,9 @@ void MainThread_Entry(ULONG thread_input)
 {
   /* USER CODE BEGIN MainThread_Entry */
   while(1)
-  { 
+  {
     /* Sleep for 1 seconds.  */
-    HAL_GPIO_TogglePin(LED1_GPIO_Port, LED1_Pin);
+    SECURE_LEDToggle();
     tx_thread_sleep(100);
   }
   /* USER CODE END MainThread_Entry */
@@ -113,13 +114,14 @@ void MainThread_Entry(ULONG thread_input)
 void MX_ThreadX_Init(void)
 {
   /* USER CODE BEGIN  Before_Kernel_Start */
-  
+
+
   /* USER CODE END  Before_Kernel_Start */
 
   tx_kernel_enter();
 
   /* USER CODE BEGIN  Kernel_Start_Error */
-  
+
   /* USER CODE END  Kernel_Start_Error */
 }
 

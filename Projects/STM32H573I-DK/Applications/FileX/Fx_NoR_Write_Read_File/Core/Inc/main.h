@@ -31,7 +31,6 @@ extern "C" {
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "lx_stm32_ospi_driver.h"
 #include <stdio.h>
 /* USER CODE END Includes */
 

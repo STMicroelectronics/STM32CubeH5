@@ -83,6 +83,7 @@ static const ARM_FLASH_CAPABILITIES DriverCapabilities =
 #define DRIVER_STATUS_NO_ERROR  (0u)
 #define DRIVER_STATUS_ERROR     (1u)
 
+
 /**
   * \brief Arm Flash device structure.
   */
@@ -292,10 +293,10 @@ static int32_t Flash_Initialize(ARM_Flash_SignalEvent_t cb_event)
   ARG_UNUSED(cb_event);
 
   HAL_FLASHEx_GetOperation(&flash_operation);
-  BOOT_LOG_INF("Flash operation: Op=0x%lx, Area=0x%lx, Address=0x%lx",
-               flash_operation.OperationType,
-               flash_operation.FlashArea,
-               flash_operation.Address);
+  BOOT_LOG_INF("Flash operation: Op=0x%x, Area=0x%x, Address=0x%x",
+               (int)flash_operation.OperationType,
+               (int)flash_operation.FlashArea,
+               (int)flash_operation.Address);
   FLASH_WaitForLastOperation(FLASH_TIMEOUT_VALUE);
   return ARM_DRIVER_OK;
 }
@@ -604,9 +605,12 @@ ARM_DRIVER_FLASH TFM_Driver_FLASH0 =
   Flash_GetInfo
 };
 #endif
+
 #if !defined(LOCAL_LOADER_CONFIG)
+
 void NMI_Handler(void)
 {
+
   if (__HAL_FLASH_GET_FLAG(FLASH_FLAG_ECCD))
   {
     __HAL_FLASH_CLEAR_FLAG(FLASH_FLAG_ECCD);

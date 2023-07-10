@@ -32,7 +32,7 @@ extern "C" {
 #include "nx_stm32_eth_driver.h"
 
 /* USER CODE BEGIN Includes */
-#include "main.h"   
+#include "main.h"
 #include "nxd_dhcp_client.h"
 #include "nxd_sntp_client.h"
 #include "nxd_dns.h"

@@ -36,26 +36,7 @@
 extern uint32_t __ICFEDIT_region_RAM_start__;
 extern uint32_t __ICFEDIT_region_RAM_end__;
 void LOADER_Run(void);
-void clear_all_sram(void);
 /* Functions Definition ------------------------------------------------------*/
-
-/**
-  * @brief This function is called to clear all SRAM area before jumping
-  * in the non secure bootloader.
-  * @note
-  * @retval void
-  */
-void clear_all_sram(void)
-{
-  __IO uint32_t *pt = (uint32_t *)__ICFEDIT_region_RAM_start__;
-  uint32_t index;
-  uint32_t size = (__ICFEDIT_region_RAM_end__-__ICFEDIT_region_RAM_start__+1)/4;
-
-  for (index = 0; index < size; index++)
-  {
-    pt[index] = 0;
-  }
-}
 
 /**
   * @brief  Display the TEST Main Menu choices on HyperTerminal
@@ -65,8 +46,8 @@ void clear_all_sram(void)
 void LOADER_Run(void)
 {
   printf("\r\n  Standard Bootloader started");
-  printf("\r\n  If you want to connect through USART device, disconnect your TeraTerm");
-  printf("\r\n  Start download with STM32CubeProgrammer through supported device (USART/SPI/I2C/I3C/USB/FDCAN)\r\n");
+  printf("\r\n  If you want to connect through USART interface, disconnect your TeraTerm");
+  printf("\r\n  Start download with STM32CubeProgrammer through supported interfaces (USART/SPI/I2C/USB)\r\n");
 
   printf("\r\n");
 
@@ -85,22 +66,19 @@ void LOADER_Run(void)
   /* Configure NVIC */
   nvic_loader_cfg();
 
-  /* enable fbu to */
+  /* enable FPU */
   fpu_enable_cfg();
-
-  /* Workaround to disable USART before calling BootLoader */
-  CLEAR_BIT(USART1->CR1, USART_CR1_UE);
 
   uint32_t boot_address = cmse_nsfptr_create(*(uint32_t *)(BOOTLOADER_BASE_NS + 4U));
 
-  /*Increment HDPL to HDPL=3*/
+  /*Increment HDPL to HDPL3*/
   SET_BIT(SBS->HDPLCR,  SBS_HDPLCR_INCR_HDPL);
 
   __TZ_set_MSP_NS((*(uint32_t *)BOOTLOADER_BASE_NS));
   SCB_NS->VTOR = BOOTLOADER_BASE_NS;
 
 
-  asm volatile("movs r0, %0\n"
+  __asm volatile("movs r0, %0\n"
                "movs r1, #0\n" /*clear registers before jumping to non-secure*/
                "movs r2, #0\n"
                "movs r3, #0\n"

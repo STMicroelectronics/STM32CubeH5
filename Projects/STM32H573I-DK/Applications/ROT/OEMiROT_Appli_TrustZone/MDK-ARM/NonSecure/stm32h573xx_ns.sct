@@ -1,0 +1,44 @@
+#! armclang --target=arm-arm-none-eabi -march=armv8-m.main -E -xc
+
+/*
+ * Copyright (c) 2017-2018 ARM Limited
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+#define S_CODE_OFFSET 0x18000                          /* This define is updated automatically from OEMiROT_BOOT project */
+#define S_CODE_SIZE 0x6000                             /* This define is updated automatically from OEMiROT_BOOT project */
+
+#define NS_CODE_OFFSET S_CODE_OFFSET + S_CODE_SIZE     /* Non secure code Offset */
+#define NS_CODE_SIZE 0xA0000                           /* This define is updated automatically from ROT_BOOT project */
+
+#define IMAGE_HEADER_SIZE 0x400                        /* mcuboot header size */
+#define TRAILER_MAX_SIZE 0x40                          /* Trailer max size */
+
+#define NS_CODE_START 0x08000000 + NS_CODE_OFFSET + IMAGE_HEADER_SIZE
+#define NS_APP_CODE_SIZE NS_CODE_SIZE - TRAILER_MAX_SIZE - IMAGE_HEADER_SIZE
+
+#define DATA_START 0x20050000
+#define DATA_SIZE 0x4FFFF
+
+LR_CODE NS_CODE_START {
+    ER_CODE NS_CODE_START NS_APP_CODE_SIZE {
+        *.o (RESET +First)
+        .ANY (+RO)
+    }
+
+    ER_DATA DATA_START DATA_SIZE {
+        .ANY (+ZI +RW)
+    }
+}
+

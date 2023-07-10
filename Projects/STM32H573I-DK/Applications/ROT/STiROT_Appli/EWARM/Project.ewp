@@ -217,7 +217,6 @@
           <state>STM32H573xx</state>
           <state>USE_HAL_DRIVER</state>
           <state>USE_STM32H573I_DK</state>
-          <state>BL2_HW_ACCEL_ENABLE</state>
         </option>
         <option>
           <name>CCPreprocFile</name>

@@ -55,7 +55,7 @@ extern "C" {
 
 #define MCUBOOT_HW_ROLLBACK_PROT
 #define MCUBOOT_ENC_IMAGES           /* Defined: Image encryption enabled. */
-
+                                     /* Undefined: Image encryption disabled. */
 #define MCUBOOT_BOOTSTRAP            /* Allow initial state with images in secondary slots only (empty primary slots) */
 
 /*

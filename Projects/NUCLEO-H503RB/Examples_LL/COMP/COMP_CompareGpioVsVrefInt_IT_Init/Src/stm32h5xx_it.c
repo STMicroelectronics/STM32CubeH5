@@ -214,10 +214,10 @@ void COMP1_IRQHandler(void)
            (instead of edge), this implies to disable interrupt in comparator IRQ handler at each interruption
            occurrence.
            In case of further operation needed in interrupt mode, comparator interruption must be rearmed. */
-  CLEAR_BIT(COMP1->CFGR1, COMP_CFGR1_ITEN);
+  LL_COMP_DisableIT_OutputTrig(COMP1);
 
   /* Clear comparator interruption flag */
-  COMP1->ICFR = COMP_ICFR_CC1IF;
+  LL_COMP_ClearFlag_OutputTrig(COMP1);
 
   /* Call interruption treatment function */
   ComparatorTrigger_Callback();

@@ -127,12 +127,14 @@ void boot_platform_noimage(void)
   /* Update run time protections for application execution */
   LL_SECU_UpdateLoaderRunTimeProtections();
 
+
   /* Check Flow control */
   FLOW_CONTROL_CHECK(uFlowProtectValue, FLOW_CTRL_STAGE_3_L);
   uFlowStage = FLOW_STAGE_CHK;
 
   /* Second function call to resist to basic hardware attacks */
   LL_SECU_UpdateLoaderRunTimeProtections();
+
 
   /* Check Flow control */
   FLOW_CONTROL_CHECK(uFlowProtectValue, FLOW_CTRL_STAGE_4_L);
@@ -294,7 +296,6 @@ void boot_clear_bl2_ram_area(void)
 int boot_hash_ref_store(void)
 {
   OBK_Hdpl1Data OBK_hdpl1_data = { 0U };
-
   /* Read all OBK hdpl1/2 data & control SHA256 */
   if (OBK_ReadHdpl1Data(&OBK_hdpl1_data) !=  HAL_OK)
   {
@@ -495,10 +496,6 @@ int32_t boot_platform_init(void)
 
     /* get descriptor address to support new and old descriptor */
     getDescriptorAdd();
-#if  defined(BL2_HW_ACCEL_ENABLE)
-    /* Init DHUK */
-    OBK_InitDHUK();
-#endif
 
     /* Configure keys */
     OBK_ReadHdpl1Config(&OBK_Hdpl1_Cfg);

@@ -2,7 +2,7 @@
  *  FIPS-180-2 compliant SHA-256 implementation
  *
  *  Copyright The Mbed TLS Contributors
- *  Copyright (C) 2022, STMicroelectronics, All Rights Reserved
+ *  Copyright (C) 2023, STMicroelectronics, All Rights Reserved
  *  SPDX-License-Identifier: Apache-2.0
  *
  *  Licensed under the Apache License, Version 2.0 (the "License"); you may

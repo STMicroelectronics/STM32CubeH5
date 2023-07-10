@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-* @file    GTZC/GTZC_MPCWM_IllegalAccess_TrustZone/Secure/Src/hal_external_memory_helper.c
+* @file    GTZC/GTZC_MPCWM_IllegalAccess_TrustZone/Secure/Src/external_memory_helper.c
 * @author  MCD Application Team
 * @brief   Helper C file to configure the external memory
   ******************************************************************************
@@ -57,7 +57,7 @@ uint32_t extMemory_Config(void)
   HAL_OSPI_DLYB_Cfg_Struct.PhaseSel = 0;
   if (HAL_XSPI_DLYB_SetConfig(&hospi1, &HAL_OSPI_DLYB_Cfg_Struct) != HAL_OK)
   {
-    return -1;
+    return 1;
   }
   /* Configure the memory in octal mode ------------------------------------- */
   OSPI_OctalModeCfg(&hospi1);
@@ -85,7 +85,7 @@ uint32_t extMemory_Config(void)
 
   if (HAL_XSPI_Command(&hospi1, &sCommand,5000U) != HAL_OK)
   {
-    return -1;
+    return 2;
   }
 
   /* Configure automatic polling mode to wait for end of erase ------ */
@@ -103,7 +103,7 @@ uint32_t extMemory_Config(void)
 
   if (HAL_XSPI_Command(&hospi1, &sCommand, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
   {
-    return -1;
+    return 3;
   }
 
   sCommand.OperationType = HAL_XSPI_OPTYPE_READ_CFG;
@@ -113,14 +113,14 @@ uint32_t extMemory_Config(void)
 
   if (HAL_XSPI_Command(&hospi1, &sCommand, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
   {
-    return -1;
+    return 4;
   }
 
   sMemMappedCfg.TimeOutActivation  = HAL_XSPI_TIMEOUT_COUNTER_ENABLE;
   sMemMappedCfg.TimeoutPeriodClock = 0x50;
   if (HAL_XSPI_MemoryMapped(&hospi1, &sMemMappedCfg) != HAL_OK)
   {
-    return -1;
+    return 5;
   }
 
   return 0;
@@ -133,8 +133,8 @@ uint32_t extMemory_Config(void)
   */
 void OSPI_WriteEnable(XSPI_HandleTypeDef *hospi)
 {
-  XSPI_RegularCmdTypeDef  sCommand;
-  XSPI_AutoPollingTypeDef sConfig;
+  XSPI_RegularCmdTypeDef  sCommand = {0};
+  XSPI_AutoPollingTypeDef sConfig = {0};
 
   /* Enable write operations ------------------------------------------ */
   sCommand.OperationType      = HAL_XSPI_OPTYPE_COMMON_CFG;
@@ -189,8 +189,8 @@ void OSPI_WriteEnable(XSPI_HandleTypeDef *hospi)
   */
 void OSPI_AutoPollingMemReady(XSPI_HandleTypeDef *hospi)
 {
-  XSPI_RegularCmdTypeDef  sCommand;
-  XSPI_AutoPollingTypeDef sConfig;
+  XSPI_RegularCmdTypeDef  sCommand = {0};
+  XSPI_AutoPollingTypeDef sConfig = {0};
 
 
   /* Configure automatic polling mode to wait for memory ready ------ */

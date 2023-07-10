@@ -90,9 +90,8 @@ volatile uint32_t uFlowStage = FLOW_STAGE_CFG;
   */
 static void boot_jump_to_NSS(uint32_t boot_jump_addr1, uint32_t boot_jump_addr2,
                              uint32_t vector_table, uint32_t MPU_region);
-void icache_init(void);
 void boot_erase_image(void);
-
+void icache_init(void);
 /**
   * @}
   */
@@ -134,6 +133,7 @@ void boot_platform_noimage(void)
 
   /* Check Flow control */
   FLOW_CONTROL_CHECK(uFlowProtectValue, FLOW_CTRL_STAGE_4_L);
+
 
   __set_MSPLIM(0);
   /* Jump into BL through NSS */
@@ -414,7 +414,6 @@ void boot_erase_image(void)
   }
 #endif
 }
-
 /**
   * @brief This function configures and enables the ICache.
   * @note
@@ -483,11 +482,6 @@ int32_t boot_platform_init(void)
     RNG_Init();
 
     (void)fih_delay_init();
-
-#ifdef OEMUROT_ENABLE
-    /* disable and clean STiROT mpu config */
-    LL_SECU_DisableCleanMpu();
-#endif
 
     /* Apply Run time Protection */
     LL_SECU_ApplyRunTimeProtections();

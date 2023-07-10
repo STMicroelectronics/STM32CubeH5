@@ -1,4 +1,4 @@
-## <b>Nx_Iperf_wifi application Description</b>
+## <b>Nx_Iperf_wifi Application Description</b>
 
 This application is a network traffic tool for measuring TCP and UDP performance with metrics around both throughput and latency.
 

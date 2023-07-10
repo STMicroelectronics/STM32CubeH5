@@ -24,9 +24,8 @@
 extern "C" {
 #endif
 
-extern uint32_t __ICFEDIT_region_ROM_start__;
-extern uint32_t IMAGE_HEADER_SIZE;
-#define APPLI_CODE_HEADER  ((uint32_t)&(__ICFEDIT_region_ROM_start__) - (uint32_t)&(IMAGE_HEADER_SIZE))
+#include "main.h"
+#define APPLI_CODE_HEADER  (S_CODE_START - IMAGE_HEADER_SIZE)
 /* Includes ------------------------------------------------------------------*/
 
 /** @addtogroup TEST_VERSIONS

@@ -501,11 +501,9 @@ void Error_Handler(void)
 {
   /* USER CODE BEGIN Error_Handler_Debug */
   /* User can add his own implementation to report the HAL error return state */
-  BSP_LED_Off(LED_GREEN);
   while (1)
   {
-    BSP_LED_Toggle(LED_RED);
-    HAL_Delay(200);
+
   }
   /* USER CODE END Error_Handler_Debug */
 }

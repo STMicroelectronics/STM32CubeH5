@@ -4,7 +4,7 @@ import time
 import hashlib
 from AppliCfg import macro_parser
 
-def get_hex(value):
+def get_hex(value, size=None, upper_format=True):
     """
         Transform value to hex number in upper mode
     Parameters:
@@ -15,21 +15,26 @@ def get_hex(value):
     if type(value) == str :
         value = value.lower()
         if "0x" in value :
-            hex_value = value[2:].upper()
+            hex_value = value[2:]
         else :
-            hex_value = hex(convert_to_integer(value))[2:].upper()
+            hex_value = hex(convert_to_integer(value))[2:]
     else :
-        hex_value = hex(value)[2:].upper()
+        hex_value = hex(value)[2:]
 
-    new_hex_value = "0x" + hex_value
-    return new_hex_value
+    if size is not None and len(hex_value) <= size :
+        hex_value = format(int(hex_value,16), 'x').zfill(size)
+
+    if upper_format :
+        hex_value = hex_value.upper()
+
+    return "0x" + hex_value
 
 def compute_condition(condition, values, vb):
     """
         Compute a conditional expression (string to integer)
     Parameters:
         condition - Value to transform
-        value - Value founded in the input file. The value must be integer
+        value - Value found in the input file. The value must be integer
         vb - Debug option (True or False)
     Returns:
         conditional_value : Return True or False
@@ -67,7 +72,7 @@ def compute_expression(expression, values, constants, vb):
         Compute a mathematical expression (string to integer)
     Parameters:
         expression - Value to transform
-        value - Value founded in the input file. The value must be integer
+        value - Value found in the input file. The value must be integer
         constants - Constant list. The constant must be integers
         vb - Debug option (True or False)
     Returns:
@@ -194,8 +199,7 @@ def compute_wrp_protections(wrp_address_start, wrp_address_end, wrp_sector_sz,
     return wrpsg1, wrpsg2
 
 
-def compute_hdp_protection(hdp_address_start, hdp_address_end, sector_nb, 
-                           vb, sector_size="0x2000"):
+def compute_hdp_protection(hdp_address_start, hdp_address_end, sector_nb, vb, hdp_sector_sz:int=0x2000):
     """
         Compute the HDP protection
     Parameters:
@@ -211,7 +215,7 @@ def compute_hdp_protection(hdp_address_start, hdp_address_end, sector_nb,
     # Compute the start and end sectors (with the wrp group size)
     LOG.info("Computing the hdp protection." + \
             " See the reference manual for more information", vb)
-    hdp_sector_sz = int(sector_size, 16)
+    #hdp_sector_sz = int(sector_size, 16)
     hdp_start = int(hdp_address_start / hdp_sector_sz)
     hdp_end = int(hdp_address_end / hdp_sector_sz)
     # Compute sectors to protect
@@ -227,8 +231,47 @@ def compute_hdp_protection(hdp_address_start, hdp_address_end, sector_nb,
             hdp2 = sector_nb, 0
     return hdp1, hdp2
 
+def compute_sector_area(sector_address_start, area_size, vb, sector_size):
+    """
+        Compute the HDP protection
+    Parameters:
+        hdp_address_start - Begin address of hdp protection
+        hdp_address_end - End address of hdp protection
+        sector_nb - Board sector number in one bank
+        vb - Debug option (True or False)
+        sector_size - Board sector size (Defined in the reference manual)
+    Returns:
+        hdp1 - Tuple with start and and values
+        hdp2 - Tuple with start and and values
+    """
+    offset_1=0x70000000
+    offset_2=0x90000000
+    if (offset_1 & convert_to_integer(sector_address_start) == offset_1):
+        sel_offset=offset_1
+    elif (offset_2 & convert_to_integer(sector_address_start) == offset_2):
+        sel_offset=offset_2
+    else:
+        LOG.error("Sector address start is unknown '%s'" % sector_address_start)
 
-def modify_file_line(infile, begin_line, value, vb):
+    if convert_to_integer(area_size) < sector_size:
+        decrement = 0
+    else:
+        decrement = 1
+
+    # Compute the start and end sectors (with the wrp group size)
+    LOG.info("Computing the erase slot area.", vb)
+    slot_sector_sz = sector_size
+    LOG.info("Sector size %d" % sector_size, vb)
+    slot_start = (convert_to_integer(sector_address_start) - sel_offset) / slot_sector_sz
+    LOG.info("Slot start %d" % slot_start, vb)
+    slot_end = (convert_to_integer(sector_address_start)- sel_offset + convert_to_integer(area_size)) / slot_sector_sz - decrement
+    LOG.info("Slot end %d with sector_size %d" % (slot_end,slot_sector_sz), vb)
+    # Compute sectors to erase
+    erase = int(slot_start), int(slot_end)
+    return erase
+
+
+def modify_file_line(infile, begin_line, value, vb, delimiter="="):
     """
         Modify the entire line of a file. Recommended to modify script variables
         Parameters:
@@ -249,16 +292,16 @@ def modify_file_line(infile, begin_line, value, vb):
             if begin_line + value in line:
                 # The line has te correct value the file 
                 # modification is not necessary
-                value = value.replace("=","")
+                value = value.replace(delimiter,"")
                 str_debug = "The variable has already the correct value (%s)" % value
                 LOG.info("The file modification is not necessary", vb)
                 LOG.info(str_debug, vb)
                 return True
             else:
-                # Line to modify has been founded (modify only the first line
+                # Line to modify has been found (modify only the first line
                 # with the pattern )
                 lines[i] = begin_line + value + "\n"
-                LOG.info("The variable value was modified to %s" % value.replace("=",""), vb)
+                LOG.info("The variable value was modified to %s" % value.replace(delimiter,""), vb)
                 break
     # Save file modification
     LOG.info("Saving file modification", vb)
@@ -328,7 +371,7 @@ def toggle_comment_line(infile, name, vb, action="comment"):
                 else : 
                     lines[i] = new_line
                     line_is_modified = True
-                    # Line to modify has been founded (modify only the first line
+                    # Line to modify has been found (modify only the first line
                     # with the pattern )
                     break
     if line_is_modified :
@@ -339,6 +382,33 @@ def toggle_comment_line(infile, name, vb, action="comment"):
         f.close()
     return line_is_modified
 
+
+def get_file_value(infile, pattern_line, search_value, search_option="((0x[0-9a-fA-F]+)|([0-9]+))"):
+    """
+    Get the value of an existing variable in a file
+    Parameters:
+        infile - File to be updated
+        pattern_line - Pattern to choose the line to be modified
+        vb - Debug option (True or False)
+        search_option = Search regex option (By default search hex an decimal numbers)
+    Returns:
+        value_is_modified - Boolean status (True value modified)
+    """
+    value_is_modified = False
+    # Modify value
+    # Read and modify a specific line
+    f = open(infile, "r")
+    lines = f.readlines()
+    for i, line in enumerate(lines):
+        # Search line to modify
+        if re.search(pattern_line, line):
+            # Get the value to be replaced
+            replace_resp = re.search(pattern_line +search_option, line)
+            if replace_resp is not None:
+              return replace_resp.group(1)
+            else:
+                sys.exit("Wrong option to replace while searching the pattern")
+    return ""
 
 def modify_file_value(infile, pattern_line, search_value, new_value, vb,
                       search_option="((0x[0-9a-fA-F]+)|([0-9]+))"):
@@ -383,7 +453,7 @@ def modify_file_value(infile, pattern_line, search_value, new_value, vb,
                     LOG.info("The variable value was modified to %s" % new_value, vb)
                     lines[i] = new_line
                     value_is_modified = True
-                    # Line to modify has been founded (modify only the first line
+                    # Line to modify has been found (modify only the first line
                     # with the pattern )
                     break
             elif replace_resp is None:
@@ -405,11 +475,11 @@ def modify_file_value(infile, pattern_line, search_value, new_value, vb,
                         LOG.info("The modification is not necessary", vb)
                         LOG.info(str_debug, vb)
                         return True
-                    else : 
+                    else :
                         lines[i] = new_line
                         LOG.info("The variable value was modified to %s" % new_value, vb)
                         value_is_modified = True
-                        # Line to modify has been founded (modify only the first
+                        # Line to modify has been found (modify only the first
                         # line with the pattern )
                         break
             else:
@@ -419,7 +489,7 @@ def modify_file_value(infile, pattern_line, search_value, new_value, vb,
         LOG.info("Saving the define modifications", vb)
         # Save file modification
         f = open(infile, "w")
-        f.write("".join(lines)) 
+        f.write("".join(lines))
         f.close()
     return value_is_modified
 
@@ -432,13 +502,15 @@ def get_macro_value(macro, layout, vb):
         layout - file
         vb - Debug option (True or False)
     Returns :
-        value - value founded (None if not value founded)
+        value - value found (None if no value)
     """
     import os.path
 
     ext = os.path.splitext(layout)[1][1:]
     if ext=="h":
         image_value_re = re.compile(r"^\#define\s*" + macro + "\s\s*(.*)")
+    elif ext=="icf":
+        image_value_re = re.compile(r"^define symbol \s*" + macro + "\s*=\s*(.*)")
     else:
         image_value_re = re.compile(r"^\s*" + macro + "\s*=\s*(.*)")
 
@@ -480,7 +552,7 @@ def data_to_bytes(hex_value, order, byte_size):
     """ Transform hex value to byte value
         Parameters:
           hex_value
-          order : little or big (endien)
+          order : little or big (endian)
           byte_size : Size of data in bytes (ex.uint32 --> 4)
         """
     int_value = int(hex_value, 16)
@@ -536,7 +608,7 @@ def data_format(bytes_value, order):
     """ Transform byte value to hex value
         Parameters:
           bytes_value
-          order : little or big (endien)
+          order : little or big (endian)
         """
     return hex(int.from_bytes(bytes_value, byteorder=order))
 
@@ -544,3 +616,22 @@ def bits_to_byte(bits_value):
     if bits_value % 8 != 0 :
         LOG.error("Bits size not available")
     return int(bits_value/8)
+
+def modify_hex_value(hex_value, hex_to_replace, shift_value) :
+    """ Modify the value of a hex number
+        Parameters:
+          hex_value : Initial hex value
+          hex_to_replace : Value to replace
+          shift_value : Shift of the hex to replace
+        """
+    hex_value = hex_value[2:] if "0x" in hex_value else hex_value
+    hex_val = int(hex_value, 16)
+    replace_val = int(hex_to_replace, 16) << shift_value
+    replace_mask = "".join([ "0" if value == "0" else "F" for value in hex(replace_val)[2:]])
+    full_inv_mask = "".join([ "F" for value in hex_value])
+    full_inv_mask_val = int(full_inv_mask,16)
+    replace_mask_val = int(replace_mask,16)
+    final_mask = full_inv_mask_val ^ replace_mask_val
+    new_hex_value = (final_mask & hex_val) | replace_val
+
+    return hex(new_hex_value)

@@ -52,6 +52,7 @@ void MemManage_Handler(void);
 void BusFault_Handler(void);
 void UsageFault_Handler(void);
 void DebugMon_Handler(void);
+void EXTI13_IRQHandler(void);
 void GPDMA1_Channel3_IRQHandler(void);
 void GPDMA1_Channel5_IRQHandler(void);
 void TIM6_IRQHandler(void);
@@ -62,7 +63,6 @@ void UCPD1_IRQHandler(void);
 #if defined(TCPP0203_SUPPORT)
 void EXTI1_IRQHandler(void);
 #endif /* TCPP0203_SUPPORT */
-void EXTI13_IRQHandler(void);
 /* USER CODE END EFP */
 
 #ifdef __cplusplus

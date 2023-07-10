@@ -16,7 +16,6 @@
   */
 
 /* Includes ------------------------------------------------------------------*/
-#include "main.h"
 #include "app_netxduo.h"
 #include <inttypes.h>
 #include <stdbool.h>
@@ -24,6 +23,7 @@
 #include "nxd_bsd.h"
 #include "nx_tcp.h"
 #include "nx_driver_emw3080.h"
+#include "main.h"
 
 
 #define MAX_BUFFER              (NX_DRIVER_PACKET_SIZE + 1)

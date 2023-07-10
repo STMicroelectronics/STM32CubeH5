@@ -16,10 +16,13 @@
   ******************************************************************************
   @endverbatim
 
+### 2-June-2023 ###
+========================
+    + several enhancements (including security updates)
+
 ### 8-February-2023 ###
 ========================
-    + Digital signature of imgtool.exe
-	+ After installation in overwrite mode, erase the complete secondary slot
+    + After installation in overwrite mode, erase the complete secondary slot
 
 ### 2-February-2023 ###
 ========================

@@ -1,12 +1,11 @@
-## <b>OEMiROT_Boot application Description</b>
+## <b>OEMiROT_Boot application description</b>
 
-This project provides an OEMiROT example. OEMiROT boot path performs authenticity and integrity checks of the project firmware and data
+This project provides an OEMiROT example. OEMiROT boot path performs authenticity and the integrity checks of the project firmware and data
 images.
 
 The core function of this application relies on the mcuboot middleware and the mbed-crypto middleware.
 
 It relies on cryptography hardware peripherals for optimal performances (PKA, SAE, HASH, RNG).
-
 This project is full secure.
 
 This project shows how to implement an OEMiROT.
@@ -24,7 +23,7 @@ The maximum system clock frequency at 250Mhz is configured.
 
 ### <b>Keywords</b>
 
-TrustZone, OEMiROT, Boot path, Root Of Trust, Security, mcuboot
+TrustZone, OEMiROT, boot path, Root Of Trust, Security, mcuboot
 
 ### <b>Directory contents</b>
 

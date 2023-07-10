@@ -5,9 +5,9 @@
   * @author  MCD Application Team
   * @brief   USBX host applicative file
   ******************************************************************************
-  * @attention
+    * @attention
   *
-  * Copyright (c) 2020-2021 STMicroelectronics.
+  * Copyright (c) 2023 STMicroelectronics.
   * All rights reserved.
   *
   * This software is licensed under terms that can be found in the LICENSE file
@@ -83,17 +83,17 @@ UINT MX_USBX_Host_Init(VOID)
   /* Initialize USBX Memory */
   if (ux_system_initialize(pointer, USBX_HOST_MEMORY_STACK_SIZE, UX_NULL, 0) != UX_SUCCESS)
   {
-    /* USER CODE BEGIN USBX_SYSTEM_INITIALIZE_ERORR */
+    /* USER CODE BEGIN USBX_SYSTEM_INITIALIZE_ERROR */
     return UX_ERROR;
-    /* USER CODE END USBX_SYSTEM_INITIALIZE_ERORR */
+    /* USER CODE END USBX_SYSTEM_INITIALIZE_ERROR */
   }
 
   /* Install the host portion of USBX */
   if (ux_host_stack_initialize(ux_host_event_callback) != UX_SUCCESS)
   {
-    /* USER CODE BEGIN USBX_HOST_INITIALIZE_ERORR */
+    /* USER CODE BEGIN USBX_HOST_INITIALIZE_ERROR */
     return UX_ERROR;
-    /* USER CODE END USBX_HOST_INITIALIZE_ERORR */
+    /* USER CODE END USBX_HOST_INITIALIZE_ERROR */
   }
 
   /* Register a callback error function */
@@ -103,27 +103,27 @@ UINT MX_USBX_Host_Init(VOID)
   if (ux_host_stack_class_register(_ux_system_host_class_hid_name,
                                    ux_host_class_hid_entry) != UX_SUCCESS)
   {
-    /* USER CODE BEGIN USBX_HSOT_HID_REGISTER_ERORR */
+    /* USER CODE BEGIN USBX_HSOT_HID_REGISTER_ERROR */
     return UX_ERROR;
-    /* USER CODE END USBX_HSOT_HID_REGISTER_ERORR */
+    /* USER CODE END USBX_HSOT_HID_REGISTER_ERROR */
   }
 
   /* Initialize the host hid mouse client */
   if (ux_host_class_hid_client_register(_ux_system_host_class_hid_client_mouse_name,
                                         ux_host_class_hid_mouse_entry) != UX_SUCCESS)
   {
-    /* USER CODE BEGIN USBX_HOST_HID_MOUSE_REGISTER_ERORR */
+    /* USER CODE BEGIN USBX_HOST_HID_MOUSE_REGISTER_ERROR */
     return UX_ERROR;
-    /* USER CODE END USBX_HOST_HID_MOUSE_REGISTER_ERORR */
+    /* USER CODE END USBX_HOST_HID_MOUSE_REGISTER_ERROR */
   }
 
   /* Initialize the host hid keyboard client */
   if (ux_host_class_hid_client_register(_ux_system_host_class_hid_client_keyboard_name,
                                         ux_host_class_hid_keyboard_entry) != UX_SUCCESS)
   {
-    /* USER CODE BEGIN USBX_HOST_HID_KEYBOARD_REGISTER_ERORR */
+    /* USER CODE BEGIN USBX_HOST_HID_KEYBOARD_REGISTER_ERROR */
     return UX_ERROR;
-    /* USER CODE END USBX_HOST_HID_KEYBOARD_REGISTER_ERORR */
+    /* USER CODE END USBX_HOST_HID_KEYBOARD_REGISTER_ERROR */
   }
 
   /* USER CODE BEGIN MX_USBX_Host_Init1 */
@@ -399,7 +399,7 @@ VOID USBX_Host_Process(VOID *arg)
 
 /**
   * @brief  USBX_APP_Host_Init
-  *         Initialization of USB device.
+  *         Initialization of USB host.
   * @param  none
   * @retval none
   */
@@ -412,7 +412,7 @@ VOID USBX_APP_Host_Init(VOID)
   /* Initialize the LL driver */
   MX_USB_HCD_Init();
 
-  /* Initialize the host controller driver */
+  /* Register all the USB host controllers available in this system. */
   ux_host_stack_hcd_register(_ux_system_host_hcd_stm32_name,
                              _ux_hcd_stm32_initialize, (ULONG)USB_DRD_FS,
                              (ULONG)&hhcd_USB_DRD_FS);
@@ -426,7 +426,8 @@ VOID USBX_APP_Host_Init(VOID)
   /* Enable USB Global Interrupt */
   HAL_HCD_Start(&hhcd_USB_DRD_FS);
 
-  /* USER CODE BEGIN USB_Host_Init_PreTreatment_1 */
+
+  /* USER CODE BEGIN USB_Host_Init_PostTreatment1 */
 
   /* Start Application Message */
   USBH_UsrLog("**** USB DRD HID Host **** \n");
@@ -436,7 +437,7 @@ VOID USBX_APP_Host_Init(VOID)
   USBH_UsrLog("Starting HID Application");
   USBH_UsrLog("Connect your HID Device");
 
-  /* USER CODE END USB_Host_Init_PreTreatment_1 */
+  /* USER CODE END USB_Host_Init_PostTreatment1 */
 }
 
 /* USER CODE END 1 */

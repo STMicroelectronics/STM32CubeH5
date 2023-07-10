@@ -22,6 +22,8 @@
 #include "stm32h5xx_nucleo.h"
 #if defined(__ICCARM__)
 #include <LowLevelIOInterface.h>
+#elif defined ( __CC_ARM ) || defined(__ARMCC_VERSION)
+#include "stdio.h"
 #endif /* __ICCARM__ */
 
 /** @addtogroup BSP

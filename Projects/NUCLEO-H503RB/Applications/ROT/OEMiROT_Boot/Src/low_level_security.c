@@ -168,9 +168,9 @@ const struct mpu_armv8m_region_cfg_t region_cfg_init[] = {
 };
 
 const struct mpu_armv8m_region_cfg_t region_cfg_appli[] = {
-  /* First region in this list is configured only at this stage,
-     the region will be activated later by NSS jump service. Following regions
-     in this list are configured and activated at this stage. */
+  /* First region in this list is configured only at this stage, */
+  /* the region will be activated later by NSS jump service. Following regions */
+  /*  in this list are configured and activated at this stage. */
 
   /* Region 1: Allows execution of appli */
   {
@@ -260,7 +260,8 @@ static const uint32_t ProductStatePrioList[] = {
 /* USB */
 
 /*----------------------|  FDCAN  |------------------------------------*/
-/* FDCAN1 */
+/* FDCAN2 */
+/* Due to HW constraint, FDCAN1 and FDCAN2 shall be set as non-secure in order to grant FDCAN2 to non-secure (Bootloader). */
 
 /*----------------------|  ICACHE  |------------------------------------*/
 /* ICACHE */
@@ -396,7 +397,6 @@ void LL_SECU_CheckStaticProtections(void)
   static FLASH_OBProgramInitTypeDef flash_option_bytes_nsboot = {0};
 #ifdef OEMIROT_ENABLE_SET_OB
   HAL_StatusTypeDef ret = HAL_ERROR;
-  uint32_t val;
 #endif  /* OEMIROT_ENABLE_SET_OB  */
   uint32_t start;
   uint32_t end;
@@ -440,6 +440,7 @@ void LL_SECU_CheckStaticProtections(void)
   }
 
 #ifdef  OEMIROT_WRP_PROTECT_ENABLE
+  uint32_t val;
   /* Check flash write protection */
   start = FLASH_AREA_PERSO_OFFSET / PAGE_SIZE;
   end = (FLASH_AREA_PERSO_OFFSET + FLASH_AREA_PERSO_SIZE + FLASH_AREA_BL2_SIZE -1) / PAGE_SIZE;
@@ -459,8 +460,8 @@ void LL_SECU_CheckStaticProtections(void)
   if ((flash_option_bytes_bank1.WRPState != OB_WRPSTATE_ENABLE)
       || (flash_option_bytes_bank1.WRPSector != val))
   {
-    BOOT_LOG_INF("BANK 1 flash write protection group 0x%lx: OB 0x%lx",
-                 val, flash_option_bytes_bank1.WRPSector);
+    BOOT_LOG_INF("BANK 1 flash write protection group 0x%x: OB 0x%x",
+                 (int)val, (int)flash_option_bytes_bank1.WRPSector);
 #ifndef OEMIROT_ENABLE_SET_OB
     BOOT_LOG_ERR("Unexpected value for write protection ");
     Error_Handler();
@@ -476,8 +477,8 @@ void LL_SECU_CheckStaticProtections(void)
     if ((flash_option_bytes_bank2.WRPState != OB_WRPSTATE_ENABLE)
         || (flash_option_bytes_bank2.WRPSector != val_bank2))
     {
-      BOOT_LOG_INF("BANK 2 flash write protection group 0x%lx: OB 0x%lx",
-                   val_bank2, flash_option_bytes_bank2.WRPSector);
+      BOOT_LOG_INF("BANK 2 flash write protection group 0x%x: OB 0x%x",
+                   (int)val_bank2, (int)flash_option_bytes_bank2.WRPSector);
 #ifndef OEMIROT_ENABLE_SET_OB
       BOOT_LOG_ERR("Unexpected value for write protection ");
       Error_Handler();
@@ -510,11 +511,11 @@ void LL_SECU_CheckStaticProtections(void)
   if ((start != flash_option_bytes_bank1.HDPStartSector)
     || (end != flash_option_bytes_bank1.HDPEndSector))
   {
-    BOOT_LOG_INF("BANK 1 hide protection [%ld, %ld] : OB [%ld, %ld]",
-                 start,
-                 end,
-                 flash_option_bytes_bank1.HDPStartSector,
-                 flash_option_bytes_bank1.HDPEndSector);
+    BOOT_LOG_INF("BANK 1 hide protection [%d, %d] : OB [%d, %d]",
+                 (int)start,
+                 (int)end,
+                 (int)flash_option_bytes_bank1.HDPStartSector,
+                 (int)flash_option_bytes_bank1.HDPEndSector);
 #ifndef OEMIROT_ENABLE_SET_OB
     BOOT_LOG_ERR("Unexpected value for hide protection");
     Error_Handler();
@@ -531,11 +532,11 @@ void LL_SECU_CheckStaticProtections(void)
     if ((start_bank2 != flash_option_bytes_bank2.HDPStartSector)
         || (end_bank2 != flash_option_bytes_bank2.HDPEndSector))
     {
-      BOOT_LOG_INF("BANK 2 hide protection [%ld, %ld] : OB [%ld, %ld]",
-                   start_bank2,
-                   end_bank2,
-                   flash_option_bytes_bank2.HDPStartSector,
-                   flash_option_bytes_bank2.HDPEndSector);
+      BOOT_LOG_INF("BANK 2 hide protection [%d, %d] : OB [%d, %d]",
+                   (int)start_bank2,
+                   (int)end_bank2,
+                   (int)flash_option_bytes_bank2.HDPStartSector,
+                   (int)flash_option_bytes_bank2.HDPEndSector);
 #ifndef OEMIROT_ENABLE_SET_OB
       BOOT_LOG_ERR("Unexpected value for hide protection");
       Error_Handler();
@@ -635,7 +636,7 @@ void LL_SECU_CheckStaticProtections(void)
   /* Check Boot lock protection */
   if (flash_option_bytes_nsboot.BootLock != OEMIROT_OB_BOOT_LOCK)
   {
-    BOOT_LOG_INF("BootLock 0x%lx", flash_option_bytes_nsboot.BootLock);
+    BOOT_LOG_INF("BootLock 0x%x", (int)flash_option_bytes_nsboot.BootLock);
     BOOT_LOG_ERR("Unexpected value for NS BOOT LOCK");
     Error_Handler();
   }
@@ -740,14 +741,6 @@ static void gtzc_loader_cfg(void)
 }
 #endif /* MCUBOOT_EXT_LOADER && GENERATOR_LOADER_IN_SYSTEM_FLASH */
 
-#ifdef OEMUROT_ENABLE
-void LL_SECU_DisableCleanMpu(void)
-{
-  struct mpu_armv8m_dev_t dev_mpu_s = { MPU_BASE };
-  mpu_armv8m_disable(&dev_mpu_s);
-  mpu_armv8m_clean(&dev_mpu_s);
-}
-#endif
 
 /**
   * @brief  mpu init
@@ -756,7 +749,7 @@ void LL_SECU_DisableCleanMpu(void)
   */
 static void mpu_init_cfg(void)
 {
-#ifdef OEMIROT_BOOT_MPU_PROTECTION
+#ifdef OEMIROT_MPU_PROTECTION
   struct mpu_armv8m_dev_t dev_mpu = { MPU_BASE };
   int32_t i;
 
@@ -814,7 +807,7 @@ static void mpu_init_cfg(void)
       FLOW_CONTROL_STEP(uFlowProtectValue, FLOW_STEP_MPU_I_CH, FLOW_CTRL_MPU_I_CH);
     }
   }
-#endif /* OEMIROT_BOOT_MPU_PROTECTION */
+#endif /* OEMIROT_MPU_PROTECTION */
 }
 
 /**
@@ -864,7 +857,7 @@ static void ram_init_cfg(void)
 
 static void mpu_appli_cfg(void)
 {
-#ifdef OEMIROT_BOOT_MPU_PROTECTION
+#ifdef OEMIROT_MPU_PROTECTION
   static struct mpu_armv8m_dev_t dev_mpu = { MPU_BASE };
   int32_t i;
   enum mpu_armv8m_error_t status;
@@ -926,12 +919,12 @@ static void mpu_appli_cfg(void)
       }
     }
   }
-#endif /* OEMIROT_BOOT_MPU_PROTECTION */
+#endif /* OEMIROT_MPU_PROTECTION */
 }
 #if defined(MCUBOOT_EXT_LOADER)
 static void mpu_loader_cfg(void)
 {
-#ifdef OEMIROT_BOOT_MPU_PROTECTION
+#ifdef OEMIROT_MPU_PROTECTION
   struct mpu_armv8m_dev_t dev_mpu = { MPU_BASE };
   uint32_t i = 0U;
   /* Secure coding  : volatile variable usage to force compiler to reload SBS->CSLCKR register address */
@@ -985,7 +978,7 @@ static void mpu_loader_cfg(void)
     }
     FLOW_CONTROL_STEP(uFlowProtectValue, FLOW_STEP_MPU_L_LCK_CH, FLOW_CTRL_MPU_L_LCK_CH);
   }
-#endif /* OEMIROT_BOOT_MPU_PROTECTION */
+#endif /* OEMIROT_MPU_PROTECTION */
 }
 #endif /* MCUBOOT_EXT_LOADER */
 
@@ -1099,7 +1092,7 @@ static void active_tamper(void)
         {
             Error_Handler();
         }
-        BOOT_LOG_INF("TAMPER SEED [0x%x,0x%x,0x%x,0x%x]", Seed[0], Seed[1], Seed[2], Seed[3]);
+        BOOT_LOG_INF("TAMPER SEED [0x%lx,0x%lx,0x%lx,0x%lx]", Seed[0], Seed[1], Seed[2], Seed[3]);
         /* Configure active tamper common parameters  */
         sAllTamper.ActiveFilter = RTC_ATAMP_FILTER_ENABLE;
         sAllTamper.ActiveAsyncPrescaler = RTC_ATAMP_ASYNCPRES_RTCCLK_32;

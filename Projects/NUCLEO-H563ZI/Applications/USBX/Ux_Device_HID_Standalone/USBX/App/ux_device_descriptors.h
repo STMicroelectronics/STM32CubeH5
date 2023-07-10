@@ -5,7 +5,7 @@
   * @author  MCD Application Team
   * @brief   USBX Device descriptor header file
   ******************************************************************************
-  * @attention
+    * @attention
   *
   * Copyright (c) 2023 STMicroelectronics.
   * All rights reserved.
@@ -42,10 +42,9 @@ extern "C" {
 #define USBD_MAX_CLASS_INTERFACES                      11U
 
 #define USBD_HID_CLASS_ACTIVATED                       1U
-
 #define USBD_HID_MOUSE_ACTIVATED                       1U
 
-#define USBD_CONFIG_MAXPOWER                           25U
+#define USBD_CONFIG_MAXPOWER                           0U
 #define USBD_COMPOSITE_USE_IAD                         0U
 #define USBD_DEVICE_FRAMEWORK_BUILDER_ENABLED          1U
 
@@ -58,12 +57,14 @@ extern "C" {
 /* Enum Class Type */
 typedef enum
 {
-  CLASS_TYPE_NONE    = 0,
-  CLASS_TYPE_HID     = 1,
-  CLASS_TYPE_CDC_ACM = 2,
-  CLASS_TYPE_MSC     = 3,
-  CLASS_TYPE_CDC_ECM = 4,
-  CLASS_TYPE_DFU     = 5,
+  CLASS_TYPE_NONE     = 0,
+  CLASS_TYPE_HID      = 1,
+  CLASS_TYPE_CDC_ACM  = 2,
+  CLASS_TYPE_MSC      = 3,
+  CLASS_TYPE_CDC_ECM  = 4,
+  CLASS_TYPE_DFU      = 5,
+  CLASS_TYPE_PIMA_MTP = 6,
+  CLASS_TYPE_RNDIS    = 7,
 } USBD_CompositeClassTypeDef;
 
 /* Enum HID Interface Type */
@@ -223,11 +224,6 @@ typedef struct
 } __PACKED USBD_HIDDescTypedef;
 #endif /* USBD_HID_CLASS_ACTIVATED == 1U */
 
-/* Private defines -----------------------------------------------------------*/
-/* USER CODE BEGIN Private_defines */
-
-/* USER CODE END Private_defines */
-
 /* Exported functions prototypes ---------------------------------------------*/
 /* USER CODE BEGIN EFP */
 
@@ -252,7 +248,7 @@ uint16_t USBD_HID_ReportDesc_length(uint8_t hid_type);
 #define USBD_PID                                      22288
 #define USBD_LANGID_STRING                            1033
 #define USBD_MANUFACTURER_STRING                      "STMicroelectronics"
-#define USBD_PRODUCT_STRING                           "STM32 Device HID Mouse"
+#define USBD_PRODUCT_STRING                           "STM32 HID Mouse Device"
 #define USBD_SERIAL_NUMBER                            "HID001"
 
 #define USB_DESC_TYPE_INTERFACE                       0x04U

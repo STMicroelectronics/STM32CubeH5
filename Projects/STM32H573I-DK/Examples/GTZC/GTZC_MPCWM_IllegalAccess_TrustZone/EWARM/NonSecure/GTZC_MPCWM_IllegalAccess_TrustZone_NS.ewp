@@ -590,7 +590,7 @@
                 </option>
                 <option>
                     <name>AOutputFile</name>
-                    <state>$FILE_BNAME$.o</state>
+                    <state></state>
                 </option>
                 <option>
                     <name>ALimitErrorsCheck</name>
@@ -988,7 +988,7 @@
                 </option>
                 <option>
                     <name>IlinkTrustzoneImportLibraryOut</name>
-                    <state>GTZC_MPCWM_IllegalAccess_TrustZone_NS_import_lib.o</state>
+                    <state></state>
                 </option>
                 <option>
                     <name>OILinkExtraOption</name>
@@ -1072,7 +1072,7 @@
         <group>
             <name>EWARM</name>
             <file>
-                <name>$PROJ_DIR$\startup_stm32h573xx.s</name>
+                <name>$PROJ_DIR$\..\startup_stm32h573xx.s</name>
             </file>
         </group>
         <group>

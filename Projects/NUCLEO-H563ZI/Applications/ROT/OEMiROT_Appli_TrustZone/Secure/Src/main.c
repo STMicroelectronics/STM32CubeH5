@@ -36,8 +36,6 @@
                              */
 #define VTOR_TABLE_NS_START_ADDR  (FLASH_BASE_NS + S_CODE_OFFSET + \
                                    S_CODE_SIZE + IMAGE_HEADER_SIZE)
-
-
 /* Private macro -------------------------------------------------------------*/
 
 
@@ -59,7 +57,7 @@ static void MX_GTZC_Init(void);
 int main(void)
 {
   /* SAU/IDAU, FPU and interrupts secure/non-secure allocation setup done */
-  /* in SystemInit() based on partition_stm32h573xx.h file's definitions. */
+  /* in SystemInit() based on partition_stm32h563xx.h file's definitions. */
 
 
   /* Enable SecureFault handler (HardFault is default) */

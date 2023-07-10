@@ -43,7 +43,7 @@ extern "C" {
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "stm32h573i_discovery.h"
+
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
@@ -72,6 +72,8 @@ void MX_I2C4_Init(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
+#define BUTTON_USER_Pin GPIO_PIN_13
+#define BUTTON_USER_GPIO_Port GPIOC
 
 /* USER CODE BEGIN Private defines */
 #define USBD_DFU_APP_DEFAULT_ADDR       0x08022000

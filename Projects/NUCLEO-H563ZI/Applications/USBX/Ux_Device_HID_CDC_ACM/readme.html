@@ -19,7 +19,7 @@
 <body>
 <div class="row">
 <div class="col-sm-12 col-lg-8">
-<h2 id="ux_device_hid_cdc_acm-application-description"><b>Ux_Device_HID_CDC_ACM application description</b></h2>
+<h2 id="ux_device_hid_cdc_acm-application-description"><b>Ux_Device_HID_CDC_ACM Application Description</b></h2>
 <p>This application provides an example of Azure RTOS USBX stack usage on NUCLEO-H563ZI board, it shows how to develop a composite USB Device communication Class “HID” and “CDC_ACM” based application. The application is designed to emulate an USB HID mouse device and USB-to-UART bridge following the Virtual COM Port (VCP) implementations, the code provides all required device descriptors framework and associated to both Classes descriptor report to build a composite compliant USB HID_CDC_ACM device. At the beginning ThreadX call the entry function tx_application_define(), at this stage, all USBx resources are initialized, the CDC_ACM and HID Class driver is registered and the application creates 4 threads with the same priorities :</p>
 <ul>
 <li>app_ux_device_thread_entry (Prio : 10; PreemptionPrio : 10) used to initialize USB DRD HAL PCD driver and start the device.</li>
@@ -48,7 +48,6 @@
 <p>When plugged to PC host, the STM32H563xx must be properly enumerated a composite device as an HID ,USB Serial device and an STlink Com port. During the enumeration phase, device provides host with the requested descriptors (Device, configuration, string). Those descriptors are used by host driver to identify the device capabilities. Once STM32H563xx USB device successfully completed the enumeration phase. Connect USB cable to Host , Open two hyperterminals (USB com port and UART com port) to send/receive data to/from host to/from device. When USER_Button is pressed, the device sneds a HID report. Each report sent should move the PC host machine mouse cursor by one step.</p>
 <h4 id="error-behaviors"><b>Error behaviors</b></h4>
 <p>Host PC shows that USB device does not operate as designed (Enumeration failed, for example PC Cursor doesn’t move or Com port enumeration failed).</p>
-<p>The Red LED is toggling to indicate any error that has occurred.</p>
 <h4 id="assumptions-if-any"><b>Assumptions if any</b></h4>
 <p>User is familiar with USB 2.0 “Universal Serial BUS” Specification and CDC_ACM class Specification.</p>
 <h4 id="known-limitations"><b>Known limitations</b></h4>

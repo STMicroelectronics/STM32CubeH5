@@ -1,4 +1,4 @@
-## <b>Ux_Device_MSC application Description</b>
+## <b>Ux_Device_MSC Application Description</b>
 
 This application provides an example of Azure RTOS USBX stack usage on STM32H573I-DK board, it shows how to develop USB Device mass storage class based
 

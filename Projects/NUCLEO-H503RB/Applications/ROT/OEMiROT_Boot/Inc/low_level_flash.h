@@ -49,7 +49,6 @@ extern struct low_level_device FLASH0_DEV;
 
 #if !defined(LOCAL_LOADER_CONFIG)
 void NMI_Handler(void);
-void memcpy_flash(void *dest, const void *src, size_t n);
 #endif
 
 #endif /* __LOW_LEVEL_FLASH_H */

@@ -1,0 +1,42 @@
+#! armclang --target=arm-arm-none-eabi -march=armv8-m.main -E -xc
+
+/*
+ * Copyright (c) 2017-2018 ARM Limited
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+#define S_CODE_OFFSET 0x00000000    /* Firmware execution area offset from STiROT_Config.xml */
+#define S_CODE_SIZE 0x00020000      /* Firmware area size from STiROT_Config.xml */
+#define IMAGE_HEADER_SIZE 0x400     /* mcuboot header size */
+
+#define CODE_START 0x0C000000 + S_CODE_OFFSET + IMAGE_HEADER_SIZE
+#define APP_CODE_SIZE S_CODE_SIZE - 16 - 1
+
+/* Only use SRAM2/3 as full secure for our application */
+/* Because when the application jump to the bootloader, the BL uses the SRAM1 ressources */
+
+#define DATA_START 0x30040000
+#define DATA_SIZE 0x5FFFF
+
+LR_CODE CODE_START {
+    ER_CODE CODE_START APP_CODE_SIZE {
+        *.o (RESET +First)
+        .ANY (+RO)
+    }
+
+    ER_DATA DATA_START DATA_SIZE {
+        .ANY (+ZI +RW)
+    }
+}
+

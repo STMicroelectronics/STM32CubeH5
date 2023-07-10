@@ -103,7 +103,7 @@
                 <option>
                     <name>GBECoreSlave</name>
                     <version>31</version>
-                    <state>59</state>
+                    <state>0</state>
                 </option>
                 <option>
                     <name>OGUseCmsis</name>
@@ -341,6 +341,7 @@
                     <state>$PROJ_DIR$/../../../../../../../Drivers/STM32H5xx_HAL_Driver/Inc</state>
                     <state>$PROJ_DIR$/../../../../../../../Drivers/CMSIS/Device/ST/STM32H5xx/Include</state>
                     <state>$PROJ_DIR$/../../../../../../../Drivers/STM32H5xx_HAL_Driver/Inc/Legacy</state>
+                    <state>$PROJ_DIR$/../../Drivers/STM32L5xx_HAL_Driver/Inc</state>
                     <state>$PROJ_DIR$/../../../../../../../Drivers/CMSIS/Include</state>
                 </option>
                 <option>
@@ -1071,7 +1072,7 @@
         <group>
             <name>EWARM</name>
             <file>
-                <name>$PROJ_DIR$\startup_stm32h573xx.s</name>
+                <name>$PROJ_DIR$\..\startup_stm32h573xx.s</name>
             </file>
         </group>
         <group>

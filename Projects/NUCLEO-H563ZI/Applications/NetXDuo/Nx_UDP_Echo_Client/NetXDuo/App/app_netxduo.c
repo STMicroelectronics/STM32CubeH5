@@ -24,7 +24,7 @@
 /* Private includes ----------------------------------------------------------*/
 #include "nxd_dhcp_client.h"
 /* USER CODE BEGIN Includes */
-#include   "main.h"
+#include "main.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -299,7 +299,7 @@ static VOID nx_app_thread_entry (ULONG thread_input)
   }
 
   /* USER CODE BEGIN Nx_App_Thread_Entry 2 */
-/* get IP address */
+  /* get IP address */
   ret = nx_ip_address_get(&NetXDuoEthIpInstance, &IpAddress, &NetMask);
 
   /* print the IP address */

@@ -1,4 +1,4 @@
-## <b>Ux_Device_CDC_ECM application Description</b>
+## <b>Ux_Device_CDC_ECM Application Description</b>
 
 This application provides an example of Azure RTOS CDC_ECM stack usage on STM32H573I-DK board, it shows how to run Web HTTP server based application stack
 over USB interface. The application is designed to load files and web pages stored in SD card using a Web HTTP server through USB interface using CDC_ECM
@@ -14,7 +14,7 @@ the NX_IP instance and the Web HTTP server are created and configured, then the 
 #### <b>Expected success behavior</b>
 
 When an SD card is inserted into the STM32H573I-DK SD card reader and the board is powered up and connected to DHCP enabled Ethernet network.
-Then the web page can be loaded on the web browser after entring the url http://@IP/index.html also the user can switch to STM32H5xxLED.html page to toggle the green led.
+Then the web page can be loaded on the web browser after entring the url http://@IP/index.html also the user can switch to STM32H5xxLED.html page to toggle the blue led.
 An example web pages is provided for testing the application that can be found under "USBX/Ux_Device_CDC_ECM/Web_Content/"
 
 #### <b>Error behaviors</b>

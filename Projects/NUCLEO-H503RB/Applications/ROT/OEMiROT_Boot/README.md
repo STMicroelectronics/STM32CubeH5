@@ -1,6 +1,6 @@
-## <b>OEMiROT_Boot application Description</b>
+## <b>OEMiROT_Boot application description</b>
 
-This project provides an OEMiROT example. OEMiROT boot path performs authenticity and integrity checks of the project firmware and data
+This project provides an OEMiROT example. OEMiROT boot path performs authenticity and the integrity checks of the project firmware and data
 images.
 
 The core function of this application relies on the mcuboot middleware and the mbed-crypto middleware.
@@ -13,11 +13,12 @@ The postbuild command is in charge of preparing the provisioning scripts and the
 (firmware application managed by OEMiROT) configuration files in ROT_Provisioning/OEMiROT folder,
 according to the flash layout and OEMiROT configuration.
 
+
 The maximum system clock frequency at 250Mhz is configured.
 
 ### <b>Keywords</b>
 
-OEMiROT, Boot path, Root Of Trust, Security, mcuboot
+OEMiROT, boot path, Root Of Trust, Security, mcuboot
 
 ### <b>Directory contents</b>
 

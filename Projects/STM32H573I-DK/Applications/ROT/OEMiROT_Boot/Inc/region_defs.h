@@ -144,7 +144,7 @@
 
 #ifdef BL2
 /* Bootloader region protected by hdp */
-#ifdef OEMUROT_ENABLE
+#if  defined(OEMUROT_ENABLE)
 #define BL2_CODE_START                      (S_ROM_ALIAS(FLASH_AREA_BL2_OFFSET + BL2_HEADER_SIZE))
 #else
 #define BL2_CODE_START                      (S_ROM_ALIAS(FLASH_AREA_BL2_OFFSET))

@@ -76,7 +76,7 @@ static void MX_ICACHE_Init(void);
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-  
+
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -85,30 +85,21 @@ int main(void)
   HAL_Init();
 
   /* USER CODE BEGIN Init */
-  
+
   /* USER CODE END Init */
 
   /* GTZC initialisation */
   MX_GTZC_S_Init();
 
   /* USER CODE BEGIN SysInit */
-  
+
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_ICACHE_Init();
   /* USER CODE BEGIN 2 */
-  /* Initialize all configured peripherals */
-  /* GPIO Ports Clock Enable */
-  __HAL_RCC_GPIOB_CLK_ENABLE();
-  __HAL_RCC_GPIOG_CLK_ENABLE();
-  
-  /*IO attributes management functions */
-  HAL_GPIO_ConfigPinAttributes(GPIOB, GPIO_PIN_0, GPIO_PIN_NSEC);
-  
-  /*IO attributes management functions */
-  HAL_GPIO_ConfigPinAttributes(GPIOG, GPIO_PIN_4, GPIO_PIN_NSEC);
+
   /* USER CODE END 2 */
 
   /*************** Setup and jump to non-secure *******************************/
@@ -158,13 +149,13 @@ static void MX_GTZC_S_Init(void)
 {
 
   /* USER CODE BEGIN GTZC_S_Init 0 */
-  
+
   /* USER CODE END GTZC_S_Init 0 */
 
   MPCBB_ConfigTypeDef MPCBB_Area_Desc = {0};
 
   /* USER CODE BEGIN GTZC_S_Init 1 */
-  
+
   /* USER CODE END GTZC_S_Init 1 */
   MPCBB_Area_Desc.SecureRWIllegalMode = GTZC_MPCBB_SRWILADIS_ENABLE;
   MPCBB_Area_Desc.InvertSecureState = GTZC_MPCBB_INVSECSTATE_NOT_INVERTED;
@@ -214,7 +205,7 @@ static void MX_GTZC_S_Init(void)
     Error_Handler();
   }
   /* USER CODE BEGIN GTZC_S_Init 2 */
-  
+
   /* USER CODE END GTZC_S_Init 2 */
 
 }
@@ -228,11 +219,11 @@ static void MX_ICACHE_Init(void)
 {
 
   /* USER CODE BEGIN ICACHE_Init 0 */
-  
+
   /* USER CODE END ICACHE_Init 0 */
 
   /* USER CODE BEGIN ICACHE_Init 1 */
-  
+
   /* USER CODE END ICACHE_Init 1 */
 
   /** Enable instruction cache in 1-way (direct mapped cache)
@@ -246,7 +237,7 @@ static void MX_ICACHE_Init(void)
     Error_Handler();
   }
   /* USER CODE BEGIN ICACHE_Init 2 */
-  
+
   /* USER CODE END ICACHE_Init 2 */
 
 }
@@ -266,21 +257,19 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOH_CLK_ENABLE();
   __HAL_RCC_GPIOB_CLK_ENABLE();
   __HAL_RCC_GPIOG_CLK_ENABLE();
-  __HAL_RCC_GPIOC_CLK_ENABLE();
 
-  /*IO attributes management functions */
-  HAL_GPIO_ConfigPinAttributes(GPIOB, GPIO_PIN_0, GPIO_PIN_NSEC);
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(LED_GREEN_GPIO_Port, LED_GREEN_Pin, GPIO_PIN_RESET);
 
-  /*IO attributes management functions */
-  HAL_GPIO_ConfigPinAttributes(GPIOG, GPIO_PIN_4, GPIO_PIN_NSEC);
-
-  /*Configure GPIO pin : PC9 */
-  GPIO_InitStruct.Pin = GPIO_PIN_9;
-  GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+  /*Configure GPIO pin : LED_GREEN_Pin */
+  GPIO_InitStruct.Pin = LED_GREEN_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  GPIO_InitStruct.Alternate = GPIO_AF0_MCO;
-  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+  HAL_GPIO_Init(LED_GREEN_GPIO_Port, &GPIO_InitStruct);
+
+  /*IO attributes management functions */
+  HAL_GPIO_ConfigPinAttributes(LED_RED_GPIO_Port, LED_RED_Pin, GPIO_PIN_NSEC);
 
 /* USER CODE BEGIN MX_GPIO_Init_2 */
 /* USER CODE END MX_GPIO_Init_2 */
@@ -298,7 +287,9 @@ void Error_Handler(void)
 {
   /* USER CODE BEGIN Error_Handler_Debug */
   /* User can add his own implementation to report the HAL error return state */
- 
+  while (1)
+  {
+  }
   /* USER CODE END Error_Handler_Debug */
 }
 
@@ -314,7 +305,11 @@ void assert_failed(uint8_t *file, uint32_t line)
 {
   /* USER CODE BEGIN 6 */
   /* User can add his own implementation to report the file name and line number,
-  ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
+     ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
+  /* Infinite loop */
+  while (1)
+  {
+  }
   /* USER CODE END 6 */
 }
 #endif /* USE_FULL_ASSERT */

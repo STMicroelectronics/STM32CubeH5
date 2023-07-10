@@ -88,6 +88,12 @@ VOID USBD_DFU_Activate(VOID *dfu_instance)
   /* Save the DFU instance */
   dfu = (UX_SLAVE_CLASS_DFU*) dfu_instance;
 
+  /* Disable instruction cache prior to internal cacheable memory update */
+  if (HAL_ICACHE_Disable() != HAL_OK)
+  {
+    Error_Handler();
+  }
+
   /* Unlock the internal flash */
   HAL_FLASH_Unlock();
 
@@ -112,6 +118,12 @@ VOID USBD_DFU_Deactivate(VOID *dfu_instance)
 
   /* Lock the internal flash */
   HAL_FLASH_Lock();
+
+  /* Re-enable instruction cache */
+  if (HAL_ICACHE_Enable() != HAL_OK)
+  {
+    Error_Handler();
+  }
 
   /* USER CODE END USBD_DFU_Deactivate */
 

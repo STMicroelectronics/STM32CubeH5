@@ -36,8 +36,6 @@
                              */
 #define VTOR_TABLE_NS_START_ADDR  (FLASH_BASE_NS + S_CODE_OFFSET + \
                                    S_CODE_SIZE + IMAGE_HEADER_SIZE)
-
-
 /* Private macro -------------------------------------------------------------*/
 
 

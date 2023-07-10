@@ -140,14 +140,14 @@ UINT MX_USBX_Host_Init(VOID *memory_ptr)
 
   /* Allocate the stack for storrage app thread  */
   if (tx_byte_allocate(byte_pool, (VOID **) &pointer,
-                       UX_HOST_APP_THREAD_STACK_SIZE, TX_NO_WAIT) != TX_SUCCESS)
+                       (UX_HOST_APP_THREAD_STACK_SIZE * 2), TX_NO_WAIT) != TX_SUCCESS)
   {
     return TX_POOL_ERROR;
   }
 
   /* Create the storage applicative process thread */
   if (tx_thread_create(&msc_app_thread, "MSC App thread", msc_process_thread_entry,
-                       0, pointer, UX_HOST_APP_THREAD_STACK_SIZE, 30, 30, 0,
+                       0, pointer,  (UX_HOST_APP_THREAD_STACK_SIZE * 2), 30, 30, 0,
                        TX_AUTO_START) != TX_SUCCESS)
   {
     return TX_THREAD_ERROR;
@@ -299,24 +299,6 @@ UINT ux_host_event_callback(ULONG event, UX_HOST_CLASS *current_class, VOID *cur
       /* USER CODE END UX_DEVICE_REMOVAL */
 
       break;
-
-#if defined (UX_HOST_CLASS_STORAGE_NO_FILEX)
-    case UX_STORAGE_MEDIA_INSERTION:
-
-      /* USER CODE BEGIN UX_STORAGE_MEDIA_INSERTION */
-
-      /* USER CODE END UX_STORAGE_MEDIA_INSERTION */
-
-      break;
-
-    case UX_STORAGE_MEDIA_REMOVAL:
-
-      /* USER CODE BEGIN UX_STORAGE_MEDIA_REMOVAL */
-
-      /* USER CODE END UX_STORAGE_MEDIA_REMOVAL */
-
-      break;
-#endif
 
     case UX_DEVICE_CONNECTION:
 

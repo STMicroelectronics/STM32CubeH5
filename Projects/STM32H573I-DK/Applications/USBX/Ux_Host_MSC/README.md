@@ -1,5 +1,5 @@
 
-## <b>Ux_Host_MSC application Description</b>
+## <b>Ux_Host_MSC Application Description</b>
 
 This application provides an example of Azure RTOS USBX stack usage. It shows how to develop USB Host Mass Storage "MSC" able to enumerate and communicates with a removable usb flash disk.
 

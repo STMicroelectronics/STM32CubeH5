@@ -168,7 +168,7 @@ int32_t BSP_OSPI_NOR_Init(uint32_t Instance, BSP_OSPI_NOR_Init_t *Init)
       (void)MX25LM51245G_GetFlashInfo(&pInfo);
       
       /* Fill config structure */
-      ospi_init.ClockPrescaler = 1; /* OctoSPI clock = 240MHz / (ClockPrescaler + 1) = 120MHz */
+      ospi_init.ClockPrescaler = 1;
       ospi_init.MemorySize     = (uint32_t)POSITION_VAL((uint32_t)pInfo.FlashSize);
       ospi_init.SampleShifting = HAL_XSPI_SAMPLE_SHIFT_NONE;
       ospi_init.TransferRate   = (uint32_t)Init->TransferRate;

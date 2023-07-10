@@ -2,14 +2,14 @@
 /*-Editor annotation file-*/
 /* IcfEditorFile="$TOOLKIT_DIR$\config\ide\IcfEditor\cortex_v1_0.xml" */
 /*-Specials-*/
-define symbol CODE_OFFSET = 0x00000000; /* Firmware execution area offset from STiROT_Config.xml */
-define symbol CODE_SIZE = 0x00020000; /* Firmware area size from STiROT_Config.xml */
+define symbol S_CODE_OFFSET = 0x00000000; /* Firmware execution area offset from STiROT_Config.xml */
+define symbol S_CODE_SIZE = 0x00020000; /* Firmware area size from STiROT_Config.xml */
 define exported symbol IMAGE_HEADER_SIZE = 0x400; /* mcuboot headre size */
 
-define exported symbol __ICFEDIT_intvec_start__ = 0x0C000000 + CODE_OFFSET + IMAGE_HEADER_SIZE;
+define exported symbol __ICFEDIT_intvec_start__ = 0x0C000000 + S_CODE_OFFSET + IMAGE_HEADER_SIZE;
 /*-Memory Regions-*/
-define exported symbol __ICFEDIT_region_ROM_start__     = 0x0C000000 + CODE_OFFSET + IMAGE_HEADER_SIZE;
-define symbol __ICFEDIT_region_ROM_end__       = 0x0C000000 + CODE_OFFSET + CODE_SIZE + IMAGE_HEADER_SIZE - 16 - 1;
+define exported symbol __ICFEDIT_region_ROM_start__     = 0x0C000000 + S_CODE_OFFSET + IMAGE_HEADER_SIZE;
+define symbol __ICFEDIT_region_ROM_end__       = 0x0C000000 + S_CODE_OFFSET + S_CODE_SIZE + IMAGE_HEADER_SIZE - 16 - 1;
 define exported symbol __ICFEDIT_region_RAM_start__     = 0x30000000;
 define exported symbol __ICFEDIT_region_RAM_end__       = 0x3009FFFF;
 

@@ -66,7 +66,6 @@ void HAL_MspInit(void)
 
   /* USER CODE END MspInit 0 */
 
-
   /* System interrupt init*/
 
   /* USER CODE BEGIN MspInit 1 */

@@ -37,8 +37,6 @@ TX_THREAD AppLinkThread;
 NX_UDP_SOCKET UDPSocket;
 ULONG IpAddress;
 ULONG NetMask;
-/* App memory pointer. */
-UCHAR *pointer;
 
 /* USER CODE END PTD */
 
@@ -331,9 +329,6 @@ static VOID App_Main_Thread_Entry (ULONG thread_input)
 
   /* this thread is not needed any more, we relinquish it */
   tx_thread_relinquish();
-
-  return;
-
   /* USER CODE END Nx_App_Thread_Entry 2 */
 
 }
@@ -412,7 +407,7 @@ static VOID App_Link_Thread_Entry(ULONG thread_input)
 
   while(1)
   {
-    /* Get Physical Link stackavailtus. */
+    /* Get Physical Link status. */
     status = nx_ip_interface_status_check(&NetXDuoEthIpInstance, 0, NX_IP_LINK_ENABLED,
                                       &actual_status, 10);
 

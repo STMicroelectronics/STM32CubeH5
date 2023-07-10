@@ -1,5 +1,5 @@
 
-## <b>Nx_MQTT_Client application Description</b>
+## <b>Nx_MQTT_Client Application Description</b>
 
 This application provides an example of Azure RTOS NetX/NetXDuo stack usage.
 It shows how to exchange data between client and server using MQTT protocol in an encrypted mode supporting TLS v1.2.

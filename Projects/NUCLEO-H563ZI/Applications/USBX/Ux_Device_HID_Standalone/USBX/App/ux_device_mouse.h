@@ -27,10 +27,9 @@ extern "C" {
 
 /* Includes ------------------------------------------------------------------*/
 #include "ux_api.h"
-
+#include "ux_device_class_hid.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "ux_device_class_hid.h"
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/

@@ -19,14 +19,14 @@
 <body>
 <div class="row">
 <div class="col-sm-12 col-lg-8">
-<h2 id="ux_device_cdc_ecm-application-description"><b>Ux_Device_CDC_ECM application Description</b></h2>
+<h2 id="ux_device_cdc_ecm-application-description"><b>Ux_Device_CDC_ECM Application Description</b></h2>
 <p>This application provides an example of Azure RTOS CDC_ECM stack usage on STM32H573I-DK board, it shows how to run Web HTTP server based application stack over USB interface. The application is designed to load files and web pages stored in SD card using a Web HTTP server through USB interface using CDC_ECM class, the code provides all required features to build a compliant Web HTTP Server. The main entry function tx_application_define() is called by ThreadX during kernel start, at this stage, the USBX initialize the network layer through USBx Class (CDC_ECM) also the FileX and the NetXDuo system are initialized, the NX_IP instance and the Web HTTP server are created and configured, then the application creates two main threads</p>
 <ul>
 <li>app_ux_device_thread_entry (Prio : 10; PreemptionPrio : 10) used to initialize USB DRD HAL PCD driver and start the device.</li>
 <li>nx_server_thread_entry (Prio :10; PreemptionPrio :10) used to assign a dynamic IP address, open the SD card driver as a FileX Media and start the Web HTTP server. Fetching a dynamic IP address to the STM32H573I-DK board is a step blocking until an IP address is obtained. Once the server is started, the user’s browser can load web pages as index.html and STM32H5xxLED.html.</li>
 </ul>
 <h4 id="expected-success-behavior"><b>Expected success behavior</b></h4>
-<p>When an SD card is inserted into the STM32H573I-DK SD card reader and the board is powered up and connected to DHCP enabled Ethernet network. Then the web page can be loaded on the web browser after entring the url http://<span class="citation" data-cites="IP/index.html">@IP/index.html</span> also the user can switch to STM32H5xxLED.html page to toggle the green led. An example web pages is provided for testing the application that can be found under “USBX/Ux_Device_CDC_ECM/Web_Content/”</p>
+<p>When an SD card is inserted into the STM32H573I-DK SD card reader and the board is powered up and connected to DHCP enabled Ethernet network. Then the web page can be loaded on the web browser after entring the url http://<span class="citation" data-cites="IP/index.html">@IP/index.html</span> also the user can switch to STM32H5xxLED.html page to toggle the blue led. An example web pages is provided for testing the application that can be found under “USBX/Ux_Device_CDC_ECM/Web_Content/”</p>
 <h4 id="error-behaviors"><b>Error behaviors</b></h4>
 <p>If the WEB HTTP server is not successfully started, the red LED stays ON. In case of other errors, the Web HTTP server does not operate as designed (Files stored in the SD card are not loaded in the web browser).</p>
 <h4 id="assumptions-if-any"><b>Assumptions if any</b></h4>

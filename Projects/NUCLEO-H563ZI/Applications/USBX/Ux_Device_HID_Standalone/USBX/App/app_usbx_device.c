@@ -72,7 +72,7 @@ UINT MX_USBX_Device_Init(VOID)
   ULONG device_framework_hs_length;
   ULONG device_framework_fs_length;
   ULONG string_framework_length;
-  ULONG languge_id_framework_length;
+  ULONG language_id_framework_length;
   UCHAR *string_framework;
   UCHAR *language_id_framework;
   UCHAR *pointer;
@@ -86,9 +86,9 @@ UINT MX_USBX_Device_Init(VOID)
   /* Initialize USBX Memory */
   if (ux_system_initialize(pointer, USBX_DEVICE_MEMORY_STACK_SIZE, UX_NULL, 0) != UX_SUCCESS)
   {
-    /* USER CODE BEGIN USBX_SYSTEM_INITIALIZE_ERORR */
+    /* USER CODE BEGIN USBX_SYSTEM_INITIALIZE_ERROR */
     return UX_ERROR;
-    /* USER CODE END USBX_SYSTEM_INITIALIZE_ERORR */
+    /* USER CODE END USBX_SYSTEM_INITIALIZE_ERROR */
   }
 
   /* Get Device Framework High Speed and get the length */
@@ -103,7 +103,7 @@ UINT MX_USBX_Device_Init(VOID)
   string_framework = USBD_Get_String_Framework(&string_framework_length);
 
   /* Get Language Id Framework and get the length */
-  language_id_framework = USBD_Get_Language_Id_Framework(&languge_id_framework_length);
+  language_id_framework = USBD_Get_Language_Id_Framework(&language_id_framework_length);
 
   /* Install the device portion of USBX */
   if (ux_device_stack_initialize(device_framework_high_speed,
@@ -113,12 +113,12 @@ UINT MX_USBX_Device_Init(VOID)
                                  string_framework,
                                  string_framework_length,
                                  language_id_framework,
-                                 languge_id_framework_length,
+                                 language_id_framework_length,
                                  UX_NULL) != UX_SUCCESS)
   {
-    /* USER CODE BEGIN USBX_DEVICE_INITIALIZE_ERORR */
+    /* USER CODE BEGIN USBX_DEVICE_INITIALIZE_ERROR */
     return UX_ERROR;
-    /* USER CODE END USBX_DEVICE_INITIALIZE_ERORR */
+    /* USER CODE END USBX_DEVICE_INITIALIZE_ERROR */
   }
 
   /* Initialize the hid mouse class parameters for the device */
@@ -147,9 +147,9 @@ UINT MX_USBX_Device_Init(VOID)
                                      hid_mouse_interface_number,
                                      &hid_mouse_parameter) != UX_SUCCESS)
   {
-    /* USER CODE BEGIN USBX_DEVICE_HID_MOUSE_REGISTER_ERORR */
+    /* USER CODE BEGIN USBX_DEVICE_HID_MOUSE_REGISTER_ERROR */
     return UX_ERROR;
-    /* USER CODE END USBX_DEVICE_HID_MOUSE_REGISTER_ERORR */
+    /* USER CODE END USBX_DEVICE_HID_MOUSE_REGISTER_ERROR */
   }
 
   /* USER CODE BEGIN MX_USBX_Device_Init1 */
@@ -225,8 +225,8 @@ VOID USBX_Device_Process(VOID *arg)
 
 
 /**
-  * @brief USBX_APP_Device_Init
-  *        Initialization of USB device.
+  * @brief  USBX_APP_Device_Init
+  *         Initialization of USB device.
   * @param  none
   * @retval none
   */
@@ -259,7 +259,7 @@ VOID USBX_APP_Device_Init(VOID)
 }
 
 /**
-  * @brief  HAL_GPIO_EXTI_Callback
+  * @brief  HAL_GPIO_EXTI_Rising_Callback
   *         EXTI line detection callback.
   * @param  GPIO_Pin: Specifies the port pin connected to corresponding EXTI line.
   * @retval None

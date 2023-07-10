@@ -79,6 +79,7 @@ static const ARM_FLASH_CAPABILITIES DriverCapabilities =
 #define DRIVER_STATUS_NO_ERROR  (0u)
 #define DRIVER_STATUS_ERROR     (1u)
 
+
 /**
   * \brief Arm Flash device structure.
   */
@@ -586,9 +587,12 @@ ARM_DRIVER_FLASH TFM_Driver_FLASH0 =
   Flash_GetInfo
 };
 #endif
+
 #if !defined(LOCAL_LOADER_CONFIG)
+
 void NMI_Handler(void)
 {
+
   if (__HAL_FLASH_GET_FLAG(FLASH_FLAG_ECCD))
   {
     __HAL_FLASH_CLEAR_FLAG(FLASH_FLAG_ECCD);

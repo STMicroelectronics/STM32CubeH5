@@ -70,7 +70,7 @@ void Error_Handler(void);
 VOID tx_application_define(VOID *first_unused_memory)
 {
   /* USER CODE BEGIN  tx_application_define_1*/
-  
+
   /* USER CODE END  tx_application_define_1 */
 #if (USE_STATIC_ALLOCATION == 1)
   UINT status = TX_SUCCESS;
@@ -85,7 +85,7 @@ VOID tx_application_define(VOID *first_unused_memory)
   else
   {
     /* USER CODE BEGIN TX_Byte_Pool_Success */
-    
+
     /* USER CODE END TX_Byte_Pool_Success */
 
     memory_ptr = (VOID *)&tx_app_byte_pool;
@@ -97,7 +97,7 @@ VOID tx_application_define(VOID *first_unused_memory)
       /* USER CODE END  App_ThreadX_Init_Error */
     }
     /* USER CODE BEGIN  App_ThreadX_Init_Success */
-    
+
     /* USER CODE END  App_ThreadX_Init_Success */
 
   }

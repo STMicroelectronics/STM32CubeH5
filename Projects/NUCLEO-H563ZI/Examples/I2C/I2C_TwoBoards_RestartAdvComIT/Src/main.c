@@ -36,7 +36,7 @@
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
 /* Uncomment this line to use the board as master, if not it is used as slave */
-//#define MASTER_BOARD
+#define MASTER_BOARD
 /**
   * @brief Defines related to Slave process
   */
@@ -123,11 +123,13 @@ __ATTRIBUTES size_t __write(int, const unsigned char *, size_t);
 #endif /* __ICCARM__ */
 
 static void FlushBuffer8(uint8_t* pBuffer1, uint16_t BufferLength);
-#if defined(__GNUC__) && defined(MASTER_BOARD) && !defined(__ARMCC_VERSION)
-extern void initialise_monitor_handles(void); /*rtt*/
-#endif
 
-#if (USE_VCP_CONNECTION == 1)
+#if (USE_VCP_CONNECTION == 0)
+#if defined(__GNUC__) && defined(MASTER_BOARD) && !defined(__ARMCC_VERSION)
+extern void initialise_monitor_handles(void);
+#endif
+#endif /* USE_VCP_CONNECTION */
+
 #if defined(__ICCARM__)
 /* New definition from EWARM V9, compatible with EWARM8 */
 int iar_fputc(int ch);
@@ -136,9 +138,10 @@ int iar_fputc(int ch);
 /* ARM Compiler 5/6*/
 #define PUTCHAR_PROTOTYPE int fputc(int ch, FILE *f)
 #elif defined(__GNUC__)
+#if (USE_VCP_CONNECTION == 1)
 #define PUTCHAR_PROTOTYPE int __io_putchar(int ch)
+#endif /* USE_VCP_CONNECTION */
 #endif /* __ICCARM__ */
-#endif
 
 /* USER CODE END PFP */
 
@@ -154,9 +157,11 @@ int iar_fputc(int ch);
 int main(void)
 {
   /* USER CODE BEGIN 1 */
+#if (USE_VCP_CONNECTION == 0)
 #if defined(__GNUC__) && defined(MASTER_BOARD) && !defined(__ARMCC_VERSION)
-  initialise_monitor_handles(); /*rtt*/
+  initialise_monitor_handles();
 #endif
+#endif /* USE_VCP_CONNECTION */
   /* STM32H5xx HAL library initialization:
        - Systick timer is configured by default as source of time base, but user
              can eventually implement his proper time base source (a general purpose

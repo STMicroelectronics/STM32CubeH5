@@ -40,12 +40,8 @@ struct arm_obk_flash_dev_t
 };
 
 /* Private defines -----------------------------------------------------------*/
-#define SBS_EXT_EPOCHSELCR_EPOCH_SEL_S_EPOCH (1U << SBS_EPOCHSELCR_EPOCH_SEL_Pos )
-#ifdef OEMUROT_ENABLE
-#define MAX_SIZE_CFG                         OBK_HDPL2_CFG_SIZE
-#else
+#define SBS_EXT_EPOCHSELCR_EPOCH_SEL_S_EPOCH    (1U << SBS_EPOCHSELCR_EPOCH_SEL_Pos)
 #define MAX_SIZE_CFG                         OBK_HDPL1_CFG_SIZE
-#endif
 #define ST_SHA256_TIMEOUT                       (3U)
 
 /* config for OBK flash driver */
@@ -128,18 +124,9 @@ static bool is_write_allowed(struct arm_obk_flash_dev_t *Flash_dev, uint32_t Len
   */
 static int32_t OBK_Flash_ReadEncrypted(uint32_t Offset, void *pData, uint32_t Length)
 {
-#if defined(BL2_HW_ACCEL_ENABLE)
-  CRYP_HandleTypeDef hcryp = { 0U };
-  uint32_t SaesTimeout = 100U;
-  uint32_t DataEncrypted[MAX_SIZE_CFG / 4U] = { 0UL };
-#endif /* BL2_HW_ACCEL_ENABLE */
+
   uint8_t *p_source = (uint8_t *) (FLASH_OBK_BASE_S + Offset);
-#if defined(BL2_HW_ACCEL_ENABLE)
-  uint8_t *p_destination = (uint8_t *) DataEncrypted;
-  uint32_t a_aes_iv[4] = {0x8001D1CEU, 0xD1CED1CEU, 0xD1CE8001U, 0xCED1CED1U};
-#else
   uint8_t *p_destination = (uint8_t *) pData;
-#endif /* BL2_HW_ACCEL_ENABLE */
 
   /* Check OBKeys  boundaries */
   if (is_range_valid(&ARM_OBK_FLASH0_DEV, Offset + Length -1U) != true)
@@ -152,45 +139,9 @@ static int32_t OBK_Flash_ReadEncrypted(uint32_t Offset, void *pData, uint32_t Le
   memcpy(p_destination, p_source, Length);
   if (DoubleECC_Error_Counter != 0U)
   {
-    BOOT_LOG_ERR("Double ECC error detected: FLASH_ECCDETR=0x%lx", FLASH->ECCDETR);
+    BOOT_LOG_ERR("Double ECC error detected: FLASH_ECCDETR=0x%x", (int)FLASH->ECCDETR);
     memset(p_destination, 0x00, Length);
   }
-
-#if defined(BL2_HW_ACCEL_ENABLE)
-  __HAL_RCC_SBS_CLK_ENABLE();
-  __HAL_RCC_SAES_CLK_ENABLE();
-
-  /* Force use of EPOCH_S value for DHUK */
-  WRITE_REG(SBS_S->EPOCHSELCR, SBS_EXT_EPOCHSELCR_EPOCH_SEL_S_EPOCH);
-
-  /* Configure SAES parameters */
-  hcryp.Instance = SAES_S;
-  if (HAL_CRYP_DeInit(&hcryp) != HAL_OK)
-  {
-    return ARM_DRIVER_ERROR_SPECIFIC;
-  }
-  hcryp.Init.DataType  = CRYP_NO_SWAP;
-  hcryp.Init.KeySelect = CRYP_KEYSEL_HW;  /* Hardware unique key (256-bits) */
-  hcryp.Init.Algorithm = CRYP_AES_CBC;
-  hcryp.Init.KeyMode = CRYP_KEYMODE_NORMAL ;
-  hcryp.Init.KeySize = CRYP_KEYSIZE_256B; /* 256 bits AES Key*/
-  hcryp.Init.pInitVect = a_aes_iv;
-
-  if (HAL_CRYP_Init(&hcryp) != HAL_OK)
-  {
-    return ARM_DRIVER_ERROR_SPECIFIC;
-  }
-
-  /*Size is n words*/
-  if (HAL_CRYP_Decrypt(&hcryp, (uint32_t *)&DataEncrypted[0U], (uint16_t) (Length / 4U), (uint32_t *)pData, SaesTimeout) != HAL_OK)
-  {
-    return ARM_DRIVER_ERROR_SPECIFIC;
-  }
-  if (HAL_CRYP_DeInit(&hcryp) != HAL_OK)
-  {
-    return ARM_DRIVER_ERROR_SPECIFIC;
-  }
-#endif /* BL2_HW_ACCEL_ENABLE */
 
   return ARM_DRIVER_OK;
 }
@@ -208,12 +159,6 @@ int32_t OBK_Flash_WriteEncrypted(uint32_t Offset, const void *pData, uint32_t Le
   uint32_t destination = FLASH_OBK_BASE_S + Offset;
   FLASH_EraseInitTypeDef FLASH_EraseInitStruct = {0U};
   uint32_t sector_error = 0U;
-#if defined(BL2_HW_ACCEL_ENABLE)
-  CRYP_HandleTypeDef hcryp = {0U};
-  uint32_t SaesTimeout = 100U;
-  uint32_t DataEncrypted[MAX_SIZE_CFG / 4U] = {0UL};
-  uint32_t a_aes_iv[4] = {0x8001D1CEU, 0xD1CED1CEU, 0xD1CE8001U, 0xCED1CED1U};
-#endif /* BL2_HW_ACCEL_ENABLE */
 
   /* Check parameters */
   if ((is_range_valid(&ARM_OBK_FLASH0_DEV, Offset + Length - 1U) != true) ||
@@ -224,47 +169,9 @@ int32_t OBK_Flash_WriteEncrypted(uint32_t Offset, const void *pData, uint32_t Le
     return ARM_DRIVER_ERROR_PARAMETER;
   }
 
-#if defined(BL2_HW_ACCEL_ENABLE)
-  __HAL_RCC_SBS_CLK_ENABLE();
-  __HAL_RCC_SAES_CLK_ENABLE();
-#endif /* BL2_HW_ACCEL_ENABLE */
-
   /* Unlock  Flash area */
   (void) HAL_FLASH_Unlock();
   (void) HAL_FLASHEx_OBK_Unlock();
-
-#if defined(BL2_HW_ACCEL_ENABLE)
-  /* Force use of EPOCH_S value for DHUK */
-  WRITE_REG(SBS_S->EPOCHSELCR, SBS_EXT_EPOCHSELCR_EPOCH_SEL_S_EPOCH);
-
-  /* Configure SAES parameters */
-  hcryp.Instance = SAES_S;
-  if (HAL_CRYP_DeInit(&hcryp) != HAL_OK)
-  {
-    return ARM_DRIVER_ERROR_SPECIFIC;
-  }
-  hcryp.Init.DataType = CRYP_NO_SWAP;
-  hcryp.Init.KeySelect = CRYP_KEYSEL_HW;        /* Hardware key : derived hardware unique key (DHUK 256-bit) */
-  hcryp.Init.Algorithm = CRYP_AES_CBC;
-  hcryp.Init.KeyMode = CRYP_KEYMODE_NORMAL ;
-  hcryp.Init.KeySize = CRYP_KEYSIZE_256B;       /* 256 bits AES Key */
-  hcryp.Init.pInitVect = a_aes_iv;
-
-  if (HAL_CRYP_Init(&hcryp) != HAL_OK)
-  {
-    return ARM_DRIVER_ERROR_SPECIFIC;
-  }
-
-  /* Size is n words */
-  if (HAL_CRYP_Encrypt(&hcryp, (uint32_t *)pData, (uint16_t) (Length / 4U), &DataEncrypted[0U], SaesTimeout) != HAL_OK)
-  {
-    return ARM_DRIVER_ERROR_SPECIFIC;
-  }
-  if (HAL_CRYP_DeInit(&hcryp) != HAL_OK)
-  {
-    return ARM_DRIVER_ERROR_SPECIFIC;
-  }
-#endif /* BL2_HW_ACCEL_ENABLE */
 
   /* Erase OBKeys */
   FLASH_EraseInitStruct.TypeErase = FLASH_TYPEERASE_OBK_ALT;
@@ -276,11 +183,7 @@ int32_t OBK_Flash_WriteEncrypted(uint32_t Offset, const void *pData, uint32_t Le
   /* Program OBKeys */
   for (i = 0U; i < Length; i += OBK_FLASH_PROG_UNIT)
   {
-#if defined(BL2_HW_ACCEL_ENABLE)
-    if (HAL_FLASH_Program(FLASH_TYPEPROGRAM_QUADWORD_OBK_ALT, (destination + i), (uint32_t)&DataEncrypted[i / 4U]) != HAL_OK)
-#else
     if (HAL_FLASH_Program(FLASH_TYPEPROGRAM_QUADWORD_OBK_ALT, (destination + i), (uint32_t)&((uint32_t*)pData)[i / 4U]) != HAL_OK)
-#endif /* BL2_HW_ACCEL_ENABLE */
     {
       return ARM_DRIVER_ERROR_SPECIFIC;
     }
@@ -322,7 +225,7 @@ static int32_t OBK_Read(uint32_t Offset, void *pData, uint32_t Length)
   memcpy(p_destination, p_source, Length);
   if (DoubleECC_Error_Counter != 0U)
   {
-    BOOT_LOG_ERR("Double ECC error detected: FLASH_ECCDETR=0x%lx", FLASH->ECCDETR);
+    BOOT_LOG_ERR("Double ECC error detected: FLASH_ECCDETR=0x%x", (int)FLASH->ECCDETR);
     memset(p_destination, 0x00, Length);
   }
 
@@ -635,7 +538,6 @@ HAL_StatusTypeDef OBK_UpdateNVCounter(enum tfm_nv_counter_t CounterId, uint32_t 
       return HAL_ERROR;
       break;
   }
-
   /* Update all OBK hdpl1 data with associated SHA256 */
   if (OBK_UpdateHdpl1Data(&OBK_data) != HAL_OK)
   {

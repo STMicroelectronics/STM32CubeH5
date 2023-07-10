@@ -27,7 +27,7 @@ vertical-align: middle;
 <body>
 <div class="row">
 <section id="tx_cmsis_wrapper-application-description" class="col-sm-12 col-lg-8">
-<h2><b>Tx_CMSIS_Wrapper application Description</b></h2>
+<h2><b>Tx_CMSIS_Wrapper Application Description</b></h2>
 <p>This application provides an example of CMSIS RTOS adaptation layer
 for Azure RTOS ThreadX, it shows how to develop an application using the
 CMSIS RTOS 2 APIs. It demonstrates how to create multiple threads using
@@ -115,7 +115,7 @@ files to expose this memory location.
 <li>For MDK-ARM:</li>
 </ul>
 <pre><code>either define the RW_IRAM1 region in the &quot;.sct&quot; file
-or modify the line below in &quot;tx_low_level_initilize.S to match the memory region being used
+or modify the line below in &quot;tx_initialize_low_level.S to match the memory region being used
     LDR r1, =|Image$$RW_IRAM1$$ZI$$Limit|</code></pre>
 <ul>
 <li>For STM32CubeIDE add the following section into the .ld file:</li>

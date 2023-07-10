@@ -92,30 +92,10 @@ and development board.</li>
 <p>This project is targeted to boot through <b>OEMiROT boot path</b>.</p>
 <p><u>Before compiling the project, you should first start the provisioning process</u>. During the provisioning process, the linker files
 of Project_s and Project_ns as well as the postbuild commands will be automatically updated.</p>
-<p>The <b>provisioning process</b> (ROT_Provisioning/OEMiROT/provisioning.bat) is divided in 3 majors steps :</p>
-<ul>
-<li><p>Step 1 : Configuration management</p>
-<ul>
-<li>OEMiRoT_Config.obk generation with TrustedPackageCreator (tab H5-OBkey)</li>
-<li>DA_Config.obk generation with TrustedPackageCreator (tab H5-OBkey)</li>
-</ul>
-</li>
-<li><p>Step 2 : Images generation</p>
-<ul>
-<li>OEMiROT binary: build OEMiROT_Boot project</li>
-<li>Code firmware images generation: automatically generated at the end of the project_s and project_ns compilation (postbuild commands)</li>
-<li>Data images generation with TrustedPackageCreator (tab H5-Image Gen), if data images enabled</li>
-</ul>
-</li>
-<li><p>Step 3 : Provisioning  </p>
-<ul>
-<li>Programming the option bytes </li>
-<li>Flashing the images </li>
-<li>Programming the OBkeys </li>
-<li>Setting the product state</li>
-</ul>
-</li>
-</ul>
+<p>Before starting the provisioning process, select the application project to use (application example or template),
+through oemirot_boot_path_project variable in ROT_Provisioning/env.bat or env.sh.
+Then start provisioning process by running ROT_Provisioning/OEMiROT/provisioning.bat or provisioning.sh, and follow its instructions.
+</p>
 <p>If the product state set to PROVISIONED, TZ-CLOSED or CLOSED, it is still possible to open the debug or to execute a full/partial regression
 with the Debug Authentication feature. To do it, scripts (regression.bat &amp; dbg_auth.bat) are available in the ROT_provisioning/DA folder.</p>
 <p>For more details, refer to Wiki article available here : <a href="https://wiki.st.com/stm32mcu/wiki/Category:Security">Link to Security Wiki</a></p>

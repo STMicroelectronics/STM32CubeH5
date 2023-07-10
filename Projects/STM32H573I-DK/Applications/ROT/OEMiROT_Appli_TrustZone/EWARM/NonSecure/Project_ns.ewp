@@ -40,11 +40,11 @@
         </option>
         <option>
           <name>Input description</name>
-          <state>Automatic choice of formatter, without multibyte support.</state>
+          <state>No specifier a, A, no specifier n, no float nor long long, without multibyte support.</state>
         </option>
         <option>
           <name>Output description</name>
-          <state>Automatic choice of formatter, without multibyte support.</state>
+          <state>No specifier n, no float nor long long, no scan set, no assignment suppressing, without multibyte support.</state>
         </option>
         <option>
           <name>GOutputBinary</name>
@@ -643,7 +643,7 @@
         </option>
         <option>
           <name>OOCOutputFile</name>
-          <state>Project.bin</state>
+          <state>$PROJ_DIR$\..\..\Binary\rot_tz_ns_app.bin</state>
         </option>
         <option>
           <name>OOCCommandLineProducer</name>
@@ -802,6 +802,7 @@
         </option>
         <option>
           <name>IlinkAdditionalLibs</name>
+          <state></state>
           <state>$PROJ_DIR$\..\Secure\STM32H573I-DK_S\Exe\Project_import_lib.o</state>
         </option>
         <option>
@@ -1129,6 +1130,9 @@
         <name>$PROJ_DIR$\..\..\NonSecure\Src\low_level_flash.c</name>
       </file>
       <file>
+        <name>$PROJ_DIR$\..\..\NonSecure\Src\low_level_device.c</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$\..\..\NonSecure\Src\com.c</name>
       </file>
       <file>
@@ -1139,9 +1143,6 @@
       </file>
       <file>
         <name>$PROJ_DIR$\..\..\NonSecure\Src\main.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\..\..\NonSecure\Src\low_level_device.c</name>
       </file>
       <file>
         <name>$PROJ_DIR$\..\startup_stm32h573xx.s</name>

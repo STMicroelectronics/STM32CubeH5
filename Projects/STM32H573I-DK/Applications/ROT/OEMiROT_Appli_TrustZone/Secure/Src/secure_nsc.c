@@ -35,8 +35,8 @@
 #define GTZC_MPCBB1_NB_VCTR (16U)
 /* SRAM3 NB super-block */
 #define GTZC_MPCBB3_NB_VCTR (20U)
-/* MPCBB : All SRAM block privileged only */
-#define GTZC_MPCBB_ALL_PRIV (0xFFFFFFFFUL)
+/* MPCBB : All SRAM block non privileged + privileged */
+#define GTZC_MPCBB_ALL_NPRIV (0x00000000UL)
 /* MPCBB : All SRAM block non secure */
 #define GTZC_MPCBB_ALL_NSEC (0x00000000UL)
 #define TZSC_MASK_R1  (GTZC_CFGR1_USART2_Msk | GTZC_CFGR1_USART3_Msk | GTZC_CFGR1_SPI3_Msk  | GTZC_CFGR1_SPI2_Msk | \
@@ -167,12 +167,14 @@ CMSE_NS_ENTRY void SECURE_loader_cfg(void)
   {
   /*SRAM1 -> MPCBB1*/
   GTZC_MPCBB1_S->SECCFGR[i] = GTZC_MPCBB_ALL_NSEC;
+  GTZC_MPCBB1_S->PRIVCFGR[i] = GTZC_MPCBB_ALL_NPRIV;
   }
   /* All bocks of SRAM3 configured non secure / privileged (default value) */
   for (i = 0; i < GTZC_MPCBB3_NB_VCTR; i++)
   {
   /*SRAM3 -> MPCBB3*/
   GTZC_MPCBB3_S->SECCFGR[i] = GTZC_MPCBB_ALL_NSEC;
+  GTZC_MPCBB3_S->PRIVCFGR[i] = GTZC_MPCBB_ALL_NPRIV;
   }
   __HAL_RCC_GPIOA_CLK_ENABLE();
   __HAL_RCC_GPIOB_CLK_ENABLE();
@@ -190,9 +192,13 @@ CMSE_NS_ENTRY void SECURE_loader_cfg(void)
    MPU_NS->CTRL = 0;
 
   /* Required peripherals configured non secure (default value) / privileged */
-  GTZC_TZSC1_S->PRIVCFGR1 = TZSC_MASK_R1;
-  GTZC_TZSC1_S->PRIVCFGR2 = TZSC_MASK_R2;
-  GTZC_TZSC1_S->PRIVCFGR3 = TZSC_MASK_R3;
+  GTZC_TZSC1_S->PRIVCFGR1 = ~TZSC_MASK_R1;
+  GTZC_TZSC1_S->PRIVCFGR2 = ~TZSC_MASK_R2;
+  GTZC_TZSC1_S->PRIVCFGR3 = ~TZSC_MASK_R3;
+
+  GTZC_TZSC1_S->SECCFGR1 = ~TZSC_MASK_R1;
+  GTZC_TZSC1_S->SECCFGR2 = ~TZSC_MASK_R2;
+  GTZC_TZSC1_S->SECCFGR3 = ~TZSC_MASK_R3;
 
   for (i = 0U; i < ARRAY_SIZE(sau_load_cfg); i++)
   {
@@ -219,6 +225,9 @@ CMSE_NS_ENTRY void SECURE_loader_cfg(void)
   NVIC->ITNS[1U] = RSS_NVIC_INIT_ITNS1_VAL;
   NVIC->ITNS[2U] = RSS_NVIC_INIT_ITNS2_VAL;
   NVIC->ITNS[3U] = RSS_NVIC_INIT_ITNS3_VAL;
+
+  /* Disable secure irqs */
+  __disable_irq();
 }
 
 /**

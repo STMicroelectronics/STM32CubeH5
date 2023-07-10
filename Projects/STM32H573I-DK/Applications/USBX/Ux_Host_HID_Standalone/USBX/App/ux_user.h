@@ -137,7 +137,7 @@
    class, then the UX_MAX_CLASSES value can be set to 3 regardless of the number of devices
    that belong to these classes.  */
 
-/* #define UX_MAX_CLASS_DRIVER    3 */
+/* #define UX_MAX_CLASS_DRIVER    2 */
 
 /* Defined, this value is the maximum number of classes in the device stack that can be loaded by
    USBX.  */

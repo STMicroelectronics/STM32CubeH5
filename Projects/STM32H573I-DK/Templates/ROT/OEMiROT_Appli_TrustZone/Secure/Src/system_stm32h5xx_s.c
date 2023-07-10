@@ -120,7 +120,8 @@
 
 #include "stm32h5xx.h"
 #include "partition_stm32h5xx.h"  /* Trustzone-M core secure attributes */
-extern uint32_t __ICFEDIT_intvec_start__;
+#include "main.h"
+
 /**
   * @}
   */
@@ -217,11 +218,11 @@ void SystemInit(void)
   TZ_SAU_Setup();
 
   /* FPU settings ------------------------------------------------------------*/
-  #if (__FPU_PRESENT == 1) && (__FPU_USED == 1)
+#if (__FPU_PRESENT == 1) && (__FPU_USED == 1)
     SCB->CPACR |= ((3UL << 20U)|(3UL << 22U));     /* set CP10 and CP11 Full Access */
 
     SCB_NS->CPACR |= ((3UL << 20U)|(3UL << 22U));  /* set CP10 and CP11 Full Access */
-  #endif
+#endif
 
   /* Reset the RCC clock configuration to the default reset state ------------*/
   /* Set HSION bit */
@@ -260,7 +261,7 @@ void SystemInit(void)
   RCC->CIER = 0U;
 
   /* Configure the Vector Table location ------------------*/
-  SCB->VTOR = (uint32_t)&(__ICFEDIT_intvec_start__); /* Vector Table Relocation in Internal FLASH */
+  SCB->VTOR = S_CODE_START; /* Vector Table Relocation in Internal FLASH */
 
   /* Check OPSR register to verify if there is an ongoing swap or option bytes update interrupted by a reset */
   reg_opsr = FLASH->OPSR & FLASH_OPSR_CODE_OP;

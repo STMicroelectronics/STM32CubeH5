@@ -1,14 +1,13 @@
 /* USER CODE BEGIN Header */
 /**
   ******************************************************************************
-  * @file    ThreadX/Tx_FreeRTOS_Wrapper/Inc/main.h
-  * @author  MCD Application Team
-  * @brief   This file contains all the functions prototypes for the main.c
-  *          file.
+  * @file           : main.h
+  * @brief          : Header for main.c file.
+  *                   This file contains the common defines of the application.
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2021 STMicroelectronics.
+  * Copyright (c) 2023 STMicroelectronics.
   * All rights reserved.
   *
   * This software is licensed under terms that can be found in the LICENSE file
@@ -27,13 +26,13 @@
 extern "C" {
 #endif
 
-/* Includes ------------------------------------------------------------------*/
-#include "stm32h5xx_hal.h"
-
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "app_tx_freertos.h"
 /* USER CODE END Includes */
+
+/* Includes ------------------------------------------------------------------*/
+#include "stm32h5xx_hal.h"
 
 /* Exported types ------------------------------------------------------------*/
 /* USER CODE BEGIN ET */

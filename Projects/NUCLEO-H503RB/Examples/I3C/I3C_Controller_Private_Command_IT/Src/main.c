@@ -76,6 +76,19 @@ I3C_PrivateTypeDef aPrivateDescriptor[2] = \
                                             {TARGET1_DYN_ADDR, {aTxBuffer, TXBUFFERSIZE}, {NULL, 0}, HAL_I3C_DIRECTION_WRITE},
                                             {TARGET1_DYN_ADDR, {NULL, 0}, {aRxBuffer, RXBUFFERSIZE}, HAL_I3C_DIRECTION_READ}
                                           };
+
+/* Status of the I3C process */
+HAL_StatusTypeDef status;
+
+/* Pointer for the target payload value */
+uint64_t aTargetPayload[0xF];
+
+/* Target payload value for a particular Target */
+uint64_t targetPayload;
+
+/* Index of Target */
+uint32_t uwTargetIndex;
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -141,21 +154,35 @@ int main(void)
 
   /*##- Start the transmission process ###################################*/
   /* Assign dynamic address processus */
-  if (HAL_I3C_Ctrl_DynAddrAssign_IT(&hi3c1, I3C_ONLY_ENTDAA) != HAL_OK)
+  do
   {
-    /* Error_Handler() function is called when error occurs. */
-    Error_Handler();
-  }
+    status = HAL_I3C_Ctrl_DynAddrAssign(&hi3c1, &aTargetPayload[uwTargetCount], I3C_ONLY_ENTDAA, 10000);
 
-  /*##- Wait for the end of the transfer #################################*/
-  /*  Before starting a new communication transfer, you need to check the current
-  state of the peripheral; if it's busy you need to wait for the end of current
-  transfer before starting a new one.
-  For simplicity reasons, this example is just waiting till the end of the
-  transfer, but application may perform other tasks while transfer operation
-  is ongoing. */
-  while (HAL_I3C_GetState(&hi3c1) != HAL_I3C_STATE_READY)
+    if (status == HAL_BUSY)
+    {
+      /* Update Payload on aTargetDesc */
+      targetPayload = aTargetPayload[uwTargetCount];
+
+      aTargetDesc[uwTargetCount]->TARGET_BCR_DCR_PID = targetPayload;
+
+      /* Send associated dynamic address */
+      if (HAL_I3C_Ctrl_SetDynAddr(&hi3c1, aTargetDesc[uwTargetCount]->DYNAMIC_ADDR) != HAL_OK)
+      {
+        /* Error_Handler() function is called when error occurs. */
+        Error_Handler();
+      }
+      uwTargetCount++;
+    }
+  }while (status == HAL_BUSY);
+
+  /* Check if the PID has been updated. */
+  for (uwTargetIndex = 0; uwTargetIndex < uwTargetCount; uwTargetIndex++)
   {
+    if (aTargetDesc[uwTargetIndex]->TARGET_BCR_DCR_PID == 0)
+    {
+      /* Error_Handler() function is called if the PID has not been updated. */
+      Error_Handler();
+    }
   }
 
   /*##- Prepare context buffers process ##################################*/

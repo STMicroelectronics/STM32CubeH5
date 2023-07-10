@@ -621,8 +621,7 @@ __STATIC_INLINE void TZ_SAU_Setup (void)
                    ((SCB_AIRCR_BFHFNMINS_VAL    << SCB_AIRCR_BFHFNMINS_Pos)    & SCB_AIRCR_BFHFNMINS_Msk);
   #endif /* defined (SCB_CSR_AIRCR_INIT) && (SCB_CSR_AIRCR_INIT == 1U) */
 
-  #if defined (__FPU_USED) && (__FPU_USED == 1U) && \
-      defined (TZ_FPU_NS_USAGE) && (TZ_FPU_NS_USAGE == 1U)
+  #if defined (__FPU_USED) && (__FPU_USED == 1U) && defined (TZ_FPU_NS_USAGE) && (TZ_FPU_NS_USAGE == 1U)
 
     SCB->NSACR = (SCB->NSACR & ~(SCB_NSACR_CP10_Msk | SCB_NSACR_CP11_Msk)) |
                    ((SCB_NSACR_CP10_11_VAL << SCB_NSACR_CP10_Pos) & (SCB_NSACR_CP10_Msk | SCB_NSACR_CP11_Msk));

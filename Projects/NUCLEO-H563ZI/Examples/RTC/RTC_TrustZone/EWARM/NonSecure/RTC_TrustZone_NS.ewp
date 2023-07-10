@@ -16,11 +16,11 @@
                 <debug>1</debug>
                 <option>
                     <name>BrowseInfoPath</name>
-                    <state>RTC_TrustZone_NS\BrowseInfo</state>
+                    <state>RTC_TrustZone_NS/BrowseInfo</state>
                 </option>
                 <option>
                     <name>BuildFilesPath</name>
-                    <state>RTC_TrustZone_NS\</state>
+                    <state>RTC_TrustZone_NS/</state>
                 </option>
                 <option>
                     <name>ExePath</name>
@@ -98,12 +98,12 @@
                 </option>
                 <option>
                     <name>RTConfigPath2</name>
-                    <state>$TOOLKIT_DIR$\inc\c\DLib_Config_Full.h</state>
+                    <state>$TOOLKIT_DIR$/inc/c/DLib_Config_Full.h</state>
                 </option>
                 <option>
                     <name>GBECoreSlave</name>
                     <version>31</version>
-                    <state>0</state>
+                    <state>59</state>
                 </option>
                 <option>
                     <name>OGUseCmsis</name>
@@ -1077,7 +1077,7 @@
         <group>
             <name>EWARM</name>
             <file>
-                <name>$PROJ_DIR$\startup_stm32h563xx.s</name>
+                <name>$PROJ_DIR$/../startup_stm32h563xx.s</name>
             </file>
         </group>
         <group>
@@ -1085,13 +1085,13 @@
             <group>
                 <name>NonSecure</name>
                 <file>
-                    <name>$PROJ_DIR$\..\..\NonSecure\Src\main.c</name>
+                    <name>$PROJ_DIR$/../../NonSecure/Src/main.c</name>
                 </file>
                 <file>
-                    <name>$PROJ_DIR$\..\..\NonSecure\Src\stm32h5xx_hal_msp.c</name>
+                    <name>$PROJ_DIR$/../../NonSecure/Src/stm32h5xx_hal_msp.c</name>
                 </file>
                 <file>
-                    <name>$PROJ_DIR$\..\..\NonSecure\Src\stm32h5xx_it.c</name>
+                    <name>$PROJ_DIR$/../../NonSecure/Src/stm32h5xx_it.c</name>
                 </file>
             </group>
         </group>
@@ -1099,7 +1099,7 @@
     <group>
         <name>Doc</name>
         <file>
-            <name>$PROJ_DIR$\..\..\README.md</name>
+            <name>$PROJ_DIR$/../../README.md</name>
         </file>
     </group>
     <group>
@@ -1109,59 +1109,59 @@
             <group>
                 <name>STM32H5xx_Nucleo</name>
                 <file>
-                    <name>$PROJ_DIR$\..\..\..\..\..\..\..\Drivers\BSP\STM32H5xx_Nucleo\stm32h5xx_nucleo.c</name>
+                    <name>$PROJ_DIR$/../../../../../../../Drivers/BSP/STM32H5xx_Nucleo/stm32h5xx_nucleo.c</name>
                 </file>
             </group>
         </group>
         <group>
             <name>CMSIS</name>
             <file>
-                <name>$PROJ_DIR$\..\..\NonSecure\Src\system_stm32h5xx_ns.c</name>
+                <name>$PROJ_DIR$/../../NonSecure/Src/system_stm32h5xx_ns.c</name>
             </file>
         </group>
         <group>
             <name>STM32H5xx_HAL_Driver</name>
             <file>
-                <name>$PROJ_DIR$\..\..\..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_hal.c</name>
+                <name>$PROJ_DIR$/../../../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\..\..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_hal_cortex.c</name>
+                <name>$PROJ_DIR$/../../../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_cortex.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\..\..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_hal_dma.c</name>
+                <name>$PROJ_DIR$/../../../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_dma.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\..\..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_hal_dma_ex.c</name>
+                <name>$PROJ_DIR$/../../../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_dma_ex.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\..\..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_hal_exti.c</name>
+                <name>$PROJ_DIR$/../../../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_exti.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\..\..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_hal_flash.c</name>
+                <name>$PROJ_DIR$/../../../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_flash.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\..\..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_hal_flash_ex.c</name>
+                <name>$PROJ_DIR$/../../../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_flash_ex.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\..\..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_hal_gpio.c</name>
+                <name>$PROJ_DIR$/../../../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_gpio.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\..\..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_hal_pwr.c</name>
+                <name>$PROJ_DIR$/../../../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pwr.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\..\..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_hal_pwr_ex.c</name>
+                <name>$PROJ_DIR$/../../../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pwr_ex.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\..\..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_hal_rcc.c</name>
+                <name>$PROJ_DIR$/../../../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rcc.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\..\..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_hal_rcc_ex.c</name>
+                <name>$PROJ_DIR$/../../../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rcc_ex.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\..\..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_hal_rtc.c</name>
+                <name>$PROJ_DIR$/../../../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rtc.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\..\..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_hal_rtc_ex.c</name>
+                <name>$PROJ_DIR$/../../../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rtc_ex.c</name>
             </file>
         </group>
     </group>

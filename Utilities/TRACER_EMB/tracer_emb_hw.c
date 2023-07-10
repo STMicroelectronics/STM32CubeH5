@@ -6,7 +6,7 @@
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2018(-2021) STMicroelectronics.
+  * Copyright (c) 2018(-2022) STMicroelectronics.
   * All rights reserved.
   *
   * This software is licensed under terms that can be found in the LICENSE file
@@ -184,7 +184,7 @@ void HW_TRACER_EMB_Init(void)
   TRACER_EMB_SET_CLK_SOURCE_USART();
 
 #if (TRACER_EMB_IS_INSTANCE_LPUART_TYPE == 0UL)
-  if (IS_USART_INSTANCE(TRACER_EMB_USART_INSTANCE))
+  if (IS_UART_INSTANCE(TRACER_EMB_USART_INSTANCE))
   {
     /* Configure USART */
 
@@ -248,7 +248,7 @@ void HW_TRACER_EMB_Init(void)
     /*  - OverSampling        : LL_LPUART_OVERSAMPLING_16       */
 #if defined(USART_PRESC_PRESCALER)
     lpuart_initstruct.PrescalerValue      = LL_LPUART_PRESCALER_DIV1;
-#endif
+#endif /* USART_PRESC_PRESCALER */
     lpuart_initstruct.BaudRate            = TRACER_EMB_BAUDRATE;
     lpuart_initstruct.DataWidth           = LL_LPUART_DATAWIDTH_8B;
     lpuart_initstruct.StopBits            = LL_LPUART_STOPBITS_1;
@@ -256,7 +256,7 @@ void HW_TRACER_EMB_Init(void)
     lpuart_initstruct.TransferDirection   = LL_LPUART_DIRECTION_TX;
 #if defined(USART_CR3_RTSE)
     lpuart_initstruct.HardwareFlowControl = LL_LPUART_HWCONTROL_NONE;
-#endif
+#endif /* USART_CR3_RTSE */
 
     /* Initialize USART instance according to parameters defined in initialization structure */
     LL_LPUART_Init(TRACER_EMB_USART_INSTANCE, &lpuart_initstruct);
@@ -277,7 +277,7 @@ void HW_TRACER_EMB_Init(void)
   TRACER_EMB_ENABLE_CLK_DMA();
 
   /* (3) Configure the DMA functional parameters for transmission */
-#if defined(GPDMA1)
+#if defined(GPDMA1) || defined(HPDMA1)
   LL_DMA_ConfigTransfer(TRACER_EMB_DMA_INSTANCE, TRACER_EMB_TX_DMA_CHANNEL,
                         LL_DMA_SRC_INCREMENT          |
                         LL_DMA_DEST_FIXED             |
@@ -285,6 +285,13 @@ void HW_TRACER_EMB_Init(void)
                         LL_DMA_DEST_DATAWIDTH_BYTE);
 
   LL_DMA_SetPeriphRequest(TRACER_EMB_DMA_INSTANCE, TRACER_EMB_TX_DMA_CHANNEL, TRACER_EMB_TX_DMA_REQUEST);
+
+#if defined (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
+  /* Configure secure parameters */
+  LL_DMA_ConfigChannelSecure(TRACER_EMB_DMA_INSTANCE, TRACER_EMB_TX_DMA_CHANNEL, (LL_DMA_CHANNEL_SEC     |
+                                                                                  LL_DMA_CHANNEL_SRC_SEC |
+                                                                                  LL_DMA_CHANNEL_DEST_SEC));
+#endif /* defined (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U) */
 
 #elif defined(DMA_SxCR_CHSEL)
   LL_DMA_SetChannelSelection(TRACER_EMB_DMA_INSTANCE, TRACER_EMB_TX_DMA_STREAM, TRACER_EMB_TX_DMA_CHANNEL);
@@ -310,7 +317,7 @@ void HW_TRACER_EMB_Init(void)
   LL_DMA_SetPeriphRequest(TRACER_EMB_DMA_INSTANCE, TRACER_EMB_TX_DMA_CHANNEL, TRACER_EMB_TX_DMA_REQUEST);
 #endif /* DMAMUX_CxCR_DMAREQ_ID || DMA_CSELR_C1S */
 
-#endif /* GPDMA1 */
+#endif /* GPDMA1 || HPDMA1 */
 
 #if defined(DMA_SxCR_CHSEL)
   LL_DMA_EnableIT_TC(TRACER_EMB_DMA_INSTANCE, TRACER_EMB_TX_DMA_STREAM);
@@ -568,7 +575,7 @@ void HW_TRACER_EMB_SendData(const uint8_t *pData, uint32_t Size)
   TRACER_EMB_ENABLE_CLK_USART();
 
 #if TRACER_EMB_DMA_MODE == 1UL
-#if defined(GPDMA1)
+#if defined(GPDMA1) || defined(HPDMA1)
   LL_DMA_ConfigAddresses(TRACER_EMB_DMA_INSTANCE, TRACER_EMB_TX_DMA_CHANNEL,
                          (uint32_t)pData,
                          TRACER_EMB_DMA_GETREGADDR(TRACER_EMB_USART_INSTANCE, TRACER_EMB_DMA_DIRECTION));

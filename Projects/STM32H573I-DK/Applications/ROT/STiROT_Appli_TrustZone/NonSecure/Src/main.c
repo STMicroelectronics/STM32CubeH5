@@ -72,9 +72,10 @@ int iar_fputc(int ch);
 #define PUTCHAR_PROTOTYPE int iar_fputc(int ch)
 #elif defined ( __CC_ARM ) || defined(__ARMCC_VERSION)
 /* ARM Compiler 5/6*/
-#define PUTCHAR_PROTOTYPE int fputc(int ch, FILE *f)
+int io_putchar(int ch);
+#define PUTCHAR_PROTOTYPE int io_putchar(int ch)
 #elif defined(__GNUC__)
-#define PUTCHAR_PROTOTYPE int __io_putchar(int ch)
+#define PUTCHAR_PROTOTYPE int32_t uart_putc(int32_t ch)
 #endif /* __ICCARM__ */
 
 PUTCHAR_PROTOTYPE
@@ -91,7 +92,7 @@ FILE __stdout;
 int fputc(int ch, FILE *f)
 {
   /* Send byte to USART */
-  uart_putc(ch);
+  io_putchar(ch);
 
   /* Return character written */
   return ch;
@@ -166,7 +167,7 @@ int main(int argc, char **argv)
   SECURE_RegisterCallback(GTZC_ERROR_CB_ID, (void *)SecureError_Callback);
 
   printf("\r\n======================================================================");
-  printf("\r\n=              (C) COPYRIGHT 2022 STMicroelectronics                 =");
+  printf("\r\n=              (C) COPYRIGHT 2023 STMicroelectronics                 =");
   printf("\r\n=                                                                    =");
   printf("\r\n=                          User App #%c                               =", *pUserAppId);
   printf("\r\n======================================================================");
@@ -255,7 +256,7 @@ static void SystemClock_Config(void)
 void FW_APP_PrintMainMenu(void)
 {
   printf("\r\n=================== Main Menu ============================\r\n\n");
-  printf("  Start BootLoader -------------------------------------- 1\r\n\n");
+  printf("  Start BootLoader ----------------------------------------- 1\r\n\n");
   printf("  Selection :\r\n\n");
 }
 
@@ -295,12 +296,14 @@ void FW_APP_Run(void)
   }
 }
 
+
 /**
-  * @brief  make configuration before Jump to the BootLoader
+  * @brief  Perform Jump to the BootLoader
   * @retval None.
   */
 void LOADER_Run(void)
 {
+  printf("\r\n  Start config before Jump in the bootloader");
   SECURE_loader_cfg();
 
   for (int i = 0; i < 16; i++)
@@ -321,11 +324,11 @@ void LOADER_Run(void)
   SCB->VTOR = BOOTLOADER_BASE_NS;
 
   printf("\r\n  Standard Bootloader started");
-  printf("\r\n  If you want to connect through USART device, disconnect your TeraTerm");
-  printf("\r\n  Start download with STM32CubeProgrammer through supported device (USART/SPI/I2C/I3C/USB/FDCAN)\r\n");
+  printf("\r\n  If you want to connect through USART interface, disconnect your TeraTerm");
+  printf("\r\n  Start download with STM32CubeProgrammer through supported interfaces (USART/SPI/I2C/USB)\r\n");
   printf("\r\n");
 
-  asm volatile("movs r0, %0\n"
+  __asm volatile("movs r0, %0\n"
                "bx r0\n" :: "r"(boot_address)); /*jump to non-secure address*/
 }
 

@@ -1,3 +1,4 @@
+call ../env.bat
 :: Enable delayed expansion
 setlocal EnableDelayedExpansion
 
@@ -6,7 +7,11 @@ set connect_reset=-c port=SWD speed=fast ap=1 mode=UR
 
 set image_number=1
 
-
+if "%isGeneratedByCubeMX%" == "true" (
+set appli_dir=%stirot_boot_path_project%
+) else (
+set appli_dir=../../%stirot_boot_path_project%
+)
 :: =============================================== Remove protections and erase the user flash ===============================================
 
 set remove_protect=-ob SECWM1_STRT=1 SECWM1_END=0 WRPSGn1=0xffffffff WRPSGn2=0xffffffff SECWM2_STRT=1 SECWM2_END=0 HDP1_STRT=1 HDP1_END=0 HDP2_STRT=1 HDP2_END=0 SECBOOT_LOCK=0xC3
@@ -23,6 +28,7 @@ IF !errorlevel! NEQ 0 goto :error
 set "action=Remove Protection and erase All"
 echo %action%
 %stm32programmercli% %connect_reset% %remove_protect% %erase_all%
+IF !errorlevel! NEQ 0 goto :error
 
 echo "Set SRAM 2 configuration"
 :: Recommended configuration for secure boot is :
@@ -44,10 +50,10 @@ IF !errorlevel! NEQ 0 goto :error
 set "action=Download the code image in the download slots"
 echo %action%
 
-IF not exist %stirot_boot_path_project%\Binary\%stirot_appli% (
+IF not exist %appli_dir%\Binary\%stirot_appli% (
 @echo [31mError: appli_enc_sign.hex does not exist! use TPC to generate it[0m
 goto :error)
-%stm32programmercli% %connect_no_reset% -d %stirot_boot_path_project%\Binary\%stirot_appli%
+%stm32programmercli% %connect_no_reset% -d  %appli_dir%\Binary\%stirot_appli%
 IF !errorlevel! NEQ 0 goto :error
 
 if  "%image_number%" == "2" (
@@ -60,6 +66,18 @@ goto :error
 %stm32programmercli% %connect_no_reset% -d %~dp0.\Binary\data_enc_sign.hex
 IF !errorlevel! NEQ 0 goto :error
 )
+
+set "action=Set UBE for ST-iRoT"
+echo %action%
+:: Unique boot entry is set to ST-iRoT to force ST-iRoT execution at each reset
+%stm32programmercli% %connect_reset% -ob BOOT_UBE=0xC3
+IF !errorlevel! NEQ 0 goto :error
+
+set "action=Set SECBOOT_LOCK option byte"
+echo %action%
+:: SECBOOT_LOCK should be set to 0xB4 (locked) to be compliant with certification document
+%stm32programmercli% %connect_no_reset% -ob SECBOOT_LOCK=0xB4
+IF !errorlevel! NEQ 0 goto :error
 
 echo Programming success
 IF [%1] NEQ [AUTO] cmd /k

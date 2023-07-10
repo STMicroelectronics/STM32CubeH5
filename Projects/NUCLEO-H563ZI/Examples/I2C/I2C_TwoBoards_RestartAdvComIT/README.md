@@ -51,7 +51,7 @@ This "Listen" action is initiated by calling HAL_I2C_EnableListen_IT().
 
 Command code type is decomposed in two categories :
 
-1- Action Command code
+1- Action Command code :
 
     a. Type of command which need an internal action from Slave Device without sending any specific answer to Master.
     b. I2C sequence is composed like that :
@@ -102,16 +102,31 @@ Depending of IDE, to watch content of Terminal I/O note that :
    Command Code could not be displayed on debugger but user can use the Virtual Com port of the NUCLEO-H563ZI
    to display Command Code on PC side using an hyperterminal. See below, information related to this possibility.
 
- When resorting to STM32CubeIDE:
+ - When resorting to STM32CubeIDE:
+   Command Code is displayed on debugger as follows: Window--> Show View--> Console.
 
- Command Code is displayed on debugger as follows: Window--> Show View--> Console.
+   In Debug configuration :
 
- In Debug configuration : 
+   - Window\Debugger, select the Debug probe : ST-LINK(OpenOCD)
+   - Window\Startup,add the command "monitor arm semihosting enable"
 
-- Window\Debugger, select the Debug probe : ST-LINK(OpenOCD)
-- Window\Startup,add the command "monitor arm semihosting enable"
+Other proposal to retrieve display of Command Code for all IDE is to use the Virtual Com:
 
-Other proposal to retrieve display of Command Code for all IDE is to use the Virtual Com.
+ - When resorting to EWARM IAR IDE:
+   Command Code is displayed on PC (as HyperTerminal or TeraTerm) with proper configuration
+
+ - When resorting to MDK-ARM KEIL IDE:
+   Command Code is displayed on PC (as HyperTerminal or TeraTerm) with proper configuration :
+   - remove the "__DBG_ITM" from MDK-ARM Settings --> C/C++ (AC6) --> Preprocessor Symbols --> Define
+   - uncheck "Trace Enable" from MDK-ARM Settings --> Debug --> Settings --> Trace
+   - exclude "Retarget.c" from MDK-ARM Project
+
+ - When resorting to STM32CubeIDE (Debug and Release) :
+   Command Code is displayed on PC (as HyperTerminal or TeraTerm) with proper configuration :
+   - uncheck "exclude resource from build" for "syscall.c" file
+   - remove "-specs=rdimon.specs -lc -lrdimon" from from cubeIDE Properties --> C/C++ Build --> Settings
+   --> Tool Settings --> MCU GCC linker --> Miscellaneous
+
 
 In order to select use of Virtual Com port feature of STLINK for connection between NUCLEO-H563ZI and PC,
 User has to set USE_VCP_CONNECTION define to 1 in main.h file.
@@ -180,16 +195,31 @@ Also only on Master board side, Terminal I/O can be used to watch the Request Co
    Command Code could not be displayed on debugger but user can use the Virtual Com port of the NUCLEO-H563ZI
    to display Command Code on PC side using an hyperterminal. See below, information related to this possibility.
  
- When resorting to STM32CubeIDE:
+ - When resorting to STM32CubeIDE:
+   Command Code is displayed on debugger as follows: Window--> Show View--> Console.
 
- Command Code is displayed on debugger as follows: Window--> Show View--> Console.
+   In Debug configuration :
 
- In Debug configuration :
-
-- Window\Debugger, select the Debug probe : ST-LINK(OpenOCD)
-- Window\Startup,add the command "monitor arm semihosting enable"
+   - Window\Debugger, select the Debug probe : ST-LINK(OpenOCD)
+   - Window\Startup,add the command "monitor arm semihosting enable"
 
 Other proposal to retrieve display of Command Code for all IDE is to use the Virtual Com.
+
+ - When resorting to EWARM IAR IDE:
+   Command Code is displayed on PC (as HyperTerminal or TeraTerm) with proper configuration
+
+ - When resorting to MDK-ARM KEIL IDE:
+   Command Code is displayed on PC (as HyperTerminal or TeraTerm) with proper configuration :
+   - remove the "__DBG_ITM" from MDK-ARM Settings --> C/C++ (AC6) --> Preprocessor Symbols --> Define
+   - uncheck "Trace Enable" from MDK-ARM Settings --> Debug --> Settings --> Trace
+   - exclude "Retarget.c" from MDK-ARM Project
+
+ - When resorting to STM32CubeIDE (Debug and Release) :
+   Command Code is displayed on PC (as HyperTerminal or TeraTerm) with proper configuration :
+   - uncheck "exclude resource from build" for "syscall.c" file
+   - remove "-specs=rdimon.specs -lc -lrdimon" from from cubeIDE Properties --> C/C++ Build --> Settings
+   --> Tool Settings --> MCU GCC linker --> Miscellaneous
+
 
 In order to select use of Virtual Com port feature of STLINK for connection between NUCLEO-H563ZI and PC,
 User has to set USE_VCP_CONNECTION define to 1 in main.h file.
@@ -213,7 +243,7 @@ Connectivity, I2C, Communication, Transmission, Reception, SCL, SDA, Interrupt, 
 
 ### <b>Directory contents</b> 
 
-  - I2C/I2C_TwoBoards_RestartAdvComIT/Inc/stm32h5xx_nucleo_conf.h     BSP configuration file
+  - I2C/I2C_TwoBoards_RestartAdvComIT/Inc/stm32h5xx_nucleo_conf.h BSP configuration file
   - I2C/I2C_TwoBoards_RestartAdvComIT/Inc/stm32h5xx_hal_conf.h    HAL configuration file
   - I2C/I2C_TwoBoards_RestartAdvComIT/Inc/stm32h5xx_it.h          I2C interrupt handlers header file
   - I2C/I2C_TwoBoards_RestartAdvComIT/Inc/main.h                  Header for main.c module  

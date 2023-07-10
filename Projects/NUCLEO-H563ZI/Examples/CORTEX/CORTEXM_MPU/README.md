@@ -1,11 +1,3 @@
----
-pagetitle: CORTEXM_MPU Example Description
-lang: en
----
-
-::: {.row}
-::: {.col-sm-12 .col-lg-8}
-
 ## <b>CORTEXM_MPU example Description</b>
 Presentation of the MPU features. This example configures MPU attributes of different
 MPU regions then configures a memory area as privileged read-only, and attempts to
@@ -61,6 +53,3 @@ In order to make the program work, you must do the following :
  - Open your preferred toolchain 
  - Rebuild all files and load your image into target memory
  - Run the example
-
-:::
-:::

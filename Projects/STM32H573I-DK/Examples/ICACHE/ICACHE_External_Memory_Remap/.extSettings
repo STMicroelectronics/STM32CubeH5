@@ -1,0 +1,11 @@
+[ProjectFiles]
+HeaderPath=../../../../../../Drivers/BSP/STM32H573I-DK
+[Others]
+Define=
+HALModule=
+[Groups]
+Doc=../README.md;
+Drivers/BSP=../../../../../../Drivers/BSP/STM32H573I-DK/stm32h573i_discovery.c;
+Drivers/BSP=../../../../../../Drivers/BSP/STM32H573I-DK/stm32h573i_discovery_ospi.c;
+Drivers/BSP=../../../../../../Drivers/BSP/Components/mx25lm51245g/mx25lm51245g.c;
+Application/User= ../Src/external_memory_helper.c

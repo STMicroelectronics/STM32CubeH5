@@ -47,7 +47,7 @@ void TEST_VERSIONS_PrintVersions(void)
   AppliCodeHeader = (struct image_header *)(APPLI_CODE_HEADER);
 
   /* Print version with same format than mcuboot log */
-  printf("\r\n Appli Code version: %d.%d.%ld\r\n", AppliCodeHeader->ih_ver.iv_major,
+  printf("\r\n Appli Code version: %d.%d.%d\r\n", AppliCodeHeader->ih_ver.iv_major,
          AppliCodeHeader->ih_ver.iv_minor,
          AppliCodeHeader->ih_ver.iv_revision);
 #ifdef DATA_IMAGE_EN
@@ -63,7 +63,7 @@ void TEST_VERSIONS_PrintVersions(void)
     AppliDataHeader = (struct image_header *)buffer;
 
     /* Print version with same format than mcuboot log */
-    printf(" Appli Data version: %d.%d.%ld\r\n", AppliDataHeader->ih_ver.iv_major,
+    printf(" Appli Data version: %d.%d.%d\r\n", AppliDataHeader->ih_ver.iv_major,
            AppliDataHeader->ih_ver.iv_minor,
            AppliDataHeader->ih_ver.iv_revision);
   }

@@ -52,8 +52,8 @@
 									<listOptionValue builtIn="false" value="../../../../../../../Drivers/CMSIS/Device/ST/STM32H5xx/Include"/>
 									<listOptionValue builtIn="false" value="../../../../../../../Middlewares/ST/threadx/ports/cortex_m33/gnu/inc"/>
 									<listOptionValue builtIn="false" value="../../../../../../../Drivers/CMSIS/Include"/>
-									<listOptionValue builtIn="false" value="../../../../../../../Middlewares\ST\threadx\utility\rtos_compatibility_layers\FreeRTOS"/>
-									<listOptionValue builtIn="false" value="../../../../../../../Middlewares\ST\threadx\utility\rtos_compatibility_layers\FreeRTOS\config_template"/>
+									<listOptionValue builtIn="false" value="../../../../../../../Middlewares/ST/threadx/utility/rtos_compatibility_layers/FreeRTOS"/>
+									<listOptionValue builtIn="false" value="../../../../../../../Middlewares/ST/threadx/utility/rtos_compatibility_layers/FreeRTOS/config_template"/>
 								</option>
 								<inputType id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.input.c.414999038" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.input.c"/>
 							</tool>
@@ -126,8 +126,8 @@
 								</option>
 								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.option.includepaths.718516356" name="Include paths (-I)" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.option.includepaths" useByScannerDiscovery="false" valueType="includePath">
 									<listOptionValue builtIn="false" value="../../Inc"/>
-									<listOptionValue builtIn="false" value="../../../../../../../Middlewares\ST\threadx\utility\rtos_compatibility_layers\FreeRTOS\config_template"/>
-									<listOptionValue builtIn="false" value="../../../../../../../Middlewares\ST\threadx\utility\rtos_compatibility_layers\FreeRTOS"/>
+									<listOptionValue builtIn="false" value="../../../../../../../Middlewares/ST/threadx/utility/rtos_compatibility_layers/FreeRTOS/config_template"/>
+									<listOptionValue builtIn="false" value="../../../../../../../Middlewares/ST/threadx/utility/rtos_compatibility_layers/FreeRTOS"/>
 									<listOptionValue builtIn="false" value="../../../../../../../Drivers/STM32H5xx_HAL_Driver/Inc"/>
 									<listOptionValue builtIn="false" value="../../../../../../../Drivers/STM32H5xx_HAL_Driver/Inc/Legacy"/>
 									<listOptionValue builtIn="false" value="../../../../../../../Middlewares/ST/threadx/common/inc"/>

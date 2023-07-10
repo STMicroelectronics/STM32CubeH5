@@ -24,13 +24,10 @@
  * with comment.
  */
 
+/* Flash layout configuration : begin ****************************************/
 /* OEMiROT/STiROT_OEMuROT configuration */
-
 /*#define OEMUROT_ENABLE*/         /* Defined: the project is used for OEMiROT boot path */
                                    /* Undefined: the project is used for STiROT_OEMuROT boot path */
-
-/* Flash layout configuration : begin ****************************************/
-
 #define MCUBOOT_OVERWRITE_ONLY     /* Defined: the FW installation uses overwrite method.
                                       UnDefined: The FW installation uses swap mode. */
 
@@ -41,14 +38,13 @@
 #define MCUBOOT_APP_IMAGE_NUMBER 2 /* 1: S and NS application binaries are assembled in one single image.
                                       2: Two separated images for S and NS application binaries. */
 
-#define MCUBOOT_S_DATA_IMAGE_NUMBER 1   /* 1: S data image for S application.
+#define MCUBOOT_S_DATA_IMAGE_NUMBER 0   /* 1: S data image for S application.
                                            0: No S data image. */
 
-#define MCUBOOT_NS_DATA_IMAGE_NUMBER 1  /* 1: NS data image for NS application.
+#define MCUBOOT_NS_DATA_IMAGE_NUMBER 0  /* 1: NS data image for NS application.
                                            0: No NS data image. */
 
 /* Flash layout configuration : end ******************************************/
-
 
 /* Total number of images */
 #define MCUBOOT_IMAGE_NUMBER (MCUBOOT_APP_IMAGE_NUMBER + MCUBOOT_S_DATA_IMAGE_NUMBER + MCUBOOT_NS_DATA_IMAGE_NUMBER)
@@ -99,10 +95,14 @@
  * is used as a temporary storage during image swapping.
  */
 
+/* area for BL2 code protected by hdp */
+#define FLASH_AREA_BL2_OFFSET           (0x0000)
+#define FLASH_AREA_BL2_SIZE             (0x18000)
+
 /* scratch area */
 #if defined(FLASH_AREA_SCRATCH_ID)
 #define FLASH_AREA_SCRATCH_DEVICE_ID    (FLASH_DEVICE_ID - FLASH_DEVICE_ID)
-#define FLASH_AREA_SCRATCH_OFFSET       (0x0000)
+#define FLASH_AREA_SCRATCH_OFFSET       (FLASH_AREA_BL2_SIZE)
 #if defined(MCUBOOT_OVERWRITE_ONLY)
 #define FLASH_AREA_SCRATCH_SIZE         (0x0000) /* Not used in MCUBOOT_OVERWRITE_ONLY mode */
 #else
@@ -116,11 +116,8 @@
 #define FLASH_AREA_SCRATCH_SIZE         (0x0)
 #endif /* FLASH_AREA_SCRATCH_ID */
 
-/* area for BL2 code protected by hdp */
-#define FLASH_AREA_BL2_OFFSET           (FLASH_AREA_SCRATCH_SIZE)
-#define FLASH_AREA_BL2_SIZE             (0x10000)
 /* HDP area end at this address */
-#define FLASH_BL2_HDP_END               (FLASH_AREA_BL2_OFFSET+FLASH_AREA_BL2_SIZE-1)
+#define FLASH_BL2_HDP_END               (FLASH_AREA_SCRATCH_OFFSET+FLASH_AREA_SCRATCH_SIZE-1)
 /* control area for BL2 code protected by hdp */
 #if ((FLASH_AREA_BL2_OFFSET+FLASH_AREA_BL2_SIZE) % FLASH_AREA_IMAGE_SECTOR_SIZE) != 0
 #error "HDP area must be aligned on FLASH_AREA_IMAGE_SECTOR_SIZE"
@@ -168,7 +165,7 @@
                                          FLASH_MAX_DATA_PARTITION_SIZE)
 
 /* BL2 flash areas */
-#define FLASH_AREA_BEGIN_OFFSET         (FLASH_AREA_BL2_OFFSET+FLASH_AREA_BL2_SIZE)
+#define FLASH_AREA_BEGIN_OFFSET         (FLASH_AREA_SCRATCH_SIZE+FLASH_AREA_BL2_SIZE)
 #define FLASH_AREAS_DEVICE_ID           (FLASH_DEVICE_ID - FLASH_DEVICE_ID)
 
 /* Secure data image primary slot */
@@ -199,6 +196,7 @@
 #error "FLASH_AREA_0_OFFSET  not aligned on FLASH_AREA_IMAGE_SECTOR_SIZE"
 #endif /*  (FLASH_AREA_0_OFFSET  % FLASH_AREA_IMAGE_SECTOR_SIZE) != 0 */
 #else /* FLASH_AREA_0_ID */
+#define FLASH_AREA_0_OFFSET             (0x0)
 #define FLASH_AREA_0_SIZE               (0x0)
 #endif /* FLASH_AREA_0_ID */
 
@@ -248,6 +246,7 @@
 #error "FLASH_AREA_2_OFFSET  not aligned on FLASH_AREA_IMAGE_SECTOR_SIZE"
 #endif /*   (FLASH_AREA_2_OFFSET  % FLASH_AREA_IMAGE_SECTOR_SIZE) != 0 */
 #else /* FLASH_AREA_2_ID */
+#define FLASH_AREA_2_OFFSET             (0x0)
 #define FLASH_AREA_2_SIZE               (0x0)
 #endif /* FLASH_AREA_2_ID */
 
@@ -263,6 +262,7 @@
 #error "FLASH_AREA_3_OFFSET  not aligned on FLASH_AREA_IMAGE_SECTOR_SIZE"
 #endif /*  (FLASH_AREA_3_OFFSET  % FLASH_AREA_IMAGE_SECTOR_SIZE) != 0 */
 #else /* FLASH_AREA_3_ID */
+#define FLASH_AREA_3_OFFSET             (0x0)
 #define FLASH_AREA_3_SIZE               (0x0)
 #endif /* FLASH_AREA_3_ID */
 

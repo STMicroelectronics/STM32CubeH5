@@ -29,7 +29,6 @@ extern "C" {
 #include "boot_hal_cfg.h"
 #include "bootutil/bootutil_log.h"
 #include "flash_layout.h"
-
 /** @addtogroup Secure Secure Boot / Firmware Update
   * @{
   */
@@ -74,7 +73,7 @@ void    LL_SECU_SetLoaderCodeSecure(void);
 #if (OEMIROT_TAMPER_ENABLE != NO_TAMPER)
 void    TAMP_IRQHandler(void);
 #endif /*  OEMIROT_TAMPER_ENABLE != NO_TAMPER */
-#ifdef OEMUROT_ENABLE
+#if  defined(OEMUROT_ENABLE)
 void    LL_SECU_DisableCleanMpu(void);
 #endif
 /**

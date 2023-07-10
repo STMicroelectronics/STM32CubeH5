@@ -1,5 +1,5 @@
 
-## <b>Nx_SNTP_Client application Description</b>
+## <b>Nx_SNTP_Client Application Description</b>
 
 This application provides an example of Azure RTOS NetX/NetXDuo stack usage. 
 

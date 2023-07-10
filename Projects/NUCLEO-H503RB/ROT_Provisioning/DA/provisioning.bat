@@ -1,4 +1,4 @@
-@ECHO OFF
+@echo off
 
 :: Enable delayed expansion
 setlocal EnableDelayedExpansion
@@ -14,7 +14,7 @@ set create_password="create_password.bat"
 set ob_programming_log="ob_programming.log"
 set password_programming_log="password_provisioning.log"
 set create_password_log="create_password.log"
-set state_change_log="state.log"
+set state_change_log="provisioning.log"
 
 :: Initial configuration
 set product_state=OPEN
@@ -22,7 +22,7 @@ set connect_no_reset=-c port=SWD speed=fast ap=1 mode=Hotplug
 set connect_reset=-c port=SWD speed=fast ap=1 mode=UR
 
 echo =====
-echo ===== Provisioning of DA Legacy boot path
+echo ===== Provisioning of DA
 echo =====
 echo.
 
@@ -48,14 +48,14 @@ pause >nul
 
 
 :: ================================================= Final product state selection ==========================================================
-set "action=Is your password already provisioned ?"
+set "action=Password provisioning"
 echo    * %action%
-set /p "password=        (WARNING: This step is done one time, then the password cannot be changed) %USERREG% [y|n]: "
+echo        WARNING: The password is definitively provisioned (in OTP), and cannot be changed even after regression
+echo        Once provisioned, be sure not to change the password anymore (will not work)
+echo        Press any key to continue...
 echo.
-if /i "%password%" == "n" goto :create_password
-if /i "%password%" == "y" goto :define_product_state
-echo         not valid answer
-goto step_error
+pause >nul
+goto create_password
 
 
 :define_product_state
@@ -142,7 +142,7 @@ set "command=start /w /b call %password_programming% AUTO"
 if !errorlevel! neq 0 goto :step_error
 
 echo        Successful password provisioning
-echo        (see %password_programming% for details)
+echo        (see %password_programming_log% for details)
 echo.
 if /i "%product_state%" NEQ "OPEN" goto :set_final_ps
 

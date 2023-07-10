@@ -43,7 +43,6 @@ extern "C" {
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "stm32h573i_discovery.h"
 #include <stdio.h>
 /* USER CODE END Includes */
 
@@ -73,6 +72,9 @@ void MX_I2C4_Init(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
+#define BUTTON_USER_Pin GPIO_PIN_13
+#define BUTTON_USER_GPIO_Port GPIOC
+#define BUTTON_USER_EXTI_IRQn EXTI13_IRQn
 
 /* USER CODE BEGIN Private defines */
 
