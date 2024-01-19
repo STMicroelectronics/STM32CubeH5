@@ -6,3 +6,11 @@
 	path = Drivers/STM32H5xx_HAL_Driver
 	url = https://github.com/STMicroelectronics/stm32h5xx_hal_driver.git
 	branch = main
+[submodule "Drivers/BSP/STM32H5xx_Nucleo"]
+	path = Drivers/BSP/STM32H5xx_Nucleo
+	url = https://github.com/STMicroelectronics/stm32h5xx-nucleo-bsp.git
+	branch = main
+[submodule "Drivers/BSP/STM32H573I-DK"]
+	path = Drivers/BSP/STM32H573I-DK
+	url = https://github.com/STMicroelectronics/stm32h573i-discovery-bsp.git
+	branch = main
