@@ -38,6 +38,11 @@
 			<locationURI>PARENT-1-PROJECT_LOC/Src/app_module.c</locationURI>
 		</link>
 		<link>
+			<name>Doc/README.md</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/README.md</locationURI>
+		</link>
+		<link>
 			<name>Application/User/app_threadx.c</name>
 			<type>1</type>
 			<locationURI>PARENT-1-PROJECT_LOC/Src/app_threadx.c</locationURI>

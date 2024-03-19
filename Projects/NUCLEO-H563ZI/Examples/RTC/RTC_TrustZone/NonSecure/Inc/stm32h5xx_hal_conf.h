@@ -149,7 +149,7 @@
                                                 in voltage and temperature.*/
 
 #if !defined  (LSI_STARTUP_TIME)
-  #define LSI_STARTUP_TIME          130UL      /*!< Time out for LSI start up, in ms */
+  #define LSI_STARTUP_TIME          130UL      /*!< Time out for LSI start up, in us */
 #endif /* LSI_STARTUP_TIME */
 
 /**
@@ -230,9 +230,8 @@
 #define  USE_HAL_LPTIM_REGISTER_CALLBACKS     0U    /* LPTIM register callback disabled     */
 #define  USE_HAL_MMC_REGISTER_CALLBACKS       0U    /* MMC register callback disabled       */
 #define  USE_HAL_NAND_REGISTER_CALLBACKS      0U    /* NAND register callback disabled      */
-
-#define  USE_HAL_OPAMP_REGISTER_CALLBACKS     0U    /* OTFDEC register callback disabled    */
-#define  USE_HAL_OTFDEC_REGISTER_CALLBACKS    0U    /* OPAMP register callback disabled     */
+#define  USE_HAL_OPAMP_REGISTER_CALLBACKS     0U    /* OPAMP register callback disabled     */
+#define  USE_HAL_OTFDEC_REGISTER_CALLBACKS    0U    /* OTFDEC register callback disabled    */
 #define  USE_HAL_PCD_REGISTER_CALLBACKS       0U    /* PCD register callback disabled       */
 #define  USE_HAL_PKA_REGISTER_CALLBACKS       0U    /* PKA register callback disabled       */
 #define  USE_HAL_RAMCFG_REGISTER_CALLBACKS    0U    /* RAMCFG register callback disabled    */

@@ -34,6 +34,7 @@
 #include "stm32h5xx_ll_fmac.h"
 #include "stm32h5xx_ll_gpio.h"
 #include "stm32h5xx_ll_i2c.h"
+#include "stm32h5xx_ll_i3c.h"
 #include "stm32h5xx_ll_icache.h"
 #include "stm32h5xx_ll_iwdg.h"
 #include "stm32h5xx_ll_lptim.h"

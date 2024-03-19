@@ -95,5 +95,3 @@ extern "C" {
 #endif
 
 #endif /* STM32H573I_DK_CONF_H */
-
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

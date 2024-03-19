@@ -167,7 +167,7 @@ But the firmware can be made of a secure part and a non secure part but at least
 	</List>
 	<File>
 		<Name>Encryption key</Name>
-		<Value>.\..\Keys\STiRoT_Encryption.pem</Value>
+		<Value>./../Keys/STiRoT_Encryption.pem</Value>
 		<Align>4</Align>
 		<KeyType>ecdsa-p256</KeyType>
 		<Type></Type>
@@ -176,7 +176,7 @@ But the firmware can be made of a secure part and a non secure part but at least
 	</File>
 	<File>
 		<Name>Authentication key</Name>
-		<Value>.\..\Keys\STiRoT_Authentication.pem</Value>
+		<Value>./../Keys/STiRoT_Authentication.pem</Value>
 		<Align>4</Align>
 		<KeyType>ecdsa-p256</KeyType>
 		<Type>Public</Type>

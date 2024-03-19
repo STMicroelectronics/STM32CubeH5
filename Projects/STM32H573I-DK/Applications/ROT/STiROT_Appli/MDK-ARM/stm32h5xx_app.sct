@@ -21,7 +21,7 @@
 #define IMAGE_HEADER_SIZE 0x400     /* mcuboot header size */
 
 #define CODE_START 0x0C000000 + S_CODE_OFFSET + IMAGE_HEADER_SIZE
-#define APP_CODE_SIZE S_CODE_SIZE - 16 - 1
+#define APP_CODE_SIZE S_CODE_SIZE - IMAGE_HEADER_SIZE
 
 /* Only use SRAM2/3 as full secure for our application */
 /* Because when the application jump to the bootloader, the BL uses the SRAM1 ressources */

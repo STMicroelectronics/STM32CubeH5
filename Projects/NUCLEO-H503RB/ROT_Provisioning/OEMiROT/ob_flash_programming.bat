@@ -1,4 +1,6 @@
 call ../env.bat
+set cube_fw_path=%cube_fw_path:"=%
+set rot_provisioning_path=%rot_provisioning_path:"=%
 
 :: Enable delayed expansion
 setlocal EnableDelayedExpansion
@@ -55,7 +57,7 @@ if  "%data_image_number%" == "1" (
 set "action=Write OEMiROT_Appli Data"
 echo %action%
 IF not exist %rot_provisioning_path%\OEMiROT\Binary\%data_image% (
-@echo [31mError: %data_image% does not exist! use TPC to generate it[0m  
+@echo [31mError: %data_image% does not exist! use TPC to generate it[0m
 goto :error
 )
 %stm32programmercli% %connect_no_reset% -d %rot_provisioning_path%\OEMiROT\Binary\%data_image% -v

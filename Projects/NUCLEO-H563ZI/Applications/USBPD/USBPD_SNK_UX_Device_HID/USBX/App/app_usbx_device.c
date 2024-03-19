@@ -42,7 +42,6 @@
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
-
 static ULONG hid_mouse_interface_number;
 static ULONG hid_mouse_configuration_number;
 static UX_SLAVE_CLASS_HID_PARAMETER hid_mouse_parameter;
@@ -280,8 +279,6 @@ VOID USBX_APP_Device_Init(VOID)
 {
   /* USER CODE BEGIN USB_Device_Init_PreTreatment_0 */
   /* USER CODE END USB_Device_Init_PreTreatment_0 */
-
-  HAL_PWREx_EnableVddUSB();
 
   /* USB_DRD_FS init function */
   MX_USB_PCD_Init();

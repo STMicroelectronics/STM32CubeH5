@@ -124,7 +124,7 @@
                                               in voltage and temperature.*/
 
 #if !defined  (LSI_STARTUP_TIME)
-#define LSI_STARTUP_TIME          130UL      /*!< Time out for LSI start up, in ms */
+#define LSI_STARTUP_TIME          130UL      /*!< Time out for LSI start up, in us */
 #endif /* LSI_STARTUP_TIME */
 
 /**

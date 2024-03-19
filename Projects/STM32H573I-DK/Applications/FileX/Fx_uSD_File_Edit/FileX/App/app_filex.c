@@ -32,7 +32,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* Main thread stack size */
-#define FX_APP_THREAD_STACK_SIZE          2 * 1024
+#define FX_APP_THREAD_STACK_SIZE         1024*2
 /* Main thread priority */
 #define FX_APP_THREAD_PRIO               10
 /* USER CODE BEGIN PD */
@@ -48,7 +48,8 @@ CARD_STATUS_CONNECTED           = 77
 
 /* Private macro -------------------------------------------------------------*/
 /* USER CODE BEGIN PM */
-
+#define MEDIA_CLOSED                     1UL
+#define MEDIA_OPENED                     0UL
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
@@ -61,7 +62,7 @@ ALIGN_32BYTES (uint32_t fx_sd_media_memory[FX_STM32_SD_DEFAULT_SECTOR_SIZE / siz
 FX_MEDIA        sdio_disk;
 
 /* USER CODE BEGIN PV */
-
+static UINT media_status;
 /* Define FileX global data structures.  */
 FX_FILE         fx_file;
 /* Define ThreadX global data structures.  */
@@ -75,7 +76,8 @@ TX_QUEUE        tx_msg_queue;
 void fx_thread_entry(ULONG thread_input);
 
 /* USER CODE BEGIN PFP */
-
+static uint8_t SD_IsDetected(uint32_t Instance);
+static VOID media_close_callback (FX_MEDIA *media_ptr);
 /* USER CODE END PFP */
 
 /**
@@ -168,7 +170,8 @@ UINT MX_FileX_Init(VOID *memory_ptr)
   }
 
 /* USER CODE BEGIN fx_thread_entry 1*/
-  if(SD_IsDetected(FX_STM32_SD_INSTANCE) == SD_PRESENT)
+  fx_media_close_notify_set(&sdio_disk, media_close_callback);
+  if(SD_IsDetected(FX_STM32_SD_INSTANCE) == HAL_OK)
   {
     /* SD card is already inserted, place the info into the queue */
     tx_queue_send(&tx_msg_queue, &s_msg, TX_NO_WAIT);
@@ -205,7 +208,7 @@ UINT MX_FileX_Init(VOID *memory_ptr)
         /* for debouncing purpose we wait a bit till it settles down */
         tx_thread_sleep(TX_TIMER_TICKS_PER_SECOND / 2);
 
-        if(SD_IsDetected(FX_STM32_SD_INSTANCE) == SD_PRESENT)
+        if(SD_IsDetected(FX_STM32_SD_INSTANCE) == HAL_OK)
         {
           /* We have a valid SD insertion event, start processing.. */
           /* Update last known sd_status */
@@ -225,6 +228,19 @@ UINT MX_FileX_Init(VOID *memory_ptr)
     }
 
     /* Create a file called STM32.TXT in the root directory.  */
+    if (media_status == MEDIA_CLOSED)
+    {
+      sd_status = fx_media_open(&sdio_disk, FX_SD_VOLUME_NAME, fx_stm32_sd_driver, (VOID *)FX_NULL, (VOID *) fx_sd_media_memory, sizeof(fx_sd_media_memory));
+      /* Check the media open sd_status */
+      if (sd_status != FX_SUCCESS)
+      {
+        /* USER CODE BEGIN SD DRIVER get info error */
+        Error_Handler();
+        /* USER CODE END SD DRIVER get info error */
+      }
+      media_status = MEDIA_OPENED;
+    }
+
     sd_status =  fx_file_create(&sdio_disk, "STM32.TXT");
 
     /* Check the create sd_status.  */
@@ -349,9 +365,9 @@ UINT MX_FileX_Init(VOID *memory_ptr)
  * @param Instance  SD Instance
  * @retval Returns if SD is detected or not
  */
-int32_t SD_IsDetected(uint32_t Instance)
+static uint8_t SD_IsDetected(uint32_t Instance)
 {
-  int32_t ret;
+  uint8_t ret;
   if(Instance >= 1)
   {
     ret = HAL_ERROR;
@@ -361,15 +377,15 @@ int32_t SD_IsDetected(uint32_t Instance)
     /* Check SD card detect pin */
     if (HAL_GPIO_ReadPin(SD_DETECT_GPIO_Port, SD_DETECT_Pin) == GPIO_PIN_SET)
     {
-      ret = SD_NOT_PRESENT;
+      ret = HAL_ERROR;
     }
     else
     {
-      ret = SD_PRESENT;
+      ret = HAL_OK;
     }
   }
 
-  return(int32_t)ret;
+  return ret;
 }
 
 /**
@@ -385,6 +401,31 @@ void HAL_GPIO_EXTI_Rising_Callback(uint16_t GPIO_Pin)
   {
     tx_queue_send(&tx_msg_queue, &s_msg, TX_NO_WAIT);
   }
+}
+
+/**
+  * @brief  EXTI line detection callback.
+  * @param  GPIO_Pin: Specifies the port pin connected to corresponding EXTI line.
+  * @retval None
+  */
+void HAL_GPIO_EXTI_Falling_Callback(uint16_t GPIO_Pin)
+{
+  ULONG s_msg = CARD_STATUS_CHANGED;
+
+  if(GPIO_Pin == SD_DETECT_Pin)
+  {
+    tx_queue_send(&tx_msg_queue, &s_msg, TX_NO_WAIT);
+  }
+}
+
+/**
+  * @brief  Media close notify callback function.
+  * @param  media_ptr: Media control block pointer
+  * @retval None
+  */
+static VOID media_close_callback(FX_MEDIA *media_ptr)
+{
+  media_status = MEDIA_CLOSED;
 }
 
 /* USER CODE END 1 */

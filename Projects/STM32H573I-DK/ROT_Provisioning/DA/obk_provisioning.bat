@@ -13,7 +13,7 @@ set connect_reset=-c port=SWD speed=fast ap=1 mode=Hotplug -hardRst
 :: =============================================== Configure OB Keys ========================================================
 :provisioning
 :: Verify if obk file exists
-if not exist %~dp0\Binary\%da_obk_file% (
+if not exist "%~dp0\Binary\%da_obk_file%" (
 @echo [31m     Error: %da_obk_file% does not exist! use TPC to generate it[0m >CON
 goto :error
 )

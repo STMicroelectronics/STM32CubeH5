@@ -1,7 +1,6 @@
 ## <b>I3C_Controller_Direct_Command_Polling Example Description</b>
 
-How to handle a Direct Command procedure between an I3C Controller and an I3C Target,
-using DMA.
+How to handle a Direct Command procedure between an I3C Controller and an I3C Target, using Polling.
 
       - Board: NUCLEO-H503RB (embeds a STM32H503RB device)
       - SCL Pin: PB6 (Arduino SCL/D15 CN5 pin 10, Morpho CN10 pin3) to PB6 (Arduino SCL/D15 CN5 pin 10, Morpho CN10 pin3)

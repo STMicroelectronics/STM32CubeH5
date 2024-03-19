@@ -35,9 +35,8 @@
 S_CODE_OFFSET = 0x12000;                        /* This define is updated automatically by OEMiROT_Boot postbuild */
 S_CODE_SIZE = 0x6000;                           /* This define is updated automatically by OEMiROT_Boot postbuild */
 NS_CODE_SIZE = 0xA0000;                          /* This define is updated automatically by OEMiROT_Boot postbuild */
-NS_CODE_OFFSET = (S_CODE_OFFSET + S_CODE_SIZE); 
+NS_CODE_OFFSET = (S_CODE_OFFSET + S_CODE_SIZE);
 IMAGE_HEADER_SIZE = 0x400;                      /* mcuboot header size */
-TRAILER_MAX_SIZE = 0x40;                        /* max size trailer */
 
 /* Entry Point */
 ENTRY(Reset_Handler)
@@ -52,7 +51,7 @@ _Min_Stack_Size = 0x400; /* required amount of stack */
 MEMORY
 {
   RAM    (xrw)    : ORIGIN = 0x20050000,    LENGTH = 0x50000    /* Memory is divided. Actual start is 0x20000000 and actual length is 320K */
-  FLASH   (rx)    : ORIGIN = (0x08000000 + NS_CODE_OFFSET + IMAGE_HEADER_SIZE),    LENGTH = (NS_CODE_SIZE - IMAGE_HEADER_SIZE - TRAILER_MAX_SIZE)    /* Memory is divided. Actual start is 0x8000000 and actual length is 2048K */
+  FLASH   (rx)    : ORIGIN = (0x08000000 + NS_CODE_OFFSET + IMAGE_HEADER_SIZE),    LENGTH = (NS_CODE_SIZE - IMAGE_HEADER_SIZE)    /* Memory is divided. Actual start is 0x8000000 and actual length is 2048K */
 }
 
 /* Sections */
@@ -92,13 +91,15 @@ SECTIONS
     . = ALIGN(4);
   } >FLASH
 
-  .ARM.extab   : {
+  .ARM.extab (READONLY) : /* The READONLY keyword is only supported in GCC11 and later, remove it if using GCC10 or earlier. */
+  {
     . = ALIGN(4);
     *(.ARM.extab* .gnu.linkonce.armextab.*)
     . = ALIGN(4);
   } >FLASH
 
-  .ARM : {
+  .ARM (READONLY) : /* The READONLY keyword is only supported in GCC11 and later, remove it if using GCC10 or earlier. */
+  {
     . = ALIGN(4);
     __exidx_start = .;
     *(.ARM.exidx*)
@@ -106,7 +107,7 @@ SECTIONS
     . = ALIGN(4);
   } >FLASH
 
-  .preinit_array     :
+  .preinit_array (READONLY) : /* The READONLY keyword is only supported in GCC11 and later, remove it if using GCC10 or earlier. */
   {
     . = ALIGN(4);
     PROVIDE_HIDDEN (__preinit_array_start = .);
@@ -115,7 +116,7 @@ SECTIONS
     . = ALIGN(4);
   } >FLASH
 
-  .init_array :
+  .init_array (READONLY) : /* The READONLY keyword is only supported in GCC11 and later, remove it if using GCC10 or earlier. */
   {
     . = ALIGN(4);
     PROVIDE_HIDDEN (__init_array_start = .);
@@ -125,7 +126,7 @@ SECTIONS
     . = ALIGN(4);
   } >FLASH
 
-  .fini_array :
+  .fini_array (READONLY) : /* The READONLY keyword is only supported in GCC11 and later, remove it if using GCC10 or earlier. */
   {
     . = ALIGN(4);
     PROVIDE_HIDDEN (__fini_array_start = .);

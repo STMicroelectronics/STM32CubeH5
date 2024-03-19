@@ -3,7 +3,7 @@
 <Obdata>
 	<Info>
 		<Title>STiRoT configuration</Title>
-		<ObDestAddress>0x0FFD0200</ObDestAddress> 
+		<ObDestAddress>0x0FFD0200</ObDestAddress>
 		<DoEncryption>1</DoEncryption>
 		<GlobalAlign>16</GlobalAlign>
 		<FlashStart>0x0C000000</FlashStart>
@@ -15,10 +15,10 @@
 		<AuthOBKStart>0xFFD0900</AuthOBKStart>
 		<AuthOBKSize>0x2F0</AuthOBKSize>
 	</Info>
-	<Hash>	
+	<Hash>
 	</Hash>
 	<List>
-		<Name>Number of images managed</Name> 
+		<Name>Number of images managed</Name>
 		<Value>0x02</Value>
 		<Width>1</Width>
 		<Default>0x02</Default>
@@ -27,18 +27,19 @@
 		<Dependency>Image</Dependency>
 		<Tooltip>Select "0x02,firmware and data images" if the firmware manages a data area located in HDPL2 OBkeys to store its secrets (keys, ...), else select "0x01,firmware image only"</Tooltip>
 	</List>
-	<Bool>
-		<Name>High speed clock activation (250Mhz)</Name> 
+	<List>
+		<Name>Clock selection</Name>
 		<Value>0x01</Value>
 		<Width>1</Width>
 		<Hidden>1</Hidden>
 		<Default>0x01</Default>
-		<True>0x01</True>
-		<False>0x00</False>
-		<Tooltip>Activate the high speed clock (250Mhz) during StiRoT execution</Tooltip>
-	</Bool>
+		<Val>0x00,STiROT clock configured @ 64Mhz</Val>
+		<Val>0x01,STiROT clock configured @ 200Mhz</Val>
+		<Val>0x02,STiROT clock configured @ 250Mhz</Val>
+		<Tooltip>Configured the clock during STiROT execution depending on the voltage supply level and the range of temperature supported</Tooltip>
+	</List>
 	<Bool>
-		<Name>Is the firmware full secure</Name> 
+		<Name>Is the firmware full secure</Name>
 		<Value>0x01</Value>
 		<Width>1</Width>
 		<Default>0x01</Default>
@@ -48,15 +49,18 @@
 		<Dependency>Secure</Dependency>
 		<Tooltip>Tick the box if the firmware is full secure</Tooltip>
 	</Bool>
-	<Data>
-		<Name>Reserved</Name> 
-		<Value>0x00</Value>
+	<Bool>
+		<Name>Jump into ST bootloader when no valid image(s)</Name>
+		<Value>0x01</Value>
 		<Width>1</Width>
-		<Reserved>1</Reserved>
-		<Default>0x00</Default>
-	</Data>
+		<Hidden>1</Hidden>
+		<Default>0x01</Default>
+		<True>0x01</True>
+		<False>0x00</False>
+		<Tooltip>Tick the box if STiROT is allowed to jump into ST bootloader when the authenticity and the integrity of at least 1 image is not verified</Tooltip>
+	</Bool>
 	<Data>
-		<Name>Firmware execution area offset</Name> 
+		<Name>Firmware execution area offset</Name>
 		<Value>0x00000000</Value>
 		<Width>4</Width>
 		<Default>0x00000000</Default>
@@ -165,7 +169,7 @@ But the firmware can be made of a secure part and a non secure part but at least
 	</List>
 	<File>
 		<Name>Encryption key</Name>
-		<Value>.\..\Keys\STiRoT_Encryption.pem</Value>
+		<Value>./../Keys/STiRoT_Encryption.pem</Value>
 		<Align>4</Align>
 		<KeyType>ecdsa-p256</KeyType>
 		<Type></Type>
@@ -174,7 +178,7 @@ But the firmware can be made of a secure part and a non secure part but at least
 	</File>
 	<File>
 		<Name>Authentication key</Name>
-		<Value>.\..\Keys\STiRoT_Authentication.pem</Value>
+		<Value>./../Keys/STiRoT_Authentication.pem</Value>
 		<Align>4</Align>
 		<KeyType>ecdsa-p256</KeyType>
 		<Type>Public</Type>
@@ -186,6 +190,6 @@ But the firmware can be made of a secure part and a non secure part but at least
 		<Value>.\..\Binary\STiRoT_Config.obk</Value>
 		<Default>.\..\Binary\STiRoT_Config.obk</Default>
 		<Tooltip>Select the output file .obk including STiRoT configuration</Tooltip>
-	</Output>	
+	</Output>
 </Obdata>
 </Root>

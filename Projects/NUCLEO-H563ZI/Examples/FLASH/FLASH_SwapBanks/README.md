@@ -50,7 +50,7 @@ Memory, FLASH, Swap, Bank, Dual bank, Program, Sector, LED
 ### <b> Directory contents </b>
 
   - FLASH/FLASH_SwapBanks/Inc/stm32h5xx_hal_conf.h        HAL Configuration file
-  - FLASH/FLASH_SwapBanks/Inc/stm32h5xx_nucleo_conf.h     STM32H5xx_Nuleo board configuration file
+  - FLASH/FLASH_SwapBanks/Inc/stm32h5xx_nucleo_conf.h     STM32H5xx_Nucleo board configuration file
   - FLASH/FLASH_SwapBanks/Inc/stm32h5xx_it.h              Header for stm32h5xx_it.c
   - FLASH/FLASH_SwapBanks/Inc/main.h                      Header for main.c module
   - FLASH/FLASH_SwapBanks/Src/stm32h5xx_it.c              Interrupt handlers

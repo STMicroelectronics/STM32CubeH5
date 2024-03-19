@@ -28,8 +28,6 @@ oemurot_image="rot_enc_sign.hex"
 connect_no_reset="-c port=SWD speed=fast ap=1 mode=Hotplug"
 connect_reset="-c port=SWD speed=fast ap=1 mode=UR"
 
-image_number=2
-
 if [ $# -ge 1 ]; then script_mode=$1; else script_mode=MANUAL; fi
 
 # Error function

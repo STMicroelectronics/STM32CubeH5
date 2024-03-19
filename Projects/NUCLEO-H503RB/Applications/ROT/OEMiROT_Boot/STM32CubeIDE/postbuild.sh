@@ -26,7 +26,7 @@ else
   echo AppliCfg with python script
   applicfg="$cube_fw_path/Utilities/PC_Software/ROT_AppliConfig/AppliCfg.py"
   #determine/check python version command
-  python="python "
+  python="python3 "
 fi
 
 error()
@@ -49,7 +49,7 @@ isGeneratedByCubeMX=$PROJECT_GENERATED_BY_CUBEMX
 appli_flash_layout="$appli_dir/Inc/appli_flash_layout.h"
 appli_linker_file="$appli_dir/EWARM/stm32h503xx_flash.icf"
 map_properties="$project_dir/../../OEMiROT_Boot/map.properties"
-code_xml="$project_dir/../../../../ROT_Provisioning/OEMiROT/Images/OEMiRoT_code_image.xml"
+code_xml="$project_dir/../../../../ROT_Provisioning/OEMiROT/Images/OEMiROT_Code_Image.xml"
 data_xml="$project_dir/../../../../ROT_Provisioning/OEMiROT/Images/OEMiROT_Data_Image.xml"
 
 $python$applicfg flash --layout $preprocess_bl2_file -b CODE_REGION_START -m RE_IMAGE_FLASH_ADDRESS $map_properties --vb >> $current_log_file 2>&1

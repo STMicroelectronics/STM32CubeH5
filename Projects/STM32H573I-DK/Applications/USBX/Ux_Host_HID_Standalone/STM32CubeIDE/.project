@@ -34,6 +34,11 @@
 	</natures>
 	<linkedResources>
 		<link>
+			<name>Ux_Host_HID_Standalone.ioc</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/Ux_Host_HID_Standalone.ioc</locationURI>
+		</link>
+		<link>
 			<name>Doc/README.md</name>
 			<type>1</type>
 			<locationURI>PARENT-1-PROJECT_LOC/README.md</locationURI>
@@ -154,44 +159,9 @@
 			<locationURI>PARENT-6-PROJECT_LOC/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_uart_ex.c</locationURI>
 		</link>
 		<link>
-			<name>Drivers/STM32H5xx_HAL_Driver/stm32h5xx_ll_dma.c</name>
-			<type>1</type>
-			<locationURI>PARENT-6-PROJECT_LOC/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_ll_dma.c</locationURI>
-		</link>
-		<link>
-			<name>Drivers/STM32H5xx_HAL_Driver/stm32h5xx_ll_exti.c</name>
-			<type>1</type>
-			<locationURI>PARENT-6-PROJECT_LOC/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_ll_exti.c</locationURI>
-		</link>
-		<link>
-			<name>Drivers/STM32H5xx_HAL_Driver/stm32h5xx_ll_gpio.c</name>
-			<type>1</type>
-			<locationURI>PARENT-6-PROJECT_LOC/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_ll_gpio.c</locationURI>
-		</link>
-		<link>
-			<name>Drivers/STM32H5xx_HAL_Driver/stm32h5xx_ll_rcc.c</name>
-			<type>1</type>
-			<locationURI>PARENT-6-PROJECT_LOC/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_ll_rcc.c</locationURI>
-		</link>
-		<link>
-			<name>Drivers/STM32H5xx_HAL_Driver/stm32h5xx_ll_tim.c</name>
-			<type>1</type>
-			<locationURI>PARENT-6-PROJECT_LOC/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_ll_tim.c</locationURI>
-		</link>
-		<link>
-			<name>Drivers/STM32H5xx_HAL_Driver/stm32h5xx_ll_ucpd.c</name>
-			<type>1</type>
-			<locationURI>PARENT-6-PROJECT_LOC/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_ll_ucpd.c</locationURI>
-		</link>
-		<link>
 			<name>Drivers/STM32H5xx_HAL_Driver/stm32h5xx_ll_usb.c</name>
 			<type>1</type>
 			<locationURI>PARENT-6-PROJECT_LOC/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_ll_usb.c</locationURI>
-		</link>
-		<link>
-			<name>Drivers/STM32H5xx_HAL_Driver/stm32h5xx_ll_utils.c</name>
-			<type>1</type>
-			<locationURI>PARENT-6-PROJECT_LOC/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_ll_utils.c</locationURI>
 		</link>
 		<link>
 			<name>Application/User/Core/main.c</name>
@@ -219,11 +189,6 @@
 			<locationURI>PARENT-6-PROJECT_LOC/Drivers/BSP/Components/tcpp0203/tcpp0203_reg.c</locationURI>
 		</link>
 		<link>
-			<name>Drivers/BSP/STM32H573I-DK/stm32h573i_discovery.c</name>
-			<type>1</type>
-			<locationURI>PARENT-6-PROJECT_LOC/Drivers/BSP/STM32H573I-DK/stm32h573i_discovery.c</locationURI>
-		</link>
-		<link>
 			<name>Drivers/BSP/STM32H573I-DK/stm32h573i_discovery_bus.c</name>
 			<type>1</type>
 			<locationURI>PARENT-6-PROJECT_LOC/Drivers/BSP/STM32H573I-DK/stm32h573i_discovery_bus.c</locationURI>
@@ -232,11 +197,6 @@
 			<name>Drivers/BSP/STM32H573I-DK/stm32h573i_discovery_usbpd_pwr.c</name>
 			<type>1</type>
 			<locationURI>PARENT-6-PROJECT_LOC/Drivers/BSP/STM32H573I-DK/stm32h573i_discovery_usbpd_pwr.c</locationURI>
-		</link>
-		<link>
-			<name>Middlewares/USBX/Core System/ux_hcd_sim_host_transfer_run.c</name>
-			<type>1</type>
-			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/ST/usbx/common/core/src/ux_hcd_sim_host_transfer_run.c</locationURI>
 		</link>
 		<link>
 			<name>Middlewares/USBX/Core System/ux_system_error_handler.c</name>
@@ -287,26 +247,6 @@
 			<name>Middlewares/USBX/Core System/ux_utility_error_callback_register.c</name>
 			<type>1</type>
 			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/ST/usbx/common/core/src/ux_utility_error_callback_register.c</locationURI>
-		</link>
-		<link>
-			<name>Middlewares/USBX/Core System/ux_utility_event_flags_create.c</name>
-			<type>1</type>
-			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/ST/usbx/common/core/src/ux_utility_event_flags_create.c</locationURI>
-		</link>
-		<link>
-			<name>Middlewares/USBX/Core System/ux_utility_event_flags_delete.c</name>
-			<type>1</type>
-			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/ST/usbx/common/core/src/ux_utility_event_flags_delete.c</locationURI>
-		</link>
-		<link>
-			<name>Middlewares/USBX/Core System/ux_utility_event_flags_get.c</name>
-			<type>1</type>
-			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/ST/usbx/common/core/src/ux_utility_event_flags_get.c</locationURI>
-		</link>
-		<link>
-			<name>Middlewares/USBX/Core System/ux_utility_event_flags_set.c</name>
-			<type>1</type>
-			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/ST/usbx/common/core/src/ux_utility_event_flags_set.c</locationURI>
 		</link>
 		<link>
 			<name>Middlewares/USBX/Core System/ux_utility_long_get.c</name>
@@ -374,26 +314,6 @@
 			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/ST/usbx/common/core/src/ux_utility_memory_set.c</locationURI>
 		</link>
 		<link>
-			<name>Middlewares/USBX/Core System/ux_utility_mutex_create.c</name>
-			<type>1</type>
-			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/ST/usbx/common/core/src/ux_utility_mutex_create.c</locationURI>
-		</link>
-		<link>
-			<name>Middlewares/USBX/Core System/ux_utility_mutex_delete.c</name>
-			<type>1</type>
-			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/ST/usbx/common/core/src/ux_utility_mutex_delete.c</locationURI>
-		</link>
-		<link>
-			<name>Middlewares/USBX/Core System/ux_utility_mutex_off.c</name>
-			<type>1</type>
-			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/ST/usbx/common/core/src/ux_utility_mutex_off.c</locationURI>
-		</link>
-		<link>
-			<name>Middlewares/USBX/Core System/ux_utility_mutex_on.c</name>
-			<type>1</type>
-			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/ST/usbx/common/core/src/ux_utility_mutex_on.c</locationURI>
-		</link>
-		<link>
 			<name>Middlewares/USBX/Core System/ux_utility_pci_class_scan.c</name>
 			<type>1</type>
 			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/ST/usbx/common/core/src/ux_utility_pci_class_scan.c</locationURI>
@@ -412,26 +332,6 @@
 			<name>Middlewares/USBX/Core System/ux_utility_physical_address.c</name>
 			<type>1</type>
 			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/ST/usbx/common/core/src/ux_utility_physical_address.c</locationURI>
-		</link>
-		<link>
-			<name>Middlewares/USBX/Core System/ux_utility_semaphore_create.c</name>
-			<type>1</type>
-			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/ST/usbx/common/core/src/ux_utility_semaphore_create.c</locationURI>
-		</link>
-		<link>
-			<name>Middlewares/USBX/Core System/ux_utility_semaphore_delete.c</name>
-			<type>1</type>
-			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/ST/usbx/common/core/src/ux_utility_semaphore_delete.c</locationURI>
-		</link>
-		<link>
-			<name>Middlewares/USBX/Core System/ux_utility_semaphore_get.c</name>
-			<type>1</type>
-			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/ST/usbx/common/core/src/ux_utility_semaphore_get.c</locationURI>
-		</link>
-		<link>
-			<name>Middlewares/USBX/Core System/ux_utility_semaphore_put.c</name>
-			<type>1</type>
-			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/ST/usbx/common/core/src/ux_utility_semaphore_put.c</locationURI>
 		</link>
 		<link>
 			<name>Middlewares/USBX/Core System/ux_utility_set_interrupt_handler.c</name>
@@ -472,11 +372,6 @@
 			<name>Middlewares/USBX/Core System/ux_utility_string_to_unicode.c</name>
 			<type>1</type>
 			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/ST/usbx/common/core/src/ux_utility_string_to_unicode.c</locationURI>
-		</link>
-		<link>
-			<name>Middlewares/USBX/Core System/ux_utility_timer_create.c</name>
-			<type>1</type>
-			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/ST/usbx/common/core/src/ux_utility_timer_create.c</locationURI>
 		</link>
 		<link>
 			<name>Middlewares/USBX/Core System/ux_utility_unicode_to_string.c</name>
@@ -682,6 +577,11 @@
 			<name>Middlewares/USBX/UX Host Class HID Keyboard/ux_host_class_hid_keyboard_tasks_run.c</name>
 			<type>1</type>
 			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/ST/usbx/common/usbx_host_classes/src/ux_host_class_hid_keyboard_tasks_run.c</locationURI>
+		</link>
+		<link>
+			<name>Middlewares/USBX/UX Host Class HID Keyboard/ux_host_class_hid_keyboard_thread.c</name>
+			<type>1</type>
+			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/ST/usbx/common/usbx_host_classes/src/ux_host_class_hid_keyboard_thread.c</locationURI>
 		</link>
 		<link>
 			<name>Middlewares/USBX/UX Host Class HID Mouse/ux_host_class_hid_mouse_activate.c</name>
@@ -1034,9 +934,19 @@
 			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/ST/usbx/common/core/src/ux_host_stack_endpoint_transfer_abort.c</locationURI>
 		</link>
 		<link>
+			<name>Middlewares/USBX/UX Host CoreStack/ux_host_stack_enum_thread_entry.c</name>
+			<type>1</type>
+			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/ST/usbx/common/core/src/ux_host_stack_enum_thread_entry.c</locationURI>
+		</link>
+		<link>
 			<name>Middlewares/USBX/UX Host CoreStack/ux_host_stack_hcd_register.c</name>
 			<type>1</type>
 			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/ST/usbx/common/core/src/ux_host_stack_hcd_register.c</locationURI>
+		</link>
+		<link>
+			<name>Middlewares/USBX/UX Host CoreStack/ux_host_stack_hcd_thread_entry.c</name>
+			<type>1</type>
+			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/ST/usbx/common/core/src/ux_host_stack_hcd_thread_entry.c</locationURI>
 		</link>
 		<link>
 			<name>Middlewares/USBX/UX Host CoreStack/ux_host_stack_hcd_transfer_request.c</name>
@@ -1047,6 +957,11 @@
 			<name>Middlewares/USBX/UX Host CoreStack/ux_host_stack_hcd_unregister.c</name>
 			<type>1</type>
 			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/ST/usbx/common/core/src/ux_host_stack_hcd_unregister.c</locationURI>
+		</link>
+		<link>
+			<name>Middlewares/USBX/UX Host CoreStack/ux_host_stack_hnp_polling_thread_entry.c</name>
+			<type>1</type>
+			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/ST/usbx/common/core/src/ux_host_stack_hnp_polling_thread_entry.c</locationURI>
 		</link>
 		<link>
 			<name>Middlewares/USBX/UX Host CoreStack/ux_host_stack_initialize.c</name>

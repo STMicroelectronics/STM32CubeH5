@@ -51,22 +51,23 @@ extern "C" {
 
 /* Exported functions prototypes ---------------------------------------------*/
 void Error_Handler(void);
+void MX_SDMMC1_SD_Init(void);
 
 /* USER CODE BEGIN EFP */
 
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
-
-/* USER CODE BEGIN Private defines */
-#define SD_DETECT_Pin                       GPIO_PIN_14
-#define SD_DETECT_GPIO_Port                 GPIOH
-#define SD_DETECT_EXTI_IRQn                  EXTI14_IRQn
-
-#define LED2_Pin GPIO_PIN_1
-#define LED2_GPIO_Port GPIOF
+#define SD_DETECT_Pin GPIO_PIN_14
+#define SD_DETECT_GPIO_Port GPIOH
+#define SD_DETECT_EXTI_IRQn EXTI14_IRQn
 #define LED1_Pin GPIO_PIN_9
 #define LED1_GPIO_Port GPIOI
+#define LED2_Pin GPIO_PIN_1
+#define LED2_GPIO_Port GPIOF
+
+/* USER CODE BEGIN Private defines */
+
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus

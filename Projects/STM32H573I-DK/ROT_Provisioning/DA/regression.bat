@@ -1,5 +1,5 @@
 @echo off
-call %~dp0../env.bat
+call "%~dp0../env.bat"
 
 :: Enable delayed expansion
 setlocal EnableDelayedExpansion
@@ -18,7 +18,7 @@ set pass=Binary/password.bin
 :: In case of Provisioning Product state, try to disable TZEN and provision DA with password
 %stm32programmercli% %connect_reset% -ob TZEN=0xC3 >nul
 %stm32programmercli% %connect_reset% >nul
-%stm32programmercli% %connect_no_reset% -sdp %~dp0Binary\DA_ConfigWithPassword.obk >nul
+%stm32programmercli% %connect_no_reset% -sdp "%~dp0Binary\DA_ConfigWithPassword.obk" >nul
 
 :: Command with both key/certificate (if TZEN enabled) and password (if TZEN disabled)
 %stm32programmercli% -c port=SWD per=a key=%key% cert=%cert% pwd=%pass% debugauth=1
@@ -29,6 +29,6 @@ IF [%1] NEQ [AUTO] cmd /k
 exit 0
 
 :error
-echo "regression script failed"
+echo "regression script failed : run ./discovery.bat script to check if the product state is not already in open state."
 IF [%1] NEQ [AUTO] cmd /k
 exit 1

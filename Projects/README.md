@@ -1,11 +1,3 @@
 # Some projects are unavailable in this repository
 
-In this repository, some middleware libraries **along with** the projects (demos, applications, and examples) using them, are **not available**. Please refer to the [README.md](../README.md#some-middleware-libraries-and-projects-are-unavailable-in-this-repository) file at the root of this repository for further details.
-
-## List of unavailable projects
-
-* `./Projects/STM32H573I-DK/Applications/ROT/SMAK_Appli`
-* `./Projects/STM32H573I-DK/Demonstration`
-* `./Projects/STM32H573I-DK/Examples/BSP`
-* `./Projects/STM32H573I-DK/ROT_Provisioning/SM`
-* `./Projects/STM32H573I-DK/Templates/ROT/SMAK_Appli`
+In this repository, some middleware libraries **along with** the projects (demos, applications, and examples) using them, are **not available**. Please refer to the [README.md](../README.md#some-middleware-libraries-are-unavailable-in-this-repository) file at the root of this repository for further details.

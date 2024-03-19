@@ -1,5 +1,5 @@
 @echo off
-call %~dp0../env.bat
+call "%~dp0../env.bat"
 
 :: Enable delayed expansion
 setlocal EnableDelayedExpansion

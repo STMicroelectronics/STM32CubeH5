@@ -28,7 +28,7 @@ extern "C" {
 /* Includes ------------------------------------------------------------------*/
 #include "stm32h5xx_hal.h"
 #include "mcuboot_config/mcuboot_config.h"
-#include "../../platform/include/tfm_plat_nv_counters.h"
+#include "plat_nv_counters.h"
 #include "Driver_Flash.h"
 
 /* Exported constants --------------------------------------------------------*/
@@ -135,8 +135,8 @@ HAL_StatusTypeDef OBK_UpdateHdpl1Data(OBK_Hdpl1Data *pOBK_Hdpl1Data);
 void OBK_VerifyHdpl1Config(OBK_Hdpl1Config *pOBK_Hdpl1Cfg);
 #endif
 
-HAL_StatusTypeDef OBK_UpdateNVCounter(enum tfm_nv_counter_t CounterId, uint32_t Counter);
-HAL_StatusTypeDef OBK_GetNVCounter(enum tfm_nv_counter_t CounterId, uint32_t *pCounter);
+HAL_StatusTypeDef OBK_UpdateNVCounter(enum nv_counter_t CounterId, uint32_t Counter);
+HAL_StatusTypeDef OBK_GetNVCounter(enum nv_counter_t CounterId, uint32_t *pCounter);
 void OBK_InitDHUK(void);
 
 #ifdef __cplusplus

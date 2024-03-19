@@ -1146,13 +1146,13 @@
         <group>
           <name>App</name>
           <file>
-            <name>$PROJ_DIR$\..\USBPD\App\usbpd.c</name>
-          </file>
-          <file>
             <name>$PROJ_DIR$\..\USBPD\App\usbpd_dpm_core.c</name>
           </file>
           <file>
             <name>$PROJ_DIR$\..\USBPD\App\usbpd_pwr_if.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$\..\USBPD\App\usbpd.c</name>
           </file>
           <file>
             <name>$PROJ_DIR$\..\USBPD\App\usbpd_usb_if.c</name>
@@ -1229,12 +1229,6 @@
         <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_ll_exti.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_hal_tim.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_hal_tim_ex.c</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_hal_adc.c</name>
       </file>
       <file>
@@ -1287,6 +1281,12 @@
       </file>
       <file>
         <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_hal_icache.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_hal_tim.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_hal_tim_ex.c</name>
       </file>
       <file>
         <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_ll_ucpd.c</name>
@@ -2707,6 +2707,9 @@
           <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_utility_timer_create.c</name>
         </file>
         <file>
+          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_utility_timer_delete.c</name>
+        </file>
+        <file>
           <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_utility_unicode_to_string.c</name>
         </file>
         <file>
@@ -2816,9 +2819,6 @@
         </file>
         <file>
           <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\usbx_host_classes\src\ux_host_class_storage_lock.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\usbx_host_classes\src\ux_host_class_storage_media_check.c</name>
         </file>
       </group>
       <group>

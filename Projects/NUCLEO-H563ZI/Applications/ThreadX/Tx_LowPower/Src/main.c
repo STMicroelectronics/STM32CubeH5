@@ -64,6 +64,7 @@ static void MX_ICACHE_Init(void);
   */
 int main(void)
 {
+
   /* USER CODE BEGIN 1 */
 
   /* USER CODE END 1 */
@@ -88,12 +89,14 @@ int main(void)
   MX_GPIO_Init();
   MX_ICACHE_Init();
   /* USER CODE BEGIN 2 */
-
+  /* Disable the Debug Module during STOP mode */
+  HAL_DBGMCU_DisableDBGStopMode();
   /* USER CODE END 2 */
 
   MX_ThreadX_Init();
 
   /* We should never get here as control is now taken by the scheduler */
+
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)

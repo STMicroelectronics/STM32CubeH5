@@ -1,6 +1,7 @@
 @ECHO OFF
-:: Getting the CubeProgammer_cli path 
+:: Getting the CubeProgammer_cli path
 call ../env.bat
+set cube_fw_path=%cube_fw_path:"=%
 
 :: Enable delayed expansion
 setlocal EnableDelayedExpansion
@@ -80,7 +81,7 @@ goto step_error
 :: =============================================== Steps to create the OEMiROT_Config.obk file ==============================================
 echo Step 1 : Configuration management
 echo    * OEMiROT_Config.obk generation:
-echo        From TrustedPackageCreator (tab H5-OBkey).
+echo        From TrustedPackageCreator (OBkey tab in Security panel).
 echo        Select OEMiROT_Config.xml(Default path is \ROT_Provisioning\OEMiROT\Config\OEMiROT_Config.xml)
 echo        Warning: Default keys must NOT be used in a product. Make sure to regenerate your own keys!
 echo        Update the configuration (if/as needed) then generate OEMiROT_Config.obk file
@@ -90,10 +91,10 @@ if [%1] neq [AUTO] pause >nul
 :: =============================================== Steps to create the DA_Config.obk file ===================================================
 echo    * DA_Config.obk generation:
 echo        Warning: Default keys must NOT be used in a product. Make sure to regenerate your own keys!
-echo        From TrustedPackageCreator (tab H5-DA CertifGen),
+echo        From TrustedPackageCreator (Debug Authentication - Certificate Generation tab in Security panel),
 echo        update the keys(s) (in \ROT_Provisioning\DA\Keys) and permissions (if/as needed)
 echo        then regenerate the certificate(s)
-echo        From TrustedPackageCreator (tab H5-OBKey),
+echo        From TrustedPackageCreator (OBkey tab in Security panel),
 echo        Select DA_Config.xml (in \ROT_Provisioning\DA\Config)
 echo        Update the configuration (if/as needed) then generate DA_Config.obk file
 echo        Press any key to continue...
@@ -200,7 +201,7 @@ if [%1] neq [AUTO] (
 if /i "%product_state%" == "OPEN" (
 echo.
 set ps_value=0xED
-goto connect_boot0 
+goto connect_boot0
 )
 
 if /i "%product_state%" == "PROVISIONED" (
@@ -242,7 +243,7 @@ echo.
 if [%1] neq [AUTO] pause >nul
 goto provisioning_step
 
-:: Provisioning execution 
+:: Provisioning execution
 :set_provisionning_ps
 set "action=Setting the product state PROVISIONING"
 set current_log_file=%provisioning_log%

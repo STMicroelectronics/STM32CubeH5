@@ -10,18 +10,6 @@
  *  Copyright The Mbed TLS Contributors
  *  SPDX-License-Identifier: Apache-2.0
  *
- *  Licensed under the Apache License, Version 2.0 (the "License"); you may
- *  not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *  http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- *  WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- *
  */
 #ifndef MBEDTLS_ARC4_H
 #define MBEDTLS_ARC4_H
@@ -35,7 +23,8 @@
 #include <stddef.h>
 
 /* MBEDTLS_ERR_ARC4_HW_ACCEL_FAILED is deprecated and should not be used. */
-#define MBEDTLS_ERR_ARC4_HW_ACCEL_FAILED                  -0x0019  /**< ARC4 hardware accelerator failed. */
+/** ARC4 hardware accelerator failed. */
+#define MBEDTLS_ERR_ARC4_HW_ACCEL_FAILED                  -0x0019
 
 #ifdef __cplusplus
 extern "C" {
@@ -52,8 +41,7 @@ extern "C" {
  *            security risk. We recommend considering stronger ciphers instead.
  *
  */
-typedef struct mbedtls_arc4_context
-{
+typedef struct mbedtls_arc4_context {
     int x;                      /*!< permutation index */
     int y;                      /*!< permutation index */
     unsigned char m[256];       /*!< permutation table */
@@ -74,7 +62,7 @@ mbedtls_arc4_context;
  *                 instead.
  *
  */
-void mbedtls_arc4_init( mbedtls_arc4_context *ctx );
+void mbedtls_arc4_init(mbedtls_arc4_context *ctx);
 
 /**
  * \brief          Clear ARC4 context
@@ -86,7 +74,7 @@ void mbedtls_arc4_init( mbedtls_arc4_context *ctx );
  *                 instead.
  *
  */
-void mbedtls_arc4_free( mbedtls_arc4_context *ctx );
+void mbedtls_arc4_free(mbedtls_arc4_context *ctx);
 
 /**
  * \brief          ARC4 key schedule
@@ -100,8 +88,8 @@ void mbedtls_arc4_free( mbedtls_arc4_context *ctx );
  *                 instead.
  *
  */
-void mbedtls_arc4_setup( mbedtls_arc4_context *ctx, const unsigned char *key,
-                 unsigned int keylen );
+void mbedtls_arc4_setup(mbedtls_arc4_context *ctx, const unsigned char *key,
+                        unsigned int keylen);
 
 /**
  * \brief          ARC4 cipher function
@@ -118,8 +106,8 @@ void mbedtls_arc4_setup( mbedtls_arc4_context *ctx, const unsigned char *key,
  *                 instead.
  *
  */
-int mbedtls_arc4_crypt( mbedtls_arc4_context *ctx, size_t length, const unsigned char *input,
-                unsigned char *output );
+int mbedtls_arc4_crypt(mbedtls_arc4_context *ctx, size_t length, const unsigned char *input,
+                       unsigned char *output);
 
 #if defined(MBEDTLS_SELF_TEST)
 
@@ -133,7 +121,7 @@ int mbedtls_arc4_crypt( mbedtls_arc4_context *ctx, size_t length, const unsigned
  *                 instead.
  *
  */
-int mbedtls_arc4_self_test( int verbose );
+int mbedtls_arc4_self_test(int verbose);
 
 #endif /* MBEDTLS_SELF_TEST */
 

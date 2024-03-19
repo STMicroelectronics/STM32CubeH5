@@ -115,14 +115,14 @@
   </Param>
 	<Param>
 		<Name>Firmware binary input file</Name>
-		<Value>./../../../Applications/ROT/STiROT_Appli/Binary/appli.bin</Value>
+		<Value>../../../Applications/ROT/STiROT_Appli/Binary/appli.bin</Value>
 		<Type>File</Type>
 		<Tooltip>Select the firmware binary file to be processed for the image generation</Tooltip>
 		<Default>./../../../Applications/ROT/STiROT_Appli/Binary/appli.bin</Default>
 	</Param>
 	<Output>
 		<Name>Image output file</Name>
-		<Value>./../../../Applications/ROT/STiROT_Appli/Binary/appli_enc_sign.hex</Value>
+		<Value>../../../Applications/ROT/STiROT_Appli/Binary/appli_enc_sign.hex</Value>
 		<Default>./../../../Applications/ROT/STiROT_Appli/Binary/appli_enc_sign.hex</Default>
 	</Output>
   </McubootFormat>

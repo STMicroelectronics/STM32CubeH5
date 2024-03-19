@@ -25,7 +25,7 @@ else
   echo AppliCfg with python script
   applicfg="$cube_fw_path/Utilities/PC_Software/ROT_AppliConfig/AppliCfg.py"
   #determine/check python version command
-  python="python "
+  python="python3 "
 fi
 AppliCfg=$python$applicfg
 
@@ -184,7 +184,7 @@ step_error()
 # Define principal log file 
 current_log_file=$provisioning_log
 # Parse the project name chosen in env.sh
-project_name=$(basename $oemirot_boot_path_project)
+project_name=$(basename $stirot_boot_path_project)
 
 echo "====="
 echo "===== Provisioning of STiRoT boot path"
@@ -206,7 +206,7 @@ if [ "$isGeneratedByCubeMX" == "false" ]; then
   # ====================================================== STM32H5 product preparation ======================================================
   echo "Step 1 : Configuration management"
   echo "   * STiRoT_Config.obk generation:"
-  echo "       From TrustedPackageCreator (tab H5-OBkey)"
+  echo "       From TrustedPackageCreator (OBkey tab in Security panel)"
   echo "       Select STiRoT_Config.xml(Default path is /ROT_Provisioning/STiROT/Config/STiRoT_Config.xml)"
   echo "       Update the configuration (if/as needed) then generate STiRoT_Config.obk file"
   echo "       Press any key to continue..."
@@ -215,7 +215,11 @@ if [ "$isGeneratedByCubeMX" == "false" ]; then
   # =============================================== Steps to create the DA_Config.obk file ==============================================
   echo
   echo "   * DA_Config.obk generation:"
-  echo "       From TrustedPackageCreator (tab H5-OBkey)"
+  echo "       Warning: Default keys must NOT be used in a product. Make sure to regenerate your own keys!"
+  echo "       From TrustedPackageCreator (Debug Authentication - Certificate Generation tab in Security panel),"
+  echo "       update the keys(s) (in \ROT_Provisioning\DA\Keys) and permissions (if/as needed)"
+  echo "       then regenerate the certificate(s)"
+  echo "       From TrustedPackageCreator (OBkey tab in Security panel)"
   echo "       Select DA_Config.xml(Default path is /ROT_Provisioning/DA/Config/DA_Config.xml)"
   echo "       Update the configuration (if/as needed) then generate DA_Config.obk file"
   echo "       Press any key to continue..."
@@ -237,14 +241,14 @@ if [ "$isGeneratedByCubeMX" == "false" ]; then
   # Check if project name is relevant with STiROT configuration xml file
   if [ "$full_secure" == "1" ]; then
     action="Check path project to STiROT_Appli"
-    if [ "$project_name" == "STiROT_Appli" ]; then
+    if [ "$project_name" != "STiROT_Appli" ]; then
       echo "STiROT_Appli_TrustZone project name selected is different from full secure configuration set into STiROT_Config.xml file" > $current_log_file 
       step_error
     fi
   fi
   if [ "$full_secure" == "0" ]; then
     action="Check path project to STiROT_Appli_TrustZone"
-    if [ "$project_name" == "STiROT_Appli_TrustZone" ]; then
+    if [ "$project_name" != "STiROT_Appli_TrustZone" ]; then
       echo "STiROT_Appli project name selected is different from fw full secure configuration set into STiROT_Config.xml" > $current_log_file
       step_error
     fi

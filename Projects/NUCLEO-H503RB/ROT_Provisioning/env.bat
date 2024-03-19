@@ -19,6 +19,6 @@ set oemirot_boot_path_project=Applications/ROT/OEMiROT_Appli
 ::               !!!! DOT NOT EDIT --- UPDATED AUTOMATICALLY !!!!
 :: ==============================================================================
 set PROJECT_GENERATED_BY_CUBEMX=false
-set cube_fw_path=%~dp0..\..\..\
+set cube_fw_path="%~dp0..\..\..\"
 set oemirot_appli=rot_app_enc_sign.hex
-set rot_provisioning_path=%~dp0
+set rot_provisioning_path="%~dp0"

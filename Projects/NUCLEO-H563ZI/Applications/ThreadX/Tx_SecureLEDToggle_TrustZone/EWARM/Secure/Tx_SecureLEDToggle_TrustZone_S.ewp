@@ -1107,12 +1107,6 @@
     <group>
       <name>STM32H5xx_HAL_Driver</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_tim.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_tim_ex.c</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$/../../../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_cortex.c</name>
       </file>
       <file>
@@ -1154,6 +1148,12 @@
       <file>
         <name>$PROJ_DIR$/../../../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_icache.c</name>
       </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_tim.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_tim_ex.c</name>
+      </file>
     </group>
     <group>
       <name>CMSIS</name>
@@ -1176,6 +1176,12 @@
         </file>
       </group>
     </group>
+  </group>
+  <group>
+    <name>Doc</name>
+    <file>
+      <name>$PROJ_DIR$/../../README.md</name>
+    </file>
   </group>
 </project>
 

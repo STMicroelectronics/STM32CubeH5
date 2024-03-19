@@ -90,7 +90,7 @@ UINT MX_NetXDuo_Init(VOID *memory_ptr);
 #define UDP_SERVER_ADDRESS       IP_ADDRESS(192, 168, 1, 1)
 
 #define MAX_PACKET_COUNT         100
-#define DEFAULT_MESSAGE          "NetXDuo On STM32H735"
+#define DEFAULT_MESSAGE          "NetXDuo On STM32H563"
 
 #define NX_APP_CABLE_CONNECTION_CHECK_PERIOD  (6 * NX_IP_PERIODIC_RATE)
 /* USER CODE END PD */

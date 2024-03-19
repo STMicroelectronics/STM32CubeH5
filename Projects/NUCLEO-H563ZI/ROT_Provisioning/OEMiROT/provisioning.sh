@@ -1,5 +1,5 @@
 #!/bin/bash -
-# Getting the CubeProgammer_cli path 
+# Getting the CubeProgammer_cli path
 if [ $# -ge 1 ]; then mode=$1; else mode=MANUAL; fi
 
 source ../env.sh
@@ -54,7 +54,7 @@ else
   echo "AppliCfg with python script"
   applicfg="$cube_fw_path/Utilities/PC_Software/ROT_AppliConfig/AppliCfg.py"
   #determine/check python version command
-  python="python "
+  python="python3 "
 fi
 
 
@@ -76,31 +76,31 @@ product_state_choice()
   fi
 
   if [ "$product_state" == "OPEN" ]; then
-    echo 
+    echo
     ps_value=0xED
-    connect_boot0 
+    connect_boot0
   fi
 
   if [ "$product_state" == "PROVISIONED" ]; then
-    echo 
+    echo
     ps_value=0x2E
     set_provisionning_ps
   fi
 
   if [ "$product_state" == "TZ-CLOSED" ]; then
-    echo 
+    echo
     ps_value=0xC6
     set_provisionning_ps
   fi
 
   if [ "$product_state" == "CLOSED" ]; then
-    echo 
+    echo
     ps_value=0x72
     set_provisionning_ps
   fi
 
   if [ "$product_state" == "LOCKED" ]; then
-    echo 
+    echo
     ps_value=0x5C
     set_provisionning_ps
   fi
@@ -117,7 +117,7 @@ connect_boot0()
   echo "   * BOOT0 pin should be connected to VDD"
   echo "       (NUCLEO-H563ZI: connect CN4/pin5 with CN4/pin7)"
   echo "       Press any key to continue..."
-  echo 
+  echo
   if [ "$mode" != "AUTO" ]; then read -p "" -n1 -s; fi
   provisioning_step
 }
@@ -127,11 +127,11 @@ disconnect_boot0()
   echo "   * BOOT0 pin should be disconnected from VDD"
   echo "       (NUCLEO-H563ZI: disconnect CN4/pin5 from CN4/pin7)"
   echo "       Press any key to continue..."
-  echo 
+  echo
   if [ "$mode" != "AUTO" ]; then read -p "" -n1 -s; fi
 }
 
-# Provisioning execution 
+# Provisioning execution
 set_provisionning_ps()
 {
   action="Setting the product state PROVISIONING"
@@ -139,19 +139,19 @@ set_provisionning_ps()
   echo "   * $action"
   "$stm32programmercli" $connect_no_reset -ob PRODUCT_STATE=0x17 > $provisioning_log
   if [ $? -ne 0 ]; then step_error; fi
-  echo 
+  echo
   provisioning_step
 }
 
 # Set the final product state of the STM32H5 product
 set_final_ps()
 {
-  
+
   action="Setting the final product state $product_state "
   current_log_file=$provisioning_log
   echo "   * $action"
   "$stm32programmercli" $connect_no_reset -ob PRODUCT_STATE=$ps_value >> $provisioning_log
-  echo 
+  echo
   #if [ $? -ne 0 ]; then step_error; fi
   final_execution
 }
@@ -167,7 +167,7 @@ provisioning_step()
   if [ $obkey_prog_error -ne 0 ]; then step_error; fi
   echo "       Successful obk provisioning"
   echo "       (see $obkey_programming_log for details)"
-  echo 
+  echo
   if [ "$product_state" != "OPEN" ]; then set_final_ps; fi
   disconnect_boot0
   final_execution
@@ -195,7 +195,7 @@ step_error()
     cat error
     rm error
   fi
-  echo 
+  echo
   echo "====="
   echo "===== Error while executing "$action"."
   echo "===== See $current_log_file for details. Then try again."
@@ -211,7 +211,7 @@ echo "===== Provisioning of OEMiRoT boot path"
 echo "===== Application selected through env.sh: $oemirot_boot_path_project"
 echo "===== Product state must be Open. Execute  /ROT_Provisioning/DA/regression.sh if not the case."
 echo "====="
-echo 
+echo
 
 # Path validation
 action="Validating OEMiROT boot path project"
@@ -227,20 +227,24 @@ if [ $isGeneratedByCubeMX != "true" ]; then
     # =============================================== Steps to create the OEMiROT_Config.obk file ==============================================
     echo "Step 1 : Configuration management"
     echo "   * OEMiROT_Config.obk generation:"
-    echo "       From TrustedPackageCreator (tab H5-OBkey)."
+    echo "       From TrustedPackageCreator (OBkey tab in Security panel)."
     echo "       Select OEMiROT_Config.xml(Default path is /ROT_Provisioning/OEMiROT/Config/OEMiROT_Config.xml)"
     echo "       Update the configuration (if/as needed) then generate OEMiROT_Config.obk file"
     echo "       Press any key to continue..."
-    echo  
+    echo
     if [ "$mode" != "AUTO" ]; then read -p "" -n1 -s; fi
 
     # =============================================== Steps to create the DA_Config.obk file ===================================================
     echo "   * DA_Config.obk generation:"
-    echo "       From TrustedPackageCreator (tab H5-OBkey)."
+    echo "       Warning: Default keys must NOT be used in a product. Make sure to regenerate your own keys!"
+    echo "       From TrustedPackageCreator (Debug Authentication - Certificate Generation tab in Security panel),"
+    echo "       update the keys(s) (in \ROT_Provisioning\DA\Keys) and permissions (if/as needed)"
+    echo "       then regenerate the certificate(s)"
+    echo "       From TrustedPackageCreator (OBkey tab in Security panel)."
     echo "       Select DA_Config.xml(Default path is /ROT_Provisioning/DA/DA_Config.xml)"
     echo "       Update the configuration (if/as needed) then generate DA_Config.obk file"
     echo "       Press any key to continue..."
-    echo 
+    echo
     if [ "$mode" != "AUTO" ]; then read -p "" -n1 -s; fi
 fi
 
@@ -276,14 +280,14 @@ if [ $isGeneratedByCubeMX != "true" ]; then
     echo "       Open the OEMiROT_Appli_TrustZone project with preferred toolchain."
     echo "       Rebuild all files. The appli_enc_sign.hex file is generated with the postbuild command."
     echo "       Press any key to continue..."
-    echo 
+    echo
     if [ "$mode" != "AUTO" ]; then read -p "" -n1 -s; fi
 
     echo "   * Data secure generation (if Data secure image is enabled)"
-    echo "       Select OEMiRoT_S_Data_Image.xml(Default path is /ROT_Provisioning/OEMiROT/Images/OEMiRoT_S_Data_Image.xml)"
+    echo "       Select OEMiRoT_S_Data_Image.xml(Default path is /ROT_Provisioning/OEMiROT/Images/OEMiROT_S_Data_Image.xml)"
     echo "       Generate the data_enc_sign.hex image"
     echo "       Press any key to continue..."
-    echo  
+    echo
     if [ "$mode" != "AUTO" ]; then read -p "" -n1 -s; fi
     if [ $s_data_image_number != "0" ]; then
         "$stm32tpccli" -pb $s_data_xml >> $provisioning_log
@@ -294,7 +298,7 @@ if [ $isGeneratedByCubeMX != "true" ]; then
     echo "       Select OEMiROT_NS_Data_Image.xml(Default path is /ROT_Provisioning/OEMiROT/Images/OEMiROT_NS_Data_Image.xml)"
     echo "       Generate the data_enc_sign.hex image"
     echo "       Press any key to continue..."
-    echo 
+    echo
     if [ "$mode" != "AUTO" ]; then read -p "" -n1 -s; fi
     if [ $ns_data_image_number != "0" ]; then
       "$stm32tpccli" -pb $ns_data_xml >> $provisioning_log
@@ -305,9 +309,9 @@ fi
 # ========================================================= Board provisioning steps =======================================================
 echo "Step 3 : Provisioning"
 echo "   * BOOT0 pin should be disconnected from VDD"
-echo "       (NUCLEO-H563ZI: connect CN4/pin5 with CN4/pin7)"
+echo "       (NUCLEO-H563ZI: disconnect CN4/pin5 from CN4/pin7)"
 echo "       Press any key to continue..."
-echo 
+echo
 if [ "$mode" != "AUTO" ]; then read -p "" -n1 -s; fi
 
 # ================================================ Option Bytes and flash programming ======================================================
@@ -320,7 +324,7 @@ ob_flash_error=$?
 if [ $ob_flash_error -ne 0 ]; then step_error; fi
 echo "       Successful option bytes programming and images flashing"
 echo "       (see $ob_flash_log for details)"
-echo 
+echo
 
 # ============================================ Provisioning and product state modification =================================================
 product_state_choice

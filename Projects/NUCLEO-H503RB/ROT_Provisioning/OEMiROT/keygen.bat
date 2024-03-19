@@ -13,11 +13,9 @@ set keys_pem_dir=%cd%
 popd
 pushd %projectdir%\..\..\Applications\ROT\OEMiROT_Boot\Src
 set keys_c_dir=%cd%
-popd
-pushd %projectdir%\..\..\..\..\Middlewares\Third_Party\mcuboot
-set mcuboot_dir=%cd%
-popd
 set "keys_c=%keys_c_dir%\keys.c"
+
+for /f "tokens=*" %%a in ("%stm32tpccli%") do (set tpc_dir=%%~dpa)
 
 :: Keys backup
 for /f %%# in ('wmic os get localdatetime^|findstr .') do if "%%#" neq "" set date=%%#
@@ -38,21 +36,13 @@ set "cmdcpyc=copy %keys_c% %key_c_backup_dir%"
 IF %ERRORLEVEL% NEQ 0 goto :error_key
 
 :start
-goto exe:
-goto py:
-:exe
 ::line for window executable
-set "imgtool=%mcuboot_dir%\scripts\dist\imgtool\imgtool.exe"
+set "imgtool=%tpc_dir%\Utilities\Windows\imgtool.exe"
 set "python="
 if exist %imgtool% (
 echo Keygen with windows executable
 goto cont
 )
-:py
-::line for python
-echo Keygen with python script
-set "imgtool=%mcuboot_dir%\scripts\imgtool.py"
-set "python=python "
 
 :cont
 :keygen

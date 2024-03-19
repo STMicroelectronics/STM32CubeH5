@@ -42,7 +42,6 @@
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
-
 static ULONG storage_interface_number;
 static ULONG storage_configuration_number;
 static UX_SLAVE_CLASS_STORAGE_PARAMETER storage_parameter;

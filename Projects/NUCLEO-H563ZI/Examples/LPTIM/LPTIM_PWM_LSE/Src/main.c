@@ -69,6 +69,7 @@ static void MX_LPTIM1_Init(void);
   */
 int main(void)
 {
+
   /* USER CODE BEGIN 1 */
   /* STM32H5xx HAL library initialization:
        - Systick timer is configured by default as source of time base, but user
@@ -165,6 +166,7 @@ void SystemClock_Config(void)
   while(!__HAL_PWR_GET_FLAG(PWR_FLAG_VOSRDY)) {}
 
   /** Configure LSE Drive Capability
+  *  Warning : Only applied when the LSE is disabled.
   */
   HAL_PWR_EnableBkUpAccess();
   __HAL_RCC_LSEDRIVE_CONFIG(RCC_LSEDRIVE_LOW);

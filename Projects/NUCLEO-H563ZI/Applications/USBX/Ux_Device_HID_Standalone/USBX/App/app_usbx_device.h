@@ -27,6 +27,7 @@ extern "C" {
 
 /* Includes ------------------------------------------------------------------*/
 #include "ux_api.h"
+#include "ux_device_class_hid.h"
 #include "ux_device_mouse.h"
 #include "ux_device_descriptors.h"
 #include "ux_dcd_stm32.h"
@@ -46,8 +47,8 @@ extern "C" {
 /* USER CODE END ET */
 
 /* Exported constants --------------------------------------------------------*/
-#define USBX_DEVICE_APP_MEMORY_BUFFER_SIZE  3*1024
-#define USBX_DEVICE_MEMORY_STACK_SIZE       3*1024
+#define UX_DEVICE_APP_MEM_POOL_SIZE         3072
+#define USBX_DEVICE_MEMORY_STACK_SIZE       3072
 
 /* USER CODE BEGIN EC */
 

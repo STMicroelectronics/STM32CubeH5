@@ -1,5 +1,5 @@
 ## <b>I3C_Target_InBandInterrupt_IT Example Description</b>
-How to handle an In-Band-Interrupt event to an I3C Controller
+How to handle an In-Band-Interrupt event to an I3C Controller.
 
       - Board: NUCLEO-H563ZI's (embeds a STM32H563ZI device)
       - SCL Pin: PB8 (Arduino SCL/D15 CN6 pin 2, Morpho CN5 pin3) to PB8 (Arduino SCL/D15 CN6 pin 2, Morpho CN5 pin3)

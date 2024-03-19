@@ -56,7 +56,7 @@ else
   echo AppliCfg with python script
   applicfg="$cube_fw_path/Utilities/PC_Software/ROT_AppliConfig/AppliCfg.py"
   #determine/check python version command
-  python="python "
+  python="python3 "
 fi
 
 # ========================================================= Script functions ===============================================================

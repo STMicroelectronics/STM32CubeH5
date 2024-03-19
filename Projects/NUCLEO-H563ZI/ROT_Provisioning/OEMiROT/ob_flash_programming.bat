@@ -1,4 +1,6 @@
 call ../env.bat
+set cube_fw_path=%cube_fw_path:"=%
+set rot_provisioning_path=%rot_provisioning_path:"=%
 
 :: Enable delayed expansion
 setlocal EnableDelayedExpansion

@@ -10,7 +10,7 @@
 		<Type>File</Type>
 		<Command>-k</Command>
 		<Hidden>1</Hidden>
-		<Default>../Keys/OEMiROT_Authentication.pem</Default>
+		<Default>../Keys/OEMiRoT_Authentication.pem</Default>
 	</Param>
 	<Param>
 		<Name>Encryption key</Name>

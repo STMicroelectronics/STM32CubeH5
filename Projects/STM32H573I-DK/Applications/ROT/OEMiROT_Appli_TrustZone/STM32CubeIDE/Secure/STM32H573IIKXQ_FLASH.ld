@@ -34,7 +34,7 @@
 S_CODE_OFFSET = 0x18000;       /* This define is updated automatically by SMAK provisioning script */
 S_CODE_SIZE = 0x6000;         /* This define is updated automatically by SMAK provisioning script */
 IMAGE_HEADER_SIZE = 0x400;       /* mcuboot header size */
-TRAILER_MAX_SIZE = 0x40;         /* max size trailer */
+CMSE_VENEER_REGION_SIZE = 0x400;  /* Include TLVs and trailer. User configurable */
 
 /* Entry Point */
 ENTRY(Reset_Handler)
@@ -49,8 +49,8 @@ _Min_Stack_Size = 0x400; /* required amount of stack */
 MEMORY
 {
   RAM    (xrw)    : ORIGIN = 0x30000000,    LENGTH = 0x40000    /* Memory is divided. Actual start is 0x30000000 and actual length is 256K */
-  FLASH    (rx)    : ORIGIN = (0xc000000 + S_CODE_OFFSET + IMAGE_HEADER_SIZE),    LENGTH = (S_CODE_SIZE - IMAGE_HEADER_SIZE - 0x2000)    /* Memory is divided. Actual start is 0x8000000 and actual length is 2048K */
-  FLASH_NSC    (rx)    : ORIGIN = (0xc000000 + S_CODE_OFFSET + S_CODE_SIZE - 0x2000),    LENGTH = (0x2000 - TRAILER_MAX_SIZE)    /* Non-Secure Call-able region */
+  FLASH    (rx)    : ORIGIN = (0xc000000 + S_CODE_OFFSET + IMAGE_HEADER_SIZE),    LENGTH = (S_CODE_SIZE - CMSE_VENEER_REGION_SIZE)    /* Memory is divided. Actual start is 0x8000000 and actual length is 2048K */
+  FLASH_NSC    (rx)    : ORIGIN = (0xc000000 + S_CODE_OFFSET + S_CODE_SIZE - 0x2000),    LENGTH = (CMSE_VENEER_REGION_SIZE)    /* Non-Secure Call-able region */
 }
 
 /* Sections */
@@ -90,13 +90,15 @@ SECTIONS
     . = ALIGN(4);
   } >FLASH
 
-  .ARM.extab   : {
+  .ARM.extab (READONLY) : /* The READONLY keyword is only supported in GCC11 and later, remove it if using GCC10 or earlier. */
+  {
     . = ALIGN(4);
     *(.ARM.extab* .gnu.linkonce.armextab.*)
     . = ALIGN(4);
   } >FLASH
 
-  .ARM : {
+  .ARM (READONLY) : /* The READONLY keyword is only supported in GCC11 and later, remove it if using GCC10 or earlier. */
+  {
     . = ALIGN(4);
     __exidx_start = .;
     *(.ARM.exidx*)
@@ -104,7 +106,7 @@ SECTIONS
     . = ALIGN(4);
   } >FLASH
 
-  .preinit_array     :
+  .preinit_array (READONLY) : /* The READONLY keyword is only supported in GCC11 and later, remove it if using GCC10 or earlier. */
   {
     . = ALIGN(4);
     PROVIDE_HIDDEN (__preinit_array_start = .);
@@ -113,7 +115,7 @@ SECTIONS
     . = ALIGN(4);
   } >FLASH
 
-  .init_array :
+  .init_array (READONLY) : /* The READONLY keyword is only supported in GCC11 and later, remove it if using GCC10 or earlier. */
   {
     . = ALIGN(4);
     PROVIDE_HIDDEN (__init_array_start = .);
@@ -123,7 +125,7 @@ SECTIONS
     . = ALIGN(4);
   } >FLASH
 
-  .fini_array :
+  .fini_array (READONLY) : /* The READONLY keyword is only supported in GCC11 and later, remove it if using GCC10 or earlier. */
   {
     . = ALIGN(4);
     PROVIDE_HIDDEN (__fini_array_start = .);

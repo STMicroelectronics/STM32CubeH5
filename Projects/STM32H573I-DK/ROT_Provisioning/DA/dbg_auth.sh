@@ -10,6 +10,10 @@ error()
   if [ "$script_mode" != "AUTO" ]; then $SHELL; fi
   return 1
 }
+connect_no_reset="-c port=SWD speed=fast ap=1 mode=Hotplug"
+
+# Close debug if opened
+"$stm32programmercli" $connect_no_reset debugauth=3 >/dev/null
 
 # Command with both key/certificate (if TZEN enabled) and password (if TZEN disabled)
 "$stm32programmercli" -c port=SWD speed=fast key=./Keys/key_3_leaf.pem cert=./Certificates/cert_leaf_chain.b64 pwd=./Binary/password.bin debugauth=1

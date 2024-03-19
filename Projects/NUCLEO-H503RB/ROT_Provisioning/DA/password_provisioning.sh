@@ -5,10 +5,15 @@ source ../env.sh
 if [ $# -ge 1 ]; then script_mode=$1; else script_mode=MANUAL; fi
 
 #CubeProgammer path and input files
-SCRIPT=$(readlink -f $0)
-project_dir=`dirname $SCRIPT`
-board_password="$project_dir\board_password.bin"
-otp_data_soc_mask="$project_dir\data_soc_mask.bin"
+if [ ${#BASH_SOURCE} -gt 0 ]; then
+  project_dir="$( cd "$( dirname "${BASH_SOURCE}" )" && pwd )"
+else
+  SCRIPT=$(readlink -f $0)
+  project_dir=`dirname $SCRIPT`
+fi
+
+board_password="$project_dir/board_password.bin"
+otp_data_soc_mask="$project_dir/data_soc_mask.bin"
 
 address_password=0x8FFF000
 address_data_soc_mask=0x8FFF020
@@ -31,13 +36,14 @@ echo $action
 # Write OTP data soc mask
 "$stm32programmercli" $connect_no_reset -w $otp_data_soc_mask $address_data_soc_mask
 
-# =============================================== Write password =========================================================================
+# =============================================== Write password ==========================================================================
 action="Write Password"
 echo "$action"
 
 "$stm32programmercli" $connect_no_reset -w $board_password $address_password
 "$stm32programmercli" $connect_reset
 
+# =============================================== Lock OTP ================================================================================
 action="Lock OTP with write protection"
 echo $action
 

@@ -71,6 +71,7 @@ static void MX_USART3_UART_Init(void);
   */
 int main(void)
 {
+
   /* USER CODE BEGIN 1 */
 
   /* USER CODE END 1 */
@@ -112,6 +113,7 @@ int main(void)
   MX_ThreadX_Init();
 
   /* We should never get here as control is now taken by the scheduler */
+
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
@@ -290,6 +292,7 @@ static void MX_UCPD1_Init(void)
   DMA_InitStruct.TriggerSelection = 0x00000000U;
   DMA_InitStruct.Request = LL_GPDMA1_REQUEST_UCPD1_RX;
   DMA_InitStruct.TransferEventMode = LL_DMA_TCEM_BLK_TRANSFER;
+  DMA_InitStruct.Mode = LL_DMA_NORMAL;
   DMA_InitStruct.SrcAllocatedPort = LL_DMA_SRC_ALLOCATED_PORT0;
   DMA_InitStruct.DestAllocatedPort = LL_DMA_DEST_ALLOCATED_PORT0;
   DMA_InitStruct.LinkAllocatedPort = LL_DMA_LINK_ALLOCATED_PORT1;
@@ -318,6 +321,7 @@ static void MX_UCPD1_Init(void)
   DMA_InitStruct.TriggerSelection = 0x00000000U;
   DMA_InitStruct.Request = LL_GPDMA1_REQUEST_UCPD1_TX;
   DMA_InitStruct.TransferEventMode = LL_DMA_TCEM_BLK_TRANSFER;
+  DMA_InitStruct.Mode = LL_DMA_NORMAL;
   DMA_InitStruct.SrcAllocatedPort = LL_DMA_SRC_ALLOCATED_PORT0;
   DMA_InitStruct.DestAllocatedPort = LL_DMA_DEST_ALLOCATED_PORT0;
   DMA_InitStruct.LinkAllocatedPort = LL_DMA_LINK_ALLOCATED_PORT1;
@@ -404,6 +408,7 @@ static void MX_USART3_UART_Init(void)
   DMA_InitStruct.TriggerSelection = 0x00000000U;
   DMA_InitStruct.Request = LL_GPDMA1_REQUEST_USART3_TX;
   DMA_InitStruct.TransferEventMode = LL_DMA_TCEM_BLK_TRANSFER;
+  DMA_InitStruct.Mode = LL_DMA_NORMAL;
   DMA_InitStruct.SrcAllocatedPort = LL_DMA_SRC_ALLOCATED_PORT0;
   DMA_InitStruct.DestAllocatedPort = LL_DMA_DEST_ALLOCATED_PORT0;
   DMA_InitStruct.LinkAllocatedPort = LL_DMA_LINK_ALLOCATED_PORT1;

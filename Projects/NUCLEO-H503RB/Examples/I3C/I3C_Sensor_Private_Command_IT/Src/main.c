@@ -272,7 +272,7 @@ int main(void)
   /* Prepare Transmit context buffer with the different parameters */
   aContextBuffers[I3C_IDX_FRAME_1].CtrlBuf.pBuffer = aControlBuffer;
   aContextBuffers[I3C_IDX_FRAME_1].CtrlBuf.Size    = 1;
-  aContextBuffers[I3C_IDX_FRAME_1].TxBuf.pBuffer   = aLSM6DSO_Config;
+  aContextBuffers[I3C_IDX_FRAME_1].TxBuf.pBuffer   = aTxBuffer;
   aContextBuffers[I3C_IDX_FRAME_1].TxBuf.Size      = LSM6DSOCONFIGSIZE;
 
   /*##- Add context buffer transmit in Frame context #####################*/
@@ -600,6 +600,9 @@ static void DisplayValue(uint8_t *pPrivateBuffer)
 
     uwDisplayDelay+=DISPLAY_REFRESH_DELAY;
   }
+#if defined(__ARMCC_VERSION)
+  HAL_Delay(100);
+#endif
 }
 /* USER CODE END 4 */
 

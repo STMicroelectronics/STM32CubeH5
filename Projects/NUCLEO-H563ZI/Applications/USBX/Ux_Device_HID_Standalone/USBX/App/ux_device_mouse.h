@@ -24,7 +24,6 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-
 /* Includes ------------------------------------------------------------------*/
 #include "ux_api.h"
 #include "ux_device_class_hid.h"
@@ -72,3 +71,4 @@ VOID USBX_DEVICE_HID_MOUSE_Task(VOID);
 }
 #endif
 #endif  /* __UX_DEVICE_MOUSE_H__ */
+

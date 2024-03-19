@@ -42,14 +42,18 @@
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
+
+/* USER CODE BEGIN UX_Device_Memory_Buffer */
+
+/* USER CODE END UX_Device_Memory_Buffer */
 #if defined ( __ICCARM__ )
 #pragma data_alignment=4
 #endif
-__ALIGN_BEGIN static UCHAR ux_device_memory_buffer[USBX_DEVICE_APP_MEMORY_BUFFER_SIZE] __ALIGN_END;
-
+__ALIGN_BEGIN static UCHAR ux_device_byte_pool_buffer[UX_DEVICE_APP_MEM_POOL_SIZE] __ALIGN_END;
 static ULONG hid_mouse_interface_number;
 static ULONG hid_mouse_configuration_number;
 static UX_SLAVE_CLASS_HID_PARAMETER hid_mouse_parameter;
+
 /* USER CODE BEGIN PV */
 extern uint8_t User_Button_State;
 /* USER CODE END PV */
@@ -80,8 +84,7 @@ UINT MX_USBX_Device_Init(VOID)
   /* USER CODE BEGIN MX_USBX_Device_Init0 */
 
   /* USER CODE END MX_USBX_Device_Init0 */
-
-  pointer = ux_device_memory_buffer;
+  pointer = ux_device_byte_pool_buffer;
 
   /* Initialize USBX Memory */
   if (ux_system_initialize(pointer, USBX_DEVICE_MEMORY_STACK_SIZE, UX_NULL, 0) != UX_SUCCESS)
@@ -233,11 +236,9 @@ VOID USBX_Device_Process(VOID *arg)
 VOID USBX_APP_Device_Init(VOID)
 {
   /* USER CODE BEGIN USB_Device_Init_PreTreatment_0 */
-
   /* USER CODE END USB_Device_Init_PreTreatment_0 */
 
   /* USB_DRD_FS init function */
-  HAL_PWREx_EnableVddUSB();
 
   /* USB_DRD_FS init function */
   MX_USB_PCD_Init();

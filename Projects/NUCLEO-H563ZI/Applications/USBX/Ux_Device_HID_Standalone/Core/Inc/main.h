@@ -29,18 +29,6 @@ extern "C" {
 /* Includes ------------------------------------------------------------------*/
 #include "stm32h5xx_hal.h"
 
-#include "stm32h5xx_ll_ucpd.h"
-#include "stm32h5xx_ll_bus.h"
-#include "stm32h5xx_ll_cortex.h"
-#include "stm32h5xx_ll_rcc.h"
-#include "stm32h5xx_ll_system.h"
-#include "stm32h5xx_ll_utils.h"
-#include "stm32h5xx_ll_pwr.h"
-#include "stm32h5xx_ll_gpio.h"
-#include "stm32h5xx_ll_dma.h"
-
-#include "stm32h5xx_ll_exti.h"
-
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "app_usbx_device.h"
@@ -63,14 +51,15 @@ extern PCD_HandleTypeDef hpcd_USB_DRD_FS;
 
 /* Exported functions prototypes ---------------------------------------------*/
 void Error_Handler(void);
-void   MX_USB_PCD_Init(void);
+void MX_USB_PCD_Init(void);
+void MX_ADC1_Init(void);
 
 /* USER CODE BEGIN EFP */
 
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
-void   MX_ADC1_Init(void);
+
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */

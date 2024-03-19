@@ -66,7 +66,7 @@ else
   echo AppliCfg with python script
   applicfg="$cube_fw_path/Utilities/PC_Software/ROT_AppliConfig/AppliCfg.py"
   #determine/check python version command
-  python="python "
+  python="python3 "
 fi
 
 error_config()
@@ -230,7 +230,7 @@ if [ $isGeneratedByCubeMX != "true" ]; then
   # =============================================== Steps to create the STiRoT_Config.obk file ==============================================
   echo "Step 1 : Configuration management"
   echo "   * STiRoT_Config.obk generation:"
-  echo "       From TrustedPackageCreator (tab H5-OBkey)"
+  echo "       From TrustedPackageCreator (OBkey tab in Security panel)"
   echo "       Select STiRoT_Config.xml(Default path is /ROT_Provisioning/STiROT_OEMuROT/Config/STiRoT_Config.xml)"
   echo "       Update the configuration (if/as needed) then generate STiRoT_Config.obk file"
   echo "       Press any key to continue..."
@@ -238,7 +238,11 @@ if [ $isGeneratedByCubeMX != "true" ]; then
   # =============================================== Steps to create the DA_Config.obk file ==============================================
   echo
   echo "   * DA_Config.obk generation:"
-  echo "       From TrustedPackageCreator (tab H5-OBkey)"
+  echo "       Warning: Default keys must NOT be used in a product. Make sure to regenerate your own keys!"
+  echo "       From TrustedPackageCreator (Debug Authentication - Certificate Generation tab in Security panel),"
+  echo "       update the keys(s) (in \ROT_Provisioning\DA\Keys) and permissions (if/as needed)"
+  echo "       then regenerate the certificate(s)"
+  echo "       From TrustedPackageCreator (OBkey tab in Security panel)"
   echo "       Select DA_Config.xml(Default path is /ROT_Provisioning/DA/Config/DA_Config.xml)"
   echo "       Update the configuration (if/as needed) then generate DA_Config.obk file"
   echo "       Press any key to continue..."
@@ -246,7 +250,7 @@ if [ $isGeneratedByCubeMX != "true" ]; then
   # =============================================== Steps to create the OEMuRoT_Config.obk file ==============================================
   echo
   echo "   * OEMuRoT_Config.obk generation:"
-  echo "       From TrustedPackageCreator (tab H5-OBkey)"
+  echo "       From TrustedPackageCreator (OBkey tab in Security panel)"
   echo "       Select OEMuRoT_Config.xml(Default path is /ROT_Provisioning/STiROT_OEMuROT/Config/OEMuRoT_Config.xml)"
   echo "       Update the configuration (if/as needed) then generate OEMuRoT_Config.obk file"
   echo "       Press any key to continue..."

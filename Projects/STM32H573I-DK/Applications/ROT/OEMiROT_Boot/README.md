@@ -1,4 +1,4 @@
-## <b>OEMiROT_Boot application description</b>
+## <b>OEMiROT_Boot Application Description</b>
 
 This project provides an OEMiROT example. OEMiROT boot path performs authenticity and the integrity checks of the project firmware and data
 images.

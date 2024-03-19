@@ -31,7 +31,7 @@ extern "C" {
 /* FIH config */
 #define MCUBOOT_FIH_PROFILE_HIGH    /* in this config random delay is activated at each FIH_CALL */
 /*
- * In TF-M most of the configuration flags (e.g. signature type,
+ * With some implementations, of the configuration flags (e.g. signature type,
  * upgrade mode ...) are handled by the CMake-based buildsystem and
  * added to the compiler command lines.
  */
@@ -63,12 +63,14 @@ extern "C" {
  */
 #define MCUBOOT_USE_MBED_TLS
 
+#include "stm32h5xx_hal.h"
+
 /*
  * Logging
  */
 #ifdef OEMIROT_DEV_MODE
 #define MCUBOOT_HAVE_LOGGING    1
-#endif 
+#endif
 
 #endif /* !__BOOTSIM__ */
 

@@ -31,6 +31,6 @@ echo "Copy binary to Binary location" >> $current_log_file 2>&1
 cp $code_bin $bin_dest >> $current_log_file 2>&1
 if [ $? != 0 ]; then error; fi
 echo "Creating STiROT image" > $current_log_file
-"$stm32tpccli" -pb "$provisioningdir/STiROT/Image/STiROT_Code_Image.xml" >> $current_log_file
+"$stm32tpccli" -pb "$provisioningdir/STiROT/Image/STiRoT_Code_Image.xml" >> $current_log_file
 if [ $? != 0 ]; then error; fi
 exit 0

@@ -1,7 +1,7 @@
+/* USER CODE BEGIN Header */
 /**
   ******************************************************************************
   * @file    stm32_assert.h
-  * @author  MCD Application Team
   * @brief   STM32 assert file.
   ******************************************************************************
   * @attention
@@ -15,6 +15,7 @@
   *
   ******************************************************************************
   */
+/* USER CODE END Header */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
 #ifndef __STM32_ASSERT_H

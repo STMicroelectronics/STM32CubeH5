@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Readme</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <link rel="stylesheet" href="../../../../_htmresc/mini-st_2020.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<div class="row">
+<div class="col-sm-12 col-lg-8">
+<h2 id="lptim_timeout-example-description"><b>LPTIM_Timeout Example Description</b></h2>
+<p>How to implement, through the HAL LPTIM API, a timeout with the LPTIMER peripheral, to wake up the system from a low-power mode.</p>
+<p>The main() function configures the LPTIMER and goes in STOP mode. In order to start the timer a first trigger is needed on (PC4)(LPTIM_ETR). Any successive trigger event on (PC4) will reset the counter and the timer will restart. The timeout value corresponds to the compare value (32767). If after the first trigger no other trigger occurs within the expected time frame, the MCU is woken-up by the compare match event and LED2 toggles.</p>
+<p>In this example the LPTIM is clocked by the LSE</p>
+<pre><code>Timeout = (Compare + 1) / LPTIM_Clock
+        = (32767 + 1) / LSE_Clock_Frequency</code></pre>
+<p>Once the system is woken up it remains in run mode. The led keeps toggling each time the timer expires.</p>
+<h4 id="notes"><b>Notes</b></h4>
+<ol type="1">
+<li><p>This example can not be used in DEBUG mode, this is due to the fact that the Cortex-M33 core is no longer clocked during low power mode so debugging features are disabled.</p></li>
+<li><p>Care must be taken when using HAL_Delay(), this function provides accurate delay (in milliseconds) based on variable incremented in SysTick ISR. This implies that if HAL_Delay() is called from a peripheral ISR process, then the SysTick interrupt must have higher priority (numerically lower) than the peripheral interrupt. Otherwise the caller ISR process will be blocked. To change the SysTick interrupt priority you have to use HAL_NVIC_SetPriority() function.</p></li>
+<li><p>This example needs to ensure that the SysTick time base is always set to 1 millisecond to have correct HAL operation.</p></li>
+</ol>
+<h3 id="keywords"><b>Keywords</b></h3>
+<p>Timer, Low Power Timer, Wake up, Stop mode, LSE, Run mode</p>
+<h3 id="directory-contents"><b>Directory contents</b></h3>
+<ul>
+<li>LPTIM/LPTIM_Timeout/Inc/stm32h5xx_nucleo_conf.h BSP configuration file</li>
+<li>LPTIM/LPTIM_Timeout/Inc/stm32h5xx_hal_conf.h HAL configuration file</li>
+<li>LPTIM/LPTIM_Timeout/Inc/stm32h5xx_it.h Interrupt handlers header file</li>
+<li>LPTIM/LPTIM_Timeout/Inc/main.h Header for main.c module</li>
+<li>LPTIM/LPTIM_Timeout/Src/stm32h5xx_it.c Interrupt handlers</li>
+<li>LPTIM/LPTIM_Timeout/Src/main.c Main program</li>
+<li>LPTIM/LPTIM_Timeout/Src/stm32h5xx_hal_msp.c HAL MSP module</li>
+<li>LPTIM/LPTIM_Timeout/Src/system_stm32h5xx.c STM32H5xx system source file</li>
+</ul>
+<h3 id="hardware-and-software-environment"><b>Hardware and Software environment</b></h3>
+<ul>
+<li><p>This example runs on STM32H533RETx devices.</p></li>
+<li><p>This example has been tested with STMicroelectronics NUCLEO-H533RE board and can be easily tailored to any other supported device and development board.</p></li>
+<li><p>Connect an external trigger (ETR) to PC4 (pin 34 in CN10 connector). If the trigger is higher than 1Hz, the counter is regularly reset, the system stays in STOP mode. If the trigger is lower than 1Hz, the counter expires and the system is woken up.</p></li>
+</ul>
+<h3 id="how-to-use-it"><b>How to use it ?</b></h3>
+<p>In order to make the program work, you must do the following :</p>
+<ul>
+<li>Open your preferred tool chain</li>
+<li>Rebuild all files and load your image into target memory</li>
+<li>Run the example</li>
+</ul>
+</div>
+</div>
+</body>
+</html>

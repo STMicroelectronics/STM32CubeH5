@@ -86,7 +86,7 @@ System, RTC, Calendar, Backup Domain, Reset
 ### <b>Hardware and Software environment</b>
 
   - This example runs on STM32H563ZITx devices.
-    
+
   - This example has been tested with NUCLEO-H563ZI board and can be
     easily tailored to any other supported device and development board.
 

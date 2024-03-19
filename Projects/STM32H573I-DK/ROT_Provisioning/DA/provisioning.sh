@@ -149,7 +149,7 @@ fi
 
 # =============================================== Steps to create the OEMiROT_Config.obk file ==============================================
 echo "   * $da_file.obk generation:"
-echo "       From TrustedPackageCreator (tab H5-OBkey)."
+echo "       From TrustedPackageCreator (OBkey tab in Security panel)."
 echo "       Select $da_file.xml (Default path is /ROT_Provisioning/DA/Config/$da_file.xml)"
 echo "       Update the configuration (if/as needed) then generate $da_file.obk file"
 echo "       Press any key to continue..."

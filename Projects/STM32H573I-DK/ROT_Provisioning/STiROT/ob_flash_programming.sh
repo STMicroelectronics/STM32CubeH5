@@ -35,7 +35,7 @@ error()
 # =============================================== Configure Option Bytes ====================================================================
 action="Set TZEN = 1"
 echo "$action"
-# Trust zone enabled is mandatory to execute ST-iRoT
+# Trust zone enabled is mandatory to execute STiRoT
 "$stm32programmercli" $connect_no_reset -ob TZEN=0xB4
 if [ $? -ne 0 ]; then error; return 1; fi
 
@@ -83,8 +83,8 @@ if [ $image_number -eq 2 ]; then
     if [ $? -ne 0 ]; then error; return 1; fi
 fi
 
-echo "Set UBE for ST-iROT"
-# Unique boot entry is set to ST-iRoT to force ST-iRoT execution at each reset
+echo "Set UBE for STiROT"
+# Unique boot entry is set to STiRoT to force STiRoT execution at each reset
 "$stm32programmercli" $connect_reset -ob BOOT_UBE=0xC3
 if [ $? -ne 0 ]; then error; return 1; fi
 

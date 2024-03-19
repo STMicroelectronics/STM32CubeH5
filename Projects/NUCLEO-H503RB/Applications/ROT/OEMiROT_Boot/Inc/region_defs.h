@@ -18,7 +18,7 @@
 #define __REGION_DEFS_H__
 #include "flash_layout.h"
 
-#define BL2_HEAP_SIZE           0x00005F0
+#define BL2_HEAP_SIZE           0x0000000
 #define BL2_MSP_STACK_SIZE      0x0001100
 
 #define NS_HEAP_SIZE            0x0001000
@@ -40,8 +40,8 @@
 #define TOTAL_ROM_SIZE          FLASH_TOTAL_SIZE
 
 /*  This area in SRAM 2 is updated BL2 and can be lock to avoid any changes */
-#define BOOT_TFM_SHARED_DATA_SIZE        0
-#define BOOT_TFM_SHARED_DATA_BASE        0
+#define BOOT_SHARED_DATA_SIZE        0
+#define BOOT_SHARED_DATA_BASE        0
 
 /*
  * Boot partition structure if MCUBoot is used:

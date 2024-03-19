@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <link rel="stylesheet" href="../../../../_htmresc/mini-st_2020.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<div class="row">
+<div class="col-sm-12 col-lg-8">
+<h2 id="adc_differentialmode-example-description"><b>ADC_DifferentialMode Example Description</b></h2>
+<p>This example describes how to configure and use the ADC1 to convert an external analog input in Differential Mode, difference between external voltage on VinN and VinP.</p>
+<p>At the beginning of the main program the HAL_Init() function is called to reset all the peripherals, initialize the Flash interface and the systick. Then the SystemClock_Config() function is used to configure the system clock (SYSCLK) to run at 250 MHz.</p>
+<p>The ADC1 is configured to convert continuously ADC_CHANNEL_1 (VinP) connected to PA.01 (PIN 30 CN7 (Morpho Arduino A1 pin 2 CN8)) and its corresponding VinN connected to PA.00 (PIN 28 CN7 (Morpho Arduino A0 pin 1 CN8)).</p>
+<p>User can connect ADC_CHANNEL_1 pins (PA.01, PA.00) to external power supply and vary voltage.</p>
+<p>uhADCxConvertedData variable contains conversion data (voltage difference VinP - VinN) and uhADCxConvertedData_Voltage_mVolt yields the signed input voltage in mV.</p>
+<h3 id="notes"><b>Notes</b></h3>
+<ol type="1">
+<li><p>Care must be taken when using HAL_Delay(), this function provides accurate delay (in milliseconds) based on variable incremented in SysTick ISR. This implies that if HAL_Delay() is called from a peripheral ISR process, then the SysTick interrupt must have higher priority (numerically lower) than the peripheral interrupt. Otherwise the caller ISR process will be blocked. To change the SysTick interrupt priority you have to use HAL_NVIC_SetPriority() function.</p></li>
+<li><p>The application need to ensure that the SysTick time base is always set to 1 millisecond to have correct HAL operation.</p></li>
+</ol>
+<h3 id="keywords"><b>Keywords</b></h3>
+<p>Analog, ADC, ADC channel, Polling</p>
+<h3 id="directory-contents"><b>Directory contents</b></h3>
+<ul>
+<li>ADC/ADC_DifferentialMode/Appli/Inc/stm32h5xx_nucleo_conf.h BSP configuration file</li>
+<li>ADC/ADC_DifferentialMode/Appli/Inc/stm32h5xx_hal_conf.h HAL configuration file</li>
+<li>ADC/ADC_DifferentialMode/Appli/Inc/stm32h5xx_it.h HAL interrupt handlers header file</li>
+<li>ADC/ADC_DifferentialMode/Appli/Inc/main.h Header for main.c module</li>
+<li>ADC/ADC_DifferentialMode/Appli/Src/stm32h5xx_it.c HAL interrupt handlers</li>
+<li>ADC/ADC_DifferentialMode/Appli/Src/main.c Main program</li>
+<li>ADC/ADC_DifferentialMode/Appli/Src/stm32h5xx_hal_msp.c HAL MSP file</li>
+<li>ADC/ADC_DifferentialMode/Appli/Src/system_stm32h5xx.c STM32H5xx system source file</li>
+</ul>
+<h3 id="hardware-and-software-environment"><b>Hardware and Software environment</b></h3>
+<ul>
+<li><p>This example runs on STM32H533RETx devices.</p></li>
+<li><p>This example has been tested with NUCLEO-H533RE board and can be easily tailored to any other supported device and development board.</p></li>
+<li><p>NUCLEO-H533RE Set-up Use an external power supply, adjust supply voltage and connect it to pins PA.01 and PA.00.</p></li>
+<li><p>To monitor the conversion result, put the “uhADCxConvertedData” (or it’s voltage representation “uhADCxConvertedData_Voltage_mVolt”) variable in the debugger live watch.</p></li>
+</ul>
+<h3 id="how-to-use-it"><b>How to use it ?</b></h3>
+<p>In order to make the program work, you must do the following : - Open your preferred toolchain - Rebuild all files from sub-project Appli and load your images into memories: This sub-project will first load Boot_XIP.hex in internal Flash, than load Appli part in External memory available on NUCLEO-H533RE board. - Run the example</p>
+</div>
+</div>
+</body>
+</html>

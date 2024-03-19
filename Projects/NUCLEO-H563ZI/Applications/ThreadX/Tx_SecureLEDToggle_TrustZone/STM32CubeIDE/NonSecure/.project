@@ -32,6 +32,11 @@
 	</natures>
 	<linkedResources>
 		<link>
+			<name>Doc/README.md</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/README.md</locationURI>
+		</link>
+		<link>
 			<name>Application/User/app_azure_rtos.c</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/NonSecure/Src/app_azure_rtos.c</locationURI>

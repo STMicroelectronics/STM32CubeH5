@@ -1,7 +1,6 @@
 ## <b>I3C_Target_I2C_ComDMA Example Description</b>
 
-How to handle I2C data buffer transmission/reception between two boards,
-using an interrupt.
+How to handle I2C data buffer transmission/reception between two boards, using DMA.
 
       - Board: NUCLEO-H503RB (embeds a STM32H503RB device)
       - SCL Pin: PB6 (Arduino SCL/D15 CN5 pin 10, Morpho CN10 pin3) to PB6 (Arduino SCL/D15 CN5 pin 10, Morpho CN10 pin3)

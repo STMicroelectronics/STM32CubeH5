@@ -451,9 +451,13 @@ Possible values of SRAM2_RST and SRAM2_ECC
 * SRAM2_RST:
  * 0x00000000 --> SRAM2_RST=0
  * 0x00000008 --> SRAM2_RST=1
-* SRAM2_ECC
+* SRAM2_ECC for H5
  * 0x00000000 --> SRAM2_ECC=0
  * 0x00000040 --> SRAM2_ECC=1
+* ECC_ON_SRAM for H7
+ *0x00 --> ECC_ON_SRAM=0
+ *0x01 --> ECC_ON_SRAM=1
+ 
 
 Example : 
 ```
@@ -758,15 +762,15 @@ This means the HASH256 will be computed with the content of the user_password.bi
 The result will be written in the the password.bin file.
 
 #### Extra options
-It is possible to define data before the HASH256, this data will be called header.
-The option -h (--header) could be used.
+It is possible to define data after the HASH256, this data will be called tail.
+The option -t (--tail) could be used.
 
 Example
 ```
-hashcontent --header AABBCCDDEEFF -i user_password.bin password.bin
+hashcontent --tail AABBCCDDEEFF -i user_password.bin password.bin
 ```
 This means the HASH256 will be computed with the content of the user_password.bin, 
-The Header + the result will be written in the the password.bin file.
+The tail data, in little endian and the result will be written in the the password.bin file. 
 
 ## Executable creation
 

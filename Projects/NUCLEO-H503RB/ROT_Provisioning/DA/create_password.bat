@@ -8,7 +8,7 @@ set "projectdir=%~dp0"
 :: Clear password
 set user_password="%projectdir%\user_password.bin"
 :: Clear password and DA heading
-set da_password="%projectdir%\password.bin"
+set da_password="%projectdir%\da_password.bin"
 :: HASH of da_password
 set board_password="%projectdir%\board_password.bin"
 
@@ -31,11 +31,13 @@ set "python=python "
 
 :create
 set "AppliCfg=%python% %applicfg%"
-:: ======================================================= Create board password =========================================================   
+:: ======================================================= Create board password =========================================================
 set "action=Create password file"
 echo %action%
-%AppliCfg% hashcontent -i %user_password% -d %da_password% -h 0x80000000 --create --vb %board_password%
+%AppliCfg% hashcontent -i %user_password% --vb %board_password% --password --da_bin_file=%da_password% -h 0x000000800c000000
 IF !errorlevel! NEQ 0 goto :error
+
+::py ../AppliCfg.py hashcontent -i input_tests/user_password.bin --vb sha.bin --password --da_bin_file=test.bin -h 0x000000800c000000
 
 echo Password script creation success
 IF [%1] NEQ [AUTO] cmd /k

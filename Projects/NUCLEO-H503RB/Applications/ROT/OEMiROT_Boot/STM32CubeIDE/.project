@@ -145,104 +145,74 @@
 			<locationURI>PARENT-6-PROJECT_LOC/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_uart_ex.c</locationURI>
 		</link>
 		<link>
-			<name>Middlewares/mcuboot/bootutil_misc.c</name>
+			<name>Example/User/bl2_nv_services.c</name>
 			<type>1</type>
-			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/Third_Party/mcuboot/boot/bootutil/src/bootutil_misc.c</locationURI>
+			<locationURI>PARENT-1-PROJECT_LOC/Src/bl2_nv_services.c</locationURI>
 		</link>
 		<link>
-			<name>Middlewares/mcuboot/caps.c</name>
+			<name>Example/User/boot_hal.c</name>
 			<type>1</type>
-			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/Third_Party/mcuboot/boot/bootutil/src/caps.c</locationURI>
+			<locationURI>PARENT-1-PROJECT_LOC/Src/boot_hal.c</locationURI>
 		</link>
 		<link>
-			<name>Middlewares/mcuboot/encrypted.c</name>
+			<name>Example/User/keys.c</name>
 			<type>1</type>
-			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/Third_Party/mcuboot/boot/bootutil/src/encrypted.c</locationURI>
+			<locationURI>PARENT-1-PROJECT_LOC/Src/keys.c</locationURI>
 		</link>
 		<link>
-			<name>Middlewares/mcuboot/image_ec.c</name>
+			<name>Example/User/keys_map.c</name>
 			<type>1</type>
-			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/Third_Party/mcuboot/boot/bootutil/src/image_ec.c</locationURI>
+			<locationURI>PARENT-1-PROJECT_LOC/Src/keys_map.c</locationURI>
 		</link>
 		<link>
-			<name>Middlewares/mcuboot/image_ec256.c</name>
+			<name>Example/User/low_level_com.c</name>
 			<type>1</type>
-			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/Third_Party/mcuboot/boot/bootutil/src/image_ec256.c</locationURI>
+			<locationURI>PARENT-1-PROJECT_LOC/Src/low_level_com.c</locationURI>
 		</link>
 		<link>
-			<name>Middlewares/mcuboot/image_rsa.c</name>
+			<name>Example/User/low_level_device.c</name>
 			<type>1</type>
-			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/Third_Party/mcuboot/boot/bootutil/src/image_rsa.c</locationURI>
+			<locationURI>PARENT-1-PROJECT_LOC/Src/low_level_device.c</locationURI>
 		</link>
 		<link>
-			<name>Middlewares/mcuboot/image_validate.c</name>
+			<name>Example/User/low_level_flash.c</name>
 			<type>1</type>
-			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/Third_Party/mcuboot/boot/bootutil/src/image_validate.c</locationURI>
+			<locationURI>PARENT-1-PROJECT_LOC/Src/low_level_flash.c</locationURI>
 		</link>
 		<link>
-			<name>Middlewares/mcuboot/loader.c</name>
+			<name>Example/User/low_level_rng.c</name>
 			<type>1</type>
-			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/Third_Party/mcuboot/boot/bootutil/src/loader.c</locationURI>
+			<locationURI>PARENT-1-PROJECT_LOC/Src/low_level_rng.c</locationURI>
 		</link>
 		<link>
-			<name>Middlewares/mcuboot/swap_misc.c</name>
+			<name>Example/User/low_level_security.c</name>
 			<type>1</type>
-			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/Third_Party/mcuboot/boot/bootutil/src/swap_misc.c</locationURI>
+			<locationURI>PARENT-1-PROJECT_LOC/Src/low_level_security.c</locationURI>
 		</link>
 		<link>
-			<name>Middlewares/mcuboot/swap_move.c</name>
+			<name>Example/User/mpu_armv8m_drv.c</name>
 			<type>1</type>
-			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/Third_Party/mcuboot/boot/bootutil/src/swap_move.c</locationURI>
+			<locationURI>PARENT-1-PROJECT_LOC/Src/mpu_armv8m_drv.c</locationURI>
 		</link>
 		<link>
-			<name>Middlewares/mcuboot/swap_scratch.c</name>
+			<name>Example/User/sha256_alt.c</name>
 			<type>1</type>
-			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/Third_Party/mcuboot/boot/bootutil/src/swap_scratch.c</locationURI>
+			<locationURI>PARENT-1-PROJECT_LOC/Src/sha256_alt.c</locationURI>
 		</link>
 		<link>
-			<name>Middlewares/mcuboot/tlv.c</name>
+			<name>Example/User/startup_stm32h5xx.c</name>
 			<type>1</type>
-			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/Third_Party/mcuboot/boot/bootutil/src/tlv.c</locationURI>
+			<locationURI>PARENT-1-PROJECT_LOC/Src/startup_stm32h5xx.c</locationURI>
 		</link>
 		<link>
-			<name>Middlewares/mcuboot/fault_injection_hardening.c</name>
+			<name>Example/User/stm32h5xx_hal_msp.c</name>
 			<type>1</type>
-			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/Third_Party/mcuboot/boot/bootutil/src/fault_injection_hardening.c</locationURI>
+			<locationURI>PARENT-1-PROJECT_LOC/Src/stm32h5xx_hal_msp.c</locationURI>
 		</link>
 		<link>
-			<name>Middlewares/mcuboot/fault_injection_hardening_delay_rng_mbedtls.c</name>
+			<name>Example/User/tick.c</name>
 			<type>1</type>
-			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/Third_Party/mcuboot/boot/bootutil/src/fault_injection_hardening_delay_rng_mbedtls.c</locationURI>
-		</link>
-		<link>
-			<name>Middlewares/trustedfirmware/bl2_main.c</name>
-			<type>1</type>
-			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/Third_Party/trustedfirmware/bl2/ext/mcuboot/bl2_main.c</locationURI>
-		</link>
-		<link>
-			<name>Middlewares/trustedfirmware/flash_map.c</name>
-			<type>1</type>
-			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/Third_Party/trustedfirmware/bl2/src/flash_map.c</locationURI>
-		</link>
-		<link>
-			<name>Middlewares/trustedfirmware/flash_map_extended.c</name>
-			<type>1</type>
-			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/Third_Party/trustedfirmware/bl2/ext/mcuboot/flash_map_extended.c</locationURI>
-		</link>
-		<link>
-			<name>Middlewares/trustedfirmware/flash_map_legacy.c</name>
-			<type>1</type>
-			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/Third_Party/trustedfirmware/bl2/ext/mcuboot/flash_map_legacy.c</locationURI>
-		</link>
-		<link>
-			<name>Middlewares/trustedfirmware/security_cnt.c</name>
-			<type>1</type>
-			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/Third_Party/trustedfirmware/bl2/src/security_cnt.c</locationURI>
-		</link>
-		<link>
-			<name>Middlewares/trustedfirmware/uart_stdout.c</name>
-			<type>1</type>
-			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/Third_Party/trustedfirmware/platform/ext/common/uart_stdout.c</locationURI>
+			<locationURI>PARENT-1-PROJECT_LOC/Src/tick.c</locationURI>
 		</link>
 		<link>
 			<name>Middlewares/mbed-crypto/aes.c</name>
@@ -263,6 +233,11 @@
 			<name>Middlewares/mbed-crypto/cipher.c</name>
 			<type>1</type>
 			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/Third_Party/mbed-crypto/library/cipher.c</locationURI>
+		</link>
+		<link>
+			<name>Middlewares/mbed-crypto/constant_time.c</name>
+			<type>1</type>
+			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/Third_Party/mbed-crypto/library/constant_time.c</locationURI>
 		</link>
 		<link>
 			<name>Middlewares/mbed-crypto/ctr_drbg.c</name>
@@ -288,6 +263,11 @@
 			<name>Middlewares/mbed-crypto/ecp_curves.c</name>
 			<type>1</type>
 			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/Third_Party/mbed-crypto/library/ecp_curves.c</locationURI>
+		</link>
+		<link>
+			<name>Middlewares/mbed-crypto/entropy.c</name>
+			<type>1</type>
+			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/Third_Party/mbed-crypto/library/entropy.c</locationURI>
 		</link>
 		<link>
 			<name>Middlewares/mbed-crypto/hkdf.c</name>
@@ -330,78 +310,104 @@
 			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/Third_Party/mbed-crypto/library/sha256.c</locationURI>
 		</link>
 		<link>
-			<name>Middlewares/mbed-crypto/entropy.c</name>
+			<name>Middlewares/mcuboot/bl2_main.c</name>
 			<type>1</type>
-			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/Third_Party/mbed-crypto/library/entropy.c</locationURI>
+			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/Third_Party/mcuboot/bl2/ext/mcuboot/bl2_main.c</locationURI>
 		</link>
 		<link>
-			<name>Example/User/low_level_flash.c</name>
+			<name>Middlewares/mcuboot/bootutil_misc.c</name>
 			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/Src/low_level_flash.c</locationURI>
+			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/Third_Party/mcuboot/boot/bootutil/src/bootutil_misc.c</locationURI>
 		</link>
 		<link>
-			<name>Example/User/low_level_com.c</name>
+			<name>Middlewares/mcuboot/caps.c</name>
 			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/Src/low_level_com.c</locationURI>
+			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/Third_Party/mcuboot/boot/bootutil/src/caps.c</locationURI>
 		</link>
 		<link>
-			<name>Example/User/low_level_rng.c</name>
+			<name>Middlewares/mcuboot/encrypted.c</name>
 			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/Src/low_level_rng.c</locationURI>
+			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/Third_Party/mcuboot/boot/bootutil/src/encrypted.c</locationURI>
 		</link>
 		<link>
-			<name>Example/User/low_level_security.c</name>
+			<name>Middlewares/mcuboot/fault_injection_hardening.c</name>
 			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/Src/low_level_security.c</locationURI>
+			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/Third_Party/mcuboot/boot/bootutil/src/fault_injection_hardening.c</locationURI>
 		</link>
 		<link>
-			<name>Example/User/tick.c</name>
+			<name>Middlewares/mcuboot/fault_injection_hardening_delay_rng_mbedtls.c</name>
 			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/Src/tick.c</locationURI>
+			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/Third_Party/mcuboot/boot/bootutil/src/fault_injection_hardening_delay_rng_mbedtls.c</locationURI>
 		</link>
 		<link>
-			<name>Example/User/boot_hal.c</name>
+			<name>Middlewares/mcuboot/flash_map.c</name>
 			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/Src/boot_hal.c</locationURI>
+			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/Third_Party/mcuboot/bl2/src/flash_map.c</locationURI>
 		</link>
 		<link>
-			<name>Example/User/low_level_device.c</name>
+			<name>Middlewares/mcuboot/flash_map_extended.c</name>
 			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/Src/low_level_device.c</locationURI>
+			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/Third_Party/mcuboot/bl2/ext/mcuboot/flash_map_extended.c</locationURI>
 		</link>
 		<link>
-			<name>Example/User/stm32h5xx_hal_msp.c</name>
+			<name>Middlewares/mcuboot/flash_map_legacy.c</name>
 			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/Src/stm32h5xx_hal_msp.c</locationURI>
+			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/Third_Party/mcuboot/bl2/ext/mcuboot/flash_map_legacy.c</locationURI>
 		</link>
 		<link>
-			<name>Example/User/keys_map.c</name>
+			<name>Middlewares/mcuboot/image_ec.c</name>
 			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/Src/keys_map.c</locationURI>
+			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/Third_Party/mcuboot/boot/bootutil/src/image_ec.c</locationURI>
 		</link>
 		<link>
-			<name>Example/User/mpu_armv8m_drv.c</name>
+			<name>Middlewares/mcuboot/image_ec256.c</name>
 			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/Src/mpu_armv8m_drv.c</locationURI>
+			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/Third_Party/mcuboot/boot/bootutil/src/image_ec256.c</locationURI>
 		</link>
 		<link>
-			<name>Example/User/bl2_nv_services.c</name>
+			<name>Middlewares/mcuboot/image_rsa.c</name>
 			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/Src/bl2_nv_services.c</locationURI>
+			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/Third_Party/mcuboot/boot/bootutil/src/image_rsa.c</locationURI>
 		</link>
 		<link>
-			<name>Example/User/sha256_alt.c</name>
+			<name>Middlewares/mcuboot/image_validate.c</name>
 			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/Src/sha256_alt.c</locationURI>
+			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/Third_Party/mcuboot/boot/bootutil/src/image_validate.c</locationURI>
 		</link>
 		<link>
-			<name>Example/User/keys.c</name>
+			<name>Middlewares/mcuboot/loader.c</name>
 			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/Src/keys.c</locationURI>
-		</link>		<link>
-			<name>Example/User/startup_stm32h5xx.c</name>
+			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/Third_Party/mcuboot/boot/bootutil/src/loader.c</locationURI>
+		</link>
+		<link>
+			<name>Middlewares/mcuboot/security_cnt.c</name>
 			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/Src/startup_stm32h5xx.c</locationURI>
+			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/Third_Party/mcuboot/bl2/src/security_cnt.c</locationURI>
+		</link>
+		<link>
+			<name>Middlewares/mcuboot/swap_misc.c</name>
+			<type>1</type>
+			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/Third_Party/mcuboot/boot/bootutil/src/swap_misc.c</locationURI>
+		</link>
+		<link>
+			<name>Middlewares/mcuboot/swap_move.c</name>
+			<type>1</type>
+			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/Third_Party/mcuboot/boot/bootutil/src/swap_move.c</locationURI>
+		</link>
+		<link>
+			<name>Middlewares/mcuboot/swap_scratch.c</name>
+			<type>1</type>
+			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/Third_Party/mcuboot/boot/bootutil/src/swap_scratch.c</locationURI>
+		</link>
+		<link>
+			<name>Middlewares/mcuboot/tlv.c</name>
+			<type>1</type>
+			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/Third_Party/mcuboot/boot/bootutil/src/tlv.c</locationURI>
+		</link>
+		<link>
+			<name>Middlewares/mcuboot/uart_stdout.c</name>
+			<type>1</type>
+			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/Third_Party/mcuboot/platform/ext/common/uart_stdout.c</locationURI>
 		</link>
 	</linkedResources>
 </projectDescription>

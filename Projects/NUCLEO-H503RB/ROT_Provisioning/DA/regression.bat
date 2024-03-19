@@ -12,7 +12,7 @@ set "command=start /b call password_provisioning.bat AUTO"
 %command% >nul
 
 :: Regression with password
-%stm32programmercli% -c port=SWD pwd=password.bin debugauth=1
+%stm32programmercli% -c port=SWD pwd=da_password.bin debugauth=1
 if !errorlevel! neq 0 goto :error
 
 echo "regression script success"

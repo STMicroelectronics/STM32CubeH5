@@ -12,7 +12,7 @@ Then the SystemClock_Config() function is used to configure the system
 clock (SYSCLK) to run at 250 MHz.
 
 The goal of this example is to explain the different steps to configure the FMC 
-and make the NOR device ready for access( with the user own HW) , without using the MSP layer .       
+and make the NOR device ready for access( with the user own HW).       
 
 In this example, the NOR device is configured and initialized explicitly 
 following all initialization sequence steps. After initializing the device, user 
@@ -20,8 +20,6 @@ can perform erase/read NOR ID/read data/write data operations on it.
 A data buffer is written to the NOR memory, then read back and checked to verify 
 its correctness.
 
-If the data is read correctly from NOR, the LED1 is ON, otherwise the LED2 is ON.
-In case of HAL initialization issue, LED3 will be ON.
   
 #### <b>Notes</b>
 
@@ -40,7 +38,6 @@ FMC/FSMC, Memory, NOR, Erase, Read, Write, Access
 
 ### <b>Directory contents</b>
 
- - FMC/FMC_NOR/Inc/stm32h563ZI_nucleo_conf.h     BSP configuration file
  - FMC/FMC_NOR/Inc/stm32h5xx_hal_conf.h        HAL Configuration file
  - FMC/FMC_NOR/Inc/main.h                      Header for main.c module 
  - FMC/FMC_NOR/Inc/stm32h5xx_it.h              Header for stm32h5xx_it.c
@@ -53,7 +50,10 @@ FMC/FSMC, Memory, NOR, Erase, Read, Write, Access
 ### <b>Hardware and Software environment</b>
  - This example runs on STM32H563ZITx devices.
 
- - This example has been tested with HW other than NUCLEO-H563ZI board on which only compilation is done. 
+ - This example can be tested using STM32H562xx or STM32H563xx or STM32H573xx devices
+   and a NOR memory (M29W128GL70ZA6E) mounted on a user custom board. 
+   The IOs to be connected between the memory and the MCU are detailed in 
+   FMC/FMC_NOR/Src/stm32h5xx_hal_msp.c file. 
       
 ### <b>How to use it ?</b>
 

@@ -157,10 +157,10 @@ enum image_attributes
 #endif
 #if defined(MCUBOOT_OVERWRITE_ONLY)
   RE_OVER_WRITE = (0x1),
-  RE_TRAILER_MAX_SIZE = (0x40),
+  RE_CMSE_VENEER_REGION_SIZE = (0x400),
 #else
   RE_OVER_WRITE = (0x0),
-  RE_TRAILER_MAX_SIZE = (0x1E00),
+  RE_CMSE_VENEER_REGION_SIZE = (0x2000),
 #endif
   RE_OEMUROT_ENABLE = (0x0),
   RE_FLASH_PAGE_NBR = (0x7F)

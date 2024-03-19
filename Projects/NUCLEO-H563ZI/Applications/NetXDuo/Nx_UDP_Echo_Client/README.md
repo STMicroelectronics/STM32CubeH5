@@ -72,12 +72,12 @@ void MX_ETH_Init(void)
 
   /* USER CODE END ETH_Init 1 */
   heth.Instance = ETH;
-  heth.Init.MACAddr[0] =   0x00;
-  heth.Init.MACAddr[1] =   0x11;
-  heth.Init.MACAddr[2] =   0x83;
-  heth.Init.MACAddr[3] =   0x45;
-  heth.Init.MACAddr[4] =   0x26;
-  heth.Init.MACAddr[5] =   0x20;
+  MACAddr[0] = 0x00;
+  MACAddr[1] = 0x80;
+  MACAddr[2] = 0xE1;
+  MACAddr[3] = 0x00;
+  MACAddr[4] = 0x00;
+  MACAddr[5] = 0x00;
 ```
 #### <b>Known limitations</b>
 None
@@ -149,7 +149,7 @@ RTOS, Network, ThreadX, NetXDuo, UDP, UART
 In order to make the program work, you must do the following :
 
  - Open your preferred toolchain
- - Edit the file <code> NetXDuo/App/app_netxduo.h</code> and correctly define the <UDP_SERVER_ADDRESS> and <UDP_SERVER_PORT> to connect on.
+ - Edit the file <code> NetXDuo/App/app_netxduo.h</code> and correctly define the <i>UDP_SERVER_ADDRESS</i> and <i>UDP_SERVER_PORT</i> to connect on.
  - run the [echotool](https://github.com/PavelBansky/EchoTool/releases/tag/v1.5.0.0) utility    on a windows console as following:
 
        c:\> .\echotool.exe /p udp /s <UDP_SERVER_PORT> 

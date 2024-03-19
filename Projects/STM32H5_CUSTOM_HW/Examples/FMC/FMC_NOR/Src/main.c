@@ -21,7 +21,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "stm32h5xx_nucleo.h"
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -47,9 +47,6 @@ NOR_HandleTypeDef hnor1;
 /* Private variables ---------------------------------------------------------*/
 FMC_NORSRAM_TimingTypeDef NOR_Timing;
 
-/* NOR IDs structure */
-static NOR_IDTypeDef NOR_Id;
-
 /* Read/Write Buffers */
 uint16_t aTxBuffer[BUFFER_SIZE];
 uint16_t aRxBuffer[BUFFER_SIZE];
@@ -64,8 +61,6 @@ uint32_t uwIndex = 0;
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
-static void MX_FLASH_Init(void);
-static void MX_MEMORYMAP_Init(void);
 static void MX_FMC_Init(void);
 static void MX_ICACHE_Init(void);
 /* USER CODE BEGIN PFP */
@@ -119,48 +114,9 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
-  MX_FLASH_Init();
-  MX_MEMORYMAP_Init();
   MX_FMC_Init();
   MX_ICACHE_Init();
   /* USER CODE BEGIN 2 */
-  /* Configure LED1, LED2 and LED3 */
-  BSP_LED_Init(LED1);
-  BSP_LED_Init(LED2);
-  BSP_LED_Init(LED3);
-
-  /*##-1- Configure the NOR device ##########################################*/
-  /* Read NOR memory ID */
-  if(HAL_NOR_Read_ID(&hnor1, &NOR_Id) != HAL_OK)
-  {
-    /* NOR read ID Error */
-    Error_Handler();
-  }
-  
-  /* Test the NOR ID correctness */
-  if((NOR_Id.Manufacturer_Code != (uint16_t)MANUFACTURER_CODE) ||
-     (NOR_Id.Device_Code1 != (uint16_t)DEVICE_CODE1) ||
-     (NOR_Id.Device_Code2 != (uint16_t)DEVICE_CODE2) ||
-     (NOR_Id.Device_Code3 != (uint16_t)DEVICE_CODE3))
-  {
-    /* NOR ID not correct */
-    Error_Handler();
-  }
-
-  /* Return to read mode */
-  HAL_NOR_ReturnToReadMode(&hnor1);
-  
-  /* Erase the NOR memory block to write on */
-  HAL_NOR_Erase_Block(&hnor1, WRITE_READ_ADDR, NOR_BANK_ADDR);
-  
-  /* Return the NOR memory status */  
-  if(HAL_NOR_GetStatus(&hnor1, NOR_BANK_ADDR, NOR_TIMEOUT_VALUE) != HAL_NOR_STATUS_SUCCESS)
-  {
-    /* Erase Error */
-    Error_Handler();
-  }
-
-  /*##-2- NOR memory read/write access ######################################*/
   /* Fill the buffer to write */
   Fill_Buffer(aTxBuffer, BUFFER_SIZE, 0xC20F);
 
@@ -197,14 +153,14 @@ int main(void)
   if(uwWriteReadStatus != PASSED)
   {
     /* KO */
-    /* Turn on LED2 */
-    BSP_LED_On(LED2);
+ 
+Error_Handler();
+
   }
   else
   {
     /* OK */
-    /* Turn on LED1 */
-    BSP_LED_On(LED1);
+   
   }
   /* USER CODE END 2 */
 
@@ -273,35 +229,6 @@ void SystemClock_Config(void)
 }
 
 /**
-  * @brief FLASH Initialization Function
-  * @param None
-  * @retval None
-  */
-static void MX_FLASH_Init(void)
-{
-
-  /* USER CODE BEGIN FLASH_Init 0 */
-
-  /* USER CODE END FLASH_Init 0 */
-
-  /* USER CODE BEGIN FLASH_Init 1 */
-
-  /* USER CODE END FLASH_Init 1 */
-  if (HAL_FLASH_Unlock() != HAL_OK)
-  {
-    Error_Handler();
-  }
-  if (HAL_FLASH_Lock() != HAL_OK)
-  {
-    Error_Handler();
-  }
-  /* USER CODE BEGIN FLASH_Init 2 */
-
-  /* USER CODE END FLASH_Init 2 */
-
-}
-
-/**
   * @brief ICACHE Initialization Function
   * @param None
   * @retval None
@@ -326,27 +253,6 @@ static void MX_ICACHE_Init(void)
   /* USER CODE BEGIN ICACHE_Init 2 */
 
   /* USER CODE END ICACHE_Init 2 */
-
-}
-
-/**
-  * @brief MEMORYMAP Initialization Function
-  * @param None
-  * @retval None
-  */
-static void MX_MEMORYMAP_Init(void)
-{
-
-  /* USER CODE BEGIN MEMORYMAP_Init 0 */
-
-  /* USER CODE END MEMORYMAP_Init 0 */
-
-  /* USER CODE BEGIN MEMORYMAP_Init 1 */
-
-  /* USER CODE END MEMORYMAP_Init 1 */
-  /* USER CODE BEGIN MEMORYMAP_Init 2 */
-
-  /* USER CODE END MEMORYMAP_Init 2 */
 
 }
 
@@ -418,11 +324,11 @@ static void MX_GPIO_Init(void)
 /* USER CODE END MX_GPIO_Init_1 */
 
   /* GPIO Ports Clock Enable */
+  __HAL_RCC_GPIOE_CLK_ENABLE();
   __HAL_RCC_GPIOF_CLK_ENABLE();
   __HAL_RCC_GPIOH_CLK_ENABLE();
   __HAL_RCC_GPIOA_CLK_ENABLE();
   __HAL_RCC_GPIOG_CLK_ENABLE();
-  __HAL_RCC_GPIOE_CLK_ENABLE();
   __HAL_RCC_GPIOD_CLK_ENABLE();
   __HAL_RCC_GPIOC_CLK_ENABLE();
 
@@ -481,9 +387,9 @@ void Error_Handler(void)
 {
   /* USER CODE BEGIN Error_Handler_Debug */
   /* User can add his own implementation to report the HAL error return state */
-  __disable_irq();
-  while (1)
+  while(1) 
   {
+    
   }
   /* USER CODE END Error_Handler_Debug */
 }

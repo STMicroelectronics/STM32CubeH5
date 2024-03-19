@@ -244,14 +244,16 @@ void SystemClock_Config(void)
   }
 
   LL_RCC_PLL1_SetSource(LL_RCC_PLL1SOURCE_HSE);
-  LL_RCC_PLL1_SetVCOInputRange(LL_RCC_PLLINPUTRANGE_2_4);
+  LL_RCC_PLL1_SetVCOInputRange(LL_RCC_PLLINPUTRANGE_8_16);
   LL_RCC_PLL1_SetVCOOutputRange(LL_RCC_PLLVCORANGE_WIDE);
-  LL_RCC_PLL1_SetM(4);
-  LL_RCC_PLL1_SetN(250);
+  LL_RCC_PLL1_SetM(1);
+  LL_RCC_PLL1_SetN(62);
   LL_RCC_PLL1_SetP(2);
   LL_RCC_PLL1_SetQ(2);
   LL_RCC_PLL1_SetR(2);
   LL_RCC_PLL1P_Enable();
+  LL_RCC_PLL1FRACN_Enable();
+  LL_RCC_PLL1_SetFRACN(4096);
   LL_RCC_PLL1_Enable();
 
    /* Wait till PLL is ready */
@@ -294,7 +296,7 @@ static void MX_ADC1_Init(void)
 
   LL_GPIO_InitTypeDef GPIO_InitStruct = {0};
 
-  LL_RCC_SetADCDACClockSource(LL_RCC_ADCDAC_CLKSOURCE_HCLK);
+  LL_RCC_SetADCDACClockSource(LL_RCC_ADCDAC_CLKSOURCE_SYSCLK);
 
   /* Peripheral clock enable */
   LL_AHB2_GRP1_EnableClock(LL_AHB2_GRP1_PERIPH_ADC);

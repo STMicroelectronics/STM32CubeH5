@@ -1,6 +1,6 @@
 @ECHO OFF
 
-:: Getting the Trusted Package Creator and STM32CubeProgammer CLI path 
+:: Getting the Trusted Package Creator and STM32CubeProgammer CLI path
 call ../env.bat
 
 :: Enable delayed expansion
@@ -78,7 +78,7 @@ goto step_error
 :: =============================================== Steps to create the STiRoT_Config.obk file ==============================================
 echo Step 1 : Configuration management
 echo    * STiRoT_Config.obk generation:
-echo        From TrustedPackageCreator (tab H5-OBkey)
+echo        From TrustedPackageCreator (OBkey tab in Security panel)
 echo        Select STiRoT_Config.xml(Default path is \ROT_Provisioning\STiROT\Config\STiRoT_Config.xml)
 echo        Warning: Default keys must NOT be used in a product. Make sure to regenerate your own keys!
 echo        Update the configuration (if/as needed) then generate STiRoT_Config.obk file
@@ -90,10 +90,10 @@ if [%1] neq [AUTO] pause >nul
 echo;
 echo    * DA_Config.obk generation:
 echo        Warning: Default keys must NOT be used in a product. Make sure to regenerate your own keys!
-echo        From TrustedPackageCreator (tab H5-DA CertifGen),
+echo        From TrustedPackageCreator (Debug Authentication - Certificate Generation tab in Security panel),
 echo        update the keys(s) (in \ROT_Provisioning\DA\Keys) and permissions (if/as needed)
 echo        then regenerate the certificate(s)
-echo        From TrustedPackageCreator (tab H5-OBKey),
+echo        From TrustedPackageCreator (OBkey tab in Security panel),
 echo        Select DA_Config.xml (in \ROT_Provisioning\DA\Config)
 echo        Update the configuration (if/as needed) then generate DA_Config.obk file
 echo        Press any key to continue...
@@ -265,7 +265,7 @@ set current_log_file="./*.log files "
 echo;
 goto product_state_choice
 
-:: ========================================= Product State configuration and Provisioning steps ==========================================   
+:: ========================================= Product State configuration and Provisioning steps ==========================================
 :: Connect BOOT0 pin to VDD
 :connect_boot0
 echo    * BOOT0 pin should be connected to VDD:
@@ -275,7 +275,7 @@ echo;
 if [%1] neq [AUTO] pause >nul
 goto provisioning_step
 
-:: Provisioning execution 
+:: Provisioning execution
 :set_provisionning_ps
 set current_log_file=%provisioning_log%
 set "action=Setting the product state PROVISIONING"
@@ -284,7 +284,7 @@ set "command=%stm32programmercli% %connect_no_reset% -ob PRODUCT_STATE=0x17"
 echo %command% >> %provisioning_log%
 echo;
 %command% > %provisioning_log%
-if !errorlevel! neq 0 goto :step_error 
+if !errorlevel! neq 0 goto :step_error
 goto provisioning_step
 
 :: Set the final product state of the STM32H5 product
@@ -315,7 +315,7 @@ echo;
 if /i "%product_state%" == "OPEN" goto :final_execution
 goto set_final_ps
 
-:: ============================================================= End functions =============================================================  
+:: ============================================================= End functions =============================================================
 :: All the steps to set the STM32H5 product were executed correctly
 :final_execution
 

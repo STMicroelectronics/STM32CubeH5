@@ -121,7 +121,7 @@
 /* Defined, this value represents how many ticks per seconds for a specific hardware platform.
    The default is 1000 indicating 1 tick per millisecond.  */
 
-/* #define UX_PERIODIC_RATE     (TX_TIMER_TICKS_PER_SECOND) */
+#define UX_PERIODIC_RATE        1000
 
 /* Define control transfer timeout value in millisecond.
    The default is 10000 milliseconds.  */
@@ -364,9 +364,10 @@
 
 /* #define UX_DEVICE_CLASS_CDC_ACM_WRITE_AUTO_ZLP  */
 
-/* defined, this macro enables device audio interrupt endpoint support.  */
+/* #define UX_DEVICE_CLASS_PRINTER_WRITE_AUTO_ZLP  */
 
-/* define UX_DEVICE_CLASS_AUDIO_INTERRUPT_SUPPORT  */
+/* defined, this macro enables device audio interrupt endpoint support.  */
+/* #define UX_DEVICE_CLASS_AUDIO_INTERRUPT_SUPPORT  */
 
 /* Defined, this macro enables device bi-directional endpoint support. */
 
@@ -403,12 +404,10 @@
 /* #define UX_HOST_CLASS_AUDIO_INTERRUPT_SUPPORT  */
 
 /* Defined, this value will only enable the host side of usbx.  */
-
 #define UX_HOST_SIDE_ONLY
 
 /* Defined, this value will only enable the device side of usbx.  */
 /* #define UX_DEVICE_SIDE_ONLY */
-
 /* Defined, this value will include the OTG polling thread. OTG can only be active if both host/device are present.
 */
 #ifndef UX_HOST_SIDE_ONLY
@@ -455,11 +454,11 @@
 /* #define _ux_utility_interrupt_restore(flags) _tx_thread_interrupt_restore(flags)  */
 
 /* Defined, this enables the assert checks inside usbx.  */
-/* #define UX_ENABLE_ASSERT */
+#define UX_ENABLE_ASSERT
 
 /* Defined, this defines the assert action taken when failure detected. By default
    it halts without any output.  */
-/* #define UX_ASSERT_FAIL  for (;;) {tx_thread_sleep(UX_WAIT_FOREVER); } */
+#define UX_ASSERT_FAIL  for (;;) {tx_thread_sleep(UX_WAIT_FOREVER); }
 
 /* This is the ThreadX priority value for the USBX enumeration threads that monitors the bus topology */
 

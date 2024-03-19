@@ -19,9 +19,6 @@ following all initialization sequence steps. After initializing the device, user
 can perform read/write operations on it. A data buffer is written to the SRAM
 memory, then read back and checked to verify its correctness.
 
-If the data is read correctly from SRAM, the LED1 is ON, otherwise the LED3 is ON.
-In case of HAL initialization issue, LED3 is blinking (1 second period).
-
 #### <b>Notes</b>
 
  1. Care must be taken when using HAL_Delay(), this function provides accurate delay (in milliseconds)
@@ -38,7 +35,6 @@ In case of HAL initialization issue, LED3 is blinking (1 second period).
 FMC/FSMC, Memory, SRAM, Read, Write, Access
 ### <b>Directory contents</b>
 
- - FMC/FMC_SRAM/Inc/stm32h5xx_nucleo_conf.h     BSP configuration file
  - FMC/FMC_SRAM/Inc/stm32h5xx_hal_conf.h        HAL Configuration file
  - FMC/FMC_SRAM/Inc/main.h                      Header for main.c module 
  - FMC/FMC_SRAM/Inc/stm32h5xx_it.h              Header for stm32h5xx_it.c
@@ -52,7 +48,10 @@ FMC/FSMC, Memory, SRAM, Read, Write, Access
 ### <b>Hardware and Software environment</b>
  - This example runs on STM32H563xx devices.
 
- - This example has been tested with HW other than NUCLEO-H563ZI board on which only compilation is done.
+ - This example can be tested using STM32H562xx or STM32H563xx or STM32H573xx devices and a
+   SRAM memory (IS61WV51216BLL) mounted on a user custom board. 
+   The IOs to be connected between the memory and the MCU are detailed in 
+   FMC/FMC_NOR/Src/stm32h5xx_hal_msp.c file.
 
       
 ### <b>How to use it ?</b>

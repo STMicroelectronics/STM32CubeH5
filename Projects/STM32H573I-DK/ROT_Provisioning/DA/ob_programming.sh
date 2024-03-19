@@ -11,7 +11,7 @@ else
     tzen_state=$1;
 fi
 
-if [ $tzen_state == "y" ]; then 
+if [ $tzen_state == "y" ]; then
   tzen_ob=0xB4
 else
   tzen_ob=0xC3
@@ -35,6 +35,7 @@ end_programming()
 {
   echo "Programming success"
   if [ "$script_mode" != "AUTO" ]; then $SHELL; fi
+  return 0
 }
 
 script_error_file="error"
@@ -70,12 +71,11 @@ if [ "$tzen_state" == "y" ]; then
 fi
 
 # Configure WaterMark Option Bytes (only when TZEN=1)
-if [ "$tzen_state" == "n" ]; then end_programming; fi
-action="Configure Secure Water Mark"
-echo "$action"
-"$stm32programmercli" $connect_reset $sec_water_mark
-if [ $? -ne 0 ]; then error; return 1; fi
-
-return
-
+if [ "$tzen_state" == "y" ]; then
+  action="Configure Secure Water Mark"
+  echo "$action"
+  "$stm32programmercli" $connect_reset $sec_water_mark
+  if [ $? -ne 0 ]; then error; return 1; fi
+fi
+end_programming
 return

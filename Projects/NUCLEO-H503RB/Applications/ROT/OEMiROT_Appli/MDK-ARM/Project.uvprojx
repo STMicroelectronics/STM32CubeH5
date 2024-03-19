@@ -340,7 +340,7 @@
               <MiscControls></MiscControls>
               <Define>STM32H503xx,USE_HAL_DRIVER</Define>
               <Undefine></Undefine>
-              <IncludePath>../Inc;../../../../../../Drivers/CMSIS/Include;../../../../../../Drivers/CMSIS/Device/ST/STM32H5xx/Include;../../../../../../Drivers/STM32H5xx_HAL_Driver/Inc;../../../../../../Middlewares/Third_Party/trustedfirmware/platform/ext/driver</IncludePath>
+              <IncludePath>../Inc;../../../../../../Drivers/CMSIS/Include;../../../../../../Drivers/CMSIS/Device/ST/STM32H5xx/Include;../../../../../../Drivers/STM32H5xx_HAL_Driver/Inc;../../../../../../Middlewares/Third_Party/mcuboot/platform/ext/driver</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>

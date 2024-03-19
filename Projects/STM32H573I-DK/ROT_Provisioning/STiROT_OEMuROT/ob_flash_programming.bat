@@ -1,4 +1,6 @@
 call ../env.bat
+set cube_fw_path=%cube_fw_path:"=%
+set rot_provisioning_path=%rot_provisioning_path:"=%
 
 :: Enable delayed expansion
 setlocal EnableDelayedExpansion
@@ -30,8 +32,6 @@ set oemurot_image=rot_enc_sign.hex
 set connect_no_reset=-c port=SWD speed=fast ap=1 mode=Hotplug
 set connect_reset=-c port=SWD speed=fast ap=1 mode=UR
 
-set image_number=2
-
 :: =============================================== Remove protections and initialize Option Bytes ==========================================
 set remove_protect=-ob SECWM1_STRT=1 SECWM1_END=0 WRPSGn1=0xffffffff WRPSGn2=0xffffffff SECWM2_STRT=1 SECWM2_END=0 HDP1_STRT=1 HDP1_END=0 HDP2_STRT=1 HDP2_END=0 SWAP_BANK=0 SRAM2_RST=0 SRAM2_ECC=0 BOOT_UBE=0xB4
 set erase_all=-e all
@@ -46,7 +46,7 @@ set appli_dir=../../%oemirot_boot_path_project%
 
 set "action=Set TZEN = 1"
 echo %action%
-:: Trust zone enabled is mandatory to execute ST-iRoT
+:: Trust zone enabled is mandatory to execute STiRoT
 %stm32programmercli% %connect_no_reset% -ob TZEN=0xB4
 IF !errorlevel! NEQ 0 goto :error
 
@@ -73,7 +73,7 @@ echo "Set SRAM 2 configuration"
 ::   - SRAM2 erased in case of reset ==> SRAM2_RST=0
 ::   - SRAM2 ECC activated. Hack tentative detection enabled ==> SRAM2_ECC=0
 %stm32programmercli% %connect_no_reset% -ob SRAM2_RST=0 SRAM2_ECC=0
-IF !errorlevel! NEQ 0 goto :error 
+IF !errorlevel! NEQ 0 goto :error
 
 set "action=Define secure area through watermarks"
 echo %action%
@@ -139,9 +139,9 @@ echo %action%
 IF !errorlevel! NEQ 0 goto :error
 echo "OEMuROT_Boot Written"
 
-set "action=Set UBE for ST-iRoT"
+set "action=Set UBE for STiRoT"
 echo %action%
-:: Unique boot entry is set to ST-iRoT to force ST-iRoT execution at each reset
+:: Unique boot entry is set to STiRoT to force STiRoT execution at each reset
 %stm32programmercli% %connect_reset% -ob BOOT_UBE=0xC3
 IF !errorlevel! NEQ 0 goto :error
 

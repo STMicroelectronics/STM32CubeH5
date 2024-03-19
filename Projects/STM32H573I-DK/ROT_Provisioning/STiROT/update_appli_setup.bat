@@ -87,7 +87,7 @@ set "action=Update STiROT_Code_Image.xml input binary file"
 if !errorlevel! neq 0 goto :error
 
 set "action=Update STiROT_Code_Image.xml output encrypted/signed hexadecimal file"
-%AppliCfg% xmlval --name %fw_out_bin% --value %stirot_app_hex% --string --vb %code_image% 
+%AppliCfg% xmlval --name %fw_out_bin% --value %stirot_app_hex% --string --vb %code_image%
 if !errorlevel! neq 0 goto :error
 
 set "action=Updating Linker .icf and .ld secure file"
@@ -131,7 +131,7 @@ set "action=Update STiROT_Code_Image.xml input binary file"
 if !errorlevel! neq 0 goto :error
 
 set "action=Update STiROT_Code_Image.xml output encrypted/signed hexadecimal file"
-%AppliCfg% xmlval --name %fw_out_bin% --value %stirot_app_hex% --string --vb %code_image% 
+%AppliCfg% xmlval --name %fw_out_bin% --value %stirot_app_hex% --string --vb %code_image%
 if !errorlevel! neq 0 goto :error
 
 set "action=Update appli postbuild"

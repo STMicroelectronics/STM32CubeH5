@@ -392,7 +392,6 @@ VOID ux_host_error_callback(UINT system_level, UINT system_context, UINT error_c
 VOID USBX_APP_Host_Init(VOID)
 {
   /* USER CODE BEGIN USB_Host_Init_PreTreatment_0 */
-  HAL_PWREx_EnableVddUSB();
   /* USER CODE END USB_Host_Init_PreTreatment_0 */
 
   /* Initialize the LL driver */

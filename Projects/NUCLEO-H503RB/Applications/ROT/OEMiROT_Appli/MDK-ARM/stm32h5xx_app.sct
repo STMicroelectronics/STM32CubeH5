@@ -20,10 +20,9 @@
 #define CODE_SIZE 0xC000                                        /* This define is updated automatically from OEMiROT_BOOT project */
 
 #define IMAGE_HEADER_SIZE 0x400                                 /* mcuboot header size */
-#define TRAILER_MAX_SIZE 0x40                                   /* Trailer max size */
 
 #define CODE_START 0x08000000 + CODE_OFFSET + IMAGE_HEADER_SIZE
-#define APP_CODE_SIZE CODE_SIZE - TRAILER_MAX_SIZE - IMAGE_HEADER_SIZE
+#define APP_CODE_SIZE CODE_SIZE - IMAGE_HEADER_SIZE
 
 #define DATA_START 0x20000000
 #define DATA_SIZE 0x7FFF

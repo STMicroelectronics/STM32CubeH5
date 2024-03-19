@@ -1,5 +1,5 @@
 ## <b>I3C_Target_IBI_Wakeup_IT Example Description</b>
-How to handle a In Band Interrupt procedure to an I3C Controller in Stop Mode
+How to handle a In Band Interrupt procedure to an I3C Controller in Stop Mode.
 
       - Board: NUCLEO-H563ZI's (embeds a STM32H563ZI device)
       - SCL Pin: PB8 (Arduino SCL/D15 CN6 pin 2, Morpho CN5 pin3)

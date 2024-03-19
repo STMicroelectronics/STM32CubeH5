@@ -910,4 +910,3 @@ LPTIM6_IRQHandler
         B LPTIM6_IRQHandler
 
         END
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

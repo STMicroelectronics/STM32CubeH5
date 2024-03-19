@@ -9,7 +9,7 @@ define exported symbol IMAGE_HEADER_SIZE = 0x400; /* mcuboot header size */
 define exported symbol __ICFEDIT_intvec_start__ = 0x0C000000 + S_CODE_OFFSET + IMAGE_HEADER_SIZE;
 /*-Memory Regions-*/
 define exported symbol __ICFEDIT_region_ROM_start__     = 0x0C000000 + S_CODE_OFFSET + IMAGE_HEADER_SIZE;
-define symbol __ICFEDIT_region_ROM_end__       = 0x0C000000 + S_CODE_OFFSET + S_CODE_SIZE + IMAGE_HEADER_SIZE - 16 - 1;
+define symbol __ICFEDIT_region_ROM_end__       = 0x0C000000 + S_CODE_OFFSET + S_CODE_SIZE - 1;
 /* Only use SRAM2/3 as full secure for our application */
 /* Because when the application jump to the bootloader, the BL uses the SRAM1 resources */
 define exported symbol __ICFEDIT_region_RAM_start__     = 0x30040000;

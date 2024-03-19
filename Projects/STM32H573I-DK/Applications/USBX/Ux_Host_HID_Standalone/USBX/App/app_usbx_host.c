@@ -49,8 +49,7 @@
 #if defined ( __ICCARM__ )
 #pragma data_alignment=4
 #endif
-__ALIGN_BEGIN static UCHAR ux_host_memory_buffer[USBX_HOST_APP_MEMORY_BUFFER_SIZE] __ALIGN_END;
-
+__ALIGN_BEGIN static UCHAR ux_host_byte_pool_buffer[UX_HOST_APP_MEM_POOL_SIZE] __ALIGN_END;
 /* USER CODE BEGIN PV */
 UX_HOST_CLASS_HID          *hid_instance;
 UX_HOST_CLASS_HID_MOUSE    *mouse;
@@ -78,7 +77,7 @@ UINT MX_USBX_Host_Init(VOID)
 
   /* USER CODE END MX_USBX_Host_Init0 */
 
-  pointer = ux_host_memory_buffer;
+  pointer = ux_host_byte_pool_buffer;
 
   /* Initialize USBX Memory */
   if (ux_system_initialize(pointer, USBX_HOST_MEMORY_STACK_SIZE, UX_NULL, 0) != UX_SUCCESS)
@@ -416,13 +415,13 @@ VOID USBX_APP_Host_Init(VOID)
   ux_host_stack_hcd_register(_ux_system_host_hcd_stm32_name,
                              _ux_hcd_stm32_initialize, (ULONG)USB_DRD_FS,
                              (ULONG)&hhcd_USB_DRD_FS);
-  
+
 
   BSP_USBPD_PWR_Init(0);
   BSP_USBPD_PWR_SetRole(0, POWER_ROLE_SOURCE);
   BSP_USBPD_PWR_VBUSInit(0);
   BSP_USBPD_PWR_VBUSOn(0);
-  
+
   /* Enable USB Global Interrupt */
   HAL_HCD_Start(&hhcd_USB_DRD_FS);
 
@@ -430,8 +429,8 @@ VOID USBX_APP_Host_Init(VOID)
   /* USER CODE BEGIN USB_Host_Init_PostTreatment1 */
 
   /* Start Application Message */
-  USBH_UsrLog("**** USB DRD HID Host **** \n");
-  USBH_UsrLog("USB Host library started.\n");
+  USBH_UsrLog("**** USB DRD HID Host **** \r\n");
+  USBH_UsrLog("USB Host library started.\r\n");
 
   /* Wait for Device to be attached */
   USBH_UsrLog("Starting HID Application");

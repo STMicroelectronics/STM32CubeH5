@@ -62,7 +62,7 @@ TrustZone, OEMiROT, boot path, Root Of Trust, MPU
 
 ### <b>Hardware and Software environment</b>
 
-  - This example runs on STM32H563xx devices with security enabled (TZEN=B4).
+  - This example runs on STM32H563xx (2MBytes) devices with security enabled (TZEN=B4).
   - This example has been tested with STMicroelectronics NUCLEO-H563ZI (MB1404)
     board and can be easily tailored to any other supported device
     and development board.

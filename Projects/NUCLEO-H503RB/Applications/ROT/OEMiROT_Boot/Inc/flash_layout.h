@@ -64,7 +64,7 @@
  * sw binary. Each FLASH_AREA_IMAGE contains two partitions. See Flash layout
  * above.
  */
-#define LOADER_FLASH_DEV_NAME             TFM_Driver_FLASH0
+#define LOADER_FLASH_DEV_NAME             Driver_FLASH0
 
 /* Flash layout info for BL2 bootloader */
 #define FLASH_AREA_IMAGE_SECTOR_SIZE    (0x2000)     /* 8 KB */
@@ -200,12 +200,12 @@
  * Name is defined in flash driver file: low_level_flash.c
  */
 /* Flash Driver Used to Confirm NonSecure App Image or MCUBOOT_APP_IMAGE_NUMBER = 1 */
-#define  FLASH_PRIMARY_NONSECURE_DEV_NAME          TFM_Driver_FLASH0
+#define  FLASH_PRIMARY_NONSECURE_DEV_NAME          Driver_FLASH0
 #if !defined(MCUBOOT_OVERWRITE_ONLY) && (MCUBOOT_DATA_IMAGE_NUMBER == 1)
 /* Flash Driver Used to Confirm NonSecure Data Image */
-#define  FLASH_PRIMARY_DATA_NONSECURE_DEV_NAME     TFM_Driver_FLASH0
+#define  FLASH_PRIMARY_DATA_NONSECURE_DEV_NAME     Driver_FLASH0
 #endif /* !defined(MCUBOOT_OVERWRITE_ONLY) && (MCUBOOT_DATA_IMAGE_NUMBER == 1) */
-#define FLASH_DEV_NAME                             TFM_Driver_FLASH0
+#define FLASH_DEV_NAME                             Driver_FLASH0
 
 
 /* BL2 NV Counters definitions  */

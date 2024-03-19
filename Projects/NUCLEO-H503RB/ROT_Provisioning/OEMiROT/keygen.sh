@@ -11,8 +11,8 @@ cd $projectdir
 cd $projectdir/../../Applications/ROT/OEMiROT_Boot/Src
 keys_c_dir='pwd'
 cd $projectdir
-cd $projectdir/../../../../Middlewares/Third_Party/mcuboot
-mcuboot_dir='pwd'
+cd $stm32programmercli_path
+tpc_dir='pwd'
 cd $projectdir
 keys_c="$keys_c_dir\keys.c"
 
@@ -29,10 +29,10 @@ error_key()
 rsa_key_error()
 {
     cnt=$cnt+1
-    if [ "$cnt" -ge "2" ]; then 
+    if [ "$cnt" -ge "2" ]; then
         error_key
-    else 
-        keygen 
+    else
+        keygen
     fi
 }
 keygen()
@@ -62,14 +62,14 @@ keygen()
     exit 0
 }
 
-imgtool="$mcuboot_dir/scripts/dist/imgtool/imgtool.exe"
+imgtool="$tpc_dir/Utilities/Windows/imgtool.exe"
 uname | grep -i -e windows -e mingw
 if [ $? == 0 ] && [ -e "$imgtool" ]; then
     echo "Keygen with windows executable"
 else
     echo "Keygen with python script"
-    imgtool="$mcuboot_dir\scripts\imgtool.py"
-    python="python "
+    imgtool="$tpc_dir\Utilities\Linux\imgtool"
+    python="python3 "
 fi
 
 keygen

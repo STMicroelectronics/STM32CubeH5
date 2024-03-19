@@ -87,7 +87,7 @@ set "command=%python%%applicfg% flash --layout %preprocess_bl2_file% -b MCUBOOT_
 %command%
 IF !errorlevel! NEQ 0 goto :error
 
-set "command=%python%%applicfg% flash --layout %preprocess_bl2_file% -b TRAILER_SIZE -m RE_TRAILER_MAX_SIZE %map_properties% --vb >> %current_log_file% 2>&1"
+set "command=%python%%applicfg% flash --layout %preprocess_bl2_file% -b CMSE_VENEER_REGION_SIZE -m RE_CMSE_VENEER_REGION_SIZE %map_properties% --vb >> %current_log_file% 2>&1"
 %command%
 IF !errorlevel! NEQ 0 goto :error
 
@@ -231,11 +231,7 @@ set "command=%python%%applicfg% linker --layout %preprocess_bl2_file% -m RE_IMAG
 %command%
 IF !errorlevel! NEQ 0 goto :error
 
-set "command=%python%%applicfg% linker --layout %preprocess_bl2_file% -m RE_TRAILER_MAX_SIZE -n TRAILER_MAX_SIZE %ns_icf_file% --vb >> %current_log_file% 2>&1"
-%command%
-IF !errorlevel! NEQ 0 goto :error
-
-set "command=%python%%applicfg% linker --layout %preprocess_bl2_file% -m RE_TRAILER_MAX_SIZE -n TRAILER_MAX_SIZE %s_icf_file% --vb >> %current_log_file% 2>&1"
+set "command=%python%%applicfg% linker --layout %preprocess_bl2_file% -m RE_CMSE_VENEER_REGION_SIZE -n CMSE_VENEER_REGION_SIZE %s_icf_file% --vb >> %current_log_file% 2>&1"
 %command%
 IF !errorlevel! NEQ 0 goto :error
 

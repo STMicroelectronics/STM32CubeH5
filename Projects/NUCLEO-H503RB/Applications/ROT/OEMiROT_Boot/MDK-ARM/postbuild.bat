@@ -40,8 +40,8 @@ set isGeneratedByCubeMX=%PROJECT_GENERATED_BY_CUBEMX%
 set appli_flash_layout="%appli_dir%\Inc\appli_flash_layout.h"
 set appli_linker_file="%appli_dir%\MDK-ARM\stm32h5xx_app.sct"
 set "map_properties=%projectdir%\..\..\OEMiROT_Boot\map.properties"
-set code_xml="%projectdir%\..\..\..\..\ROT_Provisioning\OEMiROT\Images\OEMiRoT_code_image.xml"
-set data_xml="%projectdir%\..\..\..\..\ROT_Provisioning\OEMiROT\Images\OEMiRoT_Data_Image.xml"
+set code_xml="%projectdir%\..\..\..\..\ROT_Provisioning\OEMiROT\Images\OEMiROT_Code_Image.xml"
+set data_xml="%projectdir%\..\..\..\..\ROT_Provisioning\OEMiROT\Images\OEMiROT_Data_Image.xml"
 
 set "command=%python%%applicfg% flash --layout %preprocess_bl2_file% -b CODE_REGION_START -m  RE_IMAGE_FLASH_ADDRESS %map_properties% --vb >> %current_log_file% 2>&1"
 %command%

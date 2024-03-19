@@ -43,7 +43,6 @@ extern "C" {
 #define S_CODE_SIZE        0x6000 /* This define is updated automatically from ROT_BOOT project */
 #define NS_CODE_OFFSET     (S_CODE_OFFSET + S_CODE_SIZE) /* Non secure code Offset */
 #define IMAGE_HEADER_SIZE  (0x400)  /* mcuboot headre size */
-#define TRAILER_MAX_SIZE   (0x40)  /* max size trailer */
 #define S_CODE_START       (FLASH_BASE_S + S_CODE_OFFSET + IMAGE_HEADER_SIZE)
 
 /* Exported types ------------------------------------------------------------*/

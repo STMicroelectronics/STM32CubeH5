@@ -41,8 +41,8 @@ extern "C" {
 /* USER CODE END ET */
 
 /* Exported constants --------------------------------------------------------*/
-#define USBX_HOST_APP_MEMORY_BUFFER_SIZE  22*1024
-#define USBX_HOST_MEMORY_STACK_SIZE     22*1024
+#define UX_HOST_APP_MEM_POOL_SIZE  22528
+#define USBX_HOST_MEMORY_STACK_SIZE     22528
 
 /* USER CODE BEGIN EC */
 
@@ -51,11 +51,11 @@ extern "C" {
 /* Exported macro ------------------------------------------------------------*/
 /* USER CODE BEGIN EM */
 #define USBH_UsrLog(...)   printf(__VA_ARGS__);\
-                           printf("\n");
+                           printf("\r\n");
 
 #define USBH_ErrLog(...)   printf("ERROR: ") ;\
                            printf(__VA_ARGS__);\
-                           printf("\n");
+                           printf("\r\n");
 /* USER CODE END EM */
 
 /* Exported functions prototypes ---------------------------------------------*/

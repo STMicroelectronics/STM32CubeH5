@@ -10,7 +10,7 @@ SCRIPT=$(readlink -f $0)
 da_projectdir=`dirname $SCRIPT`
 # CubeProgammer path and input files
 user_password="$da_projectdir/../DA/user_password.bin"
-da_password="$da_projectdir/../DA/password.bin"
+da_password="$da_projectdir/../DA/da_password.bin"
 board_password="$da_projectdir/../DA/board_password.bin"
 
 # Environment variable for AppliCfg
@@ -25,7 +25,7 @@ else
   echo AppliCfg with python script
   applicfg="$cube_fw_path/Utilities/PC_Software/ROT_AppliConfig/AppliCfg.py"
   #determine/check python version command
-  python="python "
+  python="python3 "
 fi
 AppliCfg=$python$applicfg
 
@@ -36,10 +36,10 @@ error()
   if [ "$script_mode" != "AUTO" ]; then $SHELL; fi
 }
 
-# ======================================================= Create board password =========================================================   
+# ======================================================= Create board password =========================================================
 action="Create password file"
 echo "$action"
-$AppliCfg hashcontent -i $user_password -d $da_password -h 0x80000000 --create --vb $board_password
+$AppliCfg hashcontent -i $user_password $board_password --password --da_bin_file=$da_password -h 0x000000800C000000
 if [ $? -ne 0 ]; then error; return 1; fi
 
 echo "Password script creation success"

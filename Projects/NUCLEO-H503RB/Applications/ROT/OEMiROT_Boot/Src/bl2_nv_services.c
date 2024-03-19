@@ -24,16 +24,16 @@
       write Non volatile Monothonic Counters.
 
       (#) NVCNT initialization functions:
-               (++) Initialize NVCNT using tfm_plat_init_nv_counter function,
+               (++) Initialize NVCNT using plat_init_nv_counter function,
          it must be performed at system start up.
          At first boot, on a virgin flash, the NV area is formatted and
          header (32bits) is written in NV area.
 
       (#) NVCNT counter access functions:
-           (++) Write Monothonic counter using tfm_plat_set_nv_counter or tfm_plat_set_nv_counter functions
+           (++) Write Monothonic counter using plat_set_nv_counter or plat_set_nv_counter functions
                 A Clean Up request can be raised as return parameter in case
                 FLASH pages used by EEPROM emulation, are full.
-           (++) Read monothonic counter using tfm_plat_read_nv_counter functions
+           (++) Read monothonic counter using plat_read_nv_counter functions
 
   @endverbatim
   ******************************************************************************
@@ -42,8 +42,8 @@
 /* Includes ------------------------------------------------------------------*/
 #include "boot_hal_cfg.h"
 #include "string.h"
-#include "platform/include/region.h"
-#include "platform/include/tfm_plat_nv_counters.h"
+#include "platform/include/plat_nv_counters.h"
+
 #ifdef OEMIROT_DEV_MODE
 #define BOOT_LOG_LEVEL BOOT_LOG_LEVEL_INFO
 #else
@@ -152,11 +152,11 @@ static bool init_counter(void);
   *         Check consistency of nv counter storage
   *         Initialize global variable for write access.
   *
-  * @retval enum tfm_plat_err_t
-  *           - TFM_PLAT_ERR_SUCCESS in case of success
-  *           - TFM_PLAT_ERR_SYSTEM_ERR in case of error
+  * @retval HAL_StatusTypeDef
+  *           - HAL_OK in case of success
+  *           - HAL_ERROR in case of error
   */
-enum tfm_plat_err_t tfm_plat_init_nv_counter(void)
+HAL_StatusTypeDef plat_init_nv_counter(void)
 {
 
   int32_t  err;
@@ -183,7 +183,7 @@ enum tfm_plat_err_t tfm_plat_init_nv_counter(void)
     if (!Write_Header())
     {
       BOOT_LOG_ERR("Init BL2 NV Header area: Failed");
-      return TFM_PLAT_ERR_SYSTEM_ERR;
+      return HAL_ERROR;
     }
     BOOT_LOG_INF("Init BL2 NV Header area: Done");
     /* initialize nv counter 3 to 0 */
@@ -192,7 +192,7 @@ enum tfm_plat_err_t tfm_plat_init_nv_counter(void)
     if (!init_counter())
     {
       BOOT_LOG_ERR("Init BL2 NV counters : Failed");
-      return TFM_PLAT_ERR_SYSTEM_ERR;
+      return HAL_ERROR;
     }
     BOOT_LOG_INF("Init BL2 NV counters to 0 : Done");
     BOOT_LOG_INF("BL2 NV Area Initialized : Power Down/reset supported");
@@ -206,35 +206,35 @@ enum tfm_plat_err_t tfm_plat_init_nv_counter(void)
   if (!Check_Header())
   {
     BOOT_LOG_ERR("Wrong BL2 NV Area header");
-    return TFM_PLAT_ERR_SYSTEM_ERR;
+    return HAL_ERROR;
   }
   BOOT_LOG_INF("Checking BL2 NV Counter consistency");
-  if (tfm_plat_read_nv_counter(PLAT_NV_COUNTER_3, sizeof(counter_value),
-                               (uint8_t *)&counter_value) != TFM_PLAT_ERR_SUCCESS)
+  if (plat_read_nv_counter(PLAT_NV_COUNTER_3, sizeof(counter_value),
+                               (uint8_t *)&counter_value) != HAL_OK)
   {
     BOOT_LOG_ERR("NV Counter Not consistent %d", PLAT_NV_COUNTER_3);
-    return TFM_PLAT_ERR_SYSTEM_ERR;
+    return HAL_ERROR;
   }
   BOOT_LOG_INF("Consistent BL2 NV Counter %d  = 0x%x", PLAT_NV_COUNTER_3, (int)counter_value);
-  if (tfm_plat_read_nv_counter(PLAT_NV_COUNTER_4, sizeof(counter_value),
-                               (uint8_t *)&counter_value) != TFM_PLAT_ERR_SUCCESS)
+  if (plat_read_nv_counter(PLAT_NV_COUNTER_4, sizeof(counter_value),
+                               (uint8_t *)&counter_value) != HAL_OK)
   {
     BOOT_LOG_ERR("NV Counter Not consistent %d", PLAT_NV_COUNTER_4);
-    return TFM_PLAT_ERR_SYSTEM_ERR;
+    return HAL_ERROR;
   }
   BOOT_LOG_INF("Consistent BL2 NV Counter %d  = 0x%x", PLAT_NV_COUNTER_4, (int)counter_value);
-  if (tfm_plat_read_nv_counter(PLAT_NV_COUNTER_5, sizeof(counter_value),
-                               (uint8_t *)&counter_value) != TFM_PLAT_ERR_SUCCESS)
+  if (plat_read_nv_counter(PLAT_NV_COUNTER_5, sizeof(counter_value),
+                               (uint8_t *)&counter_value) != HAL_OK)
   {
     BOOT_LOG_ERR("NV Counter Not consistent %d", PLAT_NV_COUNTER_5);
-    return TFM_PLAT_ERR_SYSTEM_ERR;
+    return HAL_ERROR;
   }
   BOOT_LOG_INF("Consistent BL2 NV Counter %d  = 0x%x", PLAT_NV_COUNTER_5, (int)counter_value);
-  if (tfm_plat_read_nv_counter(PLAT_NV_COUNTER_6, sizeof(counter_value),
-                               (uint8_t *)&counter_value) != TFM_PLAT_ERR_SUCCESS)
+  if (plat_read_nv_counter(PLAT_NV_COUNTER_6, sizeof(counter_value),
+                               (uint8_t *)&counter_value) != HAL_OK)
   {
     BOOT_LOG_ERR("NV Counter Not consistent %d", PLAT_NV_COUNTER_6);
-    return TFM_PLAT_ERR_SYSTEM_ERR;
+    return HAL_ERROR;
   }
   BOOT_LOG_INF("Consistent BL2 NV Counter %d  = 0x%x", PLAT_NV_COUNTER_6, (int)counter_value);
 
@@ -251,8 +251,8 @@ enum tfm_plat_err_t tfm_plat_init_nv_counter(void)
     /* Check elements present in active page */
     err = FLASH_DEV_NAME.ReadData(BL2_NV_COUNTERS_AREA_ADDR + varidx, &addressvalue[0],
                                   sizeof(addressvalue));
-    if ((err == ARM_DRIVER_ERROR_SPECIFIC) || 
-        ((addressvalue[0] != NVCNT_MASK_FULL) 
+    if ((err == ARM_DRIVER_ERROR_SPECIFIC) ||
+        ((addressvalue[0] != NVCNT_MASK_FULL)
           &&(addressvalue[1] != NVCNT_MASK_FULL) )
         )
     {
@@ -264,7 +264,7 @@ enum tfm_plat_err_t tfm_plat_init_nv_counter(void)
     {
       if (err != ARM_DRIVER_OK)
       {
-        return TFM_PLAT_ERR_SYSTEM_ERR;
+        return HAL_ERROR;
       }
       break;
     }
@@ -273,7 +273,7 @@ enum tfm_plat_err_t tfm_plat_init_nv_counter(void)
   /*********************************************************************/
   /* Step 2 : Check consistency of PLAT_NV_COUNTER_3 counter history   */
   /*********************************************************************/
-  return TFM_PLAT_ERR_SUCCESS;
+  return HAL_OK;
 }
 
 /**
@@ -281,34 +281,38 @@ enum tfm_plat_err_t tfm_plat_init_nv_counter(void)
   * @warning This function is not reentrant
   * @param  CounterId to be written
   * @param  Data 32bits data to be written
-  * @retval enum tfm_plat_err_t
-  *           TFM_PLAT_ERR_SUCCESS on write successfully done.
-              TFM_PLAT_ERR_MAX_VALUE when max updateable value written
+  * @retval HAL_StatusTypeDef
+  *           HAL_OK on write successfully done.
+              HAL_ERROR when max updateable value written
   */
-enum tfm_plat_err_t tfm_plat_set_nv_counter(enum tfm_nv_counter_t CounterId,
-                                            uint32_t Data)
+HAL_StatusTypeDef plat_set_nv_counter(enum nv_counter_t CounterId,
+                                      uint32_t Data, uint32_t *Updated)
 {
   int32_t err;
   uint32_t crc = 0U;
   NVCNT_ELEMENT_TYPE element[2];
   NVCNT_DATA_TYPE current_value;
+
+  /* reset Updated flag */
+  *Updated = 0U;
+
   /* check current value is not already in flash, and is consistent */
-  if ((tfm_plat_read_nv_counter(CounterId, sizeof(current_value), (uint8_t *)&current_value)
-       != TFM_PLAT_ERR_SUCCESS) || (Data < current_value))
+  if ((plat_read_nv_counter(CounterId, sizeof(current_value), (uint8_t *)&current_value)
+       != HAL_OK) || (Data < current_value))
   {
-    return TFM_PLAT_ERR_SYSTEM_ERR;
+    return HAL_ERROR;
   }
   /* check if same value is requested */
   if (current_value == Data)
   {
     /* nothing to do */
-    return TFM_PLAT_ERR_SUCCESS;
+    return HAL_OK;
   }
 
   /* Check if pages are full, i.e. max number of written elements achieved */
   if (uhNbWrittenElements >= NVCNT_MAX_WRITTEN_ELEMENTS)
   {
-    return TFM_PLAT_ERR_MAX_VALUE;
+    return HAL_ERROR;
   }
 
   /* Calculate crc of variable data and virtual address */
@@ -324,48 +328,20 @@ enum tfm_plat_err_t tfm_plat_set_nv_counter(enum tfm_nv_counter_t CounterId,
   /* If program operation was failed, a Flash error code is returned */
   if (err != ARM_DRIVER_OK)
   {
-    return TFM_PLAT_ERR_SYSTEM_ERR;
+    return HAL_ERROR;
   }
+
+  /* set updated flag */
+  *Updated = 1U;
 
   /* Increment global variables relative to write operation done*/
   uwAddressNextWrite += NVCNT_ELEMENT_SIZE;
   uhNbWrittenElements++;
   BOOT_LOG_INF("Counter %d set to 0x%x", CounterId, (int)Data);
-  return TFM_PLAT_ERR_SUCCESS;
+  return HAL_OK;
 }
 
-/**
-  * @brief  Increment/updates counter data in NV area.
-  * @warning This function is not reentrant
-  * @param  CounterId to be written
-   * @retval enum tfm_plat_err_t
-  *           TFM_PLAT_ERR_SUCCESS on write successfully done.
-              TFM_PLAT_ERR_MAX_VALUE when max updateable value written
-  */
-
-enum tfm_plat_err_t tfm_plat_increment_nv_counter(
-  enum tfm_nv_counter_t counter_id)
-{
-  uint32_t security_cnt;
-  enum tfm_plat_err_t err;
-
-  err = tfm_plat_read_nv_counter(counter_id,
-                                 sizeof(security_cnt),
-                                 (uint8_t *)&security_cnt);
-  if (err != TFM_PLAT_ERR_SUCCESS)
-  {
-    return err;
-  }
-
-  if (security_cnt == UINT32_MAX)
-  {
-    return TFM_PLAT_ERR_MAX_VALUE;
-  }
-
-  return tfm_plat_set_nv_counter(counter_id, security_cnt + 1u);
-}
-
-enum tfm_plat_err_t tfm_plat_read_nv_counter(enum tfm_nv_counter_t counter_id,
+HAL_StatusTypeDef plat_read_nv_counter(enum nv_counter_t counter_id,
                                              uint32_t size, uint8_t *val)
 {
   NVCNT_ELEMENT_TYPE addressvalue[2] = {0U, 0U};
@@ -378,7 +354,7 @@ enum tfm_plat_err_t tfm_plat_read_nv_counter(enum tfm_nv_counter_t counter_id,
 
   if (size < sizeof(NVCNT_DATA_TYPE))
   {
-    return TFM_PLAT_ERR_INVALID_INPUT;
+    return HAL_ERROR;
   }
   /* Search variable in active page and valid pages until erased page is found
      or in erasing pages until erased page is found */
@@ -398,7 +374,7 @@ enum tfm_plat_err_t tfm_plat_read_nv_counter(enum tfm_nv_counter_t counter_id,
       /* check a zero is not written , zero is forbidden, zero can be used to clean a value  */
       if (addressvalue[0] == 0)
       {
-        return TFM_PLAT_ERR_SYSTEM_ERR;
+        return HAL_ERROR;
       }
 
       /* Compare the read address with the virtual address */
@@ -422,7 +398,7 @@ enum tfm_plat_err_t tfm_plat_read_nv_counter(enum tfm_nv_counter_t counter_id,
             current_value = NVCNT_DATA_VALUE(addressvalue[0]);
             if (current_value >= previous_value)
             {
-              return TFM_PLAT_ERR_SYSTEM_ERR;
+              return HAL_ERROR;
             }
             else previous_value = current_value;
           }
@@ -435,12 +411,12 @@ enum tfm_plat_err_t tfm_plat_read_nv_counter(enum tfm_nv_counter_t counter_id,
   }
   if (found == 1)
   {
-    return TFM_PLAT_ERR_SUCCESS;;
+    return HAL_OK;;
   }
   else
   {
     /* Variable is not found */
-    return TFM_PLAT_ERR_SYSTEM_ERR;
+    return HAL_ERROR;
   }
 }
 /**
@@ -618,7 +594,7 @@ static bool Check_Header(void)
   if (header[0] != NVCNT_HEADER_VALUE)
   {
     ret = false;
-  }	
+  }
   return ret;
 }
 /**
@@ -631,7 +607,7 @@ static inline bool init_counter(void)
   int32_t err;
   uint32_t crc = 0U;
   NVCNT_ELEMENT_TYPE element;
-  enum tfm_nv_counter_t counter_id;
+  enum nv_counter_t counter_id;
   const uint32_t data = NVCNT_INIT_VALUE;
 
   /* initialize only one counter */

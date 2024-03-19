@@ -1,4 +1,4 @@
-## <b>OEMiROT_Boot application description</b>
+## <b>OEMiROT_Boot Application Description</b>
 
 This project provides an OEMiROT example. OEMiROT boot path performs authenticity and the integrity checks of the project firmware and data
 images.
@@ -61,7 +61,7 @@ TrustZone, OEMiROT, boot path, Root Of Trust, Security, mcuboot
 
 ### <b>Hardware and Software environment</b>
 
-  - This example runs on STM32H563xx devices with security enabled (TZEN=B4).
+  - This example runs on STM32H563xx (2MBytes) devices with security enabled (TZEN=B4).
   - This example has been tested with STMicroelectronics NUCLEO-H563ZI (MB1404)
     board and can be easily tailored to any other supported device
     and development board.

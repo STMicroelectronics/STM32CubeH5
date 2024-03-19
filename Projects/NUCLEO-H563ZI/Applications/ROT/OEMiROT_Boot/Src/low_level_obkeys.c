@@ -455,7 +455,7 @@ void OBK_VerifyHdpl1Config(OBK_Hdpl1Config *pOBK_Hdpl1Cfg)
   * @param  pCounter: pointer on current Fw version
   * @retval None
   */
-HAL_StatusTypeDef OBK_GetNVCounter(enum tfm_nv_counter_t CounterId, uint32_t *pCounter)
+HAL_StatusTypeDef OBK_GetNVCounter(enum nv_counter_t CounterId, uint32_t *pCounter)
 {
   OBK_Hdpl1Data OBK_data = { 0U };
 
@@ -506,7 +506,7 @@ HAL_StatusTypeDef OBK_GetNVCounter(enum tfm_nv_counter_t CounterId, uint32_t *pC
   * @param  Counter: Fw version
   * @retval None
   */
-HAL_StatusTypeDef OBK_UpdateNVCounter(enum tfm_nv_counter_t CounterId, uint32_t Counter)
+HAL_StatusTypeDef OBK_UpdateNVCounter(enum nv_counter_t CounterId, uint32_t Counter)
 {
   OBK_Hdpl1Data OBK_data = { 0U };
 

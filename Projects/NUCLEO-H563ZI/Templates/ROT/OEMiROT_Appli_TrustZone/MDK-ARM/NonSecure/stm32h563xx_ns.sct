@@ -23,10 +23,9 @@
 #define NS_CODE_SIZE 0xA0000
 
 #define IMAGE_HEADER_SIZE 0x400                        /* mcuboot header size */
-#define TRAILER_MAX_SIZE 0x40                          /* Trailer max size */
 
 #define NS_CODE_START 0x08000000 + NS_CODE_OFFSET + IMAGE_HEADER_SIZE
-#define NS_APP_CODE_SIZE NS_CODE_SIZE - TRAILER_MAX_SIZE - IMAGE_HEADER_SIZE
+#define NS_APP_CODE_SIZE NS_CODE_SIZE - IMAGE_HEADER_SIZE
 
 #define DATA_START 0x20050000
 #define DATA_SIZE 0x4FFFF

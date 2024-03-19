@@ -10,14 +10,14 @@
       <TargetName>Tx_Module</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>6180000::V6.18::ARMCLANG</pCCUsed>
+      <pCCUsed>6190000::V6.19::ARMCLANG</pCCUsed>
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
           <Device>STM32H573IIKx</Device>
           <Vendor>STMicroelectronics</Vendor>
-          <PackID>Keil.STM32H5xx_DFP.0.0.5</PackID>
-          <PackURL>http://www.keil.com/pack</PackURL>
+          <PackID>Keil.STM32H5xx_DFP.1.3.0</PackID>
+          <PackURL>https://www.keil.com/pack/</PackURL>
           <Cpu>IRAM(0x20000000,0x040000) IRAM2(0x30000000,0x040000) IROM(0x08000000,0x00200000) IROM2(0x0C000000,0x00200000) XRAM(0x20040000,0x00010000) XRAM2(0x20050000,0x00050000) CPUTYPE("Cortex-M33") FPU3(SFPU) DSP TZ CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
           <StartupFile></StartupFile>
@@ -338,9 +338,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>TX_SINGLE_MODE_NON_SECURE</Define>
+              <Define>STM32H573xx,TX_SINGLE_MODE_NON_SECURE</Define>
               <Undefine></Undefine>
-              <IncludePath>../../../../../../Middlewares/ST/threadx/common/inc/;../../../../../../Middlewares/ST/threadx/common_modules/inc/;../../../../../../Middlewares/ST/threadx/ports_module/cortex_m33/ac6/inc;../Inc</IncludePath>
+              <IncludePath>../../../../../../Middlewares/ST/threadx/common/inc/;../../../../../../Middlewares/ST/threadx/common_modules/inc/;../../../../../../Middlewares/ST/threadx/ports_module/cortex_m33/ac6/inc;../../../../../../Drivers/CMSIS/Include;../../../../../../Drivers/CMSIS/Device/ST/STM32H5xx/Include;../Inc</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2240,6 +2240,11 @@
               <FileType>1</FileType>
               <FilePath>.\retarget.c</FilePath>
             </File>
+            <File>
+              <FileName>Serial.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Serial.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -2832,14 +2837,14 @@
       <TargetName>Tx_ModuleManager</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>6180000::V6.18::ARMCLANG</pCCUsed>
+      <pCCUsed>6190000::V6.19::ARMCLANG</pCCUsed>
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
           <Device>STM32H573IIKx</Device>
           <Vendor>STMicroelectronics</Vendor>
-          <PackID>Keil.STM32H5xx_DFP.0.0.5</PackID>
-          <PackURL>http://www.keil.com/pack</PackURL>
+          <PackID>Keil.STM32H5xx_DFP.1.3.0</PackID>
+          <PackURL>https://www.keil.com/pack/</PackURL>
           <Cpu>IRAM(0x20000000,0x040000) IRAM2(0x30000000,0x040000) IROM(0x08000000,0x00200000) IROM2(0x0C000000,0x00200000) XRAM(0x20040000,0x00010000) XRAM2(0x20050000,0x00050000) CPUTYPE("Cortex-M33") FPU3(SFPU) DSP TZ CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
           <StartupFile></StartupFile>
@@ -4711,6 +4716,11 @@
               <FileName>retarget.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\retarget.c</FilePath>
+            </File>
+            <File>
+              <FileName>Serial.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Serial.c</FilePath>
             </File>
           </Files>
         </Group>

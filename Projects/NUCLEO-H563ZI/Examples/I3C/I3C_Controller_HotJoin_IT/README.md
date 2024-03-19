@@ -1,5 +1,5 @@
 ## <b>I3C_Controller_HotJoin_IT Example Description</b>
-How to handle a HOTJOIN procedure between an I3C Controller and I3C Targets
+How to handle a HOTJOIN procedure between an I3C Controller and I3C Targets.
 
       - Board: NUCLEO-H563ZI's (embeds a STM32H563ZI device)
       - SCL Pin: PB8 (Arduino SCL/D15 CN6 pin 2, Morpho CN5 pin3)

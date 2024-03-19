@@ -8,29 +8,28 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2023 STMicroelectronics. 
-  * All rights reserved.</center></h2>
+  * Copyright (c) 2023 STMicroelectronics.
+  * All rights reserved.
   *
-  * This software component is licensed by ST under BSD 3-Clause license,
-  * the "License"; You may not use this file except in compliance with the 
-  * License. You may obtain a copy of the License at:
-  *                        opensource.org/licenses/BSD-3-Clause
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
   *
   ******************************************************************************
   */
-  
+
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 
-/* 
+/*
 This file reflect the content of rsa_pub_2048.pem
 
 rsa_pub_2048.pem has been created using openssl 1.0.2k  26 Jan 2017:
   openssl rsa -in rsa_priv_2048.pem -out rsa_pub_2048.pem -outform PEM -pubout
-  
-Buffer have been adapted from the output of the command: 
+
+Buffer have been adapted from the output of the command:
   openssl rsa -pubin -in rsa_public.pem -text
-  
+
 Public-Key: (2048 bit)
 Modulus: (RSA modulus. Discard the first 00)
     00:d7:59:df:92:03:12:5a:8b:ea:06:e2:6d:20:cf:
@@ -84,6 +83,3 @@ const uint32_t rsa_pub_2048_modulus_len = 256;
 const uint8_t rsa_pub_2048_publicExponent[] = {0x00, 0x1, 0x00, 0x01};/* 65537; *//*(0x10001)*/
 
 const uint32_t rsa_pub_2048_publicExponent_len = 4;
-  
-
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

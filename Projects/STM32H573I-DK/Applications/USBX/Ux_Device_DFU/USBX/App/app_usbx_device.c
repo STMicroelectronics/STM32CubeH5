@@ -42,7 +42,6 @@
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
-
 static ULONG dfu_interface_number;
 static ULONG dfu_configuration_number;
 static UX_SLAVE_CLASS_DFU_PARAMETER dfu_parameter;

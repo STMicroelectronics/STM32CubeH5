@@ -69,7 +69,7 @@ else
   echo "AppliCfg with python script"
   applicfg="$cube_fw_path/Utilities/PC_Software/ROT_AppliConfig/AppliCfg.py"
   #determine/check python version command
-  python="python "
+  python="python3 "
 fi
 
 $python$applicfg flash --layout $preprocess_bl2_file -b S_CODE_REGION_START -m  RE_ADDRESS_SECURE_START --vb $map_properties >> $current_log_file 2>&1
@@ -96,7 +96,7 @@ if [ $? != 0 ]; then error; fi
 $python$applicfg flash --layout $preprocess_bl2_file -b MCUBOOT_OVERWRITE_ONLY -m RE_OVER_WRITE $map_properties --vb >> $current_log_file
 if [ $? != 0 ]; then error; fi
 
-$python$applicfg flash --layout $preprocess_bl2_file -b TRAILER_SIZE -m RE_TRAILER_MAX_SIZE $map_properties --vb >> $current_log_file
+$python$applicfg flash --layout $preprocess_bl2_file -b CMSE_VENEER_REGION_SIZE -m RE_CMSE_VENEER_REGION_SIZE $map_properties --vb >> $current_log_file
 if [ $? != 0 ]; then error; fi
 
 $python$applicfg flash --layout $preprocess_bl2_file -b S_DATA_REGION_START -m RE_AREA_4_OFFSET $map_properties --vb >> $current_log_file
@@ -204,10 +204,7 @@ if [ $? != 0 ]; then error; fi
 $python$applicfg linker --layout $preprocess_bl2_file -m RE_IMAGE_NON_SECURE_IMAGE_SIZE -n NS_CODE_SIZE --vb $ns_ld_file >> $current_log_file 2>&1
 if [ $? != 0 ]; then error; fi
 
-$python$applicfg linker --layout $preprocess_bl2_file -m RE_TRAILER_MAX_SIZE -n TRAILER_MAX_SIZE --vb $ns_ld_file >> $current_log_file 2>&1
-if [ $? != 0 ]; then error; fi
-
-$python$applicfg linker --layout $preprocess_bl2_file -m RE_TRAILER_MAX_SIZE -n TRAILER_MAX_SIZE --vb $s_ld_file >> $current_log_file 2>&1
+$python$applicfg linker --layout $preprocess_bl2_file -m RE_CMSE_VENEER_REGION_SIZE -n CMSE_VENEER_REGION_SIZE --vb $s_ld_file >> $current_log_file 2>&1
 if [ $? != 0 ]; then error; fi
 
 $python$applicfg xmlname --layout $preprocess_bl2_file -m RE_APP_IMAGE_NUMBER -n "$auth_ns" -sn "$auth_s" -v 1 -c k --vb $ns_code_xml >> $current_log_file 2>&1

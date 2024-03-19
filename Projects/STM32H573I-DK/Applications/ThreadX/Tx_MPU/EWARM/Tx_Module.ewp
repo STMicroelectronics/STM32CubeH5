@@ -1056,7 +1056,7 @@
                 </option>
                 <option>
                     <name>IarchiveOutput</name>
-                    <state>C:\git\H5_Project\Firmware\Projects\STM32H573I-DK\Applications\ThreadX\Tx_MPU\Tx_Module\EWARM\Tx_Module\Exe\Tx_Module.a</state>
+                    <state>###Unitialized###</state>
                 </option>
             </data>
         </settings>

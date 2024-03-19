@@ -92,19 +92,19 @@
 
 #if !defined(MCUBOOT_OVERWRITE_ONLY) && (MCUBOOT_APP_IMAGE_NUMBER == 2)
 /* Flash Driver Used to Confirm Secure App Image */
-#define  FLASH_PRIMARY_SECURE_DEV_NAME             TFM_Driver_FLASH0
+#define  FLASH_PRIMARY_SECURE_DEV_NAME             Driver_FLASH0
 #endif /* !defined(MCUBOOT_OVERWRITE_ONLY) && (MCUBOOT_APP_IMAGE_NUMBER == 2) */
 /* Flash Driver Used to Confirm NonSecure App Image or MCUBOOT_APP_IMAGE_NUMBER = 1 */
-#define  FLASH_PRIMARY_NONSECURE_DEV_NAME          TFM_Driver_FLASH0
+#define  FLASH_PRIMARY_NONSECURE_DEV_NAME          Driver_FLASH0
 #if !defined(MCUBOOT_OVERWRITE_ONLY) && (MCUBOOT_S_DATA_IMAGE_NUMBER == 1)
 /* Flash Driver Used to Confirm Secure Data Image */
-#define  FLASH_PRIMARY_DATA_SECURE_DEV_NAME        TFM_Driver_FLASH0
+#define  FLASH_PRIMARY_DATA_SECURE_DEV_NAME        Driver_FLASH0
 #endif /* !defined(MCUBOOT_OVERWRITE_ONLY) && (MCUBOOT_S_DATA_IMAGE_NUMBER == 1) */
 #if !defined(MCUBOOT_OVERWRITE_ONLY) && (MCUBOOT_NS_DATA_IMAGE_NUMBER == 1)
 /* Flash Driver Used to Confirm NonSecure Data Image */
-#define  FLASH_PRIMARY_DATA_NONSECURE_DEV_NAME     TFM_Driver_FLASH0
+#define  FLASH_PRIMARY_DATA_NONSECURE_DEV_NAME     Driver_FLASH0
 #endif /* !defined(MCUBOOT_OVERWRITE_ONLY) && (MCUBOOT_S_DATA_IMAGE_NUMBER == 1) */
-#define FLASH_DEV_NAME                             TFM_Driver_FLASH0
+#define FLASH_DEV_NAME                             Driver_FLASH0
 
 
 #endif /* __FLASH_LAYOUT_H__ */

@@ -114,7 +114,8 @@ UINT MX_FileX_Init(VOID *memory_ptr);
 #endif
 
 /* USER CODE BEGIN PD */
-
+#define SD_PRESENT                       1UL
+#define SD_NOT_PRESENT                   0UL
 /* USER CODE END PD */
 
 /* USER CODE BEGIN 1 */

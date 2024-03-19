@@ -3,18 +3,17 @@
   ******************************************************************************
   * @file    FDCAN/FDCAN_Loopback/Src/main.c
   * @author  MCD Application Team
-  * @brief   This sample code shows how to configure the FDCAN peripheral to
-  *          operate in loopback mode.
+  * @brief   This sample code shows how to configure the FDCAN to adapt to
+  *          different CAN bit rates using restricted mode.
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2023 STMicroelectronics.
-  * All rights reserved.</center></h2>
+  * Copyright (c) 2023 STMicroelectronics.
+  * All rights reserved.
   *
-  * This software component is licensed by ST under BSD 3-Clause license,
-  * the "License"; You may not use this file except in compliance with the
-  * License. You may obtain a copy of the License at:
-  *                        opensource.org/licenses/BSD-3-Clause
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
   *
   ******************************************************************************
   */
@@ -34,12 +33,15 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define TX_TIMEOUT   (1000U) /* Transmission timeout in ms */
+#define TX_TIMEOUT               (1000U)   /* Transmission timeout in ms           */
+
+/* Hardware related, can't be changed */
+#define NB_RX_FIFO               (3U)      /* Number of RX FIFO Elements available */
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
 /* USER CODE BEGIN PM */
-
+#define COUNTOF(BUFFER) (sizeof((BUFFER)) / sizeof(*(BUFFER)))
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
@@ -47,13 +49,12 @@
 FDCAN_HandleTypeDef hfdcan1;
 
 /* USER CODE BEGIN PV */
-FDCAN_FilterTypeDef sFilterConfig;
-FDCAN_TxHeaderTypeDef TxHeader;
-FDCAN_RxHeaderTypeDef RxHeader;
-uint8_t TxData0[] = {0x10, 0x32, 0x54, 0x76, 0x98, 0x00, 0x11, 0x22, 0x33, 0x44, 0x55, 0x66};
-uint8_t TxData1[] = {0x55, 0x55, 0x55, 0x55, 0x55, 0x55, 0x55, 0x55, 0x55, 0x55, 0x55, 0x55};
-uint8_t TxData2[] = {0xFF, 0x00, 0xFF, 0x00, 0xFF, 0x00, 0xFF, 0x00, 0xFF, 0x00, 0xFF, 0x00};
-uint8_t RxData[12];
+FDCAN_RxHeaderTypeDef rxHeader;
+uint8_t               rxData[12U];
+static const uint8_t  txData0[] = {0x10, 0x32, 0x54, 0x76, 0x98, 0x00, 0x11, 0x22, 0x33, 0x44, 0x55, 0x66};
+static const uint8_t  txData1[] = {0x55, 0x55, 0x55, 0x55, 0x55, 0x55, 0x55, 0x55, 0x55, 0x55, 0x55, 0x55};
+static const uint8_t  txData2[] = {0xFF, 0x00, 0xFF, 0x00, 0xFF, 0x00, 0xFF, 0x00, 0xFF, 0x00, 0xFF, 0x00};
+
 
 /* USER CODE END PV */
 
@@ -63,7 +64,7 @@ static void MX_GPIO_Init(void);
 static void MX_FDCAN1_Init(void);
 static void MX_ICACHE_Init(void);
 /* USER CODE BEGIN PFP */
-static uint32_t BufferCmp8b(uint8_t* pBuffer1, uint8_t* pBuffer2, uint16_t BufferLength);
+static uint32_t BufferCmp8b(const uint8_t *pBuffer1, const uint8_t *pBuffer2, uint16_t BufferLength);
 
 /* USER CODE END PFP */
 
@@ -117,86 +118,96 @@ int main(void)
   /* USER CODE BEGIN 2 */
 
   /*##-1 Configure the FDCAN filters ########################################*/
-  /* Configure standard ID reception filter to Rx FIFO 0 */
-  sFilterConfig.IdType = FDCAN_STANDARD_ID;
-  sFilterConfig.FilterIndex = 0;
-  sFilterConfig.FilterType = FDCAN_FILTER_DUAL;
+
+  /* Configure standard ID reception filter to Rx FIFO 0. Only accept ID = FilterID1 */
+  FDCAN_FilterTypeDef        sFilterConfig;
+  sFilterConfig.IdType       = FDCAN_STANDARD_ID;
+  sFilterConfig.FilterIndex  = 0U;
+  sFilterConfig.FilterType   = FDCAN_FILTER_DUAL;
   sFilterConfig.FilterConfig = FDCAN_FILTER_TO_RXFIFO0;
-  sFilterConfig.FilterID1 = 0x444;
-  sFilterConfig.FilterID2 = 0x555;
+  sFilterConfig.FilterID1    = 0x444;
+  sFilterConfig.FilterID2    = 0x444; /* For acceptance, MessageID and FilterID1 must match exactly */
   if (HAL_FDCAN_ConfigFilter(&hfdcan1, &sFilterConfig) != HAL_OK)
   {
     Error_Handler();
   }
 
-  /* Configure extended ID reception filter to Rx FIFO 1 */
-  sFilterConfig.IdType = FDCAN_EXTENDED_ID;
-  sFilterConfig.FilterIndex = 0;
-  sFilterConfig.FilterType = FDCAN_FILTER_RANGE_NO_EIDM;
+  /* Configure extended ID reception filter to Rx FIFO 1. Only accept ID between FilterID1 and FilterID2. */
+  sFilterConfig.IdType       = FDCAN_EXTENDED_ID;
+  sFilterConfig.FilterIndex  = 0U;
+  sFilterConfig.FilterType   = FDCAN_FILTER_RANGE_NO_EIDM;
   sFilterConfig.FilterConfig = FDCAN_FILTER_TO_RXFIFO1;
-  sFilterConfig.FilterID1 = 0x1111111;
-  sFilterConfig.FilterID2 = 0x2222222;
+  sFilterConfig.FilterID1    = 0x1111111;
+  sFilterConfig.FilterID2    = 0x2222222;
   if (HAL_FDCAN_ConfigFilter(&hfdcan1, &sFilterConfig) != HAL_OK)
   {
     Error_Handler();
   }
 
-  /* Configure global filter:
-     Filter all remote frames with STD and EXT ID
-     Reject non matching frames with STD ID and EXT ID */
-  if (HAL_FDCAN_ConfigGlobalFilter(&hfdcan1, FDCAN_REJECT, FDCAN_REJECT, FDCAN_FILTER_REMOTE, FDCAN_FILTER_REMOTE) != HAL_OK)
+  /**
+    *  Configure global filter:
+    *    - Filter all remote frames with STD and EXT ID
+    *    - Reject non matching frames with STD ID and EXT ID
+    */
+  if (HAL_FDCAN_ConfigGlobalFilter(&hfdcan1,
+                                   FDCAN_REJECT, FDCAN_REJECT,
+                                   FDCAN_FILTER_REMOTE, FDCAN_FILTER_REMOTE) != HAL_OK)
   {
     Error_Handler();
   }
 
   /*##-2 Start FDCAN controller (continuous listening CAN bus) ##############*/
+
   if (HAL_FDCAN_Start(&hfdcan1) != HAL_OK)
   {
     Error_Handler();
   }
 
   /*##-3 Transmit messages ##################################################*/
+
+  FDCAN_TxHeaderTypeDef        txHeader;
+
   /* Add message to Tx FIFO */
-  TxHeader.Identifier = 0x444;
-  TxHeader.IdType = FDCAN_STANDARD_ID;
-  TxHeader.TxFrameType = FDCAN_DATA_FRAME;
-  TxHeader.DataLength = FDCAN_DLC_BYTES_12;
-  TxHeader.ErrorStateIndicator = FDCAN_ESI_ACTIVE;
-  TxHeader.BitRateSwitch = FDCAN_BRS_ON;
-  TxHeader.FDFormat = FDCAN_FD_CAN;
-  TxHeader.TxEventFifoControl = FDCAN_STORE_TX_EVENTS;
-  TxHeader.MessageMarker = 0x52;
-  if (HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &TxHeader, TxData0) != HAL_OK)
+  txHeader.Identifier          = 0x444;
+  txHeader.IdType              = FDCAN_STANDARD_ID;
+  txHeader.TxFrameType         = FDCAN_DATA_FRAME;
+  txHeader.DataLength          = FDCAN_DLC_BYTES_12;
+  txHeader.ErrorStateIndicator = FDCAN_ESI_ACTIVE;
+  txHeader.BitRateSwitch       = FDCAN_BRS_ON;
+  txHeader.FDFormat            = FDCAN_FD_CAN;
+  txHeader.TxEventFifoControl  = FDCAN_STORE_TX_EVENTS;
+  txHeader.MessageMarker       = 0x52U;
+  if (HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &txHeader, txData0) != HAL_OK)
   {
     Error_Handler();
   }
 
   /* Add second message to Tx FIFO */
-  TxHeader.Identifier = 0x1111112;
-  TxHeader.IdType = FDCAN_EXTENDED_ID;
-  TxHeader.TxFrameType = FDCAN_DATA_FRAME;
-  TxHeader.DataLength = FDCAN_DLC_BYTES_12;
-  TxHeader.ErrorStateIndicator = FDCAN_ESI_PASSIVE;
-  TxHeader.BitRateSwitch = FDCAN_BRS_ON;
-  TxHeader.FDFormat = FDCAN_FD_CAN;
-  TxHeader.TxEventFifoControl = FDCAN_STORE_TX_EVENTS;
-  TxHeader.MessageMarker = 0xCC;
-  if (HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &TxHeader, TxData1) != HAL_OK)
+  txHeader.Identifier          = 0x1111112;
+  txHeader.IdType              = FDCAN_EXTENDED_ID;
+  txHeader.TxFrameType         = FDCAN_DATA_FRAME;
+  txHeader.DataLength          = FDCAN_DLC_BYTES_12;
+  txHeader.ErrorStateIndicator = FDCAN_ESI_PASSIVE;
+  txHeader.BitRateSwitch       = FDCAN_BRS_ON;
+  txHeader.FDFormat            = FDCAN_FD_CAN;
+  txHeader.TxEventFifoControl  = FDCAN_STORE_TX_EVENTS;
+  txHeader.MessageMarker       = 0xCCU;
+  if (HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &txHeader, txData1) != HAL_OK)
   {
     Error_Handler();
   }
 
   /* Add third message to Tx FIFO */
-  TxHeader.Identifier = 0x1111113;
-  TxHeader.IdType = FDCAN_EXTENDED_ID;
-  TxHeader.TxFrameType = FDCAN_DATA_FRAME;
-  TxHeader.DataLength = FDCAN_DLC_BYTES_12;
-  TxHeader.ErrorStateIndicator = FDCAN_ESI_PASSIVE;
-  TxHeader.BitRateSwitch = FDCAN_BRS_OFF;
-  TxHeader.FDFormat = FDCAN_FD_CAN;
-  TxHeader.TxEventFifoControl = FDCAN_STORE_TX_EVENTS;
-  TxHeader.MessageMarker = 0xDD;
-  if (HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &TxHeader, TxData2) != HAL_OK)
+  txHeader.Identifier          = 0x1111113;
+  txHeader.IdType              = FDCAN_EXTENDED_ID;
+  txHeader.TxFrameType         = FDCAN_DATA_FRAME;
+  txHeader.DataLength          = FDCAN_DLC_BYTES_12;
+  txHeader.ErrorStateIndicator = FDCAN_ESI_PASSIVE;
+  txHeader.BitRateSwitch       = FDCAN_BRS_OFF;
+  txHeader.FDFormat            = FDCAN_FD_CAN;
+  txHeader.TxEventFifoControl  = FDCAN_STORE_TX_EVENTS;
+  txHeader.MessageMarker       = 0xDDU;
+  if (HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &txHeader, txData2) != HAL_OK)
   {
     Error_Handler();
   }
@@ -204,8 +215,8 @@ int main(void)
   /* Get tick */
   uint32_t tickstart = HAL_GetTick();
 
-  /* Wait transmissions complete */
-  while (HAL_FDCAN_GetTxFifoFreeLevel(&hfdcan1) != 3)
+  /* Wait transmission complete */
+  while (HAL_FDCAN_GetTxFifoFreeLevel(&hfdcan1) != NB_RX_FIFO)
   {
     /* Timeout handling */
     if ((HAL_GetTick() - tickstart) > TX_TIMEOUT)
@@ -215,62 +226,73 @@ int main(void)
   }
 
   /*##-4 Receive messages ###################################################*/
+
   /* Check one message is received in Rx FIFO 0 */
-  if(HAL_FDCAN_GetRxFifoFillLevel(&hfdcan1, FDCAN_RX_FIFO0) != 1)
+  if (HAL_FDCAN_GetRxFifoFillLevel(&hfdcan1, FDCAN_RX_FIFO0) != 1U)
   {
     Error_Handler();
   }
 
   /* Retrieve message from Rx FIFO 0 */
-  if (HAL_FDCAN_GetRxMessage(&hfdcan1, FDCAN_RX_FIFO0, &RxHeader, RxData) != HAL_OK)
+  if (HAL_FDCAN_GetRxMessage(&hfdcan1, FDCAN_RX_FIFO0, &rxHeader, rxData) != HAL_OK)
   {
     Error_Handler();
   }
 
-  /* Compare payload to expected data */
-  if (BufferCmp8b(TxData0, RxData, 12) != 0)
+  /* Compare received RX message to expected data */
+  if ((rxHeader.Identifier != 0x444) ||
+      (rxHeader.IdType     != FDCAN_STANDARD_ID) ||
+      (rxHeader.DataLength != FDCAN_DLC_BYTES_12) ||
+      (BufferCmp8b(txData0, rxData, COUNTOF(rxData)) != 0U))
   {
     Error_Handler();
   }
 
   /* Check two messages are received in Rx FIFO 1 */
-  if(HAL_FDCAN_GetRxFifoFillLevel(&hfdcan1, FDCAN_RX_FIFO1) != 2)
+  if (HAL_FDCAN_GetRxFifoFillLevel(&hfdcan1, FDCAN_RX_FIFO1) != 2U)
   {
     Error_Handler();
   }
 
   /* Retrieve message from Rx FIFO 1 */
-  if (HAL_FDCAN_GetRxMessage(&hfdcan1, FDCAN_RX_FIFO1, &RxHeader, RxData) != HAL_OK)
+  if (HAL_FDCAN_GetRxMessage(&hfdcan1, FDCAN_RX_FIFO1, &rxHeader, rxData) != HAL_OK)
   {
     Error_Handler();
   }
 
-  /* Compare payload to expected data */
-  if (BufferCmp8b(TxData1, RxData, 12) != 0)
+  /* Compare received RX message to expected data */
+  if ((rxHeader.Identifier != 0x1111112) ||
+      (rxHeader.IdType     != FDCAN_EXTENDED_ID) ||
+      (rxHeader.DataLength != FDCAN_DLC_BYTES_12) ||
+      (BufferCmp8b(txData1, rxData, COUNTOF(rxData)) != 0U))
   {
     Error_Handler();
   }
 
   /* Retrieve next message from Rx FIFO 1 */
-  if (HAL_FDCAN_GetRxMessage(&hfdcan1, FDCAN_RX_FIFO1, &RxHeader, RxData) != HAL_OK)
+  if (HAL_FDCAN_GetRxMessage(&hfdcan1, FDCAN_RX_FIFO1, &rxHeader, rxData) != HAL_OK)
   {
     Error_Handler();
   }
 
-  /* Compare payload to expected data */
-  if (BufferCmp8b(TxData2, RxData, 12) != 0)
+  /* Compare received RX message to expected data */
+  if ((rxHeader.Identifier != 0x1111113) ||
+      (rxHeader.IdType     != FDCAN_EXTENDED_ID) ||
+      (rxHeader.DataLength != FDCAN_DLC_BYTES_12) ||
+      (BufferCmp8b(txData2, rxData, COUNTOF(rxData)) != 0U))
   {
     Error_Handler();
   }
+
+  /* Execution success. Turn ON LED1 */
+  BSP_LED_On(LED1);
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-    /* Toggle LED1 */
-    BSP_LED_Toggle(LED1);
-    HAL_Delay(100);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -353,13 +375,13 @@ static void MX_FDCAN1_Init(void)
   hfdcan1.Init.TransmitPause = ENABLE;
   hfdcan1.Init.ProtocolException = DISABLE;
   hfdcan1.Init.NominalPrescaler = 1;
-  hfdcan1.Init.NominalSyncJumpWidth = 50;
-  hfdcan1.Init.NominalTimeSeg1 = 199;
-  hfdcan1.Init.NominalTimeSeg2 = 50;
-  hfdcan1.Init.DataPrescaler = 1;
-  hfdcan1.Init.DataSyncJumpWidth = 11;
+  hfdcan1.Init.NominalSyncJumpWidth = 62;
+  hfdcan1.Init.NominalTimeSeg1 = 187;
+  hfdcan1.Init.NominalTimeSeg2 = 62;
+  hfdcan1.Init.DataPrescaler = 5;
+  hfdcan1.Init.DataSyncJumpWidth = 5;
   hfdcan1.Init.DataTimeSeg1 = 19;
-  hfdcan1.Init.DataTimeSeg2 = 11;
+  hfdcan1.Init.DataTimeSeg2 = 5;
   hfdcan1.Init.StdFiltersNbr = 1;
   hfdcan1.Init.ExtFiltersNbr = 1;
   hfdcan1.Init.TxFifoQueueMode = FDCAN_TX_FIFO_OPERATION;
@@ -422,29 +444,26 @@ static void MX_GPIO_Init(void)
 /* USER CODE BEGIN 4 */
 
 /**
-  * @brief Compares two buffers.
-  * @par Input
-  *  - pBuffer1, pBuffer2: buffers to be compared.
-  *  - BufferLength: buffer's length
-  * @par Output
-  * None.
-  * @retval
-  *   0: pBuffer1 identical to pBuffer2
-  *   1: pBuffer1 differs from pBuffer2
+  * @brief  Compares two buffers.
+  * @param  pBuffer1 buffer to be compared.
+  * @param  pBuffer2 buffer to be compared.
+  * @param  BufferLength: buffer's length.
+  * @retval 0: pBuffer1 is identical to pBuffer2
+  * @retval 1: pBuffer1 differs from pBuffer2
   */
-static uint32_t BufferCmp8b(uint8_t* pBuffer1, uint8_t* pBuffer2, uint16_t BufferLength)
+static uint32_t BufferCmp8b(const uint8_t *pBuffer1, const uint8_t *pBuffer2, uint16_t BufferLength)
 {
-  while(BufferLength--)
+  while (BufferLength--)
   {
-    if(*pBuffer1 != *pBuffer2)
+    if (*pBuffer1 != *pBuffer2)
     {
-      return 1;
+      return 1U;
     }
 
     pBuffer1++;
     pBuffer2++;
   }
-  return 0;
+  return 0U;
 }
 /* USER CODE END 4 */
 
@@ -456,11 +475,14 @@ void Error_Handler(void)
 {
   /* USER CODE BEGIN Error_Handler_Debug */
   /* User can add his own implementation to report the HAL error return state */
-  /* Turn LED3 on */
-  BSP_LED_On(LED3);
 
-  while(1)
+  while (1)
   {
+    /* Toggle LED3 on */
+    BSP_LED_Toggle(LED3);
+
+    /* 1s delay */
+    HAL_Delay(1000U);
   }
   /* USER CODE END Error_Handler_Debug */
 }
@@ -477,7 +499,7 @@ void assert_failed(uint8_t *file, uint32_t line)
 {
   /* USER CODE BEGIN 6 */
   /* User can add his own implementation to report the file name and line number,
-     tex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
+      ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
 
   /* Infinite loop */
   while (1)

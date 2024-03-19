@@ -579,5 +579,3 @@ __user_initial_stackheap PROC
                 ENDIF
 
                 END
-
-;************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE*****

@@ -1,13 +1,18 @@
 @echo off
-call %~dp0../env.bat
+call "%~dp0../env.bat"
 
 :: Enable delayed expansion
 setlocal EnableDelayedExpansion
+
+set connect_no_reset="-c port=SWD speed=fast ap=1 mode=Hotplug"
 
 :: Select Key/certificate (if TZEN enabled) and password (if TZEN disabled)
 set key=Keys/key_3_leaf.pem
 set cert=Certificates/cert_leaf_chain.b64
 set pass=Binary/password.bin
+
+:: Close debug if opened
+%stm32programmercli% %connect_no_reset% debugauth=3 >nul
 
 :: Command with both key/certificate (if TZEN enabled) and password (if TZEN disabled)
 set permission=

@@ -59,7 +59,7 @@ else
   #line for python
   echo AppliCfg with python script
   applicfg="$cube_fw_path/Utilities/PC_Software/ROT_AppliConfig/AppliCfg.py"
-  python="python "
+  python="python3 "
 fi
 
 error()

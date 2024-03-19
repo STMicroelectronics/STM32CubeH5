@@ -13,7 +13,8 @@ if [ "$OS" == "Windows_NT" ]; then
     stm32programmercli="C:\Program Files\STMicroelectronics\STM32Cube\STM32CubeProgrammer\bin\STM32_Programmer_CLI.exe"
     stm32tpccli="C:\Program Files\STMicroelectronics\STM32Cube\STM32CubeProgrammer\bin\STM32TrustedPackageCreator_CLI.exe"
 else
-    PATH="/C/Program Files/STMicroelectronics/STM32Cube/STM32CubeProgrammer/bin/":$PATH
+    stm32programmercli_path=~/STMicroelectronics/STM32Cube/STM32CubeProgrammer/bin/
+    PATH=$stm32programmercli_path:$PATH
     stm32programmercli="STM32_Programmer_CLI"
     stm32tpccli="STM32TrustedPackageCreator_CLI"
 fi

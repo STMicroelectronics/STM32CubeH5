@@ -121,7 +121,7 @@ PUTCHAR_PROTOTYPE
   return ch;
 }
 
-/* Redirects printf to TFM_DRIVER_STDIO in case of ARMCLANG*/
+/* Redirects printf to DRIVER_STDIO in case of ARMCLANG*/
 #if defined(__ARMCC_VERSION)
 FILE __stdout;
 
@@ -135,7 +135,7 @@ int fputc(int ch, FILE *f)
   return ch;
 }
 #elif defined(__GNUC__)
-/* Redirects printf to TFM_DRIVER_STDIO in case of GNUARM */
+/* Redirects printf to DRIVER_STDIO in case of GNUARM */
 int _write(int fd, char *str, int len)
 {
   int i;
@@ -384,7 +384,7 @@ void FW_APP_Run(void)
   */
 void LOADER_Run(void)
 {
-  printf("\r\n  Start config before Jump in the bootloader");
+  printf("\r\n  Start config before jumping to the bootloader");
   SECURE_loader_cfg();
 
   for (int i = 0; i < 16; i++)
@@ -414,19 +414,23 @@ void LOADER_Run(void)
 }
 
 #if  !defined(MCUBOOT_OVERWRITE_ONLY)
+#if (MCUBOOT_APP_IMAGE_NUMBER == 2)
 static void FW_Valid_SecureAppImage(void)
 {
     SECURE_ConfirmSecureAppImage();
     printf("  -- Secure App Firmware Confirm Done\r\n\n");
 }
+#endif /* MCUBOOT_APP_IMAGE_NUMBER == 2 */
 
+#if (MCUBOOT_S_DATA_IMAGE_NUMBER == 1)
 static void FW_Valid_SecureDataImage(void)
 {
     SECURE_ConfirmSecureDataImage();
     printf("  -- Secure Data Firmware Confirm Done\r\n\n");
 }
+#endif /* MCUBOOT_S_DATA_IMAGE_NUMBER == 1 */
 
-
+#if (MCUBOOT_NS_DATA_IMAGE_NUMBER == 1)
 /**
   * @brief  Write Confirm Flag for  :
   * @brief  - NonSecure Data image
@@ -451,6 +455,7 @@ static void FW_Valid_NonSecureDataImage(void)
     printf("  -- Confirm Flag Not Correctlty Written \r\n\n");
   }
 }
+#endif /* MCUBOOT_NS_DATA_IMAGE_NUMBER == 1 */
 
 static void FW_Valid_AppImage(void)
 {

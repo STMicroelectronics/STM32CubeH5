@@ -57,6 +57,26 @@ echo.
 pause >nul
 goto create_password
 
+:: ======================================================= Create board password =========================================================
+:create_password
+echo    * Password board creation
+echo        Create a "user_password.bin" file.(Default path is \ROT_Provisioning\DA\user_password.bin)
+echo        WARNING: This step must be done at least one time to generate the password
+echo        If the content of user_password is correct the next setp could be executed
+echo        Press any key to continue...
+echo.
+pause >nul
+
+set "action=Creating user password"
+set current_log_file=%create_password_log%
+set "command=start /w /b call %create_password% AUTO"
+echo    * %action%
+%command% > %create_password_log%
+if !errorlevel! neq 0 goto :step_error
+
+echo        User password correctly created
+echo        (see %create_password_log% for details)
+echo.
 
 :define_product_state
 set "action=Define final product state value"
@@ -80,28 +100,6 @@ goto set_provisionning_ps
 )
 
 echo       Wrong product state %product_state%
-goto step_error
-:: ======================================================= Create board password =========================================================
-:create_password
-echo    * Password board creation
-echo        Create a "user_password.bin" file.(Default path is \ROT_Provisioning\DA\user_password.bin)
-echo        WARNING: This step must be done at least one time to generate the password
-echo        If the content of user_password is correct the next setp could be executed
-echo        Press any key to continue...
-echo.
-pause >nul
-
-set "action=Creating user password"
-set current_log_file=%create_password_log%
-set "command=start /w /b call %create_password% AUTO"
-echo    * %action%
-%command% > %create_password_log%
-
-if !errorlevel! neq 0 goto :step_error
-
-echo        User password correctly created
-echo        (see %create_password_log% for details)
-echo.
 goto define_product_state
 
 :: ========================================= Product State configuration and Provisioning steps ==========================================

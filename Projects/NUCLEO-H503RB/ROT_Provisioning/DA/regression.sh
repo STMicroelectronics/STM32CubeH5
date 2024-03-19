@@ -20,7 +20,7 @@ command="source $password_programming AUTO"
 $command > /dev/null
 
 # Regression with password
-"$stm32programmercli" -c port=SWD pwd=password.bin debugauth=1
+"$stm32programmercli" -c port=SWD pwd=da_password.bin debugauth=1
 if [ $? -ne 0 ]; then error; fi
 
 echo "regression script done, press key"

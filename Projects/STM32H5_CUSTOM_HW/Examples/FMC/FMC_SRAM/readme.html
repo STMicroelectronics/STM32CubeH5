@@ -28,7 +28,6 @@
 <p>The SRAM memory is IS61WV51216BLL. .</p>
 <p>In this example, HCLK is configured at 250 MHz.</p>
 <p>In this example, the SRAM device is configured and initialized explicitly following all initialization sequence steps. After initializing the device, user can perform erase/read SRAM ID/read data/write data operations on it. A data buffer is written to the SRAM memory, then read back and checked to verify its correctness.</p>
-<p>If the data is read correctly from SRAM, the LED1 is ON, otherwise the LED3 is ON.In case of HAL initialization issue, LED3 is blinking (1 second period)</p>
 <h4> <id="notes"><b>Notes</b></h4>
 <ol type="1">
 <li><p>Care must be taken when using HAL_Delay(), this function provides accurate delay (in milliseconds) based on variable incremented in SysTick ISR. This implies that if HAL_Delay() is called from a peripheral ISR process, then the SysTick interrupt must have higher priority (numerically lower) than the peripheral interrupt. Otherwise the caller ISR process will be blocked. </p>
@@ -39,7 +38,6 @@
 <h3 id="directory-contents"><b>Directory contents</b></h3>
 <ul>
 
- <li> FMC/FMC_SRAM/Inc/stm32h5xx_nucleo_conf.h     BSP configuration file </li>
  <li> FMC/FMC_SRAM/Inc/stm32h5xx_hal_conf.h        HAL Configuration file</li>
  <li> FMC/FMC_SRAM/Inc/main.h                      Header for main.c module </li>
  <li> FMC/FMC_SRAM/Inc/stm32h5xx_it.h              Header for stm32h5xx_it.c</li>
@@ -51,7 +49,7 @@
 <h3 id="hardware-and-software-environment"><b>Hardware and Software environment</b></h3>
 <ul>
 <li><p>This example runs on STM32H563xx devices.</p></li>
-<li><p>This example has been tested with HW other than NUCLEO-H563ZI board on which only compilation is done.</p></li>
+<li><p>This example can be tested using STM32H562xx or STM32H563xx or STM32H573xx devices and a SRAM memory (IS61WV51216BLL) mounted on a user custom board. The IOs to be connected between the memory and the MCU are detailed in FMC/FMC_NOR/Src/stm32h5xx_hal_msp.c file.</p></li>
 </ul>
 <h3 id="how-to-use-it"><b>How to use it ?</b></h3>
 <p>In order to make the program work, you must do the following :</p>

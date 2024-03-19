@@ -6,18 +6,6 @@
 /*
  *  Copyright The Mbed TLS Contributors
  *  SPDX-License-Identifier: Apache-2.0
- *
- *  Licensed under the Apache License, Version 2.0 (the "License"); you may
- *  not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *  http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- *  WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
  */
 #ifndef MBEDTLS_X509_H
 #define MBEDTLS_X509_H
@@ -56,27 +44,47 @@
  * \name X509 Error codes
  * \{
  */
-#define MBEDTLS_ERR_X509_FEATURE_UNAVAILABLE              -0x2080  /**< Unavailable feature, e.g. RSA hashing/encryption combination. */
-#define MBEDTLS_ERR_X509_UNKNOWN_OID                      -0x2100  /**< Requested OID is unknown. */
-#define MBEDTLS_ERR_X509_INVALID_FORMAT                   -0x2180  /**< The CRT/CRL/CSR format is invalid, e.g. different type expected. */
-#define MBEDTLS_ERR_X509_INVALID_VERSION                  -0x2200  /**< The CRT/CRL/CSR version element is invalid. */
-#define MBEDTLS_ERR_X509_INVALID_SERIAL                   -0x2280  /**< The serial tag or value is invalid. */
-#define MBEDTLS_ERR_X509_INVALID_ALG                      -0x2300  /**< The algorithm tag or value is invalid. */
-#define MBEDTLS_ERR_X509_INVALID_NAME                     -0x2380  /**< The name tag or value is invalid. */
-#define MBEDTLS_ERR_X509_INVALID_DATE                     -0x2400  /**< The date tag or value is invalid. */
-#define MBEDTLS_ERR_X509_INVALID_SIGNATURE                -0x2480  /**< The signature tag or value invalid. */
-#define MBEDTLS_ERR_X509_INVALID_EXTENSIONS               -0x2500  /**< The extension tag or value is invalid. */
-#define MBEDTLS_ERR_X509_UNKNOWN_VERSION                  -0x2580  /**< CRT/CRL/CSR has an unsupported version number. */
-#define MBEDTLS_ERR_X509_UNKNOWN_SIG_ALG                  -0x2600  /**< Signature algorithm (oid) is unsupported. */
-#define MBEDTLS_ERR_X509_SIG_MISMATCH                     -0x2680  /**< Signature algorithms do not match. (see \c ::mbedtls_x509_crt sig_oid) */
-#define MBEDTLS_ERR_X509_CERT_VERIFY_FAILED               -0x2700  /**< Certificate verification failed, e.g. CRL, CA or signature check failed. */
-#define MBEDTLS_ERR_X509_CERT_UNKNOWN_FORMAT              -0x2780  /**< Format not recognized as DER or PEM. */
-#define MBEDTLS_ERR_X509_BAD_INPUT_DATA                   -0x2800  /**< Input invalid. */
-#define MBEDTLS_ERR_X509_ALLOC_FAILED                     -0x2880  /**< Allocation of memory failed. */
-#define MBEDTLS_ERR_X509_FILE_IO_ERROR                    -0x2900  /**< Read/write of file failed. */
-#define MBEDTLS_ERR_X509_BUFFER_TOO_SMALL                 -0x2980  /**< Destination buffer is too small. */
-#define MBEDTLS_ERR_X509_FATAL_ERROR                      -0x3000  /**< A fatal error occurred, eg the chain is too long or the vrfy callback failed. */
-/* \} name */
+/** Unavailable feature, e.g. RSA hashing/encryption combination. */
+#define MBEDTLS_ERR_X509_FEATURE_UNAVAILABLE              -0x2080
+/** Requested OID is unknown. */
+#define MBEDTLS_ERR_X509_UNKNOWN_OID                      -0x2100
+/** The CRT/CRL/CSR format is invalid, e.g. different type expected. */
+#define MBEDTLS_ERR_X509_INVALID_FORMAT                   -0x2180
+/** The CRT/CRL/CSR version element is invalid. */
+#define MBEDTLS_ERR_X509_INVALID_VERSION                  -0x2200
+/** The serial tag or value is invalid. */
+#define MBEDTLS_ERR_X509_INVALID_SERIAL                   -0x2280
+/** The algorithm tag or value is invalid. */
+#define MBEDTLS_ERR_X509_INVALID_ALG                      -0x2300
+/** The name tag or value is invalid. */
+#define MBEDTLS_ERR_X509_INVALID_NAME                     -0x2380
+/** The date tag or value is invalid. */
+#define MBEDTLS_ERR_X509_INVALID_DATE                     -0x2400
+/** The signature tag or value invalid. */
+#define MBEDTLS_ERR_X509_INVALID_SIGNATURE                -0x2480
+/** The extension tag or value is invalid. */
+#define MBEDTLS_ERR_X509_INVALID_EXTENSIONS               -0x2500
+/** CRT/CRL/CSR has an unsupported version number. */
+#define MBEDTLS_ERR_X509_UNKNOWN_VERSION                  -0x2580
+/** Signature algorithm (oid) is unsupported. */
+#define MBEDTLS_ERR_X509_UNKNOWN_SIG_ALG                  -0x2600
+/** Signature algorithms do not match. (see \c ::mbedtls_x509_crt sig_oid) */
+#define MBEDTLS_ERR_X509_SIG_MISMATCH                     -0x2680
+/** Certificate verification failed, e.g. CRL, CA or signature check failed. */
+#define MBEDTLS_ERR_X509_CERT_VERIFY_FAILED               -0x2700
+/** Format not recognized as DER or PEM. */
+#define MBEDTLS_ERR_X509_CERT_UNKNOWN_FORMAT              -0x2780
+/** Input invalid. */
+#define MBEDTLS_ERR_X509_BAD_INPUT_DATA                   -0x2800
+/** Allocation of memory failed. */
+#define MBEDTLS_ERR_X509_ALLOC_FAILED                     -0x2880
+/** Read/write of file failed. */
+#define MBEDTLS_ERR_X509_FILE_IO_ERROR                    -0x2900
+/** Destination buffer is too small. */
+#define MBEDTLS_ERR_X509_BUFFER_TOO_SMALL                 -0x2980
+/** A fatal error occurred, eg the chain is too long or the vrfy callback failed. */
+#define MBEDTLS_ERR_X509_FATAL_ERROR                      -0x3000
+/** \} name X509 Error codes */
 
 /**
  * \name X509 Verify codes
@@ -104,8 +112,8 @@
 #define MBEDTLS_X509_BADCRL_BAD_PK           0x040000  /**< The CRL is signed with an unacceptable PK alg (eg RSA vs ECDSA). */
 #define MBEDTLS_X509_BADCRL_BAD_KEY          0x080000  /**< The CRL is signed with an unacceptable key (eg bad curve, RSA too short). */
 
-/* \} name */
-/* \} addtogroup x509_module */
+/** \} name X509 Verify codes */
+/** \} addtogroup x509_module */
 
 /*
  * X.509 v3 Subject Alternative Name types.
@@ -227,15 +235,13 @@ typedef mbedtls_asn1_named_data mbedtls_x509_name;
 typedef mbedtls_asn1_sequence mbedtls_x509_sequence;
 
 /** Container for date and time (precision in seconds). */
-typedef struct mbedtls_x509_time
-{
+typedef struct mbedtls_x509_time {
     int year, mon, day;         /**< Date. */
     int hour, min, sec;         /**< Time. */
 }
 mbedtls_x509_time;
 
 /** \} name Structures for parsing X.509 certificates, CRLs and CSRs */
-/** \} addtogroup x509_module */
 
 /**
  * \brief          Store the certificate DN in printable form into buf;
@@ -248,7 +254,7 @@ mbedtls_x509_time;
  * \return         The length of the string written (not including the
  *                 terminated nul byte), or a negative error code.
  */
-int mbedtls_x509_dn_gets( char *buf, size_t size, const mbedtls_x509_name *dn );
+int mbedtls_x509_dn_gets(char *buf, size_t size, const mbedtls_x509_name *dn);
 
 /**
  * \brief          Store the certificate serial in printable form into buf;
@@ -261,7 +267,7 @@ int mbedtls_x509_dn_gets( char *buf, size_t size, const mbedtls_x509_name *dn );
  * \return         The length of the string written (not including the
  *                 terminated nul byte), or a negative error code.
  */
-int mbedtls_x509_serial_gets( char *buf, size_t size, const mbedtls_x509_buf *serial );
+int mbedtls_x509_serial_gets(char *buf, size_t size, const mbedtls_x509_buf *serial);
 
 /**
  * \brief          Check a given mbedtls_x509_time against the system time
@@ -275,7 +281,7 @@ int mbedtls_x509_serial_gets( char *buf, size_t size, const mbedtls_x509_buf *se
  * \return         1 if the given time is in the past or an error occurred,
  *                 0 otherwise.
  */
-int mbedtls_x509_time_is_past( const mbedtls_x509_time *to );
+int mbedtls_x509_time_is_past(const mbedtls_x509_time *to);
 
 /**
  * \brief          Check a given mbedtls_x509_time against the system time
@@ -289,7 +295,9 @@ int mbedtls_x509_time_is_past( const mbedtls_x509_time *to );
  * \return         1 if the given time is in the future or an error occurred,
  *                 0 otherwise.
  */
-int mbedtls_x509_time_is_future( const mbedtls_x509_time *from );
+int mbedtls_x509_time_is_future(const mbedtls_x509_time *from);
+
+/** \} addtogroup x509_module */
 
 #if defined(MBEDTLS_SELF_TEST)
 
@@ -298,7 +306,7 @@ int mbedtls_x509_time_is_future( const mbedtls_x509_time *from );
  *
  * \return         0 if successful, or 1 if the test failed
  */
-int mbedtls_x509_self_test( int verbose );
+int mbedtls_x509_self_test(int verbose);
 
 #endif /* MBEDTLS_SELF_TEST */
 
@@ -306,51 +314,52 @@ int mbedtls_x509_self_test( int verbose );
  * Internal module functions. You probably do not want to use these unless you
  * know you do.
  */
-int mbedtls_x509_get_name( unsigned char **p, const unsigned char *end,
-                   mbedtls_x509_name *cur );
-int mbedtls_x509_get_alg_null( unsigned char **p, const unsigned char *end,
-                       mbedtls_x509_buf *alg );
-int mbedtls_x509_get_alg( unsigned char **p, const unsigned char *end,
-                  mbedtls_x509_buf *alg, mbedtls_x509_buf *params );
+int mbedtls_x509_get_name(unsigned char **p, const unsigned char *end,
+                          mbedtls_x509_name *cur);
+int mbedtls_x509_get_alg_null(unsigned char **p, const unsigned char *end,
+                              mbedtls_x509_buf *alg);
+int mbedtls_x509_get_alg(unsigned char **p, const unsigned char *end,
+                         mbedtls_x509_buf *alg, mbedtls_x509_buf *params);
 #if defined(MBEDTLS_X509_RSASSA_PSS_SUPPORT)
-int mbedtls_x509_get_rsassa_pss_params( const mbedtls_x509_buf *params,
-                                mbedtls_md_type_t *md_alg, mbedtls_md_type_t *mgf_md,
-                                int *salt_len );
+int mbedtls_x509_get_rsassa_pss_params(const mbedtls_x509_buf *params,
+                                       mbedtls_md_type_t *md_alg, mbedtls_md_type_t *mgf_md,
+                                       int *salt_len);
 #endif
-int mbedtls_x509_get_sig( unsigned char **p, const unsigned char *end, mbedtls_x509_buf *sig );
-int mbedtls_x509_get_sig_alg( const mbedtls_x509_buf *sig_oid, const mbedtls_x509_buf *sig_params,
-                      mbedtls_md_type_t *md_alg, mbedtls_pk_type_t *pk_alg,
-                      void **sig_opts );
-int mbedtls_x509_get_time( unsigned char **p, const unsigned char *end,
-                   mbedtls_x509_time *t );
-int mbedtls_x509_get_serial( unsigned char **p, const unsigned char *end,
-                     mbedtls_x509_buf *serial );
-int mbedtls_x509_get_ext( unsigned char **p, const unsigned char *end,
-                  mbedtls_x509_buf *ext, int tag );
-int mbedtls_x509_sig_alg_gets( char *buf, size_t size, const mbedtls_x509_buf *sig_oid,
-                       mbedtls_pk_type_t pk_alg, mbedtls_md_type_t md_alg,
-                       const void *sig_opts );
-int mbedtls_x509_key_size_helper( char *buf, size_t buf_size, const char *name );
-int mbedtls_x509_string_to_names( mbedtls_asn1_named_data **head, const char *name );
-int mbedtls_x509_set_extension( mbedtls_asn1_named_data **head, const char *oid, size_t oid_len,
-                        int critical, const unsigned char *val,
-                        size_t val_len );
-int mbedtls_x509_write_extensions( unsigned char **p, unsigned char *start,
-                           mbedtls_asn1_named_data *first );
-int mbedtls_x509_write_names( unsigned char **p, unsigned char *start,
-                      mbedtls_asn1_named_data *first );
-int mbedtls_x509_write_sig( unsigned char **p, unsigned char *start,
-                    const char *oid, size_t oid_len,
-                    unsigned char *sig, size_t size );
+int mbedtls_x509_get_sig(unsigned char **p, const unsigned char *end, mbedtls_x509_buf *sig);
+int mbedtls_x509_get_sig_alg(const mbedtls_x509_buf *sig_oid, const mbedtls_x509_buf *sig_params,
+                             mbedtls_md_type_t *md_alg, mbedtls_pk_type_t *pk_alg,
+                             void **sig_opts);
+int mbedtls_x509_get_time(unsigned char **p, const unsigned char *end,
+                          mbedtls_x509_time *t);
+int mbedtls_x509_get_serial(unsigned char **p, const unsigned char *end,
+                            mbedtls_x509_buf *serial);
+int mbedtls_x509_get_ext(unsigned char **p, const unsigned char *end,
+                         mbedtls_x509_buf *ext, int tag);
+int mbedtls_x509_sig_alg_gets(char *buf, size_t size, const mbedtls_x509_buf *sig_oid,
+                              mbedtls_pk_type_t pk_alg, mbedtls_md_type_t md_alg,
+                              const void *sig_opts);
+int mbedtls_x509_key_size_helper(char *buf, size_t buf_size, const char *name);
+int mbedtls_x509_string_to_names(mbedtls_asn1_named_data **head, const char *name);
+int mbedtls_x509_set_extension(mbedtls_asn1_named_data **head, const char *oid, size_t oid_len,
+                               int critical, const unsigned char *val,
+                               size_t val_len);
+int mbedtls_x509_write_extensions(unsigned char **p, unsigned char *start,
+                                  mbedtls_asn1_named_data *first);
+int mbedtls_x509_write_names(unsigned char **p, unsigned char *start,
+                             mbedtls_asn1_named_data *first);
+int mbedtls_x509_write_sig(unsigned char **p, unsigned char *start,
+                           const char *oid, size_t oid_len,
+                           unsigned char *sig, size_t size,
+                           mbedtls_pk_type_t pk_alg);
 
 #define MBEDTLS_X509_SAFE_SNPRINTF                          \
     do {                                                    \
-        if( ret < 0 || (size_t) ret >= n )                  \
-            return( MBEDTLS_ERR_X509_BUFFER_TOO_SMALL );    \
-                                                            \
+        if (ret < 0 || (size_t) ret >= n)                  \
+        return MBEDTLS_ERR_X509_BUFFER_TOO_SMALL;    \
+                                                          \
         n -= (size_t) ret;                                  \
         p += (size_t) ret;                                  \
-    } while( 0 )
+    } while (0)
 
 #ifdef __cplusplus
 }

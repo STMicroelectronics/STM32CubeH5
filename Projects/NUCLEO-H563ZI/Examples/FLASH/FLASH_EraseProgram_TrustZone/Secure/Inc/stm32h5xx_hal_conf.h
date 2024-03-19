@@ -40,7 +40,6 @@
   */
 
 #define HAL_MODULE_ENABLED
-
 /*#define HAL_ADC_MODULE_ENABLED */
 /*#define HAL_CEC_MODULE_ENABLED */
 /*#define HAL_COMP_MODULE_ENABLED */
@@ -149,7 +148,7 @@
                                                 in voltage and temperature.*/
 
 #if !defined  (LSI_STARTUP_TIME)
-  #define LSI_STARTUP_TIME          130UL      /*!< Time out for LSI start up, in ms */
+  #define LSI_STARTUP_TIME          130UL      /*!< Time out for LSI start up, in us */
 #endif /* LSI_STARTUP_TIME */
 
 /**
@@ -163,7 +162,6 @@
 #if !defined  (LSE_STARTUP_TIMEOUT)
   #define LSE_STARTUP_TIMEOUT    5000UL     /*!< Time out for LSE start up, in ms */
 #endif /* LSE_STARTUP_TIMEOUT */
-
 /**
   * @brief External clock source for SPI/SAI peripheral
   *        This value is used by the SPI/SAI HAL module to compute the SPI/SAI clock source
@@ -230,9 +228,8 @@
 #define  USE_HAL_LPTIM_REGISTER_CALLBACKS     0U    /* LPTIM register callback disabled     */
 #define  USE_HAL_MMC_REGISTER_CALLBACKS       0U    /* MMC register callback disabled       */
 #define  USE_HAL_NAND_REGISTER_CALLBACKS      0U    /* NAND register callback disabled      */
-
-#define  USE_HAL_OPAMP_REGISTER_CALLBACKS     0U    /* OTFDEC register callback disabled    */
-#define  USE_HAL_OTFDEC_REGISTER_CALLBACKS    0U    /* OPAMP register callback disabled     */
+#define  USE_HAL_OPAMP_REGISTER_CALLBACKS     0U    /* OPAMP register callback disabled     */
+#define  USE_HAL_OTFDEC_REGISTER_CALLBACKS    0U    /* OTFDEC register callback disabled    */
 #define  USE_HAL_PCD_REGISTER_CALLBACKS       0U    /* PCD register callback disabled       */
 #define  USE_HAL_PKA_REGISTER_CALLBACKS       0U    /* PKA register callback disabled       */
 #define  USE_HAL_RAMCFG_REGISTER_CALLBACKS    0U    /* RAMCFG register callback disabled    */

@@ -14,7 +14,7 @@
 				</extensions>
 			</storageModule>
 			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
-				<configuration artifactExtension="elf" artifactName="${ProjName}" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.exe" buildProperties="org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.exe,org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.debug" cleanCommand="rm -rf" description="" id="com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.debug.938990524" name="Debug" parent="com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.debug" postbuildStep="&quot;../postbuild.sh&quot; &quot;${ConfigName}&quot;" prebuildStep="arm-none-eabi-gcc -E -P -xc -DBL2 -I../../../Linker -I../../Inc -o./output.ld ../stm32h5xx_bl2.ld &amp;&amp; arm-none-eabi-gcc -E -P -xc -DBL2 -I../../../Linker -I../../Inc -o../image_macros_preprocessed_bl2.c ../../Src/image_macros_to_preprocess_bl2.c">
+				<configuration artifactExtension="elf" artifactName="${ProjName}" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.exe" buildProperties="org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.exe,org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.debug" cleanCommand="rm -rf" description="" id="com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.debug.938990524" name="Debug" parent="com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.debug" postbuildStep="&quot;../postbuild.sh&quot; &quot;${ConfigName}&quot;" prebuildStep="arm-none-eabi-gcc -E -P -xc -DSTM32H503xx -DBL2 -I../../../Linker -I../../Inc -I../../../../../../../Drivers/CMSIS/Include -I../../../../../../../Drivers/CMSIS/Device/ST/STM32H5xx/Include -I../../../../../../../Drivers/STM32H5xx_HAL_Driver/Inc -o./output.ld ../stm32h5xx_bl2.ld &amp;&amp; arm-none-eabi-gcc -E -P -xc -DSTM32H503xx -DBL2 -I../../../Linker -I../../Inc -I../../../../../../../Drivers/CMSIS/Include -I../../../../../../../Drivers/CMSIS/Device/ST/STM32H5xx/Include -I../../../../../../../Drivers/STM32H5xx_HAL_Driver/Inc -o../image_macros_preprocessed_bl2.c ../../Src/image_macros_to_preprocess_bl2.c">
 					<folderInfo id="com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.debug.938990524." name="/" resourcePath="">
 						<toolChain id="com.st.stm32cube.ide.mcu.gnu.managedbuild.toolchain.exe.debug.906047280" name="MCU ARM GCC" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.toolchain.exe.debug">
 							<option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.target_mcu.2044887688" name="MCU" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.target_mcu" useByScannerDiscovery="true" value="STM32H503RBTx" valueType="string"/>
@@ -57,13 +57,13 @@
 									<listOptionValue builtIn="false" value="../../../../../../../Drivers/STM32H5xx_HAL_Driver/Inc"/>
 									<listOptionValue builtIn="false" value="../../../../../../../Middlewares/Third_Party/mbed-crypto/include"/>
 									<listOptionValue builtIn="false" value="../../../../../../../Middlewares/Third_Party/mbed-crypto/include/psa"/>
-									<listOptionValue builtIn="false" value="../../../../../../../Middlewares/Third_Party/trustedfirmware"/>
-									<listOptionValue builtIn="false" value="../../../../../../../Middlewares/Third_Party/trustedfirmware/platform/include"/>
-									<listOptionValue builtIn="false" value="../../../../../../../Middlewares/Third_Party/trustedfirmware/platform/ext/common"/>
-									<listOptionValue builtIn="false" value="../../../../../../../Middlewares/Third_Party/trustedfirmware/platform/ext/driver"/>
-									<listOptionValue builtIn="false" value="../../../../../../../Middlewares/Third_Party/trustedfirmware/bl2/include"/>
-									<listOptionValue builtIn="false" value="../../../../../../../Middlewares/Third_Party/trustedfirmware/bl2/ext/mcuboot"/>
-									<listOptionValue builtIn="false" value="../../../../../../../Middlewares/Third_Party/trustedfirmware/bl2/ext/mcuboot/include"/>
+									<listOptionValue builtIn="false" value="../../../../../../../Middlewares/Third_Party/mcuboot"/>
+									<listOptionValue builtIn="false" value="../../../../../../../Middlewares/Third_Party/mcuboot/platform/include"/>
+									<listOptionValue builtIn="false" value="../../../../../../../Middlewares/Third_Party/mcuboot/platform/ext/common"/>
+									<listOptionValue builtIn="false" value="../../../../../../../Middlewares/Third_Party/mcuboot/platform/ext/driver"/>
+									<listOptionValue builtIn="false" value="../../../../../../../Middlewares/Third_Party/mcuboot/bl2/include"/>
+									<listOptionValue builtIn="false" value="../../../../../../../Middlewares/Third_Party/mcuboot/bl2/ext/mcuboot"/>
+									<listOptionValue builtIn="false" value="../../../../../../../Middlewares/Third_Party/mcuboot/bl2/ext/mcuboot/include"/>
 									<listOptionValue builtIn="false" value="../../../../../../../Middlewares/Third_Party/mcuboot/boot/bootutil/include"/>
 									<listOptionValue builtIn="false" value="../../../../../../../Middlewares/Third_Party/mcuboot/boot/bootutil/src"/>
 									<listOptionValue builtIn="false" value="../../../../../../../Middlewares/Third_Party/mcuboot/ext/tinycrypt/lib/include"/>
@@ -118,7 +118,7 @@
 				</extensions>
 			</storageModule>
 			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
-				<configuration artifactName="${ProjName}" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.exe" buildProperties="org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.exe,org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.release" cleanCommand="rm -rf" description="" id="com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.release.1404214619" name="Release" parent="com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.release" postbuildStep="&quot;../postbuild.sh&quot; &quot;${ConfigName}&quot;" prebuildStep="arm-none-eabi-gcc -E -P -xc -DBL2 -I../../../Linker -I../../Inc -o./output.ld ../stm32h5xx_bl2.ld &amp;&amp; arm-none-eabi-gcc -E -P -xc -DBL2 -I../../../Linker -I../../Inc -o../image_macros_preprocessed_bl2.c ../../Src/image_macros_to_preprocess_bl2.c">
+				<configuration artifactName="${ProjName}" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.exe" buildProperties="org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.exe,org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.release" cleanCommand="rm -rf" description="" id="com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.release.1404214619" name="Release" parent="com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.release" postbuildStep="&quot;../postbuild.sh&quot; &quot;${ConfigName}&quot;" prebuildStep="arm-none-eabi-gcc -E -P -xc -DSTM32H503xx -DBL2 -I../../../Linker -I../../Inc -I../../../../../../../Drivers/CMSIS/Include -I../../../../../../../Drivers/CMSIS/Device/ST/STM32H5xx/Include -I../../../../../../../Drivers/STM32H5xx_HAL_Driver/Inc -o./output.ld ../stm32h5xx_bl2.ld &amp;&amp; arm-none-eabi-gcc -E -P -xc -DSTM32H503xx -DBL2 -I../../../Linker -I../../Inc -I../../../../../../../Drivers/CMSIS/Include -I../../../../../../../Drivers/CMSIS/Device/ST/STM32H5xx/Include -I../../../../../../../Drivers/STM32H5xx_HAL_Driver/Inc -o../image_macros_preprocessed_bl2.c ../../Src/image_macros_to_preprocess_bl2.c">
 					<folderInfo id="com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.release.1404214619." name="/" resourcePath="">
 						<toolChain id="com.st.stm32cube.ide.mcu.gnu.managedbuild.toolchain.exe.release.1275811931" name="MCU ARM GCC" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.toolchain.exe.release">
 							<option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.target_mcu.1079093023" name="MCU" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.target_mcu" useByScannerDiscovery="true" value="STM32H503RBTx" valueType="string"/>
@@ -158,13 +158,13 @@
 									<listOptionValue builtIn="false" value="../../../../../../../Drivers/STM32H5xx_HAL_Driver/Inc"/>
 									<listOptionValue builtIn="false" value="../../../../../../../Middlewares/Third_Party/mbed-crypto/include"/>
 									<listOptionValue builtIn="false" value="../../../../../../../Middlewares/Third_Party/mbed-crypto/include/psa"/>
-									<listOptionValue builtIn="false" value="../../../../../../../Middlewares/Third_Party/trustedfirmware"/>
-									<listOptionValue builtIn="false" value="../../../../../../../Middlewares/Third_Party/trustedfirmware/platform/include"/>
-									<listOptionValue builtIn="false" value="../../../../../../../Middlewares/Third_Party/trustedfirmware/platform/ext/common"/>
-									<listOptionValue builtIn="false" value="../../../../../../../Middlewares/Third_Party/trustedfirmware/platform/ext/driver"/>
-									<listOptionValue builtIn="false" value="../../../../../../../Middlewares/Third_Party/trustedfirmware/bl2/include"/>
-									<listOptionValue builtIn="false" value="../../../../../../../Middlewares/Third_Party/trustedfirmware/bl2/ext/mcuboot"/>
-									<listOptionValue builtIn="false" value="../../../../../../../Middlewares/Third_Party/trustedfirmware/bl2/ext/mcuboot/include"/>
+									<listOptionValue builtIn="false" value="../../../../../../../Middlewares/Third_Party/mcuboot"/>
+									<listOptionValue builtIn="false" value="../../../../../../../Middlewares/Third_Party/mcuboot/platform/include"/>
+									<listOptionValue builtIn="false" value="../../../../../../../Middlewares/Third_Party/mcuboot/platform/ext/common"/>
+									<listOptionValue builtIn="false" value="../../../../../../../Middlewares/Third_Party/mcuboot/platform/ext/driver"/>
+									<listOptionValue builtIn="false" value="../../../../../../../Middlewares/Third_Party/mcuboot/bl2/include"/>
+									<listOptionValue builtIn="false" value="../../../../../../../Middlewares/Third_Party/mcuboot/bl2/ext/mcuboot"/>
+									<listOptionValue builtIn="false" value="../../../../../../../Middlewares/Third_Party/mcuboot/bl2/ext/mcuboot/include"/>
 									<listOptionValue builtIn="false" value="../../../../../../../Middlewares/Third_Party/mcuboot/boot/bootutil/include"/>
 									<listOptionValue builtIn="false" value="../../../../../../../Middlewares/Third_Party/mcuboot/boot/bootutil/src"/>
 									<listOptionValue builtIn="false" value="../../../../../../../Middlewares/Third_Party/mcuboot/ext/tinycrypt/lib/include"/>

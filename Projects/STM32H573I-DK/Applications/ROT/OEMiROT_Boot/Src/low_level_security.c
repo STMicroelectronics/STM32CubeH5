@@ -772,7 +772,7 @@ void LL_SECU_CheckStaticProtections(void)
         || (end != flash_option_bytes_bank2.WMSecEndSector))
     {
       BOOT_LOG_INF("BANK 2 secure flash [%d, %d] : OB [%d, %d]", (int)start, (int)end, (int)flash_option_bytes_bank2.WMSecStartSector,
-                   flash_option_bytes_bank2.WMSecEndSector);
+                   (int)flash_option_bytes_bank2.WMSecEndSector);
 #ifndef OEMIROT_ENABLE_SET_OB
       BOOT_LOG_ERR("Unexpected value for secure flash protection");
       Error_Handler();

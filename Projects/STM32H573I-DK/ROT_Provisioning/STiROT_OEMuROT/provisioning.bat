@@ -1,7 +1,8 @@
 @ECHO OFF
 
-:: Getting the Trusted Package Creator and STM32CubeProgammer CLI path 
+:: Getting the Trusted Package Creator and STM32CubeProgammer CLI path
 call ../env.bat
+set cube_fw_path=%cube_fw_path:"=%
 
 :: Enable delayed expansion
 setlocal EnableDelayedExpansion
@@ -49,6 +50,7 @@ set connect_no_reset=-c port=SWD speed=fast ap=1 mode=Hotplug
 set connect_under_reset=-c port=SWD speed=fast ap=1 mode=UR
 
 set "flash_layout=%cube_fw_path%\Projects\STM32H573I-DK\Applications\ROT\OEMiROT_Boot\Inc\flash_layout.h"
+set flash_layout=%flash_layout:"=%
 
 :: Environment variable used to know if the firmware image is full secure or not
 set stirot_config=".\Config\STiRoT_Config.xml"
@@ -92,7 +94,7 @@ goto step_error
 :: =============================================== Steps to create the STiRoT_Config.obk file ==============================================
 echo Step 1 : Configuration management
 echo    * STiRoT_Config.obk generation:
-echo        From TrustedPackageCreator (tab H5-OBkey)
+echo        From TrustedPackageCreator (OBkey tab in Security panel)
 echo        Select STiRoT_Config.xml(Default path is \ROT_Provisioning\STiROT_OEMuROT\Config\STiRoT_Config.xml)
 echo        Warning: Default keys must NOT be used in a product. Make sure to regenerate your own keys!
 echo        Update the configuration (if/as needed) then generate STiRoT_Config.obk file
@@ -103,10 +105,10 @@ if [%1] neq [AUTO] pause >nul
 echo;
 echo    * DA_Config.obk generation:
 echo        Warning: Default keys must NOT be used in a product. Make sure to regenerate your own keys!
-echo        From TrustedPackageCreator (tab H5-DA CertifGen),
+echo        From TrustedPackageCreator (Debug Authentication - Certificate Generation tab in Security panel),
 echo        update the keys(s) (in \ROT_Provisioning\DA\Keys) and permissions (if/as needed)
 echo        then regenerate the certificate(s)
-echo        From TrustedPackageCreator (tab H5-OBKey),
+echo        From TrustedPackageCreator (OBkey tab in Security panel),
 echo        Select DA_Config.xml (in \ROT_Provisioning\DA\Config)
 echo        Update the configuration (if/as needed) then generate DA_Config.obk file
 echo        Press any key to continue...
@@ -116,7 +118,7 @@ if [%1] neq [AUTO] pause >nul
 :cubemx1
 echo;
 echo    * OEMuRoT_Config.obk generation:
-echo        From TrustedPackageCreator (tab H5-OBkey)
+echo        From TrustedPackageCreator (OBkey tab in Security panel)
 echo        Select OEMuRoT_Config_Keys.xml(Default path is \ROT_Provisioning\STiROT_OEMuROT\Config\OEMuRoT_Config_Keys.xml)
 echo        Warning: Default keys must NOT be used in a product. Make sure to regenerate your own keys!
 echo        Update the configuration (if/as needed) then generate OEMuRoT_Config.obk file
@@ -137,7 +139,7 @@ echo        Successful OEMuRoT_Config.obk file generation
 set "command=%python%%applicfg% setdefine -a uncomment -n OEMUROT_ENABLE -v 1 %flash_layout%"
 %command%
 IF !errorlevel! NEQ 0 goto :step_error
-:: ========================================================= Images generation steps ========================================================  
+:: ========================================================= Images generation steps ========================================================
 echo;
 echo Step 2 : Images generation
 echo    * Boot firmware image generation
@@ -195,7 +197,7 @@ if !errorlevel! neq 0 goto :step_error
 :no_ns_data
 
 :cubemx2
-:: ========================================================= Board provisioning steps =======================================================  
+:: ========================================================= Board provisioning steps =======================================================
 echo Step 3 : Provisioning
 echo    * BOOT0 pin should be disconnected from VDD:
 echo        (STM32H573I-DK: set SW1 to position 0)
@@ -216,7 +218,7 @@ if %ob_flash_error% neq 0 goto :step_error
 echo        Successful option bytes programming and images flashing
 echo        (see %ob_flash_log% for details)
 echo;
-:: ================================================ Final product state selection =========================================================  
+:: ================================================ Final product state selection =========================================================
 :product_state_choice
 for /f %%A in ('"prompt $H & echo on & for %%B in (1) do rem"') do set "BS=%%A"
 set "action=Define product state value"
@@ -229,7 +231,7 @@ set ps_value=0xED
 goto connect_boot0
 )
 
-if /i "%product_state%" == "PROVISIONED" ( 
+if /i "%product_state%" == "PROVISIONED" (
 set ps_value=0x2E
 goto set_provisionning_ps
 )
@@ -255,8 +257,8 @@ echo;
 goto product_state_choice
 
 
-:: ========================================= Product State configuration and Provisioning steps ==========================================   
-:: Connect BOOT0 pin to VDD (CN4 pin5 & pin7) 
+:: ========================================= Product State configuration and Provisioning steps ==========================================
+:: Connect BOOT0 pin to VDD (CN4 pin5 & pin7)
 :connect_boot0
 echo    * BOOT0 pin connected to VDD
 echo        (STM32H573I-DK: set SW1 to position 1)
@@ -265,7 +267,7 @@ echo;
 if [%1] neq [AUTO] pause >nul
 goto provisioning_step
 
-:: Provisioning execution 
+:: Provisioning execution
 :set_provisionning_ps
 set current_log_file=%provisioning_log%
 set "action=Setting the product state PROVISIONING"
@@ -274,7 +276,7 @@ set "command=%stm32programmercli% %connect_no_reset% -ob PRODUCT_STATE=0x17"
 echo %command% >> %provisioning_log%
 echo;
 %command% > %provisioning_log%
-if !errorlevel! neq 0 goto :step_error 
+if !errorlevel! neq 0 goto :step_error
 goto provisioning_step
 
 :: Set the final product state of the STM32H5 product
@@ -305,7 +307,7 @@ echo;
 if /i "%product_state%" == "OPEN" goto :final_execution
 goto set_final_ps
 
-:: ============================================================= End functions =============================================================  
+:: ============================================================= End functions =============================================================
 :: All the steps to set the STM32H5 product were executed correctly
 :final_execution
 echo =====

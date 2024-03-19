@@ -17,57 +17,63 @@
   */
 
 /* Includes ------------------------------------------------------------------*/
-#include "platform/include/tfm_plat_nv_counters.h"
+#include "boot_hal_cfg.h"
+#include "string.h"
+#include "platform/include/plat_nv_counters.h"
 #include "low_level_obkeys.h"
 
 /* Private typedef -----------------------------------------------------------*/
 /* Private configuration  -----------------------------------------------*/
-enum tfm_plat_err_t tfm_plat_init_nv_counter(void)
+HAL_StatusTypeDef plat_init_nv_counter(void)
 {
-  return TFM_PLAT_ERR_SUCCESS;
+  return HAL_OK;
 }
 
-enum tfm_plat_err_t tfm_plat_set_nv_counter(enum tfm_nv_counter_t CounterId,
-                                            uint32_t Data)
+HAL_StatusTypeDef plat_set_nv_counter(enum nv_counter_t CounterId,
+                                      uint32_t Data, uint32_t *Updated)
 {
   uint32_t current = 0U;
 
+  /* reset Updated flag */
+  *Updated = 0U;
+
   if (OBK_GetNVCounter(CounterId,(uint32_t *) &current) != HAL_OK)
   {
-    return TFM_PLAT_ERR_SYSTEM_ERR;
+    return HAL_ERROR;
   }
-   
-  /* never decrement the counter */ 
+
+  /* never decrement the counter */
   if (current > Data)
   {
-    return TFM_PLAT_ERR_SYSTEM_ERR;
+    return HAL_ERROR;
   }
   else if (Data > current)
-  {  
+  {
     if (OBK_UpdateNVCounter(CounterId, Data) != HAL_OK)
     {
-      return TFM_PLAT_ERR_SYSTEM_ERR;
+      return HAL_ERROR;
     }
+    /* set updated flag */
+    *Updated = 1U;
   }
-  else 
+  else
   {
-   return TFM_PLAT_ERR_SUCCESS;
+   return HAL_OK;
   }
-  
-  return TFM_PLAT_ERR_SUCCESS;
+
+  return HAL_OK;
 }
 
-enum tfm_plat_err_t tfm_plat_read_nv_counter(enum tfm_nv_counter_t CounterId,
+HAL_StatusTypeDef plat_read_nv_counter(enum nv_counter_t CounterId,
                                              uint32_t size, uint8_t *val)
 {
-  /* counter is encoded uint32_t */ 
+  /* counter is encoded uint32_t */
   if (OBK_GetNVCounter(CounterId,(uint32_t *) val) == HAL_OK)
   {
     if (*(uint32_t *)val != 0xFFFFFFFFU)
     {
-      return TFM_PLAT_ERR_SUCCESS;
+      return HAL_OK;
     }
   }
-  return TFM_PLAT_ERR_SYSTEM_ERR;
+  return HAL_ERROR;
 }
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

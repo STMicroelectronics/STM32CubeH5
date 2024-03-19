@@ -10,8 +10,8 @@ source $projectdir/../env.sh
 
 error()
 {
-  echo "regression script failed"
-  if [ "$script_mode" != "AUTO" ]; then $SHELL; fi
+  echo "regression script failed : run ./discovery.sh script to check if the product state is not already in open state."
+  if [ "$script_mode" != "AUTO" ]; then $SHELL>/dev/null; fi
   exit 1
 }
 
@@ -37,4 +37,4 @@ if [ $? -ne 0 ]; then error; return 1; fi
 
 
 echo "regression script success"
-if [ "$script_mode" != "AUTO" ]; then $SHELL; fi
+if [ "$script_mode" != "AUTO" ]; then $SHELL>/dev/null; fi
