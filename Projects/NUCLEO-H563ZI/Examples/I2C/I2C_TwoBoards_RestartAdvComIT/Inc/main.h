@@ -68,7 +68,7 @@ void Error_Handler(void);
 /* USER CODE BEGIN Private defines */
 /* Define used to enable Virtual Com Port use : 
      USE_VCP_CONNECTION == 0
-       IDE output print is used to print Command Code of this example. See readme.txt for more details.
+       IDE output print is used to print Command Code of this example. See README.md for more details.
      USE_VCP_CONNECTION == 1
        USART3 instance is used to print Command Code of this example. (TX on PD.8, RX on PD.9)
        (please ensure that USART communication between the target MCU and ST-LINK MCU is properly enabled 

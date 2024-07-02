@@ -18,7 +18,7 @@
 
     <h1>STM32CubeH5 Firmware Examples for STM32H5xx Series</h1>
 
-    <p class="copyright">Copyright 2023 STMicroelectronics</p>
+    <p class="copyright">Copyright 2021 STMicroelectronics</p>
 
     <div class="picture">
       <img alt="" id="_x0000_i1025" src="../_htmresc/st_logo_2020.png" style="border: 0px solid ; width: 104px; height: 77px;"/>
@@ -41,7 +41,7 @@
       <li>A Template project is provided to allow user to quickly build any firmware application on a given board.</li>
     </ul>
 
-    <p>The examples are located under STM32Cube_FW_H5_V1.2.0\Projects\, and all of them have the same structure:</p>
+    <p>The examples are located under STM32Cube_FW_H5_VX.Y.Z\Projects\, and all of them have the same structure:</p>
 
     <ul>
       <li>\Inc folder that contains all header files.</li>
@@ -82,33 +82,11 @@
 				<td>NUCLEO-H503RB</td>
 			</tr>
       <tr align=center>
-        <td style="background-repeat: no-repeat;background-position: right center;background-color: #39A9DC;color: #FFF;" rowspan=2><p id="Templates_Board">Templates_Board</p></td>
-        <td align=left rowspan=1><p id="-">-</p></td>
-        <td align=left><p id="-">-</p></td>
-        <td align=left>
-This project provides a reference template for the NUCLEO-H533RE board based on the STM32Cube HAL API and the
-BSP drivers that can be used to build any firmware application.
-</td>
-        <td>-</td>
-        <td>-</td>
-        <td>-</td>
-        <td><font size="5" color=green>CubeMx</font></td>
-        <td>-</td>
-      </tr>
-      <tr style="background-repeat: no-repeat;background-position: right center;background-color: #39A9DC;color: #FFF;" align=center>
-        <td colspan="3"><b>Total number of templates_board: 1</b></td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>1</td>
-        <td>0</td>
-      </tr>
-      <tr align=center>
-        <td style="background-repeat: no-repeat;background-position: right center;background-color: #39A9DC;color: #FFF;" rowspan=9><p id="Templates">Templates</p></td>
+        <td style="background-repeat: no-repeat;background-position: right center;background-color: #39A9DC;color: #FFF;" rowspan=8><p id="Templates">Templates</p></td>
         <td align=left rowspan=3><p id="-">-</p></td>
-        <td align=left><p id="Starter Project">Starter Project</p></td>
+        <td align=left><p id="Starter project">Starter project</p></td>
         <td align=left>
-- This projects provides a reference template through the HAL API that can be used
+This projects provides a reference template through the HAL API that can be used
 to build any firmware application.
 </td>
         <td>-</td>
@@ -120,7 +98,7 @@ to build any firmware application.
       <tr align=center>
         <td align=left><p id="TrustZoneDisabled">TrustZoneDisabled</p></td>
         <td align=left>
-- This project provides a reference template based on the STM32Cube HAL API that can be used
+This project provides a reference template based on the STM32Cube HAL API that can be used
 to build any firmware application when security is not enabled (TZEN=C3).  
 </td>
         <td>-</td>
@@ -132,7 +110,7 @@ to build any firmware application when security is not enabled (TZEN=C3).
       <tr align=center>
         <td align=left><p id="TrustZoneEnabled">TrustZoneEnabled</p></td>
         <td align=left>
-- This project provides a reference template based on the STM32Cube HAL API that can be used
+This project provides a reference template based on the STM32Cube HAL API that can be used
 to build any firmware application when TrustZone security is activated (TZEN=B4).
 </td>
         <td>-</td>
@@ -142,19 +120,7 @@ to build any firmware application when TrustZone security is activated (TZEN=B4)
         <td>-</td>
       </tr>
       <tr align=center>
-        <td align=left rowspan=5><p id="ROT">ROT</p></td>
-        <td align=left><p id="OEMiROT_Appli">OEMiROT_Appli</p></td>
-        <td align=left>
-This project provides a OEMiROT boot path application example. Boot is performed through OEMiROT bootpath after authenticity and integrity checks of the project firmware and project data 
-images.
-</td>
-        <td>-</td>
-        <td>-</td>
-        <td>-</td>
-        <td>-</td>
-        <td><font size="5" color=green>X</font></td>
-      </tr>
-      <tr align=center>
+        <td align=left rowspan=4><p id="ROT">ROT</p></td>
         <td align=left><p id="OEMiROT_Appli_TrustZone">OEMiROT_Appli_TrustZone</p></td>
         <td align=left>
 This project provides a OEMiROT boot path reference template. Boot is performed through OEMiROT boot path after authenticity and integrity checks of the project firmware and project data
@@ -203,12 +169,34 @@ images.
         <td>-</td>
       </tr>
       <tr style="background-repeat: no-repeat;background-position: right center;background-color: #39A9DC;color: #FFF;" align=center>
-        <td colspan="3"><b>Total number of templates: 16</b></td>
+        <td colspan="3"><b>Total number of templates: 15</b></td>
         <td>0</td>
         <td>6</td>
         <td>3</td>
         <td>5</td>
-        <td>2</td>
+        <td>1</td>
+      </tr>
+      <tr align=center>
+        <td style="background-repeat: no-repeat;background-position: right center;background-color: #39A9DC;color: #FFF;" rowspan=2><p id="Templates_Board">Templates_Board</p></td>
+        <td align=left rowspan=1><p id="-">-</p></td>
+        <td align=left><p id="Starter project">Starter project</p></td>
+        <td align=left>
+This project provides a reference template for the NUCLEO-H533RE board based on the STM32Cube HAL API and the
+BSP drivers that can be used to build any firmware application.
+</td>
+        <td>-</td>
+        <td>-</td>
+        <td>-</td>
+        <td><font size="5" color=green>CubeMx</font></td>
+        <td>-</td>
+      </tr>
+      <tr style="background-repeat: no-repeat;background-position: right center;background-color: #39A9DC;color: #FFF;" align=center>
+        <td colspan="3"><b>Total number of templates_board: 1</b></td>
+        <td>0</td>
+        <td>0</td>
+        <td>0</td>
+        <td>1</td>
+        <td>0</td>
       </tr>
       <tr align=center>
         <td style="background-repeat: no-repeat;background-position: right center;background-color: #39A9DC;color: #FFF;" rowspan=3><p id="Templates_LL">Templates_LL</p></td>
@@ -245,7 +233,7 @@ to build any firmware application.
         <td>1</td>
       </tr>
       <tr align=center>
-        <td style="background-repeat: no-repeat;background-position: right center;background-color: #39A9DC;color: #FFF;" rowspan=158><p id="Examples">Examples</p></td>
+        <td style="background-repeat: no-repeat;background-position: right center;background-color: #39A9DC;color: #FFF;" rowspan=160><p id="Examples">Examples</p></td>
         <td align=left rowspan=1><p id="-">-</p></td>
         <td align=left><p id="BSP">BSP</p></td>
         <td align=left>
@@ -258,7 +246,7 @@ How to use the different BSP drivers of the board.
         <td>-</td>
       </tr>
       <tr align=center>
-        <td align=left rowspan=4><p id="ADC">ADC</p></td>
+        <td align=left rowspan=5><p id="ADC">ADC</p></td>
         <td align=left><p id="ADC_AnalogWatchdog">ADC_AnalogWatchdog</p></td>
         <td align=left>
 How to use an ADC peripheral with an ADC analog watchdog to monitor a channel
@@ -276,6 +264,18 @@ thresholds.
         <td align=left>
 This example describes how to configure and use the ADC1 to convert an external
 analog input in Differential Mode, difference between external voltage on VinN and VinP.
+</td>
+        <td>-</td>
+        <td>-</td>
+        <td>-</td>
+        <td><font size="5" color=green>CubeMx</font></td>
+        <td>-</td>
+      </tr>
+      <tr align=center>
+        <td align=left><p id="ADC_MultiChannelSingleConversion">ADC_MultiChannelSingleConversion</p></td>
+        <td align=left>
+How to use an ADC peripheral to convert several channels. ADC conversions are 
+performed successively in a scan sequence.
 </td>
         <td>-</td>
         <td>-</td>
@@ -523,11 +523,22 @@ using hardware secret key DHUK then use it to encrypt in polling mode.
         <td>-</td>
       </tr>
       <tr align=center>
-        <td align=left rowspan=1><p id="DAC">DAC</p></td>
+        <td align=left rowspan=2><p id="DAC">DAC</p></td>
         <td align=left><p id="DAC_SignalsGeneration">DAC_SignalsGeneration</p></td>
         <td align=left>
 How to use the DAC peripheral to generate several signals using the DMA
 controller and the DAC internal wave generator.
+</td>
+        <td>-</td>
+        <td>-</td>
+        <td><font size="5" color=green>CubeMx</font></td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+      <tr align=center>
+        <td align=left><p id="DAC_SimpleConversion">DAC_SimpleConversion</p></td>
+        <td align=left>
+How to use the DAC peripheral to do a simple conversion.
 </td>
         <td>-</td>
         <td>-</td>
@@ -1209,7 +1220,7 @@ using interrupt.
         <td>-</td>
         <td>-</td>
         <td><font size="5" color=green>CubeMx</font></td>
-        <td><font size="5" color=green>X</font></td>
+        <td><font size="5" color=green>CubeMx</font></td>
       </tr>
       <tr align=center>
         <td align=left><p id="I3C_Target_Direct_Command_DMA">I3C_Target_Direct_Command_DMA</p></td>
@@ -2106,11 +2117,11 @@ generates an MCU WWDG reset when a predefined time period has elapsed.
         <td><font size="5" color=green>CubeMx</font></td>
       </tr>
       <tr style="background-repeat: no-repeat;background-position: right center;background-color: #39A9DC;color: #FFF;" align=center>
-        <td colspan="3"><b>Total number of examples: 191</b></td>
+        <td colspan="3"><b>Total number of examples: 193</b></td>
         <td>2</td>
         <td>26</td>
-        <td>77</td>
-        <td>36</td>
+        <td>78</td>
+        <td>37</td>
         <td>50</td>
       </tr>
       <tr align=center>
@@ -3141,7 +3152,7 @@ the STM32H5xx UART HAL and LL API, the LL API being used for performance improve
         <td>7</td>
       </tr>
       <tr align=center>
-        <td style="background-repeat: no-repeat;background-position: right center;background-color: #39A9DC;color: #FFF;" rowspan=51><p id="Applications">Applications</p></td>
+        <td style="background-repeat: no-repeat;background-position: right center;background-color: #39A9DC;color: #FFF;" rowspan=49><p id="Applications">Applications</p></td>
         <td align=left rowspan=1><p id="-">-</p></td>
         <td align=left><p id="OpenBootloader">OpenBootloader</p></td>
         <td align=left>
@@ -3168,29 +3179,7 @@ and how use it.
         <td>-</td>
       </tr>
       <tr align=center>
-        <td align=left rowspan=6><p id="FileX">FileX</p></td>
-        <td align=left><p id="FX_IAP">FX_IAP</p></td>
-        <td align=left>
-This application provides an example of Azure RTOS FileX stack usage on STM32H573I-DK board, it implements an In-Application programming (IAP) demonstrating FileX's SD file access capabilities.
-</td>
-        <td>-</td>
-        <td><font size="5" color=green>X</font></td>
-        <td>-</td>
-        <td>-</td>
-        <td>-</td>
-      </tr>
-      <tr align=center>
-        <td align=left><p id="Fx_Dual_Instance">Fx_Dual_Instance</p></td>
-        <td align=left>
-This application provide user a working example of two storage media managed by two independent instances of FileX/LevelX running on STM32H573I-DK board.
-</td>
-        <td>-</td>
-        <td><font size="5" color=green>CubeMx</font></td>
-        <td>-</td>
-        <td>-</td>
-        <td>-</td>
-      </tr>
-      <tr align=center>
+        <td align=left rowspan=4><p id="FileX">FileX</p></td>
         <td align=left><p id="Fx_File_Edit_Standalone">Fx_File_Edit_Standalone</p></td>
         <td align=left>
 This application provides an example of FileX stack usage on STM32H573I-DK board, running in standalone mode (without ThreadX). It demonstrates how to create a Fat File system on the SD card memory using FileX API.
@@ -3727,9 +3716,9 @@ This application provides an example of Azure RTOS USBX stack usage. It shows ho
         <td>-</td>
       </tr>
       <tr style="background-repeat: no-repeat;background-position: right center;background-color: #39A9DC;color: #FFF;" align=center>
-        <td colspan="3"><b>Total number of applications: 58</b></td>
+        <td colspan="3"><b>Total number of applications: 56</b></td>
         <td>0</td>
-        <td>32</td>
+        <td>30</td>
         <td>16</td>
         <td>6</td>
         <td>4</td>
@@ -3762,12 +3751,12 @@ basic GUI interface. It is based on the STM32Cube HAL BSP and several middleware
         <td>0</td>
       </tr>
       <tr style="background-repeat: no-repeat;background-position: right center;background-color: #39A9DC;color: #FFF;" align=center>
-      	<td colspan="4"><b>Total number of projects: 361</b></td>
+      	<td colspan="4"><b>Total number of projects: 360</b></td>
       	<td>2</td>
-      	<td>66</td>
-      	<td>138</td>
-      	<td>55</td>
-      	<td>100</td>
+      	<td>64</td>
+      	<td>139</td>
+      	<td>56</td>
+      	<td>99</td>
       </tr>
     </table>
   </body>

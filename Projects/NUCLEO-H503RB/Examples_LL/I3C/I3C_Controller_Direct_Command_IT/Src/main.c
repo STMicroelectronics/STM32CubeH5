@@ -152,6 +152,7 @@ extern void initialise_monitor_handles(void);
   */
 int main(void)
 {
+
   /* USER CODE BEGIN 1 */
 #if (defined (__GNUC__) && !defined(__ARMCC_VERSION))
   initialise_monitor_handles();

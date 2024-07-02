@@ -44,7 +44,7 @@
                 </option>
                 <option>
                     <name>MemFile</name>
-                    <state>$TOOLKIT_DIR$/CONFIG/debugger/ST/STM32H57xxI.ddf</state>
+                    <state>$TOOLKIT_DIR$\CONFIG\debugger\ST\STM32H57xxI.ddf</state>
                 </option>
                 <option>
                     <name>RunToEnable</name>
@@ -112,7 +112,7 @@
                 </option>
                 <option>
                     <name>FlashLoadersV3</name>
-                    <state>$TOOLKIT_DIR$/config/flashloader/ST/FlashSTM32H5xxxI.board</state>
+                    <state>$TOOLKIT_DIR$\config\flashloader\ST\FlashSTM32H5xxxI.board</state>
                 </option>
                 <option>
                     <name>OCImagesSuppressCheck1</name>
@@ -120,7 +120,7 @@
                 </option>
                 <option>
                     <name>OCImagesPath1</name>
-                    <state>$PROJ_DIR$/../NonSecure/STM32H573xx_ns/Exe/project_ns.out</state>
+                    <state>$PROJ_DIR$\..\NonSecure\STM32H573xx_ns\Exe\project_ns.out</state>
                 </option>
                 <option>
                     <name>OCImagesSuppressCheck2</name>
@@ -270,7 +270,7 @@
                 </option>
                 <option>
                     <name>CCADILogFileEditB</name>
-                    <state>$PROJ_DIR$/cspycomm.log</state>
+                    <state>$PROJ_DIR$\cspycomm.log</state>
                 </option>
                 <option>
                     <name>OCDriverInfo</name>
@@ -312,7 +312,7 @@
                 </option>
                 <option>
                     <name>CMSISDAPLogFile</name>
-                    <state>$PROJ_DIR$/cspycomm.log</state>
+                    <state>$PROJ_DIR$\cspycomm.log</state>
                 </option>
                 <option>
                     <name>CMSISDAPInterfaceRadio</name>
@@ -478,7 +478,7 @@
                 </option>
                 <option>
                     <name>LogFile</name>
-                    <state>$PROJ_DIR$/cspycomm.log</state>
+                    <state>$PROJ_DIR$\cspycomm.log</state>
                 </option>
                 <option>
                     <name>CCJTagBreakpointRadio</name>
@@ -536,7 +536,7 @@
                 </option>
                 <option>
                     <name>IjetLogFile</name>
-                    <state>$PROJ_DIR$/cspycomm.log</state>
+                    <state>$PROJ_DIR$\cspycomm.log</state>
                 </option>
                 <option>
                     <name>IjetInterfaceRadio</name>
@@ -793,7 +793,7 @@
                 </option>
                 <option>
                     <name>CCJLinkLogFile</name>
-                    <state>$PROJ_DIR$/cspycomm.log</state>
+                    <state>$PROJ_DIR$\cspycomm.log</state>
                 </option>
                 <option>
                     <name>CCJLinkHWResetDelay</name>
@@ -997,7 +997,7 @@
                 </option>
                 <option>
                     <name>CCLmiftdiLogFile</name>
-                    <state>$PROJ_DIR$/cspycomm.log</state>
+                    <state>$PROJ_DIR$\cspycomm.log</state>
                 </option>
                 <option>
                     <name>CCLmiFtdiInterfaceRadio</name>
@@ -1039,7 +1039,7 @@
                 </option>
                 <option>
                     <name>LogFile</name>
-                    <state>$PROJ_DIR$/cspycomm.log</state>
+                    <state>$PROJ_DIR$\cspycomm.log</state>
                 </option>
             </data>
         </settings>
@@ -1064,7 +1064,7 @@
                 </option>
                 <option>
                     <name>LogFile</name>
-                    <state>$PROJ_DIR$/cspycomm.log</state>
+                    <state>$PROJ_DIR$\cspycomm.log</state>
                 </option>
             </data>
         </settings>
@@ -1110,7 +1110,7 @@
                 </option>
                 <option>
                     <name>LogFile</name>
-                    <state>$PROJ_DIR$/cspycomm.log</state>
+                    <state>$PROJ_DIR$\cspycomm.log</state>
                 </option>
                 <option>
                     <name>CCSTLinkDoUpdateBreakpoints</name>
@@ -1209,7 +1209,7 @@
                 </option>
                 <option>
                     <name>CThirdPartyLogFileEditB</name>
-                    <state>$PROJ_DIR$/cspycomm.log</state>
+                    <state>$PROJ_DIR$\cspycomm.log</state>
                 </option>
                 <option>
                     <name>OCDriverInfo</name>
@@ -1280,7 +1280,7 @@
                 </option>
                 <option>
                     <name>CCMSPFetLogFile</name>
-                    <state>$PROJ_DIR$/cspycomm.log</state>
+                    <state>$PROJ_DIR$\cspycomm.log</state>
                 </option>
                 <option>
                     <name>CCMSPFetRadioEraseFlash</name>
@@ -1317,7 +1317,7 @@
                 </option>
                 <option>
                     <name>LogFile</name>
-                    <state>$PROJ_DIR$/cspycomm.log</state>
+                    <state>$PROJ_DIR$\cspycomm.log</state>
                 </option>
                 <option>
                     <name>CCXds100BreakpointRadio</name>
@@ -1474,59 +1474,59 @@
         </settings>
         <debuggerPlugins>
             <plugin>
-                <file>$TOOLKIT_DIR$/plugins/rtos/CMX/CmxArmPlugin.ENU.ewplugin</file>
+                <file>$TOOLKIT_DIR$\plugins\rtos\CMX\CmxArmPlugin.ENU.ewplugin</file>
                 <loadFlag>0</loadFlag>
             </plugin>
             <plugin>
-                <file>$TOOLKIT_DIR$/plugins/rtos/CMX/CmxTinyArmPlugin.ENU.ewplugin</file>
+                <file>$TOOLKIT_DIR$\plugins\rtos\CMX\CmxTinyArmPlugin.ENU.ewplugin</file>
                 <loadFlag>0</loadFlag>
             </plugin>
             <plugin>
-                <file>$TOOLKIT_DIR$/plugins/rtos/embOS/embOSPlugin.ewplugin</file>
+                <file>$TOOLKIT_DIR$\plugins\rtos\embOS\embOSPlugin.ewplugin</file>
                 <loadFlag>0</loadFlag>
             </plugin>
             <plugin>
-                <file>$TOOLKIT_DIR$/plugins/rtos/FreeRtos/FreeRtosArmPlugin.ENU.ewplugin</file>
+                <file>$TOOLKIT_DIR$\plugins\rtos\FreeRtos\FreeRtosArmPlugin.ENU.ewplugin</file>
                 <loadFlag>0</loadFlag>
             </plugin>
             <plugin>
-                <file>$TOOLKIT_DIR$/plugins/rtos/Mbed/MbedArmPlugin.ENU.ewplugin</file>
+                <file>$TOOLKIT_DIR$\plugins\rtos\Mbed\MbedArmPlugin.ENU.ewplugin</file>
                 <loadFlag>0</loadFlag>
             </plugin>
             <plugin>
-                <file>$TOOLKIT_DIR$/plugins/rtos/Mbed/MbedArmPlugin2.ENU.ewplugin</file>
+                <file>$TOOLKIT_DIR$\plugins\rtos\Mbed\MbedArmPlugin2.ENU.ewplugin</file>
                 <loadFlag>0</loadFlag>
             </plugin>
             <plugin>
-                <file>$TOOLKIT_DIR$/plugins/rtos/OpenRTOS/OpenRTOSPlugin.ewplugin</file>
+                <file>$TOOLKIT_DIR$\plugins\rtos\OpenRTOS\OpenRTOSPlugin.ewplugin</file>
                 <loadFlag>0</loadFlag>
             </plugin>
             <plugin>
-                <file>$TOOLKIT_DIR$/plugins/rtos/SafeRTOS/SafeRTOSPlugin.ewplugin</file>
+                <file>$TOOLKIT_DIR$\plugins\rtos\SafeRTOS\SafeRTOSPlugin.ewplugin</file>
                 <loadFlag>0</loadFlag>
             </plugin>
             <plugin>
-                <file>$TOOLKIT_DIR$/plugins/rtos/SMX/smxAwareIarArm9.ewplugin</file>
+                <file>$TOOLKIT_DIR$\plugins\rtos\SMX\smxAwareIarArm9.ewplugin</file>
                 <loadFlag>0</loadFlag>
             </plugin>
             <plugin>
-                <file>$TOOLKIT_DIR$/plugins/rtos/SMX/smxAwareIarArm9BE.ewplugin</file>
+                <file>$TOOLKIT_DIR$\plugins\rtos\SMX\smxAwareIarArm9BE.ewplugin</file>
                 <loadFlag>0</loadFlag>
             </plugin>
             <plugin>
-                <file>$TOOLKIT_DIR$/plugins/rtos/ThreadX/ThreadXArmPlugin.ENU.ewplugin</file>
+                <file>$TOOLKIT_DIR$\plugins\rtos\ThreadX\ThreadXArmPlugin.ENU.ewplugin</file>
                 <loadFlag>0</loadFlag>
             </plugin>
             <plugin>
-                <file>$EW_DIR$/common/plugins/Orti/Orti.ENU.ewplugin</file>
+                <file>$EW_DIR$\common\plugins\Orti\Orti.ENU.ewplugin</file>
                 <loadFlag>0</loadFlag>
             </plugin>
             <plugin>
-                <file>$EW_DIR$/common/plugins/TargetAccessServer/TargetAccessServer.ENU.ewplugin</file>
+                <file>$EW_DIR$\common\plugins\TargetAccessServer\TargetAccessServer.ENU.ewplugin</file>
                 <loadFlag>0</loadFlag>
             </plugin>
             <plugin>
-                <file>$EW_DIR$/common/plugins/uCProbe/uCProbePlugin.ENU.ewplugin</file>
+                <file>$EW_DIR$\common\plugins\uCProbe\uCProbePlugin.ENU.ewplugin</file>
                 <loadFlag>0</loadFlag>
             </plugin>
         </debuggerPlugins>

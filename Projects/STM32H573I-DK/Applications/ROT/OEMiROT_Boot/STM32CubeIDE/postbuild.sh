@@ -39,6 +39,7 @@ ns_main="$appli_dir/NonSecure/Inc/main.h"
 s_main="$appli_dir/Secure/Inc/main.h"
 appli_flash_layout="$appli_dir/Secure_nsclib/appli_flash_layout.h"
 appli_postbuild="$appli_dir/STM32CubeIDE/postbuild.sh"
+flash_layout="$project_dir/../Inc/flash_layout.h"
 
 $python$applicfg flash --layout $preprocess_bl2_file -b oemurot_enable -m  RE_OEMUROT_ENABLE --decimal $auto_rot_update --vb >> $current_log_file
 $command
@@ -52,6 +53,7 @@ s_code_xml=$provisioningdir/$bootpath/Images/$project"_S_Code_Image.xml"
 ns_code_xml=$provisioningdir/$bootpath/Images/$project"_NS_Code_Image.xml"
 s_data_xml=$provisioningdir/$bootpath/Images/$project"_S_Data_Image.xml"
 ns_data_xml=$provisioningdir/$bootpath/Images/$project"_NS_Data_Image.xml"
+stirot_config_xml=$provisioningdir/$bootpath/Config/"STiRoT_Config.xml"
 auth_s="Authentication secure key"
 auth_ns="Authentication non secure key"
 xml_fw_app_item_name="Firmware binary input file"
@@ -60,6 +62,10 @@ xml_output_item_name="Image output file"
 xml_enc_item_name="Encryption key"
 s_ld_file="$appli_dir/STM32CubeIDE/Secure/STM32H573IIKXQ_FLASH.ld"
 ns_ld_file="$appli_dir/STM32CubeIDE/NonSecure/STM32H573IIKXQ_FLASH.ld"
+code_size="Firmware area size"
+data_size="Data download slot size"
+oemurot_firmware_size="Firmware area size"
+scratch_sector_number="Number of scratch sectors"
 
 error()
 {
@@ -70,6 +76,10 @@ error()
     echo "====="
     exit 1
 }
+if [ "$oemurot_enable" == "1" ]; then
+    $python"$applicfg" definevalue -xml "$stirot_config_xml" -nxml "$oemurot_firmware_size" -n FLASH_AREA_BL2_SIZE --parenthesis "$flash_layout" --vb >> "$current_log_file"
+    if [ $? != 0 ]; then error; fi
+fi
 
 $python$applicfg flash --layout $preprocess_bl2_file -b S_CODE_REGION_START -m  RE_ADDRESS_SECURE_START $map_properties --vb >> $current_log_file
 if [ $? != 0 ]; then error; fi
@@ -267,6 +277,30 @@ $python$applicfg definevalue --layout $preprocess_bl2_file -m RE_IMAGE_FLASH_SEC
 if [ $? != 0 ]; then error; fi
 
 $python$applicfg definevalue --layout $preprocess_bl2_file -m RE_IMAGE_NON_SECURE_IMAGE_SIZE -n NS_CODE_SIZE $s_main --vb >> $current_log_file
+if [ $? != 0 ]; then error; fi
+
+$python"$applicfg" xmlval --layout "$preprocess_bl2_file" -m RE_FLASH_AREA_SCRATCH_SIZE -n "$scratch_sector_number" --decimal "$s_code_xml" --vb >> "$current_log_file"
+if [ $? != 0 ]; then error; fi
+
+$python"$applicfg" xmlval -xml "$s_code_xml" -nxml "$code_size" -nxml "$scratch_sector_number" --decimal -e "(((val1+1)/val2)+1)" -cond "val2" -c M "$s_code_xml" --vb >> "$current_log_file"
+if [ $? != 0 ]; then error; fi
+
+$python"$applicfg" xmlval --layout "$preprocess_bl2_file" -m RE_FLASH_AREA_SCRATCH_SIZE -n "$scratch_sector_number" --decimal "$ns_code_xml" --vb >> "$current_log_file"
+if [ $? != 0 ]; then error; fi
+
+$python"$applicfg" xmlval -xml "$ns_code_xml" -nxml "$code_size" -nxml "$scratch_sector_number" --decimal -e "(((val1+1)/val2)+1)" -cond "val2" -c M "$ns_code_xml" --vb >> "$current_log_file"
+if [ $? != 0 ]; then error; fi
+
+$python"$applicfg" xmlval --layout "$preprocess_bl2_file" -m RE_FLASH_AREA_SCRATCH_SIZE -n "$scratch_sector_number" --decimal "$s_data_xml" --vb >> "$current_log_file"
+if [ $? != 0 ]; then error; fi
+
+$python"$applicfg" xmlval -xml "$s_data_xml" -nxml "$data_size" -nxml "$scratch_sector_number" --decimal -e "(((val1+1)/val2)+1)" -cond "val2" -c M "$s_data_xml" --vb >> "$current_log_file"
+if [ $? != 0 ]; then error; fi
+
+$python"$applicfg" xmlval --layout "$preprocess_bl2_file" -m RE_FLASH_AREA_SCRATCH_SIZE -n "$scratch_sector_number" --decimal "$ns_data_xml" --vb >> "$current_log_file"
+if [ $? != 0 ]; then error; fi
+
+$python"$applicfg" xmlval -xml "$ns_data_xml" -nxml "$data_size" -nxml "$scratch_sector_number" --decimal -e "(((val1+1)/val2)+1)" -cond "val2" -c M "$ns_data_xml" --vb >> "$current_log_file"
 if [ $? != 0 ]; then error; fi
 
 # Bypass configuration of appli_flash_layout file if not present

@@ -65,6 +65,7 @@ static void MX_DCACHE1_Init(void);
   */
 int main(void)
 {
+
   /* USER CODE BEGIN 1 */
   uint32_t i, temp_value;
   volatile uint32_t read_value;

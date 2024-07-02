@@ -172,5 +172,10 @@ enum image_attributes
 #else
   RE_OEMUROT_ENABLE = (0x0),
 #endif
+#if defined(DEVICE_256K_FLASH_ENABLE)
+  RE_FLASH_SIZE = 0x40000,
+#else
+  RE_FLASH_SIZE = 0x80000,
+#endif
   RE_FLASH_PAGE_NBR = (0x1F)
 };

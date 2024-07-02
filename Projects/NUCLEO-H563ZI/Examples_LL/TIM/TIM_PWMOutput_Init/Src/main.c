@@ -98,6 +98,7 @@ __STATIC_INLINE void Configure_DutyCycle(uint32_t D);
   */
 int main(void)
 {
+
   /* USER CODE BEGIN 1 */
 
   /* USER CODE END 1 */

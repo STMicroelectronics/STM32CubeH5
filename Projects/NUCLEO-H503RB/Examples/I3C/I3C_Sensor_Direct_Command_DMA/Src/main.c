@@ -144,6 +144,7 @@ extern void initialise_monitor_handles(void);
   */
 int main(void)
 {
+
   /* USER CODE BEGIN 1 */
   LL_I3C_CtrlBusConfTypeDef CtrlBusConf;
   I3C_CtrlTimingTypeDef CtrlTiming;
@@ -414,6 +415,10 @@ void SystemClock_Config(void)
   {
     Error_Handler();
   }
+
+  /** Configure the programming delay
+  */
+  __HAL_FLASH_SET_PROGRAM_DELAY(FLASH_PROGRAMMING_DELAY_2);
 }
 
 /**

@@ -110,6 +110,7 @@ static uint32_t DMA_StartAndCompare(uint32_t* SrcBuffer, uint32_t* DstBuffer, ui
   */
 int main(void)
 {
+
   /* USER CODE BEGIN 1 */
 
   /* USER CODE END 1 */
@@ -369,6 +370,10 @@ void SystemClock_Config(void)
   {
     Error_Handler();
   }
+
+  /** Configure the programming delay
+  */
+  __HAL_FLASH_SET_PROGRAM_DELAY(FLASH_PROGRAMMING_DELAY_2);
 }
 
 /**

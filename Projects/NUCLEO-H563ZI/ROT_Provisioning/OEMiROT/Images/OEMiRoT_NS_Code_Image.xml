@@ -16,6 +16,13 @@
 		<Default></Default>
 	</Param>
 	<Param>
+		<Name>Write Option</Name>
+		<Type>Data</Type>
+		<Command>--overwrite-only</Command>
+		<Hidden>1</Hidden>
+		<Default></Default>
+	</Param>
+	<Param>
 		<Name>Encryption key</Name>
 		<Link>GetPublic</Link>
 		<Type>File</Type>
@@ -69,13 +76,6 @@
 		<Default>1,1.0.0</Default>
 	</Param>	
 	<Param>
-		<Name>Write Option</Name>
-		<Type>Data</Type>
-		<Command>--overwrite-only</Command>
-		<Hidden>1</Hidden>
-		<Default></Default>
-	</Param>
-	<Param>
 		<Name>Version</Name>
 		<Value>1.0.0</Value>
 		<Type>Data</Type>
@@ -100,11 +100,20 @@
 	</Param>
 	<Param>
 		<Name>Firmware download area offset</Name>
-		<Value>0x80BC000</Value>
+		<Value>0x80C4000</Value>
 		<Type>Data</Type>
 		<Command>-x</Command>
 		<Hidden>1</Hidden>
 		<Default>0x80c0000</Default>
+	</Param>
+	<Param>
+		<Name>Number of scratch sectors</Name>
+		<Value>0</Value>
+		<Type>Data</Type>
+		<Command>-M</Command>
+		<Hidden>1</Hidden>
+		<Tooltip>This is the firmware area size divided by the scratch area size</Tooltip>
+		<Default>0</Default>
 	</Param>
 	<Param>
 		<Name>Firmware binary input file</Name>

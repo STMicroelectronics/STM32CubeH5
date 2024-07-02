@@ -127,6 +127,10 @@ static void SystemClock_Config(void)
     Error_Handler();
   }
 
+  /** Configure the programming delay
+  */
+  __HAL_FLASH_SET_PROGRAM_DELAY(FLASH_PROGRAMMING_DELAY_2);
+
   /* Select PLL1Q as source of FDCAN clock */
   LL_RCC_PLL1Q_Enable();
   LL_RCC_SetFDCANClockSource(LL_RCC_FDCAN_CLKSOURCE_PLL1Q);

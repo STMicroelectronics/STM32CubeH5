@@ -109,6 +109,7 @@ uint32_t ChangePLLConfiguration(uint32_t PLLSource, uint32_t PLLM, uint32_t PLLN
   */
 int main(void)
 {
+
   /* USER CODE BEGIN 1 */
 
   /* USER CODE END 1 */

@@ -106,6 +106,15 @@
 		<Default>0x8162000</Default>
 	</Param>
 	<Param>
+		<Name>Number of scratch sectors</Name>
+		<Value>0</Value>
+		<Type>Data</Type>
+		<Command>-M</Command>
+		<Hidden>1</Hidden>
+		<Tooltip>This is the firmware area size divided by the scratch area size</Tooltip>
+		<Default>0</Default>
+	</Param>
+	<Param>
 		<Name>Data binary input file</Name>
 		<Value>../Binary/ns_data.bin</Value>
 		<Type>File</Type>

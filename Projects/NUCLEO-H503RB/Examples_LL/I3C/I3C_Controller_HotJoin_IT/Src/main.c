@@ -94,6 +94,7 @@ static void I3C_DynamicAddressTreatment(void);
   */
 int main(void)
 {
+
   /* USER CODE BEGIN 1 */
 
   /* USER CODE END 1 */

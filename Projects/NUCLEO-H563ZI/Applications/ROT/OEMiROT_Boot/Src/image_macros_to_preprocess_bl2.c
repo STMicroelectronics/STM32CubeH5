@@ -162,6 +162,11 @@ enum image_attributes
   RE_OVER_WRITE = (0x0),
   RE_CMSE_VENEER_REGION_SIZE = (0x2000),
 #endif
+#if defined(DEVICE_1M_FLASH_ENABLE)
+  RE_FLASH_SIZE = 0x100000,
+#else
+  RE_FLASH_SIZE = 0x200000,
+#endif
   RE_OEMUROT_ENABLE = (0x0),
   RE_FLASH_PAGE_NBR = (0x7F)
 };

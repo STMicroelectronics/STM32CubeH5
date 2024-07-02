@@ -78,6 +78,7 @@ static uint32_t BufferCmp8b(const uint8_t *pBuffer1, const uint8_t *pBuffer2, ui
   */
 int main(void)
 {
+
   /* USER CODE BEGIN 1 */
   __IO uint8_t exit_loop = 0U;
 
@@ -275,6 +276,10 @@ void SystemClock_Config(void)
   {
     Error_Handler();
   }
+
+  /** Configure the programming delay
+  */
+  __HAL_FLASH_SET_PROGRAM_DELAY(FLASH_PROGRAMMING_DELAY_2);
 }
 
 /**

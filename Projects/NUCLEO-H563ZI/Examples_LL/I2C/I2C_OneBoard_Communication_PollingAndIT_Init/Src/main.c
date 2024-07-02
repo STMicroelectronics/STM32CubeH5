@@ -101,6 +101,7 @@ void     Handle_I2C_Master(void);
   */
 int main(void)
 {
+
   /* USER CODE BEGIN 1 */
 
   /* USER CODE END 1 */

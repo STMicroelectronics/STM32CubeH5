@@ -41,6 +41,8 @@
 #define MCUBOOT_NS_DATA_IMAGE_NUMBER 0  /* 1: NS data image for NS application.
                                            0: No NS data image. */
 
+/*#define DEVICE_1M_FLASH_ENABLE */  /*Defined: the project is for 1M FLASH device
+                                       Undefined: the project is for 2M FLASH device */
 /* Flash layout configuration : end ******************************************/
 
 
@@ -61,8 +63,12 @@
 /* Flash layout info for BL2 bootloader */
 #define FLASH_AREA_IMAGE_SECTOR_SIZE    (0x2000)     /* 8 KB */
 #define FLASH_AREA_WRP_GROUP_SIZE       (0x8000)     /* 32 KB */
-#define FLASH_B_SIZE                    (0x100000)   /* 1 MBytes*/
-#define FLASH_TOTAL_SIZE                (FLASH_B_SIZE+FLASH_B_SIZE) /* 2 MBytes */
+#if defined(DEVICE_1M_FLASH_ENABLE)
+#define FLASH_B_SIZE                    (0x80000)   /* 512 KBytes*/
+#else
+#define FLASH_B_SIZE                    (0x100000) /* 1 MBytes */
+#endif /* DEVICE_1M_FLASH_ENABLE */
+#define FLASH_TOTAL_SIZE                (FLASH_B_SIZE+FLASH_B_SIZE) /* 1 MBytes  or 2MBytes*/
 #define FLASH_BASE_ADDRESS              (0x08000000)
 
 /* Flash area IDs */
@@ -131,7 +137,11 @@
 
 /* BL2 partitions size */
 #define FLASH_S_PARTITION_SIZE          (0x06000) /* 24 KB for S partition */
+#if defined(DEVICE_1M_FLASH_ENABLE)
+#define FLASH_NS_PARTITION_SIZE         (0x40000) /* 256 KB for NS partition */
+#else
 #define FLASH_NS_PARTITION_SIZE         (0xA0000) /* 640 KB for NS partition */
+#endif /* DEVICE_1M_FLASH_ENABLE */
 #define FLASH_PARTITION_SIZE            (FLASH_S_PARTITION_SIZE+FLASH_NS_PARTITION_SIZE)
 
 #if (MCUBOOT_APP_IMAGE_NUMBER == 2)
@@ -312,8 +322,12 @@
 /*
  * The maximum number of status entries supported by the bootloader.
  */
-#define MCUBOOT_STATUS_MAX_ENTRIES         ((FLASH_MAX_PARTITION_SIZE) / \
-                                            FLASH_AREA_SCRATCH_SIZE)
+#if defined(MCUBOOT_OVERWRITE_ONLY)
+#define MCUBOOT_STATUS_MAX_ENTRIES        (0)
+#else /* not MCUBOOT_OVERWRITE_ONLY */
+#define MCUBOOT_STATUS_MAX_ENTRIES        (((FLASH_MAX_PARTITION_SIZE - 1) / \
+                                            FLASH_AREA_SCRATCH_SIZE) + 1)
+#endif /* MCUBOOT_OVERWRITE_ONLY */
 /* Maximum number of image sectors supported by the bootloader. */
 #define MCUBOOT_MAX_IMG_SECTORS           ((FLASH_MAX_PARTITION_SIZE) / \
                                            FLASH_AREA_IMAGE_SECTOR_SIZE)

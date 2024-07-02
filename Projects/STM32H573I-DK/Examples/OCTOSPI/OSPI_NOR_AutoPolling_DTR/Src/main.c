@@ -72,6 +72,7 @@ static void XSPI_OctalDtrModeCfg(XSPI_HandleTypeDef *hospi);
   */
 int main(void)
 {
+
   /* USER CODE BEGIN 1 */
   XSPI_RegularCmdTypeDef sCommand = {0};
   uint16_t index, errorBuffer = 0;
@@ -267,6 +268,10 @@ void SystemClock_Config(void)
   {
     Error_Handler();
   }
+
+  /** Configure the programming delay
+  */
+  __HAL_FLASH_SET_PROGRAM_DELAY(FLASH_PROGRAMMING_DELAY_2);
 }
 
 /**

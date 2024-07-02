@@ -1,9 +1,9 @@
 ## <b>Templates_TrustZoneEnabled Example Description</b>
 
-- This project provides a reference template based on the STM32Cube HAL API that can be used
+This project provides a reference template based on the STM32Cube HAL API that can be used
 to build any firmware application when TrustZone security is activated (TZEN=B4).
 
-- This project is targeted to run on STM32H573xx devices on STM32H573I-DK boards from STMicroelectronics.
+This project is targeted to run on STM32H573xx devices on STM32H573I-DK boards from STMicroelectronics.
 
 - At the beginning of the main program, the HAL_Init() function is called to reset
 all the peripherals, initialize the Flash interface and the systick.
@@ -125,15 +125,12 @@ In order to make the program work, you must do the following :
 
 <b>STM32CubeIDE</b>
 
-- Open your toolchain
-- Open Multi-projects workspace file .project
-- Select the xxxxx_S project and Build xxxxx_S project
-- Select the xxxxx_NS project and Build xxxxx_NS project
-- Select the xxxxx_S project and select “Debug conguration”
-- Double click on “STM32 Cortex-M C/C++ Application”
-- Select “Startup” > “Add” >
-- Select the xxxxx_NS project
-- Build configuration : Select Release/Debug
-- Select the xxxxx_NS project in “Load Image and Symbols” window
-- Click “Move Up” then “Debug”
-- Run the example
+ - Open STM32CubeIDE
+ - File > Import. Point to the STM32CubeIDE folder of the example project. Click Finish.
+ - Select and build the xxxxx_NS project, this will automatically trigger build of xxxxx_S project
+ - Select the xxxxx_S project and select “Debug configuration”
+   - Double click on “STM32 Cortex-M C/C++ Application”
+   - Select  “Startup” >  “Add” >
+ - Select the xxxxx_NS project
+ - Build configuration : Select Release/Debug
+ - Click Debug to debug the example

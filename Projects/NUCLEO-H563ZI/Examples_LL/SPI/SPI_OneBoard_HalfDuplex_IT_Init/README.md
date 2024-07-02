@@ -47,12 +47,12 @@ Connectivity, SPI, Half-duplex, Transmission, Reception, Master, Slave, MISO, MO
     - Connect Master MOSI PA7 to Slave MISO PB14
 
 Relation with Board connector:
-  PA5  is connected to pin 11 of CN5 connector
-  PA7  is connected to pin 15 of CN5 connector
-  PB13 is connected to pin 30 of CN5 connector
-  PB14 is connected to pin 28 of CN5 connector
+  PA5  is connected to pin 11 of CN12 connector
+  PA7  is connected to pin 15 of CN12 connector
+  PB13 is connected to pin 30 of CN12 connector
+  PB14 is connected to pin 28 of CN12 connector
 
-### <b>How to use it ?</b> 
+### <b>How to use it ?</b>
 
 In order to make the program work, you must do the following :
 

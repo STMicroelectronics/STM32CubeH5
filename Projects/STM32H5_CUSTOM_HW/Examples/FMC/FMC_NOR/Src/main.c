@@ -80,6 +80,7 @@ static TestStatus Buffercmp(uint16_t *pBuffer1, uint16_t *pBuffer2, uint16_t Buf
   */
 int main(void)
 {
+
   /* USER CODE BEGIN 1 */
   uint16_t *pdata = NULL;
   uint32_t index  = 0;
@@ -226,6 +227,10 @@ void SystemClock_Config(void)
   {
     Error_Handler();
   }
+
+  /** Configure the programming delay
+  */
+  __HAL_FLASH_SET_PROGRAM_DELAY(FLASH_PROGRAMMING_DELAY_2);
 }
 
 /**

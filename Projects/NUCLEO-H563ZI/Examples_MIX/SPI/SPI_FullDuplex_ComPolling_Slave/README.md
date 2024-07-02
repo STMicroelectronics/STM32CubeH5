@@ -3,9 +3,9 @@
 Data buffer transmission/reception between two boards via SPI using Polling mode.
 
 	Board	: NUCLEO-H563ZI (embeds a STM32H563ZI device)
-	CLK Pin	: PA5 (CN5, pin 11)
-	MISO Pin: PA6 (CN5, pin 13)
-	MOSI Pin: PA7 (CN5, pin 15)
+	CLK Pin : PA5 (CN12, pin 11)
+	MISO Pin: PA6 (CN12, pin 13)
+	MOSI Pin: PA7 (CN12, pin 15)
 
 At the beginning of the main program the HAL_Init() function is called to reset
 all the peripherals, initialize the Flash interface and the systick.
@@ -72,9 +72,9 @@ Connectivity, SPI, Full-duplex, Transmission, Reception, Slave, MISO, MOSI, Poll
     easily tailored to any other supported device and development board.
 
   - NUCLEO-H563ZI Set-up
-    - Connect Master board PA5 (CN5, pin 11) to Slave Board PA5 (CN5, pin 11)
-    - Connect Master board PA6 (CN5, pin 13) to Slave Board PA6 (CN5, pin 13)
-    - Connect Master board PA7 (CN5, pin 15) to Slave Board PA7 (CN5, pin 15)
+    - Connect Master board PA5 (CN12, pin 11) to Slave Board PA5 (CN12, pin 11)
+    - Connect Master board PA6 (CN12, pin 13) to Slave Board PA6 (CN12, pin 13)
+    - Connect Master board PA7 (CN12, pin 15) to Slave Board PA7 (CN12, pin 15)
     - Connect Master board GND to Slave Board GND
 
 ### <b>How to use it ?</b>

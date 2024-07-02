@@ -3,9 +3,9 @@
 Data buffer transmission/reception between two boards via SPI using Interrupt mode.
 
     - Board    : NUCLEO-H563ZI (embeds a STM32H563ZI device)
-    - CLK Pin  : PA5 (pin 10 on CN6 connector)
+    - CLK Pin  : PA5 (pin 10 on CN7 connector)
     - MISO Pin : PA6 (pin 1 on CN9 connector)
-    - MOSI Pin : PA7 (pin 15 on CN5 connector)
+    - MOSI Pin : PA7 (pin 15 on CN12 connector)
 
 HAL architecture allows user to easily change code to move to DMA or Polling 
 mode. To see others communication modes please check following examples:
@@ -86,9 +86,9 @@ Connectivity, SPI, Full-duplex, Interrupt, Transmission, Reception, Master, Slav
     easily tailored to any other supported device and development board.
 
   - NUCLEO-H563ZI Set-up
-    - Connect Master board PA5 (pin 10 on CN6 connector) to Slave Board PA5 (pin 10 on CN6 connector)
+    - Connect Master board PA5 (pin 10 on CN7 connector) to Slave Board PA5 (pin 10 on CN7 connector)
     - Connect Master board PA6 (pin 1 on CN9 connector) to Slave Board PA6 (pin 1 on CN9 connector)
-    - Connect Master board PA7 (pin 15 on CN5 connector) to Slave Board PA7 (pin 15 on CN5 connector)
+    - Connect Master board PA7 (pin 15 on CN12 connector) to Slave Board PA7 (pin 15 on CN12 connector)
     - Connect Master board GND  to Slave Board GND
 
 ### <b>How to use it ?</b>

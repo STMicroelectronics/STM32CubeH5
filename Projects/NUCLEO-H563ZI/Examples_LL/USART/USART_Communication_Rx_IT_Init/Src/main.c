@@ -71,6 +71,7 @@ void     LED_Blinking(uint32_t Period);
   */
 int main(void)
 {
+
   /* USER CODE BEGIN 1 */
   /* USER CODE END 1 */
 

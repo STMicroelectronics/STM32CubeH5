@@ -107,6 +107,15 @@
 		<Default>0x80C4000</Default>
 	</Param>
 	<Param>
+		<Name>Number of scratch sectors</Name>
+		<Value>0</Value>
+		<Type>Data</Type>
+		<Command>-M</Command>
+		<Hidden>1</Hidden>
+		<Tooltip>This is the firmware area size divided by the scratch area size</Tooltip>
+		<Default>0</Default>
+	</Param>
+	<Param>
 		<Name>Firmware binary input file</Name>
 		<Value>../../../Applications/ROT/OEMiROT_Appli_TrustZone/Binary/rot_tz_ns_app.bin</Value>
 		<Type>File</Type>

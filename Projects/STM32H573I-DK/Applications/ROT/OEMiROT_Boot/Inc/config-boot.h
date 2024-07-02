@@ -86,7 +86,7 @@
 #define MBEDTLS_AES_ALT
 #define MBEDTLS_ECDSA_VERIFY_ALT
 #define MBEDTLS_ECP_ALT
-#define MBEDTLS_RSA_ALT
+/* #define MBEDTLS_RSA_ALT */
 #endif /* BL2_HW_ACCEL_ENABLE */
 
 /* mbed TLS modules */

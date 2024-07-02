@@ -40,7 +40,6 @@
   */
 
 #define HAL_MODULE_ENABLED
-
 /*#define HAL_ADC_MODULE_ENABLED */
 #define HAL_CEC_MODULE_ENABLED
 /*#define HAL_COMP_MODULE_ENABLED */
@@ -163,7 +162,6 @@
 #if !defined  (LSE_STARTUP_TIMEOUT)
   #define LSE_STARTUP_TIMEOUT    5000UL     /*!< Time out for LSE start up, in ms */
 #endif /* LSE_STARTUP_TIMEOUT */
-
 /**
   * @brief External clock source for SPI/SAI peripheral
   *        This value is used by the SPI/SAI HAL module to compute the SPI/SAI clock source

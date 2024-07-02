@@ -376,7 +376,7 @@
             <IncludeLibsPath></IncludeLibsPath>
             <Misc></Misc>
             <LinkerInputFile></LinkerInputFile>
-            <DisabledWarnings></DisabledWarnings>
+            <DisabledWarnings>6848</DisabledWarnings>
           </LDads>
         </TargetArmAds>
       </TargetOption>

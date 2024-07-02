@@ -1825,7 +1825,6 @@ RTC_HandleTypeDef RTCHandle;
 
 static void active_tamper(void)
 {
-    fih_int fih_rc = FIH_FAILURE;
 #if (OEMIROT_TAMPER_ENABLE == ALL_TAMPER)
     RTC_ActiveTampersTypeDef sAllTamper;
     /*  use random generator to feed  */
@@ -1836,6 +1835,7 @@ static void active_tamper(void)
 #if (OEMIROT_TAMPER_ENABLE != NO_TAMPER)
     RTC_SecureStateTypeDef TamperSecureConfGet;
     RTC_PrivilegeStateTypeDef TamperPrivConfGet;
+    fih_int fih_rc = FIH_FAILURE;
 #endif /* OEMIROT_TAMPER_ENABLE != NO_TAMPER) */
     /* configuration stage */
     if (uFlowStage == FLOW_STAGE_CFG)

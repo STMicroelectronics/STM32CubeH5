@@ -80,6 +80,7 @@ static void OSPI_OctalDTRModeCfg(XSPI_HandleTypeDef *hospi);
   */
 int main(void)
 {
+
   /* USER CODE BEGIN 1 */
   /* STM32H5xx HAL library initialization:
        - Systick timer is configured by default as source of time base, but user
@@ -331,6 +332,10 @@ void SystemClock_Config(void)
   {
     Error_Handler();
   }
+
+  /** Configure the programming delay
+  */
+  __HAL_FLASH_SET_PROGRAM_DELAY(FLASH_PROGRAMMING_DELAY_2);
 }
 
 /**

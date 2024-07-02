@@ -156,6 +156,7 @@ int iar_fputc(int ch);
   */
 int main(void)
 {
+
   /* USER CODE BEGIN 1 */
 #if (USE_VCP_CONNECTION == 0)
 #if defined(__GNUC__) && defined(MASTER_BOARD) && !defined(__ARMCC_VERSION)
@@ -472,6 +473,10 @@ void SystemClock_Config(void)
   {
     Error_Handler();
   }
+
+  /** Configure the programming delay
+  */
+  __HAL_FLASH_SET_PROGRAM_DELAY(FLASH_PROGRAMMING_DELAY_2);
 }
 
 /**

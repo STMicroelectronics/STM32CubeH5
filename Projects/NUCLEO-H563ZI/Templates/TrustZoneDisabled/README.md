@@ -1,8 +1,8 @@
 ## <b>Templates_TrustZoneDisabled Example Description</b>
 
-- This project provides a reference template based on the STM32Cube HAL API that can be used
+This project provides a reference template based on the STM32Cube HAL API that can be used
 to build any firmware application when security is not enabled (TZEN=C3).  
-- This project is targeted to run on STM32H563xx devices on NUCLEO-H563ZI boards from STMicroelectronics.  
+This project is targeted to run on STM32H563xx devices on NUCLEO-H563ZI boards from STMicroelectronics.  
 At the beginning of the main program, the HAL_Init() function is called to reset
 all the peripherals, initialize the Flash interface and the systick.
 - The SystemClock_Config() function is used to configure the system clock (SYSCLK)

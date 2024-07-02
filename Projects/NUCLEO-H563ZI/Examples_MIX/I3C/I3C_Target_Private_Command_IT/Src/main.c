@@ -90,6 +90,7 @@ static uint16_t Buffercmp(uint8_t *pBuffer1, uint8_t *pBuffer2, uint16_t BufferL
   */
 int main(void)
 {
+
   /* USER CODE BEGIN 1 */
   /* Initialize transfer pointer */
   pBuffRXWordPtr    = ((uint32_t *)&aRxBuffer[0]);
@@ -196,6 +197,10 @@ void SystemClock_Config(void)
   {
     Error_Handler();
   }
+
+  /** Configure the programming delay
+  */
+  __HAL_FLASH_SET_PROGRAM_DELAY(FLASH_PROGRAMMING_DELAY_2);
 }
 
 /**

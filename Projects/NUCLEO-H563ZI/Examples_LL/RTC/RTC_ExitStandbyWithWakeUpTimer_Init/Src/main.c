@@ -103,6 +103,7 @@ uint32_t WaitForSynchro_RTC(void);
   */
 int main(void)
 {
+
   /* USER CODE BEGIN 1 */
   uint32_t seconds ;
 

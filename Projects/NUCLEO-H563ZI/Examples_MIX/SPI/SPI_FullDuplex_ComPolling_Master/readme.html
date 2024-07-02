@@ -27,9 +27,9 @@
 <h2><b>SPI_FullDuplex_ComPolling_Master Example Description</b></h2>
 <p>Data buffer transmission/reception between two boards via SPI using Polling mode.</p>
 <pre><code>Board   : NUCLEO-H563ZI (embeds a STM32H563ZI device)
-CLK Pin : PA5 (CN5, pin 11)
-MISO Pin: PA6 (CN5, pin 13)
-MOSI Pin: PA7 (CN5, pin 15)</code></pre>
+CLK Pin : PA5 (CN12, pin 11)
+MISO Pin: PA6 (CN12, pin 13)
+MOSI Pin: PA7 (CN12, pin 15)</code></pre>
 <p>At the beginning of the main program the HAL_Init() function is called to reset all the peripherals, initialize the Flash interface and the systick. Then the SystemClock_Config() function is used to configure the system clock (SYSCLK) to run at 250 MHz.</p>
 <p>The SPI peripheral configuration is ensured by the HAL_SPI_Init() function. This later is calling the HAL_SPI_MspInit()function which core is implementing the configuration of the needed SPI resources according to the used hardware (CLOCK &amp; GPIO). You may update this function to change SPI configuration. The Full-Duplex SPI transfer (16bit) is done using LL Driver functions LL_SPI_TransmitData16 and LL_SPI_ReceiveData16.</p>
 <p>Example execution:</p>
@@ -66,9 +66,9 @@ MOSI Pin: PA7 (CN5, pin 15)</code></pre>
 <li><p>This example has been tested with NUCLEO-H563ZI board and can be easily tailored to any other supported device and development board.</p></li>
 <li><p>NUCLEO-H563ZI Set-up</p>
 <ul>
-<li>Connect Master board PA5 (CN5, pin 11) to Slave Board PA5 (CN5, pin 11)</li>
-<li>Connect Master board PA6 (CN5, pin 13) to Slave Board PA6 (CN5, pin 13)</li>
-<li>Connect Master board PA7 (CN5, pin 15) to Slave Board PA7 (CN5, pin 15)</li>
+<li>Connect Master board PA5 (CN12, pin 11) to Slave Board PA5 (CN12, pin 11)</li>
+<li>Connect Master board PA6 (CN12, pin 13) to Slave Board PA6 (CN12, pin 13)</li>
+<li>Connect Master board PA7 (CN12, pin 15) to Slave Board PA7 (CN12, pin 15)</li>
 <li>Connect Master board GND to Slave Board GND</li>
 </ul></li>
 </ul>

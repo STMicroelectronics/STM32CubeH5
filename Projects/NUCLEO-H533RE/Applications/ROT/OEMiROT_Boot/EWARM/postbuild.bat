@@ -35,6 +35,7 @@ set "map_properties=%projectdir%\..\map.properties"
 set "preprocess_bl2_file=%projectdir%\image_macros_preprocessed_bl2.c"
 set "appli_dir=../../../../%oemirot_boot_path_project%"
 
+set "flash_layout=%projectdir%\..\Inc\flash_layout.h"
 set "provisioning=%projectdir%\..\..\..\..\ROT_Provisioning\img_config.bat"
 set ns_main="%appli_dir%\NonSecure\Inc\main.h"
 set s_main="%appli_dir%\Secure\Inc\main.h"
@@ -49,6 +50,7 @@ set s_code_xml="%provisioningdir%\%bootpath%\Images\%project%_S_Code_Image.xml"
 set ns_code_xml="%provisioningdir%\%bootpath%\Images\%project%_NS_Code_Image.xml"
 set s_data_xml="%provisioningdir%\%bootpath%\Images\%project%_S_Data_Image.xml"
 set ns_data_xml="%provisioningdir%\%bootpath%\Images\%project%_NS_Data_Image.xml"
+set stirot_config_xml="%provisioningdir%\%bootpath%\Config\STiRoT_Config.xml"
 set auth_s="Authentication secure key"
 set auth_ns="Authentication non secure key"
 set xml_fw_app_item_name="Firmware binary input file"
@@ -57,6 +59,24 @@ set xml_output_item_name="Image output file"
 set xml_enc_item_name="Encryption key"
 set s_icf_file="%appli_dir%\EWARM\Secure\stm32h533xx_flash_s.icf"
 set ns_icf_file="%appli_dir%\EWARM\NonSecure\stm32h533xx_flash_ns.icf"
+set code_size="Firmware area size"
+set data_size="Data download slot size"
+set oemurot_firmware_size="Firmware area size"
+set scratch_sector_number="Number of scratch sectors"
+
+if "%project%" == "OEMiROT" goto :common_rot_regions
+if "%project%" == "OEMuROT" goto :oemurot_rot_regions
+
+:oemurot_rot_regions
+set "command=%python%%applicfg% definevalue -xml %stirot_config_xml% -nxml %oemurot_firmware_size% -n FLASH_AREA_BL2_SIZE --parenthesis %flash_layout% --vb >> %current_log_file% 2>&1"
+%command%
+IF !errorlevel! NEQ 0 goto :error
+goto :common_rot_regions
+
+:common_rot_regions
+set "command=%python%%applicfg% flash --layout %preprocess_bl2_file% -b FLASH_SIZE -m RE_FLASH_SIZE %map_properties% --vb >> %current_log_file% 2>&1"
+%command%
+IF !errorlevel! NEQ 0 goto :error
 
 set "command=%python%%applicfg% flash --layout %preprocess_bl2_file% -b S_CODE_REGION_START -m  RE_ADDRESS_SECURE_START %map_properties% --vb >> %current_log_file% 2>&1"
 %command%
@@ -420,6 +440,38 @@ set "command=%python%%applicfg% definevalue --layout %preprocess_bl2_file% -m RE
 IF !errorlevel! NEQ 0 goto :error
 
 set "command=%python%%applicfg% definevalue --layout %preprocess_bl2_file% -m RE_FLASH_B_SIZE -n FLASH_B_SIZE %appli_flash_layout% --vb >> %current_log_file% 2>&1"
+%command%
+IF !errorlevel! NEQ 0 goto :error
+
+set "command=%python%%applicfg% xmlval --layout %preprocess_bl2_file% -m RE_FLASH_AREA_SCRATCH_SIZE -n %scratch_sector_number% --decimal %s_code_xml% --vb >> %current_log_file% 2>&1"
+%command%
+IF !errorlevel! NEQ 0 goto :error
+
+set "command=%python%%applicfg% xmlval -xml %s_code_xml% -nxml %code_size% -nxml %scratch_sector_number% --decimal -e (((val1+1)/val2)+1) -cond val2 -c M %s_code_xml% --vb >> %current_log_file% 2>&1"
+%command%
+IF !errorlevel! NEQ 0 goto :error
+
+set "command=%python%%applicfg% xmlval --layout %preprocess_bl2_file% -m RE_FLASH_AREA_SCRATCH_SIZE -n %scratch_sector_number% --decimal %ns_code_xml% --vb >> %current_log_file% 2>&1"
+%command%
+IF !errorlevel! NEQ 0 goto :error
+
+set "command=%python%%applicfg% xmlval -xml %ns_code_xml% -nxml %code_size% -nxml %scratch_sector_number% --decimal -e (((val1+1)/val2)+1) -cond val2 -c M %ns_code_xml% --vb >> %current_log_file% 2>&1"
+%command%
+IF !errorlevel! NEQ 0 goto :error
+
+set "command=%python%%applicfg% xmlval --layout %preprocess_bl2_file% -m RE_FLASH_AREA_SCRATCH_SIZE -n %scratch_sector_number% --decimal %s_data_xml% --vb >> %current_log_file% 2>&1"
+%command%
+IF !errorlevel! NEQ 0 goto :error
+
+set "command=%python%%applicfg% xmlval -xml %s_data_xml% -nxml %data_size% -nxml %scratch_sector_number% --decimal -e (((val1+1)/val2)+1) -cond val2 -c M %s_data_xml% --vb >> %current_log_file% 2>&1"
+%command%
+IF !errorlevel! NEQ 0 goto :error
+
+set "command=%python%%applicfg% xmlval --layout %preprocess_bl2_file% -m RE_FLASH_AREA_SCRATCH_SIZE -n %scratch_sector_number% --decimal %ns_data_xml% --vb >> %current_log_file% 2>&1"
+%command%
+IF !errorlevel! NEQ 0 goto :error
+
+set "command=%python%%applicfg% xmlval -xml %ns_data_xml% -nxml %data_size% -nxml %scratch_sector_number% --decimal -e (((val1+1)/val2)+1) -cond val2 -c M %ns_data_xml% --vb >> %current_log_file% 2>&1"
 %command%
 IF !errorlevel! NEQ 0 goto :error
 

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>TrusZoneEnabled_NonSecure</name>
+	<name>TrustZoneEnabled_NonSecure</name>
 	<comment></comment>
 	<projects>
-		<project>TrusZoneEnabled_Secure</project>
+		<project>TrustZoneEnabled_Secure</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

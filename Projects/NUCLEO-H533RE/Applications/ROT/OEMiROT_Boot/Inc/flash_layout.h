@@ -44,6 +44,9 @@
 #define MCUBOOT_NS_DATA_IMAGE_NUMBER 0  /* 1: NS data image for NS application.
                                            0: No NS data image. */
 
+/* #define DEVICE_256K_FLASH_ENABLE */  /* Defined: the project is for 256K FLASH device.
+                                           Undefined: the project is for 512K FLASH device */
+
 /* Flash layout configuration : end ******************************************/
 
 /* Total number of images */
@@ -62,9 +65,15 @@
 
 /* Flash layout info for BL2 bootloader */
 #define FLASH_AREA_IMAGE_SECTOR_SIZE    (0x2000)     /* 8 KB */
+#if !defined(OEMUROT_ENABLE)
 #define FLASH_AREA_WRP_GROUP_SIZE       (0x8000)     /* 32 KB */
+#endif /* not OEMUROT_ENABLE */
+#if defined(DEVICE_256K_FLASH_ENABLE)
+#define FLASH_B_SIZE                    (0x20000)   /* 128 KBytes*/
+#else
 #define FLASH_B_SIZE                    (0x40000)    /* 256 KBytes*/
-#define FLASH_TOTAL_SIZE                (FLASH_B_SIZE+FLASH_B_SIZE) /* 512 KBytes */
+#endif /* DEVICE_256K_FLASH_ENABLE */
+#define FLASH_TOTAL_SIZE                (FLASH_B_SIZE+FLASH_B_SIZE) /* 512 KBytes or 256 KBytes */
 #define FLASH_BASE_ADDRESS              (0x08000000)
 
 /* Flash area IDs */
@@ -117,23 +126,33 @@
 #endif /* FLASH_AREA_SCRATCH_ID */
 
 /* HDP area end at this address */
+#if !defined(OEMUROT_ENABLE)
 #define FLASH_BL2_HDP_END               (FLASH_AREA_SCRATCH_OFFSET+FLASH_AREA_SCRATCH_SIZE-1)
-/* control area for BL2 code protected by hdp */
+#endif /* not OEMUROT_ENABLE */
+
+/* control area for BL2 code */
 #if ((FLASH_AREA_BL2_OFFSET+FLASH_AREA_BL2_SIZE) % FLASH_AREA_IMAGE_SECTOR_SIZE) != 0
-#error "HDP area must be aligned on FLASH_AREA_IMAGE_SECTOR_SIZE"
+#error "BL2 area must be aligned on FLASH_AREA_IMAGE_SECTOR_SIZE"
 #endif /* ((FLASH_AREA_BL2_OFFSET+FLASH_AREA_BL2_SIZE) % FLASH_AREA_IMAGE_SECTOR_SIZE) != 0 */
 
 /* control area under WRP group protection */
+#if !defined(OEMUROT_ENABLE)
 #if (FLASH_AREA_BL2_OFFSET % FLASH_AREA_WRP_GROUP_SIZE) != 0
 #error "FLASH_AREA_BL2_OFFSET not aligned on FLASH_AREA_WRP_GROUP_SIZE"
 #endif /* (FLASH_AREA_BL2_OFFSET % FLASH_AREA_WRP_GROUP_SIZE) != 0 */
 #if ((FLASH_AREA_BL2_OFFSET+FLASH_AREA_BL2_SIZE) % FLASH_AREA_WRP_GROUP_SIZE) != 0
 #error "(FLASH_AREA_BL2_OFFSET+FLASH_AREA_BL2_SIZE) not aligned on FLASH_AREA_WRP_GROUP_SIZE"
 #endif /* ((FLASH_AREA_BL2_OFFSET+FLASH_AREA_BL2_SIZE) % FLASH_AREA_WRP_GROUP_SIZE) != 0 */
+#endif /* not OEMUROT_ENABLE */
 
 /* BL2 partitions size */
+#if defined(DEVICE_256K_FLASH_ENABLE)
+#define FLASH_S_PARTITION_SIZE          (0x04000) /* 16 KB for S partition */
+#define FLASH_NS_PARTITION_SIZE         (0x0E000) /* 56 KB for NS partition */
+#else
 #define FLASH_S_PARTITION_SIZE          (0x06000) /* 24 KB for S partition */
 #define FLASH_NS_PARTITION_SIZE         (0x10000) /* 64 KB for NS partition */
+#endif /* DEVICE_256K_FLASH_ENABLE */
 #define FLASH_PARTITION_SIZE            (FLASH_S_PARTITION_SIZE+FLASH_NS_PARTITION_SIZE)
 
 #if (MCUBOOT_APP_IMAGE_NUMBER == 2)
@@ -314,8 +333,13 @@
 /*
  * The maximum number of status entries supported by the bootloader.
  */
-#define MCUBOOT_STATUS_MAX_ENTRIES         ((FLASH_MAX_PARTITION_SIZE) / \
-                                            FLASH_AREA_SCRATCH_SIZE)
+#if defined(MCUBOOT_OVERWRITE_ONLY)
+#define MCUBOOT_STATUS_MAX_ENTRIES        (0)
+#else /* not MCUBOOT_OVERWRITE_ONLY */
+#define MCUBOOT_STATUS_MAX_ENTRIES        (((FLASH_MAX_PARTITION_SIZE - 1) / \
+                                            FLASH_AREA_SCRATCH_SIZE) + 1)
+#endif /* MCUBOOT_OVERWRITE_ONLY */
+
 /* Maximum number of image sectors supported by the bootloader. */
 #define MCUBOOT_MAX_IMG_SECTORS           ((FLASH_MAX_PARTITION_SIZE) / \
                                            FLASH_AREA_IMAGE_SECTOR_SIZE)

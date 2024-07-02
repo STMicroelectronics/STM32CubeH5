@@ -16,7 +16,7 @@
         <TargetCommonOption>
           <Device>STM32H573IIKx</Device>
           <Vendor>STMicroelectronics</Vendor>
-          <PackID>Keil.STM32H5xx_DFP.1.2.0</PackID>
+          <PackID>Keil.STM32H5xx_DFP.1.3.0</PackID>
           <PackURL>https://www.keil.com/pack/</PackURL>
           <Cpu>CLOCK(8000000) FPU3(SFPU) CPUTYPE("Cortex-M33") ELITTLE TZ</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -834,11 +834,6 @@
               <FileName>ecp_curves_alt.c</FileName>
               <FileType>1</FileType>
               <FilePath>../Src/ecp_curves_alt.c</FilePath>
-            </File>
-            <File>
-              <FileName>rsa_alt.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../Src/rsa_alt.c</FilePath>
             </File>
             <File>
               <FileName>sha256_alt.c</FileName>

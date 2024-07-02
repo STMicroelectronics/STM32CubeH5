@@ -86,6 +86,7 @@ __STATIC_INLINE void     Configure_OCMode(uint32_t OCMode);
   */
 int main(void)
 {
+
   /* USER CODE BEGIN 1 */
   /* USER CODE END 1 */
 

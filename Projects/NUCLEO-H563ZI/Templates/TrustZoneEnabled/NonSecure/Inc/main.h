@@ -23,7 +23,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "stm32h5xx_hal.h"
 #include "secure_nsc.h"
-//#include "stm32h5xx_nucleo.h.h"
+//#include "stm32h5xx_nucleo.h"
 
 /* Exported types ------------------------------------------------------------*/
 /* Exported constants --------------------------------------------------------*/

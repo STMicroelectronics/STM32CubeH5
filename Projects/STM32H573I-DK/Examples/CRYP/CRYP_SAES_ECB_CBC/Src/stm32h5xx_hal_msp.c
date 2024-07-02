@@ -62,6 +62,7 @@
   */
 void HAL_MspInit(void)
 {
+
   /* USER CODE BEGIN MspInit 0 */
   /* Enable Secure AES clock */
   __HAL_RCC_RNG_CLK_ENABLE();

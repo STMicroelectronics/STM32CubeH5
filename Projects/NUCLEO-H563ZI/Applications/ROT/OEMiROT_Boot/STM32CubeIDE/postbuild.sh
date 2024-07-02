@@ -48,6 +48,9 @@ xml_fw_app_item_name="Firmware binary input file"
 xml_fw_data_item_name="Data binary input file"
 xml_output_item_name="Image output file"
 xml_enc_item_name="Encryption key"
+code_size="Firmware area size"
+data_size="Data download slot size"
+scratch_sector_number="Number of scratch sectors"
 
 s_code_bin="$appli_dir/STM32CubeIDE/Secure/$config/NUCLEO-H563ZI_OEMiROT_Appli_TrustZone_S.bin"
 ns_code_bin="$appli_dir/STM32CubeIDE/NonSecure/$config/NUCLEO-H563ZI_OEMiROT_Appli_TrustZone_NS.bin"
@@ -265,6 +268,31 @@ $python$applicfg xmlparam --layout  $preprocess_bl2_file -m RE_OVER_WRITE -n "Wr
 if [ $? != 0 ]; then error; fi
 
 $python$applicfg xmlparam --layout  $preprocess_bl2_file -m RE_OVER_WRITE -n "Write Option" -t Data -c --overwrite-only -h 1 -d "" --vb $ns_data_xml >> $current_log_file 2>&1
+if [ $? != 0 ]; then error; fi
+
+$python$applicfg flash --layout $preprocess_bl2_file -b FLASH_SIZE -m RE_FLASH_SIZE $map_properties --vb >> $current_log_file
+$python"$applicfg" xmlval --layout "$preprocess_bl2_file" -m RE_FLASH_AREA_SCRATCH_SIZE -n "$scratch_sector_number" --decimal "$s_code_xml" --vb >> "$current_log_file"
+if [ $? != 0 ]; then error; fi
+
+$python"$applicfg" xmlval -xml "$s_code_xml" -nxml "$code_size" -nxml "$scratch_sector_number" --decimal -e "(((val1+1)/val2)+1)" -cond "val2" -c M "$s_code_xml" --vb >> "$current_log_file"
+if [ $? != 0 ]; then error; fi
+
+$python"$applicfg" xmlval --layout "$preprocess_bl2_file" -m RE_FLASH_AREA_SCRATCH_SIZE -n "$scratch_sector_number" --decimal "$ns_code_xml" --vb >> "$current_log_file"
+if [ $? != 0 ]; then error; fi
+
+$python"$applicfg" xmlval -xml "$ns_code_xml" -nxml "$code_size" -nxml "$scratch_sector_number" --decimal -e "(((val1+1)/val2)+1)" -cond "val2" -c M "$ns_code_xml" --vb >> "$current_log_file"
+if [ $? != 0 ]; then error; fi
+
+$python"$applicfg" xmlval --layout "$preprocess_bl2_file" -m RE_FLASH_AREA_SCRATCH_SIZE -n "$scratch_sector_number" --decimal "$s_data_xml" --vb >> "$current_log_file"
+if [ $? != 0 ]; then error; fi
+
+$python"$applicfg" xmlval -xml "$s_data_xml" -nxml "$data_size" -nxml "$scratch_sector_number" --decimal -e "(((val1+1)/val2)+1)" -cond "val2" -c M "$s_data_xml" --vb >> "$current_log_file"
+if [ $? != 0 ]; then error; fi
+
+$python"$applicfg" xmlval --layout "$preprocess_bl2_file" -m RE_FLASH_AREA_SCRATCH_SIZE -n "$scratch_sector_number" --decimal "$ns_data_xml" --vb >> "$current_log_file"
+if [ $? != 0 ]; then error; fi
+
+$python"$applicfg" xmlval -xml "$ns_data_xml" -nxml "$data_size" -nxml "$scratch_sector_number" --decimal -e "(((val1+1)/val2)+1)" -cond "val2" -c M "$ns_data_xml" --vb >> "$current_log_file"
 if [ $? != 0 ]; then error; fi
 
 # Bypass configuration of appli_flash_layout file if not present

@@ -37,7 +37,7 @@ IF %ERRORLEVEL% NEQ 0 goto :error_key
 
 :start
 ::line for window executable
-set "imgtool=%tpc_dir%\Utilities\Windows\imgtool.exe"
+set "imgtool="%tpc_dir%"\Utilities\Windows\imgtool.exe"
 set "python="
 if exist %imgtool% (
 echo Keygen with windows executable

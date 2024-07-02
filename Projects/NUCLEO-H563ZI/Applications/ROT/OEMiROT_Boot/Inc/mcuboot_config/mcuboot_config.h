@@ -35,6 +35,7 @@ extern "C" {
  * upgrade mode ...) are handled by the CMake-based buildsystem and
  * added to the compiler command lines.
  */
+#define MCUBOOT_FLASH_HOMOGENOUS     /* Defined: flash having the same sector size can use this flag */
 
 /* Available crypto schemes (do not change values, as used in appli postbuild script) */
 #define CRYPTO_SCHEME_EC256      0x2 /* ECDSA-256 signature,

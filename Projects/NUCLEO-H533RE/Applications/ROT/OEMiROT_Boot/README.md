@@ -43,7 +43,6 @@ TrustZone, OEMiROT, boot path, Root Of Trust, Security, mcuboot
   - OEMiROT_Boot/Inc/low_level_security.h            Header file for low_level_security.c
   - OEMiROT_Boot/Inc/mpu_armv8m_drv.h                Header file for mpu_armv8m_drv.c
   - OEMiROT_Boot/Inc/region_defs.h                   RAM and FLASH regions definitions
-  - OEMiROT_Boot/Inc/rsa_alt.h                       Header file for rsa_alt.c
   - OEMiROT_Boot/Inc/sha256_alt.h                    Header file for sha256_alt.c
   - OEMiROT_Boot/Inc/stm32h5xx_hal_conf.h            HAL driver configuration file
   - OEMiROT_Boot/Inc/target_cfg.h                    Header file for target start up
@@ -63,7 +62,6 @@ TrustZone, OEMiROT, boot path, Root Of Trust, Security, mcuboot
   - OEMiROT_Boot/Src/low_level_rng.c                 Random generator interface
   - OEMiROT_Boot/Src/low_level_security.c            Security Low level services
   - OEMiROT_Boot/Src/mpu_armv8m_drv.c                Mpu low level interface
-  - OEMiROT_Boot/Src/rsa_alt.c                       RSA HW crypto interface
   - OEMiROT_Boot/Src/sha256_alt.c                    SHA256 HW crypto interface
   - OEMiROT_Boot/Src/startup_stm32h5xx.c             Startup file in c
   - OEMiROT_Boot/Src/stm32h5xx_hal_msp.c             HAL MSP module

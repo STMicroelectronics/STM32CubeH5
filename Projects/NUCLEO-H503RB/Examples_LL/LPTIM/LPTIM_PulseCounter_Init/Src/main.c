@@ -69,6 +69,7 @@ void EnterStop1Mode(void);
   */
 int main(void)
 {
+
   /* USER CODE BEGIN 1 */
 
   /* USER CODE END 1 */

@@ -35,6 +35,11 @@
 			<locationURI>PARENT-1-PROJECT_LOC/README.md</locationURI>
 		</link>
 		<link>
+			<name>Application/User/aes_alt.c</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/Src/aes_alt.c</locationURI>
+		</link>
+		<link>
 			<name>Application/User/bl2_nv_services.c</name>
 			<type>1</type>
 			<locationURI>PARENT-1-PROJECT_LOC/Src/bl2_nv_services.c</locationURI>
@@ -105,11 +110,6 @@
 			<locationURI>PARENT-1-PROJECT_LOC/Src/mpu_armv8m_drv.c</locationURI>
 		</link>
 		<link>
-			<name>Application/User/rsa_alt.c</name>
-			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/Src/rsa_alt.c</locationURI>
-		</link>
-		<link>
 			<name>Application/User/sha256_alt.c</name>
 			<type>1</type>
 			<locationURI>PARENT-1-PROJECT_LOC/Src/sha256_alt.c</locationURI>
@@ -130,11 +130,6 @@
 			<locationURI>PARENT-1-PROJECT_LOC/Src/tick.c</locationURI>
 		</link>
 		<link>
-			<name>Application/User/aes_alt.c</name>
-			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/Src/aes_alt.c</locationURI>
-		</link>
-		<link>
 			<name>Drivers/CMSIS/system_stm32h5xx.c</name>
 			<type>1</type>
 			<locationURI>PARENT-1-PROJECT_LOC/Src/system_stm32h5xx.c</locationURI>
@@ -148,6 +143,16 @@
 			<name>Drivers/STM32H5xx_HAL_Driver/stm32h5xx_hal_cortex.c</name>
 			<type>1</type>
 			<locationURI>PARENT-6-PROJECT_LOC/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_cortex.c</locationURI>
+		</link>
+		<link>
+			<name>Drivers/STM32H5xx_HAL_Driver/stm32h5xx_hal_cryp.c</name>
+			<type>1</type>
+			<locationURI>PARENT-6-PROJECT_LOC/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_cryp.c</locationURI>
+		</link>
+		<link>
+			<name>Drivers/STM32H5xx_HAL_Driver/stm32h5xx_hal_cryp_ex.c</name>
+			<type>1</type>
+			<locationURI>PARENT-6-PROJECT_LOC/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_cryp_ex.c</locationURI>
 		</link>
 		<link>
 			<name>Drivers/STM32H5xx_HAL_Driver/stm32h5xx_hal_dma.c</name>
@@ -250,16 +255,6 @@
 			<locationURI>PARENT-6-PROJECT_LOC/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_uart_ex.c</locationURI>
 		</link>
 		<link>
-			<name>Drivers/STM32H5xx_HAL_Driver/stm32h5xx_hal_cryp.c</name>
-			<type>1</type>
-			<locationURI>PARENT-6-PROJECT_LOC/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_cryp.c</locationURI>
-		</link>
-		<link>
-			<name>Drivers/STM32H5xx_HAL_Driver/stm32h5xx_hal_cryp_ex.c</name>
-			<type>1</type>
-			<locationURI>PARENT-6-PROJECT_LOC/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_cryp_ex.c</locationURI>
-		</link>
-		<link>
 			<name>Middlewares/mbed-crypto/aes.c</name>
 			<type>1</type>
 			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/Third_Party/mbed-crypto/library/aes.c</locationURI>
@@ -355,6 +350,11 @@
 			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/Third_Party/mbed-crypto/library/sha256.c</locationURI>
 		</link>
 		<link>
+			<name>Middlewares/mcuboot/bl2_main.c</name>
+			<type>1</type>
+			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/Third_Party/mcuboot/bl2/ext/mcuboot/bl2_main.c</locationURI>
+		</link>
+		<link>
 			<name>Middlewares/mcuboot/bootutil_misc.c</name>
 			<type>1</type>
 			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/Third_Party/mcuboot/boot/bootutil/src/bootutil_misc.c</locationURI>
@@ -378,6 +378,21 @@
 			<name>Middlewares/mcuboot/fault_injection_hardening_delay_rng_mbedtls.c</name>
 			<type>1</type>
 			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/Third_Party/mcuboot/boot/bootutil/src/fault_injection_hardening_delay_rng_mbedtls.c</locationURI>
+		</link>
+		<link>
+			<name>Middlewares/mcuboot/flash_map.c</name>
+			<type>1</type>
+			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/Third_Party/mcuboot/bl2/src/flash_map.c</locationURI>
+		</link>
+		<link>
+			<name>Middlewares/mcuboot/flash_map_extended.c</name>
+			<type>1</type>
+			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/Third_Party/mcuboot/bl2/ext/mcuboot/flash_map_extended.c</locationURI>
+		</link>
+		<link>
+			<name>Middlewares/mcuboot/flash_map_legacy.c</name>
+			<type>1</type>
+			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/Third_Party/mcuboot/bl2/ext/mcuboot/flash_map_legacy.c</locationURI>
 		</link>
 		<link>
 			<name>Middlewares/mcuboot/image_ec.c</name>
@@ -405,6 +420,11 @@
 			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/Third_Party/mcuboot/boot/bootutil/src/loader.c</locationURI>
 		</link>
 		<link>
+			<name>Middlewares/mcuboot/security_cnt.c</name>
+			<type>1</type>
+			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/Third_Party/mcuboot/bl2/src/security_cnt.c</locationURI>
+		</link>
+		<link>
 			<name>Middlewares/mcuboot/swap_misc.c</name>
 			<type>1</type>
 			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/Third_Party/mcuboot/boot/bootutil/src/swap_misc.c</locationURI>
@@ -423,31 +443,6 @@
 			<name>Middlewares/mcuboot/tlv.c</name>
 			<type>1</type>
 			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/Third_Party/mcuboot/boot/bootutil/src/tlv.c</locationURI>
-		</link>
-		<link>
-			<name>Middlewares/mcuboot/bl2_main.c</name>
-			<type>1</type>
-			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/Third_Party/mcuboot/bl2/ext/mcuboot/bl2_main.c</locationURI>
-		</link>
-		<link>
-			<name>Middlewares/mcuboot/flash_map.c</name>
-			<type>1</type>
-			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/Third_Party/mcuboot/bl2/src/flash_map.c</locationURI>
-		</link>
-		<link>
-			<name>Middlewares/mcuboot/flash_map_extended.c</name>
-			<type>1</type>
-			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/Third_Party/mcuboot/bl2/ext/mcuboot/flash_map_extended.c</locationURI>
-		</link>
-		<link>
-			<name>Middlewares/mcuboot/flash_map_legacy.c</name>
-			<type>1</type>
-			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/Third_Party/mcuboot/bl2/ext/mcuboot/flash_map_legacy.c</locationURI>
-		</link>
-		<link>
-			<name>Middlewares/mcuboot/security_cnt.c</name>
-			<type>1</type>
-			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/Third_Party/mcuboot/bl2/src/security_cnt.c</locationURI>
 		</link>
 		<link>
 			<name>Middlewares/mcuboot/uart_stdout.c</name>

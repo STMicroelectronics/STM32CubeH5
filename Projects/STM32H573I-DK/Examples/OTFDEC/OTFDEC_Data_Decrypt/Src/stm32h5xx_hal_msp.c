@@ -62,6 +62,7 @@
   */
 void HAL_MspInit(void)
 {
+
   /* USER CODE BEGIN MspInit 0 */
 
   /* USER CODE END MspInit 0 */
@@ -91,6 +92,7 @@ void HAL_CRYP_MspInit(CRYP_HandleTypeDef* hcryp)
   /* USER CODE BEGIN AES_MspInit 1 */
 
   /* USER CODE END AES_MspInit 1 */
+
   }
 
 }
@@ -135,6 +137,7 @@ void HAL_DCACHE_MspInit(DCACHE_HandleTypeDef* hdcache)
   /* USER CODE BEGIN DCACHE1_MspInit 1 */
 
   /* USER CODE END DCACHE1_MspInit 1 */
+
   }
 
 }
@@ -277,6 +280,7 @@ void HAL_XSPI_MspInit(XSPI_HandleTypeDef* hxspi)
   /* USER CODE BEGIN OCTOSPI1_MspInit 1 */
 
   /* USER CODE END OCTOSPI1_MspInit 1 */
+
   }
 
 }
@@ -352,6 +356,7 @@ void HAL_OTFDEC_MspInit(OTFDEC_HandleTypeDef* hotfdec)
   /* USER CODE BEGIN OTFDEC1_MspInit 1 */
 
   /* USER CODE END OTFDEC1_MspInit 1 */
+
   }
 
 }

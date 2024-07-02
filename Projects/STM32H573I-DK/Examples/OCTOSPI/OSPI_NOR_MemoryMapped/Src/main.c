@@ -73,6 +73,7 @@ static void OSPI_OctalModeCfg(XSPI_HandleTypeDef *hospi);
   */
 int main(void)
 {
+
   /* USER CODE BEGIN 1 */
   XSPI_RegularCmdTypeDef sCommand = {0};
   XSPI_MemoryMappedTypeDef sMemMappedCfg = {0};
@@ -303,6 +304,10 @@ void SystemClock_Config(void)
   {
     Error_Handler();
   }
+
+  /** Configure the programming delay
+  */
+  __HAL_FLASH_SET_PROGRAM_DELAY(FLASH_PROGRAMMING_DELAY_2);
 }
 
 /**

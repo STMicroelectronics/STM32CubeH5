@@ -127,6 +127,7 @@ EXTI_TypeDef *EXTI_DBG;
   */
 int main(void)
 {
+
   /* USER CODE BEGIN 1 */
 a = ((8U  << 16U) | 3U);
   EXTI_DBG = (EXTI_TypeDef *) EXTI_BASE_NS;

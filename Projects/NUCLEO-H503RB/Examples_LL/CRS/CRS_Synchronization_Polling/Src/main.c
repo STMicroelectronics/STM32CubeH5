@@ -91,6 +91,7 @@ void     WaitForUserButtonPress(void);
   */
 int main(void)
 {
+
   /* USER CODE BEGIN 1 */
 
   uint32_t status = CRS_STATUS_TIMEOUT;

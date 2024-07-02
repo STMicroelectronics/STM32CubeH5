@@ -102,6 +102,7 @@ void Target_Request_DynamicAddrCallback(uint64_t targetPayload);
   */
 int main(void)
 {
+
   /* USER CODE BEGIN 1 */
 
   /* USER CODE END 1 */

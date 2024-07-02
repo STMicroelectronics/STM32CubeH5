@@ -16,19 +16,19 @@
                 <debug>1</debug>
                 <option>
                     <name>BrowseInfoPath</name>
-                    <state>STM32H573xx_ns/BrowseInfo</state>
+                    <state>STM32H573xx_ns\BrowseInfo</state>
                 </option>
                 <option>
                     <name>ExePath</name>
-                    <state>STM32H573xx_ns/Exe</state>
+                    <state>STM32H573xx_ns\Exe</state>
                 </option>
                 <option>
                     <name>ObjPath</name>
-                    <state>STM32H573xx_ns/Obj</state>
+                    <state>STM32H573xx_ns\Obj</state>
                 </option>
                 <option>
                     <name>ListPath</name>
-                    <state>STM32H573xx_ns/List</state>
+                    <state>STM32H573xx_ns\List</state>
                 </option>
                 <option>
                     <name>GEndianMode</name>
@@ -336,11 +336,11 @@
                 </option>
                 <option>
                     <name>CCIncludePath2</name>
-                    <state>$PROJ_DIR$/../../NonSecure/Inc</state>
-                    <state>$PROJ_DIR$/../../Secure_nsclib</state>
-                    <state>$PROJ_DIR$/../../../../../../Drivers/CMSIS/Include</state>
-                    <state>$PROJ_DIR$/../../../../../../Drivers/CMSIS/Device/ST/STM32H5xx/Include</state>
-                    <state>$PROJ_DIR$/../../../../../../Drivers/STM32H5xx_HAL_Driver/Inc</state>
+                    <state>$PROJ_DIR$\..\..\NonSecure\Inc</state>
+                    <state>$PROJ_DIR$\..\..\Secure_nsclib</state>
+                    <state>$PROJ_DIR$\..\..\..\..\..\..\Drivers\CMSIS\Include</state>
+                    <state>$PROJ_DIR$\..\..\..\..\..\..\Drivers\CMSIS\Device\ST\STM32H5xx\Include</state>
+                    <state>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Inc</state>
                 </option>
                 <option>
                     <name>CCStdIncCheck</name>
@@ -689,7 +689,7 @@
                 </option>
                 <option>
                     <name>IlinkOutputFile</name>
-                    <state>Project_ns.out</state>
+                    <state>$PROJ_FNAME$.out</state>
                 </option>
                 <option>
                     <name>IlinkDebugInfoEnable</name>
@@ -753,7 +753,7 @@
                 </option>
                 <option>
                     <name>IlinkIcfFile</name>
-                    <state>$PROJ_DIR$/stm32h573xx_flash_ns.icf</state>
+                    <state>$PROJ_DIR$\stm32h573xx_flash_ns.icf</state>
                 </option>
                 <option>
                     <name>IlinkIcfFileSlave</name>
@@ -801,7 +801,7 @@
                 </option>
                 <option>
                     <name>IlinkAdditionalLibs</name>
-                    <state>$PROJ_DIR$/../Secure_nsclib/secure_nsclib.o</state>
+                    <state>$PROJ_DIR$\..\..\Secure_nsclib\secure_nsclib.o</state>
                 </option>
                 <option>
                     <name>IlinkOverrideProgramEntryLabel</name>
@@ -1133,6 +1133,12 @@
                 <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_hal_dts.c</name>
             </file>
             <file>
+                <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_hal_eth.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_hal_eth_ex.c</name>
+            </file>
+            <file>
                 <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_hal_exti.c</name>
             </file>
             <file>
@@ -1154,6 +1160,9 @@
                 <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_hal_gtzc.c</name>
             </file>
             <file>
+                <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_hal_hash.c</name>
+            </file>
+            <file>
                 <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_hal_hcd.c</name>
             </file>
             <file>
@@ -1169,7 +1178,13 @@
                 <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_hal_i2s_ex.c</name>
             </file>
             <file>
+                <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_hal_i3c.c</name>
+            </file>
+            <file>
                 <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_hal_icache.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_hal_irda.c</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_hal_iwdg.c</name>
@@ -1247,6 +1262,12 @@
                 <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_hal_sdram.c</name>
             </file>
             <file>
+                <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_hal_smartcard.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_hal_smartcard_ex.c</name>
+            </file>
+            <file>
                 <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_hal_smbus.c</name>
             </file>
             <file>
@@ -1281,6 +1302,9 @@
             </file>
             <file>
                 <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_hal_wwdg.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_hal_xspi.c</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_ll_dlyb.c</name>

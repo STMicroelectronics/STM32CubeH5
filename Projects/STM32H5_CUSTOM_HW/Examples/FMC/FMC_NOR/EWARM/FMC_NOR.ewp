@@ -1086,7 +1086,7 @@
     <group>
         <name>Doc</name>
         <file>
-            <name>$PROJ_DIR$\..\readme.txt</name>
+            <name>$PROJ_DIR$\..\README.md</name>
         </file>
     </group>
     <group>

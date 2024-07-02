@@ -94,6 +94,7 @@ void     WaitForUserButtonPress(void);
   */
 int main(void)
 {
+
   /* USER CODE BEGIN 1 */
 
   uint32_t felim = 0;

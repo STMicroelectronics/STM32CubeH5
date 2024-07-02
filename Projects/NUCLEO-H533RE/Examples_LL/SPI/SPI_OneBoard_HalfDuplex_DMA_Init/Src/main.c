@@ -164,7 +164,7 @@ void SystemClock_Config(void)
   }
 
   LL_PWR_SetRegulVoltageScaling(LL_PWR_REGU_VOLTAGE_SCALE0);
-  while (LL_PWR_IsActiveFlag_VOS()== 0)
+  while (LL_PWR_IsActiveFlag_VOS() == 0)
   {
   }
   LL_RCC_HSE_Enable();

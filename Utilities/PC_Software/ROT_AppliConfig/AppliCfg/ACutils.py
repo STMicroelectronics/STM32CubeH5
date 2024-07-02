@@ -226,7 +226,7 @@ class SCRIPT_APPLI(MANAGE_FILE):
         else:
             self._logs.error("Linker value not recognized")
 
-    def get_file_value(self, pattern_line:str, search_option:str="\"?((0x[0-9a-fA-F]+)|([0-9]+))\"?")->str:
+    def get_file_value(self, pattern_line:str, search_option:str="\"?((0x[0-9a-fA-F]+)|([0-9]+))\"?", occurrence=1)->str:
         """
         Get the value of an existing variable in a file
         Parameters:
@@ -241,7 +241,10 @@ class SCRIPT_APPLI(MANAGE_FILE):
             replace_resp=regfv.search(line)
             if replace_resp is not None:
                 # Get the value to be replaced
-                return replace_resp.group(1)
+                if occurrence==1:
+                    return replace_resp.group(1)
+                else:
+                    occurrence-=1
         self._logs.error("Pattern not found")
         return ""
         
@@ -307,18 +310,20 @@ class SCRIPT_APPLI(MANAGE_FILE):
                         break
         return line_is_modified
     
-    def modify_file_value(self, pattern_line:str, search_value, new_value)->bool:
+    def modify_file_value(self, pattern_line:str, search_value, new_value, cpt=1)->bool:
         """
         Modify the int value of an existing variable in a file 
         Parameters:
             pattern_line - Pattern to choose the line to be modified
             search_value - value to search in the line if present. Every present value is changed if None
             new_value - New value
+            cpt: counter, change the value cpt only, if 0 then all
         Returns:
             value_is_modified - Boolean status (New value is now present)
         """
         # Modify value
         # Read and modify a specific line
+        value_is_modified=False
         nv=StringValue(self._logs)
         nv.set(new_value)
         rv=StringValue(self._logs)
@@ -331,42 +336,57 @@ class SCRIPT_APPLI(MANAGE_FILE):
                 return True
             pattern_line+=r"\(?((0x[0-9a-fA-F]+)|([0-9]+))\)?"
         else:
-            pattern_line+=r"\(?((0x[0-9a-fA-F]+)|([0-9]+))\)?" #the double parenthesis force to get value only
+            pattern_line+=r"(\(?((0x[0-9a-fA-F]+)|([0-9]+))\)?|$)" #the double parenthesis force to get value only
         reqextract = re.compile(pattern_line) #To know the value to replace, extract the number from line
         for i, line in enumerate(self.__lines):
             # Search line to modify
             replace_resp=reqextract.search(line)
             if replace_resp:
-                readvalue=replace_resp.group(1)
-                str_idx, end_indx = replace_resp.span()
-                if readvalue is not None:
-                    rv.set(readvalue)
-                    if int(rv) == int(nv):
-                        self._logs.info("The modification is not necessary")
-                        self._logs.info("The variable has already the correct value (%s)" % str(new_value))
-                        return True
-                    if search_value is None or int(sv)==int(rv):#if readvalue == search value, search value is a restrict access value
-                        cmd_len=end_indx-len(readvalue)
-                        if (line[end_indx-1]==")"):
-                            cmd_len=end_indx-len(readvalue)-1
+                if cpt<=1:
+                    readvalue=replace_resp.group(1)
+                    str_idx, end_indx = replace_resp.span()
+                    if readvalue is not None and readvalue!="":
+                        rv.set(readvalue)
+                        if int(rv) == int(nv):
+                            self._logs.info("The modification is not necessary")
+                            self._logs.info("The variable has already the correct value (%s)" % str(new_value))
+                            return True
+                        if search_value is None or int(sv)==int(rv):#if readvalue == search value, search value is a restrict access value
+                            cmd_len=0
+                            if readvalue[0]=="(":
+                                new_value="("+str(new_value)+")"
+                            else:
+                                if line[end_indx-1]==")":
+                                    cmd_len=-2
+                                else:
+                                    new_value=str(new_value)
+                            cmd_len+=end_indx-len(readvalue)
+                            str_to_replace = line[cmd_len:end_indx].replace(readvalue, new_value).replace("\n","").replace("\r",'')
+                            self.__lines[i] = line[str_idx:cmd_len] + str_to_replace + line[end_indx:]
+                            self._logs.info("The variable value is modified to %s" % new_value)
+                            if cpt==1:
+                                return True
+                            else:
+                                value_is_modified=True
+                    elif search_value is None:
+                        debut=re.sub("\r?\n","",line[:end_indx])
+                        self.__lines[i]=debut+ new_value + line[end_indx:]+"\n"
+                        if cpt==1:
+                            return True
                         else:
-                            cmd_len=end_indx-len(readvalue)
-                        str_to_replace = line[cmd_len:end_indx].replace(readvalue, str(new_value)).replace("\n","").replace("\r",'')
-                        self.__lines[i] = line[str_idx:cmd_len] + str_to_replace + line[end_indx:]
-                        self._logs.info("The variable value is modified to %s" % new_value)
-                        return True
-                elif search_value is None:
-                    debut=re.sub("\r?\n","",line[:end_indx])
-                    self.__lines[i]=debut+ new_value + line[end_indx:]+"\n"
-                    return True
-        self._logs.info("No pattern found in file")
-        return False
+                            value_is_modified=True
+                else:
+                    if cpt>0:
+                        cpt-=1
+        if not value_is_modified:
+            self._logs.info("No pattern found in file")
+        return value_is_modified
     
     def modify_file_strvalue(self, pattern_line:str, search_value, new_value)->bool:
         if type(new_value)==str:
             new_value=new_value.strip()
             if search_value is None:
-                pattern_line+=r"(\(?\w+\)?)" #capture parenthesis if present
+                pattern_line+=r"(\(?[\w+|+|*|\/|//|.|\d]*\)?)" #capture parenthesis if present, string string+integer, string+hex, string*value
             elif search_value == new_value:
                 self._logs.info("The modification is not necessary")
                 self._logs.info("Same value than those to replace" % new_value)

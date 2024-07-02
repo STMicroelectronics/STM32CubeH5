@@ -273,6 +273,9 @@ static void SystemClock_Config(void)
     /* Initialization Error */
     while(1);
   }
+
+  /** Configure the programming delay */
+  __HAL_FLASH_SET_PROGRAM_DELAY(FLASH_PROGRAMMING_DELAY_2);
 }
 
 /**

@@ -69,6 +69,7 @@ extern DMA_HandleTypeDef handle_GPDMA1_Channel0;
   */
 void HAL_MspInit(void)
 {
+
   /* USER CODE BEGIN MspInit 0 */
 
   /* USER CODE END MspInit 0 */

@@ -1,13 +1,13 @@
 ## <b>Templates Example Description</b>
 
-- This projects provides a reference template through the HAL API that can be used
+This projects provides a reference template through the HAL API that can be used
 to build any firmware application.
-- This project is targeted to run on STM32H503xx devices on NUCLEO-H503RB boards from STMicroelectronics.
+This project is targeted to run on STM32H503xx devices on NUCLEO-H503RB boards from STMicroelectronics.
 At the beginning of the main program, the HAL_Init() function is called to reset
 all the peripherals, initialize the Flash interface and the systick.
-- The SystemClock_Config() function is used to configure the system clock (SYSCLK)
+The SystemClock_Config() function is used to configure the system clock (SYSCLK)
 to run at 250 Mhz.
-- The template project calls also CACHE_Enable() function in order to enable the Instruction
+The template project calls also CACHE_Enable() function in order to enable the Instruction
 and Data Caches. This function is provided as template implementation that the User may
 integrate in his application in order to enhance the performance.
 

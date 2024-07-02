@@ -218,6 +218,11 @@ void USBPD_HW_IF_Send_BIST_Pattern(uint8_t PortNum)
 }
 #endif /* !USBPDCORE_LIB_NO_PD */
 
+/**
+  * @brief  Assert Rp resistors
+  * @param  PortNum Port
+  * @retval None
+  */
 void USBPDM1_AssertRp(uint8_t PortNum)
 {
   switch (Ports[PortNum].params->RpResistor)
@@ -292,13 +297,22 @@ void USBPDM1_AssertRp(uint8_t PortNum)
   BSP_USBPD_PWR_SetRole(PortNum, POWER_ROLE_SOURCE);
 #endif /* TCPP0203_SUPPORT */
 }
-
+/**
+  * @brief  De-assert Rp resistors
+  * @param  PortNum Port
+  * @retval None
+  */
 void USBPDM1_DeAssertRp(uint8_t PortNum)
 {
-  /* not needed on STM32H5xx, so nothing to do, keep only for compatibility */
+  /* Not needed on STM32H5xx, so nothing to do, keep only for compatibility */
   UNUSED(PortNum);
 }
 
+/**
+  * @brief  Assert Rd resistors
+  * @param  PortNum Port
+  * @retval None
+  */
 void USBPDM1_AssertRd(uint8_t PortNum)
 {
   LL_UCPD_TypeCDetectionCC2Disable(Ports[PortNum].husbpd);
@@ -328,34 +342,55 @@ void USBPDM1_AssertRd(uint8_t PortNum)
 #endif /* TCPP0203_SUPPORT */
 }
 
+/**
+  * @brief  Assert Rd resistors
+  * @param  PortNum Port
+  * @retval none
+  */
 void USBPDM1_DeAssertRd(uint8_t PortNum)
 {
-  /* not needed on STM32H5xx, so nothing to do, keep only for compatibility */
+  /* Not needed on STM32H5xx, so nothing to do, keep only for compatibility */
   UNUSED(PortNum);
 }
 
+/**
+  * @brief  Enter error recovery
+  * @param  PortNum Port
+  * @retval None
+  */
 void USBPDM1_EnterErrorRecovery(uint8_t PortNum)
 {
   LL_UCPD_SetSRCRole(Ports[PortNum].husbpd);
   LL_UCPD_SetRpResistor(Ports[PortNum].husbpd, LL_UCPD_RESISTOR_NONE);
   LL_UCPD_RxDisable(Ports[PortNum].husbpd);
 
-#if defined(USBPD_REV30_SUPPORT)
+#if !defined(USBPDCORE_LIB_NO_PD)
   if (Ports[PortNum].settings->PE_PD3_Support.d.PE_FastRoleSwapSupport == USBPD_TRUE)
   {
-    /* Set GPIO to disallow the FRSTX handling */
+    /* Set GPIO to disallow the FRS RX handling */
     LL_UCPD_FRSDetectionDisable(Ports[PortNum].husbpd);
   }
-#endif /* USBPD_REV30_SUPPORT */
+#endif /* USBPDCORE_LIB_NO_PD */
 }
 
+/**
+  * @brief  Set the correct CC pin on the comparator
+  * @param  PortNum Port
+  * @param  cc CC pin based on @ref CCxPin_TypeDef
+  * @retval None
+  */
 void USBPDM1_Set_CC(uint8_t PortNum, CCxPin_TypeDef cc)
 {
-  /* Set the correct pin on the comparator*/
+  /* Set the correct pin on the comparator */
   Ports[PortNum].CCx = cc;
   LL_UCPD_SetCCPin(Ports[PortNum].husbpd, (cc == CC1) ? LL_UCPD_CCPIN_CC1 : LL_UCPD_CCPIN_CC2);
 }
 
+/**
+  * @brief  Enable RX interrupt
+  * @param  PortNum Port
+  * @retval None
+  */
 void USBPDM1_RX_EnableInterrupt(uint8_t PortNum)
 {
   /* Enable the RX interrupt process */
@@ -365,11 +400,21 @@ void USBPDM1_RX_EnableInterrupt(uint8_t PortNum)
   LL_UCPD_RxDMAEnable(Ports[PortNum].husbpd);
 }
 
+/**
+  * @brief  Enable RX
+  * @param  PortNum Port
+  * @retval None
+  */
 void USBPD_HW_IF_EnableRX(uint8_t PortNum)
 {
   LL_UCPD_RxEnable(Ports[PortNum].husbpd);
 }
 
+/**
+  * @brief  Disable RX
+  * @param  PortNum Port
+  * @retval None
+  */
 void USBPD_HW_IF_DisableRX(uint8_t PortNum)
 {
   LL_UCPD_RxDisable(Ports[PortNum].husbpd);
@@ -401,7 +446,7 @@ void HW_SignalAttachement(uint8_t PortNum, CCxPin_TypeDef cc)
   _temp = (uint32_t)&Ports[PortNum].husbpd->TXDR;
   Ports[PortNum].hdmatx->CDAR = _temp;
 
-  /* disabled non Rd line set CC line enable */
+  /* Disabled non Rd line set CC line enable */
 #define INTERRUPT_MASK  UCPD_IMR_TXMSGDISCIE | UCPD_IMR_TXMSGSENTIE | UCPD_IMR_HRSTDISCIE  | UCPD_IMR_HRSTSENTIE |  \
   UCPD_IMR_TXMSGABTIE  | UCPD_IMR_TXUNDIE     | UCPD_IMR_RXORDDETIE  | UCPD_IMR_RXHRSTDETIE | \
   UCPD_IMR_RXOVRIE     | UCPD_IMR_RXMSGENDIE
@@ -422,15 +467,14 @@ void HW_SignalAttachement(uint8_t PortNum, CCxPin_TypeDef cc)
   (void)BSP_USBPD_PWR_VCONNInit(PortNum, (Ports[PortNum].CCx == CC1) ? 1u : 2u);
 #endif /* _VCONN_SUPPORT */
 
-#if defined(USBPD_REV30_SUPPORT)
   if (Ports[PortNum].settings->PE_PD3_Support.d.PE_FastRoleSwapSupport == USBPD_TRUE)
   {
-    /* Set GPIO to allow the FRSTX handling */
+    /* Set GPIO to allow the FRS TX handling */
     USBPD_HW_SetFRSSignalling(PortNum, (Ports[PortNum].CCx == CC1) ? 1u : 2u);
+    /* Enable FRS RX */
     LL_UCPD_FRSDetectionEnable(Ports[PortNum].husbpd);
     Ports[PortNum].husbpd->IMR |= UCPD_IMR_FRSEVTIE;
   }
-#endif /* USBPD_REV30_SUPPORT */
 
   /* Disable the Resistor on Vconn PIN */
   if (Ports[PortNum].CCx == CC1)
@@ -453,7 +497,7 @@ void HW_SignalAttachement(uint8_t PortNum, CCxPin_TypeDef cc)
 void HW_SignalDetachment(uint8_t PortNum)
 {
 #if !defined(USBPDCORE_LIB_NO_PD)
-  /* stop DMA RX/TX */
+  /* Stop DMA RX/TX */
   LL_UCPD_RxDMADisable(Ports[PortNum].husbpd);
   LL_UCPD_TxDMADisable(Ports[PortNum].husbpd);
   LL_UCPD_RxDisable(Ports[PortNum].husbpd);
@@ -484,13 +528,11 @@ void HW_SignalDetachment(uint8_t PortNum)
     (void)BSP_USBPD_PWR_VBUSDeInit(PortNum);
   }
 
-#if defined(USBPD_REV30_SUPPORT)
   if (Ports[PortNum].settings->PE_PD3_Support.d.PE_FastRoleSwapSupport == USBPD_TRUE)
   {
-    /* Set GPIO to disallow the FRSTX handling */
+    /* Set GPIO to disallow the FRS RX handling */
     LL_UCPD_FRSDetectionDisable(Ports[PortNum].husbpd);
   }
-#endif /* USBPD_REV30_SUPPORT */
 
 #endif /* !USBPDCORE_LIB_NO_PD */
   Ports[PortNum].CCx = CCNONE;
@@ -500,9 +542,14 @@ void HW_SignalDetachment(uint8_t PortNum)
 #endif /* !USBPDCORE_LIB_NO_PD */
 }
 
+/**
+  * @brief  Set resistors to SinkTxNG
+  * @param  PortNum Port
+  * @retval None
+  */
 void USBPD_HW_IF_SetResistor_SinkTxNG(uint8_t PortNum)
 {
-  /* set the resistor SinkTxNG 1.5A5V */
+  /* Set the resistor SinkTxNG 1.5A5V */
   LL_UCPD_SetRpResistor(Ports[PortNum].husbpd, LL_UCPD_RESISTOR_1_5A);
 
   /* If CFG3 register exists */
@@ -527,9 +574,14 @@ void USBPD_HW_IF_SetResistor_SinkTxNG(uint8_t PortNum)
 #endif /* UCPD_CFG3_TRIM_CC1_RP */
 }
 
+/**
+  * @brief  Set resistors to SinkTxOk
+  * @param  PortNum Port
+  * @retval None
+  */
 void USBPD_HW_IF_SetResistor_SinkTxOK(uint8_t PortNum)
 {
-  /* set the resistor SinkTxNG 3.0A5V */
+  /* Set the resistor SinkTxNG 3.0A5V */
   LL_UCPD_SetRpResistor(Ports[PortNum].husbpd, LL_UCPD_RESISTOR_3_0A);
 
   /* If CFG3 register exists */
@@ -554,6 +606,11 @@ void USBPD_HW_IF_SetResistor_SinkTxOK(uint8_t PortNum)
 #endif /* UCPD_CFG3_TRIM_CC1_RP */
 }
 
+/**
+  * @brief  Check if resistors are set to SinkTxOk
+  * @param  PortNum Port
+  * @retval USBPD_TRUE if resistor is set to SinkTxOk, else USBPD_FALSE
+  */
 uint8_t USBPD_HW_IF_IsResistor_SinkTxOk(uint8_t PortNum)
 {
 #if defined(_LOW_POWER)
@@ -594,6 +651,11 @@ uint8_t USBPD_HW_IF_IsResistor_SinkTxOk(uint8_t PortNum)
   return USBPD_FALSE;
 }
 
+/**
+  * @brief  Signal a Fast Role Swap
+  * @param  PortNum Port
+  * @retval None
+  */
 void USBPD_HW_IF_FastRoleSwapSignalling(uint8_t PortNum)
 {
   LL_UCPD_SignalFRSTX(Ports[PortNum].husbpd);

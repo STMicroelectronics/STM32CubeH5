@@ -23,7 +23,7 @@ from struct import pack
 from AppliCfg import ACutils
 from AppliCfg import xml_parser
 
-SOURCE_VERSION = "1.1.2"
+SOURCE_VERSION = "1.1.3"
 
 MIN_PYTHON_VERSION = (3, 10)
 AppliCfgLog=ACutils.LOG(False,True)
@@ -931,13 +931,14 @@ def sectorerase(infile, xml, slot, begin_xml, size_xml, memory, division, vb):
               'Example 2: ((val1 + cons1)/(cons2 + val2)) - cons3')
 @click.option('-cons', '--constants', multiple=True,
               default=[], help='Constant values declared in the expression')
+@click.option('-o', '--occurrence', type=int, default=1, required=False, help='occurrence to be modified')
 @click.option('--vb', default=False, is_flag=True,
               help='Define if debug traces will be displayed')
 
 @click.command(help='Modify the value of one #define variable in a ".h" file'
                     'More information in the README file')
 #do not launch error if layout, xml files not exist
-def definevalue(infile, layout, macro, xml, value, xml_name, name, parenthesis, expression, constants, string, decimal, vb):
+def definevalue(infile, layout, macro, xml, value, xml_name, name, parenthesis, expression, constants, occurrence, string, decimal, vb):
     # Verify if the input files exist
     if vb is False:
         logs=ACutils.LOG(True,True)
@@ -983,6 +984,7 @@ def definevalue(infile, layout, macro, xml, value, xml_name, name, parenthesis, 
         data=ACutils.StringValue(logs)
         data.set(value)
         values.append(data)
+
     # Different input values are only accepted when the expression argument is used
     # otherwise the last value of values list will be used
     if len(values) > 1 and not expression:
@@ -990,7 +992,7 @@ def definevalue(infile, layout, macro, xml, value, xml_name, name, parenthesis, 
             logs.info("Using the value of the last content recovered %s" %data.getInt())
         else:
             logs.info("Using the value of the last content recovered %s" %data.getHex())
-
+    
     # If expression is declared, the expression will be computed
     if expression :
         if "cons" in expression and not constants :
@@ -1014,8 +1016,9 @@ def definevalue(infile, layout, macro, xml, value, xml_name, name, parenthesis, 
         pattern=output.pattern(name, "",False)
     if parenthesis:
         pattern+=r"\(\s*"
-    oldval=output.get_file_value(pattern)
-    ret = output.modify_file_value(pattern, oldval , choosenvalue)
+
+    oldval=output.get_file_value(pattern, occurrence=occurrence)
+    ret = output.modify_file_value(pattern, oldval , choosenvalue, occurrence)
     if not ret:
         logs.error("Define variable (%s) not found in the file" % name)
     else:
@@ -1261,7 +1264,6 @@ def flash(infile, xml, layout, macro, name, begin, save_result, division, decima
     # When using .bat files the variable needs to be set
     logs.info("File to update '%s'" % output.name())
     pattern=output.pattern(begin, "=")
-    
     if not output.modify_file_value(pattern, None, choosenValue):
         logs.error("Initial pattern (%s) not found in File" % begin)
     else:
@@ -1603,7 +1605,7 @@ def iofile(infile, layout, macro_encrypted, macro_image, xml, input_bin,
 @click.option('--upper', default=False, is_flag=True,
               help='Define value output in capital letters')
 @click.option('--str', 'str_in', default=False, is_flag=True,
-              help='Define if value to modify is a string value')
+              help='string replacement, do not interpret the value, authorized : alphanumeric character/.+*\\ and optional enclosing parenthesis')
 @click.option('--vb', default=False, is_flag=True,
               help='Define if debug traces will be displayed')
 @click.command(help='Modify the variable value of an external file')

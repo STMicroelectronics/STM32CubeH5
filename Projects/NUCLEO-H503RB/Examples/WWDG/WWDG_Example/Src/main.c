@@ -74,6 +74,7 @@ static uint32_t TimeoutCalculation(uint32_t timevalue);
   */
 int main(void)
 {
+
   /* USER CODE BEGIN 1 */
  uint32_t delay;
   /* STM32H5xx HAL library initialization:
@@ -208,6 +209,10 @@ void SystemClock_Config(void)
   {
     Error_Handler();
   }
+
+  /** Configure the programming delay
+  */
+  __HAL_FLASH_SET_PROGRAM_DELAY(FLASH_PROGRAMMING_DELAY_2);
 }
 
 /**

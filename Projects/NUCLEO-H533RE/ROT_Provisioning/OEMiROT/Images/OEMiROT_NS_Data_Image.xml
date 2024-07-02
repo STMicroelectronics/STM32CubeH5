@@ -98,6 +98,15 @@
 		<Default>16</Default>
 	</Param>
 	<Param>
+		<Name>Number of scratch sectors</Name>
+		<Value>0</Value>
+		<Type>Data</Type>
+		<Command>-M</Command>
+		<Hidden>1</Hidden>
+		<Tooltip>This is data download slot size divided by the scratch area size</Tooltip>
+		<Default>0</Default>
+	</Param>
+	<Param>
 		<Name>Firmware download area offset</Name>
 		<Value>0x0</Value>
 		<Type>Data</Type>
