@@ -51,6 +51,8 @@ appli_linker_file="$appli_dir/EWARM/stm32h503xx_flash.icf"
 map_properties="$project_dir/../../OEMiROT_Boot/map.properties"
 code_xml="$project_dir/../../../../ROT_Provisioning/OEMiROT/Images/OEMiROT_Code_Image.xml"
 data_xml="$project_dir/../../../../ROT_Provisioning/OEMiROT/Images/OEMiROT_Data_Image.xml"
+code_init_xml="$project_dir/../../../../ROT_Provisioning/OEMiROT/Images/OEMiROT_Code_Init_Image.xml"
+data_init_xml="$project_dir/../../../../ROT_Provisioning/OEMiROT/Images/OEMiROT_Data_Init_Image.xml"
 
 $python$applicfg flash --layout $preprocess_bl2_file -b CODE_REGION_START -m RE_IMAGE_FLASH_ADDRESS $map_properties --vb >> $current_log_file 2>&1
 if [ $? != 0 ]; then  error; fi
@@ -140,7 +142,15 @@ if [ $? != 0 ]; then  error; fi
 $python$applicfg flash --layout $preprocess_bl2_file  -b data_image_number -m  RE_DATA_IMAGE_NUMBER --decimal $update --vb >> $current_log_file 2>&1
 if [ $? != 0 ]; then  error; fi
 
-cp -a $project_dir/$config/NUCLEO-H503RB_OEMiROT_Boot.bin $project_dir/../Binary/OEMiROT_Boot.bin >> $current_log_file 2>&1
+cp -a $project_dir/$config/OEMiROT_Boot.bin $project_dir/../Binary/OEMiROT_Boot.bin >> $current_log_file 2>&1
+if [ $? != 0 ]; then error; fi
+
+#xml for init image generation
+
+cp $code_xml $code_init_xml >> $current_log_file 2>&1
+if [ $? != 0 ]; then error; fi
+
+cp $data_xml $data_init_xml >> $current_log_file 2>&1
 if [ $? != 0 ]; then error; fi
 
 exit 0

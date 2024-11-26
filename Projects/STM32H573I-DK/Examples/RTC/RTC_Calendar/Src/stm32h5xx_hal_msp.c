@@ -104,6 +104,7 @@ void HAL_RTC_MspInit(RTC_HandleTypeDef* hrtc)
     HAL_PWR_EnableBkUpAccess();
 
   /* USER CODE END RTC_MspInit 1 */
+
   }
 
 }

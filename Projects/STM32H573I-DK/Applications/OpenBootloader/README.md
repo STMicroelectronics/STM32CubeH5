@@ -147,9 +147,9 @@ OpenBootloader, USART, FDCAN, I2C, I3C, SPI, USB
     and can be easily tailored to any other supported device and development board.
 
   - STM32H573I-DK-B01 set-up to use FDCAN1:
-    - Connect the PB5 (CN15: 4), PB6 (CN13: 10) respectively to RX, TX pins of an external FDCAN transceiver 
+    - Connect the PB5 (CN15: 4), PB6 (CN13: 10) respectively to RX, TX pins of an external FDCAN transceiver
     - Connect CAN-H and CAN-L of the external FDCAN transceiver to your FDCAN Host adapter
-    - The FDCAN interface is not supported for STM32H573I-DK rev-A01 
+    - The FDCAN interface is not supported for STM32H573I-DK rev-A01
 
   - STM32H573I-DK-B01 set-up to use USART:
     - To use the USART1 for communication you have to connect:
@@ -165,8 +165,8 @@ OpenBootloader, USART, FDCAN, I2C, I3C, SPI, USB
 
   - STM32H573I-DK-B01 set-up to use I3C:
     - To use the I3C1 for communication you have to connect:
-      - SCL (CN3: 07) pin of your host adapter to PH11 pin of the STM32H573I-DK-B01 board
-      - SDA (CN3: 10) pin of your host adapter to PH12 pin of the STM32H573I-DK-B01 board
+      - SCL (CN15: 06) pin of your host adapter to PH11 pin of the STM32H573I-DK-B01 board
+      - SDA (CN3 : 14) pin of your host adapter to PH12 pin of the STM32H573I-DK-B01 board
 
   - STM32H573I-DK-B01set-up to use SPI
       - To use the SPI1 for communication you have to connect:

@@ -11,15 +11,15 @@ set stm32tpccli="C:\Program Files\STMicroelectronics\STM32Cube\STM32CubeProgramm
 ::                            STiRoT boot path
 :: ==============================================================================
 :: Select application project below
-::set stirot_boot_path_project=Templates/ROT/STiROT_Appli_TrustZone
-set stirot_boot_path_project=Templates/ROT/STiROT_Appli
+::set stirot_boot_path_project=Templates\ROT\STiROT_Appli_TrustZone
+set stirot_boot_path_project=Templates\ROT\STiROT_Appli
 :: ==============================================================================
 
 :: ==============================================================================
 ::                            OEMiROT boot path
 :: ==============================================================================
 :: Select application project below
-set oemirot_boot_path_project=Templates/ROT/OEMiROT_Appli_TrustZone
+set oemirot_boot_path_project=Templates\ROT\OEMiROT_Appli_TrustZone
 :: ==============================================================================
 
 :: ==============================================================================
@@ -32,8 +32,8 @@ set oemirot_boot_path_project=Templates/ROT/OEMiROT_Appli_TrustZone
 :: ==============================================================================
 set PROJECT_GENERATED_BY_CUBEMX=false
 set cube_fw_path="%~dp0..\..\..\"
-set stirot_appli=appli_enc_sign.hex
-set oemirot_appli_secure=rot_tz_s_app_enc_sign.hex
-set oemirot_appli_non_secure=rot_tz_ns_app_enc_sign.hex
-set oemirot_appli_assembly_sign=rot_tz_app_enc_sign.hex
+set stirot_appli=appli_init_sign.hex
+set oemirot_appli_secure=rot_tz_s_app_init_sign.hex
+set oemirot_appli_non_secure=rot_tz_ns_app_init_sign.hex
+set oemirot_appli_assembly_sign=rot_tz_app_init_sign.hex
 set rot_provisioning_path="%~dp0"

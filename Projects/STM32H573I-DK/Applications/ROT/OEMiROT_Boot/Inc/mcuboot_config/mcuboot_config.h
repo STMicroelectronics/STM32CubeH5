@@ -62,8 +62,14 @@ extern "C" {
 /*
  * Cryptographic settings
  */
+/* HW accelerators activation in BL2 */
+#define BL2_HW_ACCEL_ENABLE
+#if defined(BL2_HW_ACCEL_ENABLE)
+#define MCUBOOT_USE_HAL
+#else /* not BL2_HW_ACCEL_ENABLE */
 #define MCUBOOT_USE_MBED_TLS
-
+#endif /* BL2_HW_ACCEL_ENABLE */
+#define PKA_ECDSA_SIGNATURE_ADDRESS 0x0578UL
 #include "stm32h5xx_hal.h"
 
 /*

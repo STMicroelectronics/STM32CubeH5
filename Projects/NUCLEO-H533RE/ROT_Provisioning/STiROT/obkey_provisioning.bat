@@ -10,6 +10,7 @@ set connect_reset=-c port=SWD speed=fast ap=1 mode=Hotplug -hardRst
 :: Local variable to manage alone script execution
 set "product_state=unknown"
 
+set image_number=1
 :: Update local variable thanks to argument use with the command script executed
 IF /i [%2] EQU [OPEN] set product_state=open
 
@@ -40,6 +41,13 @@ echo %action%
 %stm32programmercli% %connect_no_reset% -sdp ./Binary/STiRoT_Data.obk
 IF !errorlevel! NEQ 0 goto :error
 
+if  "%image_number%" == "2" (
+set "action=Configure OBKeys HDPL2-STiRoT data area"
+echo %action%
+%stm32programmercli% %connect_reset%
+%stm32programmercli% %connect_no_reset% -sdp ./Binary/data_sign.obk
+IF !errorlevel! NEQ 0 goto :error
+)
 :: =============================================== Boot on STiRoT ==========================================================================
 IF "!product_state!" == "open" (
 set "action=Set UBE for STiRoT"

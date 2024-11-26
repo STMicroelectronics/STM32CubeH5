@@ -5,6 +5,7 @@ setlocal EnableDelayedExpansion
 
 :: Path and input files
 set ob_flash_programming="ob_flash_programming.bat"
+set obkey_provisioning="obkey_provisioning.bat"
 set obk_cfg_file="./Config/STiRoT_Config.xml"
 
 set "projectdir=%~dp0"
@@ -53,7 +54,7 @@ set "action=Updating SRAM2_ECC value"
 if !errorlevel! neq 0 goto :error
 
 set "action=Updating image number value"
-%AppliCfg% flash -xml %obk_cfg_file% --name %data_image_en% -b image_number --decimal %ob_flash_programming% --vb
+%AppliCfg% flash -xml %obk_cfg_file% --name %data_image_en% -b image_number --decimal %obkey_provisioning% --vb
 if !errorlevel! neq 0 goto :error
 
 echo Script successfully updated according to STiRoT_Config.obk

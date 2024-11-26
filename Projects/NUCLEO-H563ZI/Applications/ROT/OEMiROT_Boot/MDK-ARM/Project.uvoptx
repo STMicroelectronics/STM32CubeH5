@@ -790,8 +790,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>../../../../../../Middlewares/Third_Party/mbed-crypto/library/ctr_drbg.c</PathWithFileName>
-      <FilenameWithoutPath>ctr_drbg.c</FilenameWithoutPath>
+      <PathWithFileName>../../../../../../Middlewares/Third_Party/mbed-crypto/library/hmac_drbg.c</PathWithFileName>
+      <FilenameWithoutPath>hmac_drbg.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>

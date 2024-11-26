@@ -57,7 +57,7 @@
   * @brief  Application FileX Initialization.
   * @param memory_ptr: memory pointer
   * @retval int
-*/
+  */
 UINT MX_FileX_Init(VOID *memory_ptr)
 {
   UINT ret = FX_SUCCESS;
@@ -67,16 +67,16 @@ UINT MX_FileX_Init(VOID *memory_ptr)
   (void)byte_pool;
   /* USER CODE END MX_FileX_MEM_POOL */
 
-/* USER CODE BEGIN MX_FileX_Init */
+  /* USER CODE BEGIN MX_FileX_Init */
 
-/* USER CODE END MX_FileX_Init */
+  /* USER CODE END MX_FileX_Init */
 
-/* Initialize FileX.  */
+  /* Initialize FileX. */
   fx_system_initialize();
 
-/* USER CODE BEGIN MX_FileX_Init 1*/
+  /* USER CODE BEGIN MX_FileX_Init 1 */
 
-/* USER CODE END MX_FileX_Init 1*/
+  /* USER CODE END MX_FileX_Init 1 */
 
   return ret;
 }

@@ -23,7 +23,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "stdio.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -38,9 +38,7 @@
 
 /* Private macro -------------------------------------------------------------*/
 /* USER CODE BEGIN PM */
-#if defined(__ICCARM__)
-#include <LowLevelIOInterface.h>
-#endif /* __ICCARM__ */
+
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
@@ -62,16 +60,6 @@ static void ThreadOne_Entry(void *argument);
 static void ThreadTwo_Entry(void *argument);
 static void Led_Toggle(uint32_t delay);
 
-#if defined(__ICCARM__)
-/* New definition from EWARM V9, compatible with EWARM8 */
-int iar_fputc(int ch);
-#define PUTCHAR_PROTOTYPE int iar_fputc(int ch)
-#elif defined ( __CC_ARM ) || defined(__ARMCC_VERSION)
-/* ARM Compiler 5/6*/
-#define PUTCHAR_PROTOTYPE int fputc(int ch, FILE *f)
-#elif defined(__GNUC__)
-#define PUTCHAR_PROTOTYPE int __io_putchar(int ch)
-#endif /* __ICCARM__ */
 /* USER CODE END PFP */
 
 /* Global user code ---------------------------------------------------------*/
@@ -220,32 +208,6 @@ static void Led_Toggle(uint32_t delay)
     HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
     osDelay(delay);
   }
-}
-#if defined(__ICCARM__)
-size_t __write(int file, unsigned char const *ptr, size_t len)
-{
-  size_t idx;
-  unsigned char const *pdata = ptr;
-
-  for (idx = 0; idx < len; idx++)
-  {
-    iar_fputc((int)*pdata);
-    pdata++;
-  }
-  return len;
-}
-#endif /* __ICCARM__ */
-
-/**
-  * @brief  Retargets the C library printf function to the USART.
-  */
-PUTCHAR_PROTOTYPE
-{
-  /* Place your implementation of putchar here */
-  /* e.g. write a character to the USART3 and Loop until the end of transmission */
-  HAL_UART_Transmit(&huart3, (uint8_t *)&ch, 1, 0xFFFF);
-
-  return ch;
 }
 
 /* USER CODE END 1 */

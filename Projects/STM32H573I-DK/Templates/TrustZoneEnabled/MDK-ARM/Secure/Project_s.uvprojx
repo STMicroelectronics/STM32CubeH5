@@ -1,46 +1,41 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<Project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="project_projx.xsd">
-
+<?xml version="1.0" encoding="UTF-8"?>
+<Project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" noNamespaceSchemaLocation="project_projx.xsd">
   <SchemaVersion>2.1</SchemaVersion>
-
   <Header>### uVision Project, (C) Keil Software</Header>
-
   <Targets>
     <Target>
-      <TargetName>STM32H573xx_Templates_TrustZoneEnabled</TargetName>
+      <TargetName>STM32H573xx_Templates_TrustZoneEnabled_s</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>6180000::V6.18::ARMCLANG</pCCUsed>
+      <pCCUsed>6140001::V6.14.1::ARMCLANG</pCCUsed>
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
-          <Device>STM32H573IIKx</Device>
+          <Device>STM32H573IITx</Device>
           <Vendor>STMicroelectronics</Vendor>
-          <PackID>Keil.STM32H5xx_DFP.0.0.5</PackID>
-          <PackURL>http://www.keil.com/pack</PackURL>
-          <Cpu>IRAM(0x20000000,0x040000) IRAM2(0x30000000,0x040000) IROM(0x08000000,0x00200000) IROM2(0x0C000000,0x00200000) XRAM(0x20040000,0x00010000) XRAM2(0x20050000,0x00050000) CPUTYPE("Cortex-M33") FPU3(SFPU) DSP TZ CLOCK(12000000) ESEL ELITTLE</Cpu>
-          <FlashUtilSpec></FlashUtilSpec>
-          <StartupFile></StartupFile>
-          <FlashDriverDll>UL2V8M(-S0 -C0 -P0 -FD20000000 -FC1000 -FN2 -FF0STM32H5xx_2M_0C00 -FS0C000000 -FL0200000 -FF1STM32H5xx_2M_0800 -FS18000000 -FL1200000 -FP0($$Device:STM32H573IIKx$CMSIS\Flash\STM32H5xx_2M_0C00.FLM) -FP1($$Device:STM32H573IIKx$CMSIS\Flash\STM32H5xx_2M_0800.FLM))</FlashDriverDll>
+          <Cpu>IRAM(0x30000000-0x3004FFFF) IROM(0x0C000000-0xC0FDFFF) IROM2(0x0C0FE000-0xC0FFFFF) CLOCK(8000000) FPU3(SFPU) CPUTYPE("Cortex-M33") ELITTLE TZ DSP</Cpu>
+          <FlashUtilSpec />
+          <StartupFile />
+          <FlashDriverDll />
           <DeviceId>0</DeviceId>
-          <RegisterFile>$$Device:STM32H573IIKx$Drivers\CMSIS\Device\ST\STM32H5xx\Include\stm32h5xx.h</RegisterFile>
-          <MemoryEnv></MemoryEnv>
-          <Cmp></Cmp>
-          <Asm></Asm>
-          <Linker></Linker>
-          <OHString></OHString>
-          <InfinionOptionDll></InfinionOptionDll>
-          <SLE66CMisc></SLE66CMisc>
-          <SLE66AMisc></SLE66AMisc>
-          <SLE66LinkerMisc></SLE66LinkerMisc>
-          <SFDFile>$$Device:STM32H573IIKx$CMSIS\SVD\STM32H57x.svd</SFDFile>
+          <RegisterFile />
+          <MemoryEnv />
+          <Cmp />
+          <Asm />
+          <Linker />
+          <OHString />
+          <InfinionOptionDll />
+          <SLE66CMisc />
+          <SLE66AMisc />
+          <SLE66LinkerMisc />
+          <SFDFile />
           <bCustSvd>0</bCustSvd>
           <UseEnv>0</UseEnv>
-          <BinPath></BinPath>
-          <IncludePath></IncludePath>
-          <LibPath></LibPath>
-          <RegisterFilePath></RegisterFilePath>
-          <DBRegisterFilePath></DBRegisterFilePath>
+          <BinPath />
+          <IncludePath />
+          <LibPath />
+          <RegisterFilePath />
+          <DBRegisterFilePath />
           <TargetStatus>
             <Error>0</Error>
             <ExitCodeStop>0</ExitCodeStop>
@@ -48,22 +43,22 @@
             <NotGenerated>0</NotGenerated>
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
-          <OutputDirectory>..\Secure_nsclib\</OutputDirectory>
+          <OutputDirectory>STM32H573xx_Templates_TrustZoneEnabled_s\</OutputDirectory>
           <OutputName>Project_s</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
           <CreateHexFile>1</CreateHexFile>
           <DebugInformation>1</DebugInformation>
           <BrowseInformation>1</BrowseInformation>
-          <ListingPath></ListingPath>
+          <ListingPath>STM32H573xx_s\List</ListingPath>
           <HexFormatSelection>1</HexFormatSelection>
           <Merge32K>0</Merge32K>
           <CreateBatchFile>0</CreateBatchFile>
           <BeforeCompile>
             <RunUserProg1>0</RunUserProg1>
             <RunUserProg2>0</RunUserProg2>
-            <UserProg1Name></UserProg1Name>
-            <UserProg2Name></UserProg2Name>
+            <UserProg1Name />
+            <UserProg2Name />
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
             <nStopU1X>0</nStopU1X>
@@ -72,8 +67,8 @@
           <BeforeMake>
             <RunUserProg1>0</RunUserProg1>
             <RunUserProg2>0</RunUserProg2>
-            <UserProg1Name></UserProg1Name>
-            <UserProg2Name></UserProg2Name>
+            <UserProg1Name />
+            <UserProg2Name />
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
             <nStopB1X>0</nStopB1X>
@@ -82,15 +77,15 @@
           <AfterMake>
             <RunUserProg1>0</RunUserProg1>
             <RunUserProg2>0</RunUserProg2>
-            <UserProg1Name></UserProg1Name>
-            <UserProg2Name></UserProg2Name>
+            <UserProg1Name />
+            <UserProg2Name />
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
             <nStopA1X>0</nStopA1X>
             <nStopA2X>0</nStopA2X>
           </AfterMake>
           <SelectedForBatchBuild>1</SelectedForBatchBuild>
-          <SVCSIdString></SVCSIdString>
+          <SVCSIdString />
         </TargetCommonOption>
         <CommonProperty>
           <UseCPPCompiler>0</UseCPPCompiler>
@@ -104,17 +99,17 @@
           <AssembleAssemblyFile>0</AssembleAssemblyFile>
           <PublicsOnly>0</PublicsOnly>
           <StopOnExitCode>3</StopOnExitCode>
-          <CustomArgument></CustomArgument>
-          <IncludeLibraryModules></IncludeLibraryModules>
+          <CustomArgument />
+          <IncludeLibraryModules />
           <ComprImg>0</ComprImg>
         </CommonProperty>
         <DllOption>
-          <SimDllName></SimDllName>
-          <SimDllArguments></SimDllArguments>
-          <SimDlgDll></SimDlgDll>
-          <SimDlgDllArguments></SimDlgDllArguments>
+          <SimDllName />
+          <SimDllArguments />
+          <SimDlgDll />
+          <SimDlgDllArguments />
           <TargetDllName>SARMV8M.DLL</TargetDllName>
-          <TargetDllArguments> -MPU</TargetDllArguments>
+          <TargetDllArguments>-MPU</TargetDllArguments>
           <TargetDlgDll>TCM.DLL</TargetDlgDll>
           <TargetDlgDllArguments>-pCM33</TargetDlgDllArguments>
         </DllOption>
@@ -134,15 +129,15 @@
             <RunIndependent>0</RunIndependent>
             <UpdateFlashBeforeDebugging>1</UpdateFlashBeforeDebugging>
             <Capability>1</Capability>
-            <DriverSelection>4102</DriverSelection>
+            <DriverSelection>4101</DriverSelection>
           </Flash1>
           <bUseTDR>1</bUseTDR>
           <Flash2>BIN\UL2V8M.DLL</Flash2>
-          <Flash3>"" ()</Flash3>
-          <Flash4></Flash4>
-          <pFcarmOut></pFcarmOut>
-          <pFcarmGrp></pFcarmGrp>
-          <pFcArmRoot></pFcArmRoot>
+          <Flash3 />
+          <Flash4 />
+          <pFcarmOut />
+          <pFcarmGrp />
+          <pFcArmRoot />
           <FcArmLst>0</FcArmLst>
         </Utilities>
         <TargetArmAds>
@@ -175,23 +170,22 @@
             <RvctClst>0</RvctClst>
             <GenPPlst>0</GenPPlst>
             <AdsCpuType>"Cortex-M33"</AdsCpuType>
-            <RvctDeviceName></RvctDeviceName>
+            <RvctDeviceName />
             <mOS>0</mOS>
             <uocRom>0</uocRom>
             <uocRam>0</uocRam>
             <hadIROM>1</hadIROM>
             <hadIRAM>1</hadIRAM>
-            <hadXRAM>1</hadXRAM>
+            <hadXRAM>0</hadXRAM>
             <uocXRam>0</uocXRam>
             <RvdsVP>2</RvdsVP>
             <RvdsMve>0</RvdsMve>
             <RvdsCdeCp>0</RvdsCdeCp>
-            <nBranchProt>0</nBranchProt>
-            <hadIRAM2>1</hadIRAM2>
+            <hadIRAM2>0</hadIRAM2>
             <hadIROM2>1</hadIROM2>
             <StupSel>8</StupSel>
             <useUlib>0</useUlib>
-            <EndSel>1</EndSel>
+            <EndSel>0</EndSel>
             <uLtcg>0</uLtcg>
             <nSecure>1</nSecure>
             <RoSelD>3</RoSelD>
@@ -246,18 +240,18 @@
               </Ocm6>
               <IRAM>
                 <Type>0</Type>
-                <StartAddress>0x20000000</StartAddress>
-                <Size>0x40000</Size>
+                <StartAddress>0x0</StartAddress>
+                <Size>0x0</Size>
               </IRAM>
               <IROM>
                 <Type>1</Type>
-                <StartAddress>0x8000000</StartAddress>
-                <Size>0x200000</Size>
+                <StartAddress>0x0</StartAddress>
+                <Size>0x0</Size>
               </IROM>
               <XRAM>
-                <Type>1</Type>
-                <StartAddress>0x20040000</StartAddress>
-                <Size>0x10000</Size>
+                <Type>0</Type>
+                <StartAddress>0x0</StartAddress>
+                <Size>0x0</Size>
               </XRAM>
               <OCR_RVCT1>
                 <Type>1</Type>
@@ -276,13 +270,13 @@
               </OCR_RVCT3>
               <OCR_RVCT4>
                 <Type>1</Type>
-                <StartAddress>0xc000000</StartAddress>
-                <Size>0xfe000</Size>
+                <StartAddress />
+                <Size />
               </OCR_RVCT4>
               <OCR_RVCT5>
                 <Type>1</Type>
-                <StartAddress>0xc0fe000</StartAddress>
-                <Size>0x2000</Size>
+                <StartAddress>0x0</StartAddress>
+                <Size>0x0</Size>
               </OCR_RVCT5>
               <OCR_RVCT6>
                 <Type>0</Type>
@@ -301,8 +295,8 @@
               </OCR_RVCT8>
               <OCR_RVCT9>
                 <Type>0</Type>
-                <StartAddress>0x30000000</StartAddress>
-                <Size>0x40000</Size>
+                <StartAddress>0x0</StartAddress>
+                <Size>0x0</Size>
               </OCR_RVCT9>
               <OCR_RVCT10>
                 <Type>0</Type>
@@ -310,11 +304,11 @@
                 <Size>0x0</Size>
               </OCR_RVCT10>
             </OnChipMemories>
-            <RvctStartVector></RvctStartVector>
+            <RvctStartVector />
           </ArmAdsMisc>
           <Cads>
             <interw>1</interw>
-            <Optim>4</Optim>
+            <Optim>7</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
@@ -337,9 +331,9 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls></MiscControls>
+              <MiscControls />
               <Define>STM32H573xx,USE_HAL_DRIVER</Define>
-              <Undefine></Undefine>
+              <Undefine />
               <IncludePath>../../Secure/Inc;../../Secure_nsclib;../../../../../../Drivers/CMSIS/Include;../../../../../../Drivers/CMSIS/Device/ST/STM32H5xx/Include;../../../../../../Drivers/STM32H5xx_HAL_Driver/Inc</IncludePath>
             </VariousControls>
           </Cads>
@@ -355,10 +349,10 @@
             <useXO>0</useXO>
             <ClangAsOpt>1</ClangAsOpt>
             <VariousControls>
-              <MiscControls></MiscControls>
-              <Define></Define>
-              <Undefine></Undefine>
-              <IncludePath></IncludePath>
+              <MiscControls />
+              <Define />
+              <Undefine />
+              <IncludePath />
             </VariousControls>
           </Aads>
           <LDads>
@@ -368,15 +362,15 @@
             <noStLib>0</noStLib>
             <RepFail>1</RepFail>
             <useFile>0</useFile>
-            <TextAddressRange></TextAddressRange>
-            <DataAddressRange></DataAddressRange>
-            <pXoBase></pXoBase>
-            <ScatterFile></ScatterFile>
-            <IncludeLibs></IncludeLibs>
-            <IncludeLibsPath></IncludeLibsPath>
-            <Misc>--import_cmse_lib_out=../Secure_nsclib/secure_nsclib.o</Misc>
-            <LinkerInputFile></LinkerInputFile>
-            <DisabledWarnings></DisabledWarnings>
+            <TextAddressRange />
+            <DataAddressRange />
+            <pXoBase />
+            <ScatterFile />
+            <IncludeLibs />
+            <IncludeLibsPath />
+            <Misc>--import_cmse_lib_out=../../Secure_nsclib/secure_nsclib.o</Misc>
+            <LinkerInputFile />
+            <DisabledWarnings />
           </LDads>
         </TargetArmAds>
       </TargetOption>
@@ -423,6 +417,11 @@
               <FileName>stm32h5xx_hal_cec.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_cec.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32h5xx_hal_comp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_comp.c</FilePath>
             </File>
             <File>
               <FileName>stm32h5xx_hal_cordic.c</FileName>
@@ -490,6 +489,16 @@
               <FilePath>../../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_dts.c</FilePath>
             </File>
             <File>
+              <FileName>stm32h5xx_hal_eth.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_eth.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32h5xx_hal_eth_ex.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_eth_ex.c</FilePath>
+            </File>
+            <File>
               <FileName>stm32h5xx_hal_exti.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_exti.c</FilePath>
@@ -525,6 +534,11 @@
               <FilePath>../../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_gtzc.c</FilePath>
             </File>
             <File>
+              <FileName>stm32h5xx_hal_hash.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_hash.c</FilePath>
+            </File>
+            <File>
               <FileName>stm32h5xx_hal_hcd.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_hcd.c</FilePath>
@@ -550,9 +564,19 @@
               <FilePath>../../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_i2s_ex.c</FilePath>
             </File>
             <File>
+              <FileName>stm32h5xx_hal_i3c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_i3c.c</FilePath>
+            </File>
+            <File>
               <FileName>stm32h5xx_hal_icache.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_icache.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32h5xx_hal_irda.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_irda.c</FilePath>
             </File>
             <File>
               <FileName>stm32h5xx_hal_iwdg.c</FileName>
@@ -680,6 +704,16 @@
               <FilePath>../../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_sdram.c</FilePath>
             </File>
             <File>
+              <FileName>stm32h5xx_hal_smartcard.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_smartcard.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32h5xx_hal_smartcard_ex.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_smartcard_ex.c</FilePath>
+            </File>
+            <File>
               <FileName>stm32h5xx_hal_smbus.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_smbus.c</FilePath>
@@ -740,6 +774,11 @@
               <FilePath>../../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_wwdg.c</FilePath>
             </File>
             <File>
+              <FileName>stm32h5xx_hal_xspi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_xspi.c</FilePath>
+            </File>
+            <File>
               <FileName>stm32h5xx_ll_dlyb.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_ll_dlyb.c</FilePath>
@@ -767,7 +806,7 @@
             <File>
               <FileName>startup_stm32h573xx.s</FileName>
               <FileType>2</FileType>
-              <FilePath>..\startup_stm32h573xx.s</FilePath>
+              <FilePath>../startup_stm32h573xx.s</FilePath>
             </File>
           </Files>
         </Group>
@@ -796,24 +835,20 @@
             </File>
           </Files>
         </Group>
-        <Group>
-          <GroupName>::CMSIS</GroupName>
-        </Group>
       </Groups>
     </Target>
   </Targets>
-
   <RTE>
-    <apis/>
+    <apis />
     <components>
-      <component Cclass="CMSIS" Cgroup="CORE" Cvendor="ARM" Cversion="5.6.0" condition="ARMv6_7_8-M Device">
-        <package name="CMSIS" schemaVersion="1.7.7" url="http://www.keil.com/pack/" vendor="ARM" version="5.9.0"/>
+      <component Cclass="CMSIS" Cgroup="CORE" Cvendor="ARM" Cversion="4.3.0" condition="CMSIS Core">
+        <package name="CMSIS" schemaVersion="1.3" url="http://www.keil.com/pack/" vendor="ARM" version="4.5.0" />
         <targetInfos>
-          <targetInfo name="STM32H573xx_Templates_TrustZoneEnabled"/>
+          <targetInfo name="STM32H573xx_Templates_TrustZoneEnabled_s" />
         </targetInfos>
       </component>
     </components>
-    <files/>
+    <files />
   </RTE>
-
 </Project>
+

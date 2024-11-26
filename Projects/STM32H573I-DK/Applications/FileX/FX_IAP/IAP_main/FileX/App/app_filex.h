@@ -88,7 +88,7 @@ UINT MX_FileX_Init(VOID *memory_ptr);
 
 /* fx sd Hidden sectors */
 #ifndef FX_SD_HIDDEN_SECTORS
-  #define FX_SD_HIDDEN_SECTORS               0
+  #define FX_SD_HIDDEN_SECTORS                0
 #endif
 
 /* USER CODE BEGIN PD */

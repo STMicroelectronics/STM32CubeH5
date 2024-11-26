@@ -23,22 +23,6 @@ create_password_log="../DA/create_password.log"
 current_log_file="provisioning.log"
 echo "" > $current_log_file
 
-
-
-if [ $isGeneratedByCubeMX == "true" ]; then
-   appli_dir=$oemirot_boot_path_project
-else
-   appli_dir="../../../$oemirot_boot_path_project"
-fi
-
-# Variables for image xml configuration
-fw_in_bin="Firmware binary input file"
-fw_out_bin="Image output file"
-app_bin="$appli_dir/Binary/rot_app.bin"
-app_enc_sign_hex="$appli_dir/Binary/rot_app_enc_sign.hex"
-code_image_file="$projectdir/Images/OEMiROT_Code_Image.xml"
-
-
 # Initial configuration
 product_state=OPEN
 connect_no_reset="-c port=SWD speed=fast ap=1 mode=Hotplug"
@@ -231,6 +215,12 @@ if [ $isGeneratedByCubeMX == "true" ]; then
     echo "===== please modify the env.bat to set the right path"
     step_error
   fi
+  echo "Step 1 : Configuration management"
+  echo "      * OEM Keys (Keys/*.pem and OEMiROT_Boot/Src/keys.c) were created during CubeMX code generation"
+  echo
+  echo "         Press any key to continue..."
+  echo
+  if [ "$mode" != "AUTO" ]; then read -p "" -n1 -s; fi
 else
 
   # =============================================== Steps to create the OEMiROT_Config.obk file ==============================================
@@ -255,11 +245,6 @@ if [ "$mode" != "AUTO" ]; then read -p "" -n1 -s; fi
 #update xml file
 if [ "$isGeneratedByCubeMX" != "true" ]; then
 
-  $python$applicfg xmlval -v $app_bin --string -n "$fw_in_bin" $code_image_file --vb >> $current_log_file
-  if [ $? -ne 0 ]; then step_error; fi
-  $python$applicfg xmlval -v $app_enc_sign_hex --string -n "$fw_out_bin" $code_image_file --vb >> $current_log_file
-  if [ $? -ne 0 ]; then step_error; fi
-
   echo "   * Code firmware image generation"
   echo "       Open the OEMiROT_Appli project with preferred toolchain."
   echo "       Rebuild all files. The rot_app_enc_sign.hex file is generated with the postbuild command."
@@ -272,6 +257,14 @@ if [ "$isGeneratedByCubeMX" != "true" ]; then
   echo "       Press any key to continue..."
   echo
   if [ "$mode" != "AUTO" ]; then read -p "" -n1 -s; fi
+fi
+if [ $isGeneratedByCubeMX == "true" ]; then
+    echo "   * Code firmware image generation"
+    echo "       If the configuration of OEMiROT_Boot project has been updated, reload and regenerate STM32CubeMX application project."
+    echo "       Open the regenerated application project with preferred toolchain and rebuild all files."
+    echo "       Press any key to continue..."
+    echo
+    if [ "$mode" != "AUTO" ]; then read -p "" -n1 -s; fi
 fi
 # ========================================================= Board provisioning steps =======================================================  
 echo "Step 2 : Provisioning password"

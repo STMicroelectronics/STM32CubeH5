@@ -1,8 +1,9 @@
 /* USER CODE BEGIN Header */
 /**
   ******************************************************************************
-  * @file           : main.c
-  * @brief          : Main program body
+  * @file    main.c
+  * @author  MCD Application Team
+  * @brief   Main program body
   ******************************************************************************
   * @attention
   *
@@ -19,17 +20,18 @@
 /* Includes ------------------------------------------------------------------*/
 #include "app_threadx.h"
 #include "main.h"
-#include "string.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#if defined(__ICCARM__)
+#include <LowLevelIOInterface.h>
+#endif /* __ICCARM__ */
 
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
 #if defined(__ICCARM__)
-size_t __write(int file, unsigned char const *ptr, size_t len);
 /* New definition from EWARM V9, compatible with EWARM8 */
 int iar_fputc(int ch);
 #define PUTCHAR_PROTOTYPE int iar_fputc(int ch)
@@ -53,7 +55,6 @@ int iar_fputc(int ch);
 
 /* Private variables ---------------------------------------------------------*/
 
-ETH_TxPacketConfigTypeDef TxConfig;
 ETH_DMADescTypeDef  DMARxDscrTab[ETH_RX_DESC_CNT]; /* Ethernet Rx DMA Descriptors */
 ETH_DMADescTypeDef  DMATxDscrTab[ETH_TX_DESC_CNT]; /* Ethernet Tx DMA Descriptors */
 
@@ -230,11 +231,6 @@ static void MX_ETH_Init(void)
   {
     Error_Handler();
   }
-
-  memset(&TxConfig, 0 , sizeof(ETH_TxPacketConfigTypeDef));
-  TxConfig.Attributes = ETH_TX_PACKETS_FEATURES_CSUM | ETH_TX_PACKETS_FEATURES_CRCPAD;
-  TxConfig.ChecksumCtrl = ETH_CHECKSUM_IPHDR_PAYLOAD_INSERT_PHDR_CALC;
-  TxConfig.CRCPadCtrl = ETH_CRC_PAD_INSERT;
   /* USER CODE BEGIN ETH_Init 2 */
 
   /* USER CODE END ETH_Init 2 */
@@ -436,12 +432,19 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
+/**
+  * @brief  Retargets the C library __write function to the IAR function iar_fputc.
+  * @param  file: file descriptor.
+  * @param  ptr: pointer to the buffer where the data is stored.
+  * @param  len: length of the data to write in bytes.
+  * @retval length of the written data in bytes.
+  */
 #if defined(__ICCARM__)
 size_t __write(int file, unsigned char const *ptr, size_t len)
 {
   size_t idx;
   unsigned char const *pdata = ptr;
-  
+
   for (idx = 0; idx < len; idx++)
   {
     iar_fputc((int)*pdata);
@@ -461,7 +464,7 @@ PUTCHAR_PROTOTYPE
   /* Place your implementation of putchar here */
   /* e.g. write a character to the USART3 and Loop until the end of transmission */
   HAL_UART_Transmit(&huart3, (uint8_t *)&ch, 1, 0xFFFF);
-  
+
   return ch;
 }
 /* USER CODE END 4 */

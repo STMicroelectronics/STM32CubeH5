@@ -3,7 +3,7 @@
   ******************************************************************************
   * @file    ux_device_mouse.c
   * @author  MCD Application Team
-  * @brief   USBX Device applicative file
+  * @brief   USBX Device HID Mouse applicative source file
   ******************************************************************************
   * @attention
   *
@@ -23,7 +23,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "main.h"
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -140,11 +140,11 @@ UINT USBD_HID_Mouse_GetReport(UX_SLAVE_CLASS_HID *hid_instance,
 /* USER CODE BEGIN 1 */
 
 /**
-* @brief  USBX_DEVICE_HID_MOUSE_Task
-*         Run HID mouse task
-* @param  none
-* @retval none
-*/
+  * @brief  USBX_DEVICE_HID_MOUSE_Task
+  *         Run HID mouse task
+  * @param  none
+  * @retval none
+  */
 VOID USBX_DEVICE_HID_MOUSE_Task(VOID)
 {
   ULONG tick;
@@ -183,11 +183,11 @@ VOID USBX_DEVICE_HID_MOUSE_Task(VOID)
   }
 }
 /**
-* @brief  GetPointerData
-*         Gets Pointer Data.
-* @param  hid_event: Pointer to structure of the hid event.
-* @retval None
-*/
+  * @brief  GetPointerData
+  *         Gets Pointer Data.
+  * @param  hid_event: Pointer to structure of the hid event.
+  * @retval None
+  */
 static VOID GetPointerData(UX_SLAVE_CLASS_HID_EVENT *hid_event)
 {
   static int8_t counter = 0;
@@ -223,16 +223,20 @@ static VOID GetPointerData(UX_SLAVE_CLASS_HID_EVENT *hid_event)
   /* Increment counter */
   counter++;
 
-  /* Mouse event. Length is fixed to 3 */
-  hid_event->ux_device_class_hid_event_length = 3;
+  /* Mouse event. Length is fixed to 4 */
+  hid_event->ux_device_class_hid_event_length = 4;
 
-  /* Set X position. */
-  hid_event->ux_device_class_hid_event_buffer[0] = x;
+  /* Set select position */
+  hid_event->ux_device_class_hid_event_buffer[0] = 0;
 
-  /* Set Y position. */
-  hid_event->ux_device_class_hid_event_buffer[1] = y;
+  /* Set X position */
+  hid_event->ux_device_class_hid_event_buffer[1] = x;
 
-  hid_event->ux_device_class_hid_event_buffer[2] = 0;
+  /* Set Y position */
+  hid_event->ux_device_class_hid_event_buffer[2] = y;
+
+  /* Set wheel position */
+  hid_event->ux_device_class_hid_event_buffer[3] = 0;
 }
 
 /* USER CODE END 1 */

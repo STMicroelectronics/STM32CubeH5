@@ -54,10 +54,17 @@ __asm("  .global __ARM_use_no_argv\n");
 #define FLASH_B_SIZE                        (0x10000)   /*!< 64K */
 #define FLASH_TOTAL_SIZE                    (0x20000)   /*!< 128K */
 
+/* Enable print of boot time (obtained through DWT).
+   DWT usage requires product state is not closed/locked.
+   OEMxRoT logs must be disabled for relevant boot time. */
+/* #define PRINT_BOOT_TIME */
+
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
 uint8_t *pUserAppId;
 const uint8_t UserAppId = 'A';
+uint64_t time;
+uint32_t end;
 
 /* Private function prototypes -----------------------------------------------*/
 static void SystemClock_Config(void);
@@ -143,6 +150,9 @@ size_t __write(int file, unsigned char const *ptr, size_t len)
 int main(int argc, char **argv)
 /*int main(void) */
 {
+  /* Get boot cycles */
+  end = DWT->CYCCNT;
+
   /*  set example to const : this const changes in binary without rebuild */
   pUserAppId = (uint8_t *)&UserAppId;
 
@@ -157,6 +167,15 @@ int main(int argc, char **argv)
   */
   HAL_Init();
 
+  /* !!! To boot in a secure way, the RoT has configured and activated the Memory Protection Unit
+      In order to keep a secure environment execution, you should reconfigure the
+      MPU to make it compatible with your application
+      In this example, MPU is disabled */
+  HAL_MPU_Disable();
+
+  /* Get Boot Time */
+  time = ((uint64_t)(end) * 1000U / SystemCoreClock);
+
   /* DeInitialize RCC to allow PLL reconfiguration when configuring system clock */
   HAL_RCC_DeInit();
 
@@ -166,6 +185,10 @@ int main(int argc, char **argv)
   /* Configure Communication module */
   COM_Init();
 
+#ifdef PRINT_BOOT_TIME
+  printf("\r\nBoot time : %u ms at %u MHz", (unsigned int)(time), (unsigned int)(SystemCoreClock/1000000U));
+  printf("\r\n");
+#endif
   printf("\r\n======================================================================");
   printf("\r\n=              (C) COPYRIGHT 2023 STMicroelectronics                 =");
   printf("\r\n=                                                                    =");
@@ -389,8 +412,7 @@ void LOADER_Run(void)
   printf("\r\n  If you want to connect through USART interface, disconnect your TeraTerm");
   printf("\r\n  Start download with STM32CubeProgrammer through supported interfaces (USART/SPI/I2C/USB)\r\n");
   printf("\r\n");
-  /* disable MPU */
-  MPU->CTRL = 0;
+
   /* Unlock the Flash to enable the flash control register access *************/
   HAL_FLASH_Unlock();
   /* Get the 1st sector of image to erase */

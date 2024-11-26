@@ -102,11 +102,11 @@ For keeping track of time while in low power mode, there are two possibilities:
        } >RAM_D1 AT> RAM_D1
     ```
 
-       The simplest way to provide memory for ThreadX is to define a new section, see ._threadx_heap above.
-       In the example above the ThreadX heap size is set to 64KBytes.
-       The ._threadx_heap must be located between the .bss and the ._user_heap_stack sections in the linker script.
-       Caution: Make sure that ThreadX does not need more than the provided heap memory (64KBytes in this example).
-       Read more in STM32CubeIDE User Guide, chapter: "Linker script".
+    The simplest way to provide memory for ThreadX is to define a new section, see ._threadx_heap above.
+    In the example above the ThreadX heap size is set to 64KBytes.
+    The ._threadx_heap must be located between the .bss and the ._user_heap_stack sections in the linker script.
+    Caution: Make sure that ThreadX does not need more than the provided heap memory (64KBytes in this example).
+    Read more in STM32CubeIDE User Guide, chapter: "Linker script".
 
     + The "tx_initialize_low_level.S" should be also modified to enable the "USE_DYNAMIC_MEMORY_ALLOCATION" flag.
 
@@ -116,8 +116,8 @@ RTOS, ThreadX, Threading, Semaphore, LowPower
 
 ### <b>Hardware and Software environment</b>
 
-  - This example runs on STM32H533RETx devices.
-  - This example has been tested with STMicroelectronics NUCLEO-H533RE boards
+  - This application runs on STM32H533RETx devices.
+  - This application has been tested with STMicroelectronics NUCLEO-H533RE boards revision MB1814-C01
     and can be easily tailored to any other supported device and development board.
 
 ###  <b>How to use it ?</b>

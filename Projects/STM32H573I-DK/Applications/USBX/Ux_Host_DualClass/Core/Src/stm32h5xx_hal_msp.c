@@ -120,6 +120,7 @@ void HAL_UART_MspInit(UART_HandleTypeDef* huart)
   /* USER CODE BEGIN USART1_MspInit 1 */
 
   /* USER CODE END USART1_MspInit 1 */
+
   }
 
 }
@@ -189,6 +190,7 @@ void HAL_HCD_MspInit(HCD_HandleTypeDef* hhcd)
   /* USER CODE BEGIN USB_DRD_FS_MspInit 1 */
 
   /* USER CODE END USB_DRD_FS_MspInit 1 */
+
   }
 
 }

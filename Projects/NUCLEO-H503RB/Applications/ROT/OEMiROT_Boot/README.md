@@ -28,7 +28,7 @@ OEMiROT, boot path, Root Of Trust, Security, mcuboot
   - OEMiROT_Boot/Inc/boot_hal_hash_ref.h             Header file for hash reference code in boot_hal.c
   - OEMiROT_Boot/Inc/boot_hal_imagevalid.h           Header file for image validation code in boot_hal.c
   - OEMiROT_Boot/Inc/cmsis.h                         Header file for CMSIS
-  - OEMiROT_Boot/Inc/config-boot.h                   Mbed-crypto configuration file
+  - OEMiROT_Boot/Inc/mbedtls_config.h                Mbed-crypto configuration file
   - OEMiROT_Boot/Inc/flash_layout.h                  Flash mapping
   - OEMiROT_Boot/Inc/low_level_flash.h               Header file for low_level_flash.c
   - OEMiROT_Boot/Inc/low_level_rng.h                 Header file for low_level_rng.c

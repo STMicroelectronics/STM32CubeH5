@@ -1,8 +1,11 @@
 /* USER CODE BEGIN Header */
 /**
   ******************************************************************************
-  * @file    stm32h5xx_it.c
-  * @brief   Interrupt Service Routines.
+  * @file    ThreadX/Tx_CMSIS_Wrapper/Src/stm32h5xx_it.c
+  * @author  MCD Application Team
+  * @brief   Main Interrupt Service Routines.
+  *          This file provides template for all exceptions handler and
+  *          peripherals interrupt service routine.
   ******************************************************************************
   * @attention
   *
@@ -110,7 +113,7 @@ void MemManage_Handler(void)
 }
 
 /**
-  * @brief This function handles Prefetch fault, memory access fault.
+  * @brief This function handles Pre-fetch fault, memory access fault.
   */
 void BusFault_Handler(void)
 {

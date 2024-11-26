@@ -36,7 +36,6 @@ set "preprocess_bl2_file=%projectdir%\image_macros_preprocessed_bl2.c"
 set "appli_dir=../../../../%oemirot_boot_path_project%"
 
 set "flash_layout=%projectdir%\..\Inc\flash_layout.h"
-set "provisioning=%projectdir%\..\..\..\..\ROT_Provisioning\img_config.bat"
 set ns_main="%appli_dir%\NonSecure\Inc\main.h"
 set s_main="%appli_dir%\Secure\Inc\main.h"
 set appli_flash_layout="%appli_dir%\Secure_nsclib\appli_flash_layout.h"
@@ -45,11 +44,16 @@ set "command=%python%%applicfg% flash --layout %preprocess_bl2_file% -b oemurot_
 %command%
 IF !errorlevel! NEQ 0 goto :error
 call %auto_rot_update%
+set "provisioning=%projectdir%\..\..\..\..\ROT_Provisioning\%bootpath%\img_config.bat"
 set "update=%provisioningdir%\%bootpath%\ob_flash_programming.bat"
 set s_code_xml="%provisioningdir%\%bootpath%\Images\%project%_S_Code_Image.xml"
 set ns_code_xml="%provisioningdir%\%bootpath%\Images\%project%_NS_Code_Image.xml"
 set s_data_xml="%provisioningdir%\%bootpath%\Images\%project%_S_Data_Image.xml"
 set ns_data_xml="%provisioningdir%\%bootpath%\Images\%project%_NS_Data_Image.xml"
+set s_code_init_xml="%provisioningdir%\%bootpath%\Images\%project%_S_Code_Init_Image.xml"
+set ns_code_init_xml="%provisioningdir%\%bootpath%\Images\%project%_NS_Code_Init_Image.xml"
+set s_data_init_xml="%provisioningdir%\%bootpath%\Images\%project%_S_Data_Init_Image.xml"
+set ns_data_init_xml="%provisioningdir%\%bootpath%\Images\%project%_NS_Data_Init_Image.xml"
 set stirot_config_xml="%provisioningdir%\%bootpath%\Config\STiRoT_Config.xml"
 set auth_s="Authentication secure key"
 set auth_ns="Authentication non secure key"
@@ -63,12 +67,18 @@ set code_size="Firmware area size"
 set data_size="Data download slot size"
 set oemurot_firmware_size="Firmware area size"
 set scratch_sector_number="Number of scratch sectors"
+set oemurot_firmware_offset="Firmware download area offset"
+set firmware_execution_offset="Firmware execution area offset"
 
 if "%project%" == "OEMiROT" goto :common_rot_regions
 if "%project%" == "OEMuROT" goto :oemurot_rot_regions
 
 :oemurot_rot_regions
 set "command=%python%%applicfg% definevalue -xml %stirot_config_xml% -nxml %oemurot_firmware_size% -n FLASH_AREA_BL2_SIZE --parenthesis %flash_layout% --vb >> %current_log_file% 2>&1"
+%command%
+IF !errorlevel! NEQ 0 goto :error
+
+set "command=%python%%applicfg% modifyfilevalue -xml %stirot_config_xml% -nxml %oemurot_firmware_offset% --delimiter = -var DOWNLOAD_ROT_REGION_START %map_properties% --vb >> %current_log_file% 2>&1"
 %command%
 IF !errorlevel! NEQ 0 goto :error
 goto :common_rot_regions
@@ -471,9 +481,91 @@ set "command=%python%%applicfg% xmlval -xml %ns_data_xml% -nxml %data_size% -nxm
 %command%
 IF !errorlevel! NEQ 0 goto :error
 
+::xml for init image generation
+
+copy %s_code_xml% %s_code_init_xml%
+IF !errorlevel! NEQ 0 goto :error
+
+copy %ns_code_xml% %ns_code_init_xml%
+IF !errorlevel! NEQ 0 goto :error
+
+copy %s_data_xml% %s_data_init_xml%
+IF !errorlevel! NEQ 0 goto :error
+
+copy %ns_data_xml% %ns_data_init_xml%
+IF !errorlevel! NEQ 0 goto :error
+
+set "command=%python%%applicfg% xmlparam --option add -n "Clear" -t Data -c -c -h 1 -d "" %s_code_init_xml% --vb >> %current_log_file% 2>&1"
+%command%
+IF !errorlevel! NEQ 0 goto :error
+
+set "command=%python%%applicfg% xmlparam --option add -n "Confirm" -t Data -c --confirm -h 1 -d "" %s_code_init_xml% --vb >> %current_log_file% 2>&1"
+%command%
+IF !errorlevel! NEQ 0 goto :error
+
+set "command=%python%%applicfg% xmlname -n %firmware_execution_offset%  -c x %s_code_init_xml% --vb >> %current_log_file% 2>&1"
+%command%
+IF !errorlevel! NEQ 0 goto :error
+
+set "command=%python%%applicfg% xmlval --layout %preprocess_bl2_file% -m RE_IMAGE_FLASH_ADDRESS_SECURE -c x %s_code_init_xml% --vb >> %current_log_file% 2>&1"
+%command%
+IF !errorlevel! NEQ 0 goto :error
+
+set "command=%python%%applicfg% xmlparam --option add -n "Clear" -t Data -c -c -h 1 -d "" %ns_code_init_xml% --vb >> %current_log_file% 2>&1"
+%command%
+IF !errorlevel! NEQ 0 goto :error
+
+set "command=%python%%applicfg% xmlparam --option add -n "Confirm" -t Data -c --confirm -h 1 -d "" %ns_code_init_xml% --vb >> %current_log_file% 2>&1"
+%command%
+IF !errorlevel! NEQ 0 goto :error
+
+set "command=%python%%applicfg% xmlname -n %firmware_execution_offset%  -c x %ns_code_init_xml% --vb >> %current_log_file% 2>&1"
+%command%
+IF !errorlevel! NEQ 0 goto :error
+
+set "command=%python%%applicfg% xmlval --layout %preprocess_bl2_file% -m RE_IMAGE_FLASH_ADDRESS_NON_SECURE -sm RE_IMAGE_FLASH_ADDRESS_SECURE -v 0 -c x %ns_code_init_xml% --vb >> %current_log_file% 2>&1"
+%command%
+IF !errorlevel! NEQ 0 goto :error
+
+set "command=%python%%applicfg% xmlparam --option add -n "Clear" -t Data -c -c -h 1 -d "" %s_data_init_xml% --vb >> %current_log_file% 2>&1"
+%command%
+IF !errorlevel! NEQ 0 goto :error
+
+set "command=%python%%applicfg% xmlparam --option add -n "Confirm" -t Data -c --confirm -h 1 -d "" %s_data_init_xml% --vb >> %current_log_file% 2>&1"
+%command%
+IF !errorlevel! NEQ 0 goto :error
+
+set "command=%python%%applicfg% xmlname -n %firmware_execution_offset%  -c x %s_data_init_xml% --vb >> %current_log_file% 2>&1"
+%command%
+IF !errorlevel! NEQ 0 goto :error
+
+set "command=%python%%applicfg% xmlval --layout %preprocess_bl2_file% -m RE_IMAGE_FLASH_ADDRESS_DATA_SECURE -c x %s_data_init_xml% --vb >> %current_log_file% 2>&1"
+%command%
+IF !errorlevel! NEQ 0 goto :error
+
+set "command=%python%%applicfg% xmlparam --option add -n "Clear" -t Data -c -c -h 1 -d "" %ns_data_init_xml% --vb >> %current_log_file% 2>&1"
+%command%
+IF !errorlevel! NEQ 0 goto :error
+
+set "command=%python%%applicfg% xmlparam --option add -n "Confirm" -t Data -c --confirm -h 1 -d "" %ns_data_init_xml% --vb >> %current_log_file% 2>&1"
+%command%
+IF !errorlevel! NEQ 0 goto :error
+
+set "command=%python%%applicfg% xmlname -n %firmware_execution_offset%  -c x %ns_data_init_xml% --vb >> %current_log_file% 2>&1"
+%command%
+IF !errorlevel! NEQ 0 goto :error
+
+set "command=%python%%applicfg% xmlval --layout %preprocess_bl2_file% -m RE_IMAGE_FLASH_ADDRESS_DATA_NON_SECURE -c x %ns_data_init_xml% --vb >> %current_log_file% 2>&1"
+%command%
+IF !errorlevel! NEQ 0 goto :error
+
 :end
 if %oemurot_enable% == 1 (
-	%stm32tpccli% -pb %rot_provisioning_path%\STiROT_OEMuROT\Images\STiRoT_Code_Image.xml
+    %stm32tpccli% -pb %rot_provisioning_path%\STiROT_OEMuROT\Images\STiRoT_Code_Image.xml >> %current_log_file% 2>>&1
+    IF !errorlevel! NEQ 0 goto :error
+
+    %stm32tpccli% -pb %rot_provisioning_path%\STiROT_OEMuROT\Images\STiRoT_Code_Init_Image.xml >> %current_log_file% 2>>&1
+    IF !errorlevel! NEQ 0 goto :error
 )
 
 

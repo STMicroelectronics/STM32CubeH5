@@ -41,7 +41,7 @@ according to the flash layout and OEMiROT configuration.</p>
 <li>OEMiROT_Boot/Inc/boot_hal_hash_ref.h             Header file for hash reference code in boot_hal.c</li>
 <li>OEMiROT_Boot/Inc/boot_hal_imagevalid.h           Header file for image validation code in boot_hal.c</li>
 <li>OEMiROT_Boot/Inc/cmsis.h                         Header file for CMSIS</li>
-<li>OEMiROT_Boot/Inc/config-boot.h                   Mbed-crypto configuration file</li>
+<li>OEMiROT_Boot/Inc/mbedtls_config.h                Mbed-crypto configuration file</li>
 <li>OEMiROT_Boot/Inc/flash_layout.h                  Flash mapping</li>
 <li>OEMiROT_Boot/Inc/low_level_flash.h               Header file for low_level_flash.c</li>
 <li>OEMiROT_Boot/Inc/low_level_obkeys.h              Header file for low_level_obkeys.c</li>
@@ -73,6 +73,7 @@ according to the flash layout and OEMiROT configuration.</p>
 <h3 id="hardware-and-software-environment"><b>Hardware and Software environment</b></h3>
 <ul>
 <li>This example runs on STM32H563xx (2MBytes) devices with security enabled (TZEN=B4).</li>
+<li>It can be configured for STM32H563xx 1M device by uncommenting DEVICE_1M_FLASH_ENABLE (flash_layout.h).</li>
 <li>This example has been tested with STMicroelectronics NUCLEO-H563ZI (MB1404)
 board and can be easily tailored to any other supported device and development board.<br /></li>
 <li>To get debug print in your UART console you have to configure it using these parameters:

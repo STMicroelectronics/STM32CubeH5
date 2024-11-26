@@ -24,7 +24,7 @@ fi
 #                           OEMiROT bootpath
 #==============================================================================
 #Select application project below
-#oemirot_boot_path_project=Templates/ROT/OEMiROT_Appli
+#oemirot_boot_path_project=Templates_ROT/OEMiROT_Appli
 oemirot_boot_path_project=Applications/ROT/OEMiROT_Appli
 
 #==============================================================================
@@ -32,5 +32,5 @@ oemirot_boot_path_project=Applications/ROT/OEMiROT_Appli
 #==============================================================================
 PROJECT_GENERATED_BY_CUBEMX=false
 cube_fw_path=$projectdir/../../../
-oemirot_appli=rot_app_enc_sign.hex
+oemirot_appli=rot_app_init_sign.hex
 rot_provisioning_path=$projectdir

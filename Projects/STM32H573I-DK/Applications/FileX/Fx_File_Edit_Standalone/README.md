@@ -46,7 +46,7 @@ FileX, File System, FAT32, SDMMC
 ### <b>Hardware and Software environment</b>
 
   - This application runs on  STM32H573xx devices.
-  - This application has been tested with STMicroelectronics STM32H573I-DK boards Revision: MB1677-H573I-A01.
+  - This application has been tested with STMicroelectronics STM32H573I-DK boards revision: MB1677-H573I-C01
     and can be easily tailored to any other supported device and development board.
 
 

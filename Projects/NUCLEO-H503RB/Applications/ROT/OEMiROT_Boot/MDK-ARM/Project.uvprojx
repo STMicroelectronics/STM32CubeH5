@@ -10,13 +10,13 @@
       <TargetName>NUCLEO-H503RB_OEMiROT_Boot</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>6180000::V6.18::ARMCLANG</pCCUsed>
+      <pCCUsed>6190000::V6.19::ARMCLANG</pCCUsed>
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
           <Device>STM32H503RBTx</Device>
           <Vendor>STMicroelectronics</Vendor>
-          <PackID>Keil.STM32H5xx_DFP.1.2.0</PackID>
+          <PackID>Keil.STM32H5xx_DFP.1.3.0</PackID>
           <PackURL>https://www.keil.com/pack/</PackURL>
           <Cpu>CLOCK(8000000) FPU3(SFPU) CPUTYPE("Cortex-M33") ELITTLE TZ</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -338,7 +338,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>STM32H503xx,USE_HAL_DRIVER,NDEBUG,MCUBOOT_TARGET_CONFIG=&lt;flash_layout.h&gt;,MBEDTLS_CONFIG_FILE=&lt;config-boot.h&gt;,MCUBOOT_DOUBLE_SIGN_VERIF,FLOW_CONTROL,BL2,DEFAULT_UART_BAUDRATE=115200,OEMIROT_DEV_MODE,BOOT_MAX_ALIGN=16</Define>
+              <Define>STM32H503xx,USE_HAL_DRIVER,NDEBUG,MCUBOOT_TARGET_CONFIG=&lt;flash_layout.h&gt;,MBEDTLS_CONFIG_FILE=&lt;mbedtls_config.h&gt;,MCUBOOT_DOUBLE_SIGN_VERIF,FLOW_CONTROL,BL2,DEFAULT_UART_BAUDRATE=115200,OEMIROT_DEV_MODE,BOOT_MAX_ALIGN=16</Define>
               <Undefine></Undefine>
               <IncludePath>../Inc;../../../../../../Drivers/CMSIS/Include;../../../../../../Drivers/CMSIS/Device/ST/STM32H5xx/Include;../../../../../../Drivers/STM32H5xx_HAL_Driver/Inc;../../../../../../Middlewares/Third_Party/mbed-crypto/include;../../../../../../Middlewares/Third_Party/mbed-crypto/include/psa;../../../../../../Middlewares/Third_Party/mcuboot;../../../../../../Middlewares/Third_Party/mcuboot/platform/include;../../../../../../Middlewares/Third_Party/mcuboot/platform/ext/common;../../../../../../Middlewares/Third_Party/mcuboot/platform/ext/driver;../../../../../../Middlewares/Third_Party/mcuboot/bl2/include;../../../../../../Middlewares/Third_Party/mcuboot/bl2/ext/mcuboot;../../../../../../Middlewares/Third_Party/mcuboot/bl2/ext/mcuboot/include;../../../../../../Middlewares/Third_Party/mcuboot/boot/bootutil/include;../../../../../../Middlewares/Third_Party/mcuboot/boot/bootutil/src;../../../../../../Middlewares/Third_Party/mcuboot/ext/tinycrypt/lib/include</IncludePath>
             </VariousControls>
@@ -551,11 +551,6 @@
               <FilePath>../../../../../../Middlewares/Third_Party/mcuboot/boot/bootutil/src/image_ec256.c</FilePath>
             </File>
             <File>
-              <FileName>image_rsa.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../Middlewares/Third_Party/mcuboot/boot/bootutil/src/image_rsa.c</FilePath>
-            </File>
-            <File>
               <FileName>image_validate.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../Middlewares/Third_Party/mcuboot/boot/bootutil/src/image_validate.c</FilePath>
@@ -646,14 +641,19 @@
               <FilePath>../../../../../../Middlewares/Third_Party/mbed-crypto/library/bignum.c</FilePath>
             </File>
             <File>
+              <FileName>bignum_core.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../Middlewares/Third_Party/mbed-crypto/library/bignum_core.c</FilePath>
+            </File>
+            <File>
               <FileName>cipher.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../Middlewares/Third_Party/mbed-crypto/library/cipher.c</FilePath>
             </File>
             <File>
-              <FileName>ctr_drbg.c</FileName>
+              <FileName>hmac_drbg.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../Middlewares/Third_Party/mbed-crypto/library/ctr_drbg.c</FilePath>
+              <FilePath>../../../../../../Middlewares/Third_Party/mbed-crypto/library/hmac_drbg.c</FilePath>
             </File>
             <File>
               <FileName>ecdh.c</FileName>
@@ -699,16 +699,6 @@
               <FileName>platform_util.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../Middlewares/Third_Party/mbed-crypto/library/platform_util.c</FilePath>
-            </File>
-            <File>
-              <FileName>rsa.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../Middlewares/Third_Party/mbed-crypto/library/rsa.c</FilePath>
-            </File>
-            <File>
-              <FileName>rsa_internal.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../Middlewares/Third_Party/mbed-crypto/library/rsa_internal.c</FilePath>
             </File>
             <File>
               <FileName>sha256.c</FileName>

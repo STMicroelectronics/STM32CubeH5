@@ -80,10 +80,8 @@ uint32_t App_TX_CmsisRTOS_Init(void);
 #define APP_SYNC_CREATE()                    osSemaphoreNew(0, 1, NULL)
 #endif
 
-#define DEFAULT_WAIT_TIME                   5
-
-
-#define APP_THREAD_STACK_SIZE    2*256
+#define DEFAULT_WAIT_TIME      5
+#define APP_THREAD_STACK_SIZE  2*256
 /* USER CODE END Private defines */
 
 /* USER CODE BEGIN 1 */

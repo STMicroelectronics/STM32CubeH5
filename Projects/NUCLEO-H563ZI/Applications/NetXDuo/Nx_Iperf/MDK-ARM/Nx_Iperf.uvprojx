@@ -2945,6 +2945,16 @@
               <FilePath>../../../../../../Middlewares/ST/netxduo/common/src/nx_udp_socket_bind.c</FilePath>
             </File>
             <File>
+              <FileName>nxe_udp_socket_vlan_priority_set.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../Middlewares/ST/netxduo/common/src/nxe_udp_socket_vlan_priority_set.c</FilePath>
+            </File>
+            <File>
+              <FileName>nxe_tcp_socket_vlan_priority_set.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../Middlewares/ST/netxduo/common/src/nxe_tcp_socket_vlan_priority_set.c</FilePath>
+            </File>
+            <File>
               <FileName>nx_udp_socket_bytes_available.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../Middlewares/ST/netxduo/common/src/nx_udp_socket_bytes_available.c</FilePath>

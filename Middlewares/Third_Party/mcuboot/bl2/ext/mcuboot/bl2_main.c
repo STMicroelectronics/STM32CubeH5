@@ -107,9 +107,14 @@ int main(void)
         BOOT_LOG_ERR("Platform init failed");
         FIH_PANIC;
     }
-#ifdef OEMUROT_ENABLE
+#if defined(OEMUROT_ENABLE) && defined(FLASH_BASE_S)
     struct image_header *hdr = (struct image_header *)(FLASH_BASE_S + FLASH_AREA_BL2_OFFSET);
     BOOT_LOG_INF("Starting bootloader OEMuROT %x.%x.%x",hdr->ih_ver.iv_major, hdr->ih_ver.iv_minor, hdr->ih_ver.iv_revision);
+#elif defined(OEMUROT_ENABLE) && defined(BL2_RAM_BASE)
+    struct image_header *hdr = (struct image_header *)(BL2_RAM_BASE);
+    BOOT_LOG_INF("Starting bootloader OEMuROT %x.%x.%x",hdr->ih_ver.iv_major, hdr->ih_ver.iv_minor, hdr->ih_ver.iv_revision);
+#elif defined(OEMUROT_ENABLE)
+    BOOT_LOG_INF("Starting bootloader OEMuROT");
 #else
     BOOT_LOG_INF("Starting bootloader OEMiROT");
 #endif

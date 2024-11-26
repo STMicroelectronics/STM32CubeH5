@@ -19,11 +19,13 @@
 /* Includes ------------------------------------------------------------------*/
 #include "app_threadx.h"
 #include "main.h"
-#include "string.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
+#if defined(__ICCARM__)
+#include <LowLevelIOInterface.h>
+#endif /* __ICCARM__ */
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -31,7 +33,6 @@
 #if defined(__ICCARM__)
 /* New definition from EWARM V9, compatible with EWARM8 */
 int iar_fputc(int ch);
-size_t __write(int file, unsigned char const *ptr, size_t len);
 #define PUTCHAR_PROTOTYPE int iar_fputc(int ch)
 #elif defined ( __CC_ARM ) || defined(__ARMCC_VERSION)
 /* ARM Compiler 5/6*/
@@ -52,7 +53,6 @@ size_t __write(int file, unsigned char const *ptr, size_t len);
 
 /* Private variables ---------------------------------------------------------*/
 
-ETH_TxPacketConfigTypeDef TxConfig;
 ETH_DMADescTypeDef  DMARxDscrTab[ETH_RX_DESC_CNT]; /* Ethernet Rx DMA Descriptors */
 ETH_DMADescTypeDef  DMATxDscrTab[ETH_TX_DESC_CNT]; /* Ethernet Tx DMA Descriptors */
 
@@ -84,8 +84,8 @@ void Success_Handler(void)
    HAL_GPIO_WritePin(LED_RED_GPIO_Port, LED_RED_Pin, GPIO_PIN_SET);
    while(1)
    {
-    HAL_GPIO_TogglePin(LED_GREEN_GPIO_Port, LED_GREEN_Pin);
-    tx_thread_sleep(50);
+     HAL_GPIO_TogglePin(LED_GREEN_GPIO_Port, LED_GREEN_Pin);
+     tx_thread_sleep(50);
    }
 }
 /* USER CODE END 0 */
@@ -237,11 +237,6 @@ static void MX_ETH_Init(void)
   {
     Error_Handler();
   }
-
-  memset(&TxConfig, 0 , sizeof(ETH_TxPacketConfigTypeDef));
-  TxConfig.Attributes = ETH_TX_PACKETS_FEATURES_CSUM | ETH_TX_PACKETS_FEATURES_CRCPAD;
-  TxConfig.ChecksumCtrl = ETH_CHECKSUM_IPHDR_PAYLOAD_INSERT_PHDR_CALC;
-  TxConfig.CRCPadCtrl = ETH_CRC_PAD_INSERT;
   /* USER CODE BEGIN ETH_Init 2 */
 
   /* USER CODE END ETH_Init 2 */
@@ -424,8 +419,8 @@ size_t __write(int file, unsigned char const *ptr, size_t len)
   */
 PUTCHAR_PROTOTYPE
 {
-  /* Place your implementation of putchar here */
-  /* e.g. write a character to the USART3 and Loop until the end of transmission */
+  /* Place your implementation of fputc here */
+  /* e.g. write a character to the USART1 and Loop until the end of transmission */
   HAL_UART_Transmit(&huart1, (uint8_t *)&ch, 1, 0xFFFF);
 
   return ch;
@@ -462,7 +457,7 @@ void Error_Handler(void)
   /* USER CODE BEGIN Error_Handler_Debug */
   /* User can add his own implementation to report the HAL error return state */
   HAL_GPIO_WritePin(LED_GREEN_GPIO_Port, LED_GREEN_Pin, GPIO_PIN_SET);
-  while (1)
+  while(1)
   {
     HAL_GPIO_TogglePin(LED_RED_GPIO_Port, LED_RED_Pin);
     HAL_Delay(1000);

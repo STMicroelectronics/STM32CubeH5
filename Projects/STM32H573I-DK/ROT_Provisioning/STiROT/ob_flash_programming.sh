@@ -11,8 +11,6 @@ if [ $# -ge 1 ]; then script_mode=$1; else script_mode=MANUAL; fi
 connect_no_reset="-c port=SWD speed=fast ap=1 mode=Hotplug"
 connect_reset="-c port=SWD speed=fast ap=1 mode=UR"
 
-# Value updated automatically
-image_number=1
 # =============================================== Remove protections and erase the user flash ===============================================
 
 remove_protect="-ob SECWM1_STRT=1 SECWM1_END=0 WRPSGn1=0xffffffff WRPSGn2=0xffffffff SECWM2_STRT=1 SECWM2_END=0 HDP1_STRT=1 HDP1_END=0 HDP2_STRT=1 HDP2_END=0 SECBOOT_LOCK=0xC3"
@@ -69,19 +67,6 @@ if [ ! -f $appli_dir/Binary/$stirot_appli ]; then
 fi
 "$stm32programmercli" $connect_no_reset -d $appli_dir/Binary/$stirot_appli
 if [ $? -ne 0 ]; then error; return 1; fi
-
-if [ $image_number -eq 2 ]; then
-    action="Download the data image in the download slots"
-    echo "$action"
-    
-    if [ ! -f "$project_dir/Binary/data_enc_sign.hex" ]; then
-        echo "Error: data_enc_sign.hex does not exist! use TPC to generate it"
-        error
-    fi
-    
-    "$stm32programmercli" $connect_no_reset -d $project_dir/Binary/data_enc_sign.hex
-    if [ $? -ne 0 ]; then error; return 1; fi
-fi
 
 echo "Set UBE for STiROT"
 # Unique boot entry is set to STiRoT to force STiRoT execution at each reset

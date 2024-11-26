@@ -108,6 +108,7 @@ void HAL_HCD_MspInit(HCD_HandleTypeDef* hhcd)
   /* USER CODE BEGIN USB_DRD_FS_MspInit 1 */
 
   /* USER CODE END USB_DRD_FS_MspInit 1 */
+
   }
 
 }

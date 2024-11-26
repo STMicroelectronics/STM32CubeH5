@@ -5,7 +5,7 @@
   * @author  MCD Application Team
   * @brief   NetXDuo applicative header file
   ******************************************************************************
-    * @attention
+  * @attention
   *
   * Copyright (c) 2023 STMicroelectronics.
   * All rights reserved.
@@ -82,15 +82,17 @@ UINT MX_NetXDuo_Init(VOID *memory_ptr);
 
 /* Private defines -----------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define QUEUE_MAX_SIZE           512
+#define QUEUE_MAX_SIZE                        512
 
-#define DEFAULT_MEMORY_SIZE      1024
-#define DEFAULT_PRIORITY         10
-#define LINK_PRIORITY            11
+#define DEFAULT_MEMORY_SIZE                   1024
+#define DEFAULT_PRIORITY                      10
+#define LINK_PRIORITY                         11
 
-#define NULL_ADDRESS             0
+#define NULL_ADDRESS                          0
 
-#define DEFAULT_PORT             6000
+#define DEFAULT_PORT                          6000
+
+#define NX_APP_CABLE_CONNECTION_CHECK_PERIOD  (1 * NX_IP_PERIODIC_RATE)
 /* USER CODE END PD */
 
 #define NX_APP_DEFAULT_TIMEOUT               (10 * NX_IP_PERIODIC_RATE)

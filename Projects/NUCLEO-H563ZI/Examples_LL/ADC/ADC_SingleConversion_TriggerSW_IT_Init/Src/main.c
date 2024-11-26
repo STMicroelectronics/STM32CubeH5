@@ -361,6 +361,7 @@ static void MX_ADC1_Init(void)
   LL_ADC_REG_SetSequencerRanks(ADC1, LL_ADC_REG_RANK_1, LL_ADC_CHANNEL_10);
   LL_ADC_SetChannelSamplingTime(ADC1, LL_ADC_CHANNEL_10, LL_ADC_SAMPLINGTIME_247CYCLES_5);
   LL_ADC_SetChannelSingleDiff(ADC1, LL_ADC_CHANNEL_10, LL_ADC_SINGLE_ENDED);
+  LL_ADC_EnableChannel0_GPIO(ADC1);
   /* USER CODE BEGIN ADC1_Init 2 */
 
   /* Configuration of ADC interruptions */

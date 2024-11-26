@@ -218,7 +218,7 @@
                     <state>USE_HAL_DRIVER</state>
                     <state>NDEBUG</state>
                     <state>MCUBOOT_TARGET_CONFIG=&lt;flash_layout.h&gt;</state>
-                    <state>MBEDTLS_CONFIG_FILE=&lt;config-boot.h&gt;</state>
+                    <state>MBEDTLS_CONFIG_FILE=&lt;mbedtls_config.h&gt;</state>
                     <state>MCUBOOT_DOUBLE_SIGN_VERIF</state>
                     <state>FLOW_CONTROL</state>
                     <state>BL2</state>
@@ -1227,13 +1227,16 @@
                 <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\Third_Party\mbed-crypto\library\bignum.c</name>
             </file>
             <file>
+                <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\Third_Party\mbed-crypto\library\bignum_core.c</name>
+            </file>
+            <file>
                 <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\Third_Party\mbed-crypto\library\cipher.c</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\Third_Party\mbed-crypto\library\constant_time.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\Third_Party\mbed-crypto\library\ctr_drbg.c</name>
+                <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\Third_Party\mbed-crypto\library\hmac_drbg.c</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\Third_Party\mbed-crypto\library\ecdh.c</name>
@@ -1264,12 +1267,6 @@
             </file>
             <file>
                 <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\Third_Party\mbed-crypto\library\platform_util.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\Third_Party\mbed-crypto\library\rsa.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\Third_Party\mbed-crypto\library\rsa_internal.c</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\Third_Party\mbed-crypto\library\sha256.c</name>
@@ -1309,9 +1306,6 @@
             </file>
             <file>
                 <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\Third_Party\mcuboot\boot\bootutil\src\image_ec256.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\Third_Party\mcuboot\boot\bootutil\src\image_rsa.c</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\Third_Party\mcuboot\boot\bootutil\src\image_validate.c</name>

@@ -3,7 +3,7 @@
   ******************************************************************************
   * @file    app_azure_rtos.c
   * @author  MCD Application Team
-  * @brief   azure_rtos application implementation file
+  * @brief   app_azure_rtos application implementation file
   ******************************************************************************
   * @attention
   *
@@ -70,7 +70,7 @@ static TX_BYTE_POOL ux_device_app_byte_pool;
 
 /* USER CODE END PFP */
 
-  /**
+/**
   * @brief  Define the initial system.
   * @param  first_unused_memory : Pointer to the first unused memory
   * @retval None

@@ -107,6 +107,7 @@ void HAL_RTC_MspInit(RTC_HandleTypeDef* hrtc)
     /* Peripheral interrupt init */
 
   /* USER CODE END RTC_MspInit 1 */
+
   }
 
 }
@@ -170,6 +171,7 @@ void HAL_TIM_Base_MspInit(TIM_HandleTypeDef* htim_base)
   /* USER CODE BEGIN TIM16_MspInit 1 */
 
   /* USER CODE END TIM16_MspInit 1 */
+
   }
 
 }

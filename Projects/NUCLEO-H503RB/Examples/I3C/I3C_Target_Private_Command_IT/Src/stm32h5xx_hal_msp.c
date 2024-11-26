@@ -62,6 +62,7 @@
   */
 void HAL_MspInit(void)
 {
+
   /* USER CODE BEGIN MspInit 0 */
 
   /* USER CODE END MspInit 0 */
@@ -121,6 +122,7 @@ void HAL_I3C_MspInit(I3C_HandleTypeDef* hi3c)
   /* USER CODE BEGIN I3C1_MspInit 1 */
 
   /* USER CODE END I3C1_MspInit 1 */
+
   }
 
 }

@@ -49,7 +49,7 @@ extern "C" {
 
 #define UX_HOST_APP_MEM_POOL_SIZE                71680
 
-#define USBPD_DEVICE_APP_MEM_POOL_SIZE              5000
+#define USBPD_DEVICE_APP_MEM_POOL_SIZE           5000
 
 /* USER CODE BEGIN EC */
 

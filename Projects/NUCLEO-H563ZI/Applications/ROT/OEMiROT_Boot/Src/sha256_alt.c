@@ -33,7 +33,7 @@
 #include <string.h>
 #include "mbedtls/platform.h"
 #include "mbedtls/platform_util.h"
-
+#include "mbedtls/error.h"
 
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
@@ -41,9 +41,8 @@
 /* #define ST_HW_CONTEXT_SAVING */   /* Allows hash buffers interleaving */
 
 /* Private macro -------------------------------------------------------------*/
-#define SHA256_VALIDATE_RET(cond)                           \
-    MBEDTLS_INTERNAL_VALIDATE_RET( cond, MBEDTLS_ERR_SHA256_BAD_INPUT_DATA )
-#define SHA256_VALIDATE(cond)  MBEDTLS_INTERNAL_VALIDATE( cond )
+#define SHA256_VALIDATE_RET(cond)
+#define SHA256_VALIDATE(cond)
 
 /* Private variables ---------------------------------------------------------*/
 /* Private function prototypes -----------------------------------------------*/
@@ -87,7 +86,7 @@ void mbedtls_sha256_clone(mbedtls_sha256_context *dst,
     *dst = *src;
 }
 
-int mbedtls_sha256_starts_ret(mbedtls_sha256_context *ctx, int is224)
+int mbedtls_sha256_starts(mbedtls_sha256_context *ctx, int is224)
 {
     SHA256_VALIDATE_RET( ctx != NULL );
     SHA256_VALIDATE_RET( is224 == 0 || is224 == 1 );
@@ -154,7 +153,7 @@ int mbedtls_internal_sha256_process( mbedtls_sha256_context *ctx, const unsigned
     return 0;
 }
 
-int mbedtls_sha256_update_ret(mbedtls_sha256_context *ctx, const unsigned char *input, size_t ilen)
+int mbedtls_sha256_update(mbedtls_sha256_context *ctx, const unsigned char *input, size_t ilen)
 {
     size_t currentlen = ilen;
 
@@ -211,7 +210,7 @@ int mbedtls_sha256_update_ret(mbedtls_sha256_context *ctx, const unsigned char *
     return 0;
 }
 
-int mbedtls_sha256_finish_ret(mbedtls_sha256_context *ctx, unsigned char output[32])
+int mbedtls_sha256_finish(mbedtls_sha256_context *ctx, unsigned char *output)
 {
     SHA256_VALIDATE_RET( ctx != NULL );
     SHA256_VALIDATE_RET( (unsigned char *)output != NULL );

@@ -176,6 +176,7 @@ void HAL_DAC_MspInit(DAC_HandleTypeDef* hdac)
   /* USER CODE BEGIN DAC1_MspInit 1 */
   
   /* USER CODE END DAC1_MspInit 1 */
+
   }
 
 }
@@ -228,6 +229,7 @@ void HAL_TIM_Base_MspInit(TIM_HandleTypeDef* htim_base)
   /* USER CODE BEGIN TIM1_MspInit 1 */
 
   /* USER CODE END TIM1_MspInit 1 */
+
   }
 
 }

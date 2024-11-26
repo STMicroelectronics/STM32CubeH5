@@ -92,6 +92,7 @@ void HAL_CRYP_MspInit(CRYP_HandleTypeDef* hcryp)
   /* USER CODE BEGIN AES_MspInit 1 */
 
   /* USER CODE END AES_MspInit 1 */
+
   }
 
 }

@@ -67,13 +67,13 @@ UINT App_ThreadX_Init(VOID *memory_ptr)
   /* USER CODE END App_ThreadX_MEM_POOL */
   CHAR *pointer;
 
-  /* Allocate the stack for Main Thread  */
+  /* Allocate the stack for Main Thread */
   if (tx_byte_allocate(byte_pool, (VOID**) &pointer,
                        TX_APP_STACK_SIZE, TX_NO_WAIT) != TX_SUCCESS)
   {
     return TX_POOL_ERROR;
   }
-  /* Create Main Thread.  */
+  /* Create Main Thread. */
   if (tx_thread_create(&tx_app_thread, "Main Thread", MainThread_Entry, 0, pointer,
                        TX_APP_STACK_SIZE, TX_APP_THREAD_PRIO, TX_APP_THREAD_PREEMPTION_THRESHOLD,
                        TX_APP_THREAD_TIME_SLICE, TX_APP_THREAD_AUTO_START) != TX_SUCCESS)
@@ -99,30 +99,30 @@ void MainThread_Entry(ULONG thread_input)
   /* USER CODE BEGIN MainThread_Entry */
   while(1)
   {
-    /* Sleep for 1 seconds.  */
+    /* Sleep for 1 seconds. */
     SECURE_LEDToggle();
     tx_thread_sleep(100);
   }
   /* USER CODE END MainThread_Entry */
 }
 
-  /**
+/**
   * @brief  Function that implements the kernel's initialization.
   * @param  None
   * @retval None
   */
 void MX_ThreadX_Init(void)
 {
-  /* USER CODE BEGIN  Before_Kernel_Start */
+  /* USER CODE BEGIN Before_Kernel_Start */
 
 
-  /* USER CODE END  Before_Kernel_Start */
+  /* USER CODE END Before_Kernel_Start */
 
   tx_kernel_enter();
 
-  /* USER CODE BEGIN  Kernel_Start_Error */
+  /* USER CODE BEGIN Kernel_Start_Error */
 
-  /* USER CODE END  Kernel_Start_Error */
+  /* USER CODE END Kernel_Start_Error */
 }
 
 /* USER CODE BEGIN 1 */

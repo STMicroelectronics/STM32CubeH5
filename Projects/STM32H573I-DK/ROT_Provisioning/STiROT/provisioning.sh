@@ -34,6 +34,8 @@ ob_flash_programming="ob_flash_programming.sh"
 ob_key_provisioning="obkey_provisioning.sh"
 update_ob_setup="update_ob_setup.sh"
 update_appli_setup="update_appli_setup.sh"
+data_xml="./Image/STiRoT_Data_Image.xml"
+data_init_xml="./Image/STiRoT_Data_Init_Image.xml"
 
 # Logs files
 ob_update_ob_log="update_ob_setup.log"
@@ -254,6 +256,17 @@ if [ "$isGeneratedByCubeMX" == "false" ]; then
     fi
   fi
 
+else
+  echo "Step 1 : Configuration management"
+  echo "        * STiROT_Config.obk was created during CubeMX code generation"
+  echo
+  echo "        * DA_Config.obk was created during CubeMX code generation"
+  echo
+  echo "        * $update_appli_setup was created during CubeMX code generation"
+  echo
+  echo "       Press any key to continue..."
+  echo
+  if [ "$mode" != "AUTO" ]; then read -p "" -n1 -s; fi
 fi
 # ======================================================= Updating the Option bytes =======================================================
 echo
@@ -319,8 +332,15 @@ echo "       Generate the data_enc_sign.hex image"
 echo "       Press any key to continue..."
 if [ "$mode" != "AUTO" ]; then read -p "" -n1 -s; fi
 echo
-
-# ========================================================= Board provisioning steps =======================================================  
+if [ "$image_number" != 1 ]; then
+    "$stm32tpccli" -pb $data_xml >> $provisioning_log
+    if [ $? != "0" ]; then error_config; fi
+    "$stm32tpccli" -pb $data_init_xml >> $provisioning_log
+    if [ $? != "0" ]; then error_config; fi
+    "$stm32tpccli" -obk ST/STiRoT_ST_Settings.xml >> $current_log_file
+    if [ $? != "0" ]; then error_config; fi
+fi
+# ========================================================= Board provisioning steps =======================================================
 echo "Step 3 : Provisioning"
 echo "   * BOOT0 pin should be disconnected from VDD:"
 echo "       (STM32H573I-DK: set SW1 to position 0)"

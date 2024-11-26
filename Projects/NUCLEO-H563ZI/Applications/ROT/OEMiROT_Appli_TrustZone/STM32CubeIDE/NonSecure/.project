@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>NUCLEO-H563ZI_OEMiROT_Appli_TrustZone_NS</name>
+	<name>OEMiROT_Appli_TrustZone_NonSecure</name>
 	<comment></comment>
 	<projects>
-		<project>NUCLEO-H563ZI_OEMiROT_Appli_TrustZone_S</project>
+		<project>OEMiROT_Appli_TrustZone_Secure</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
@@ -23,7 +23,7 @@
 		<nature>com.st.stm32cube.ide.mcu.MCUProjectNature</nature>
 		<nature>org.eclipse.cdt.core.cnature</nature>
 		<nature>com.st.stm32cube.ide.mcu.MCUCubeIdeServicesRevAev2ProjectNature</nature>
-		<nature>com.st.stm32cube.ide.mcu.MCUManagedMakefileProjectNature</nature>
+		<nature>com.st.stm32cube.ide.mcu.MCUNonUnderRootProjectNature</nature>
 		<nature>com.st.stm32cube.ide.mcu.MCUNonSecureProjectNature</nature>
 		<nature>com.st.stm32cube.ide.mcu.MCUSingleCpuProjectNature</nature>
 		<nature>org.eclipse.cdt.managedbuilder.core.managedBuildNature</nature>

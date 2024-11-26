@@ -122,6 +122,7 @@ void HAL_FMAC_MspInit(FMAC_HandleTypeDef* hfmac)
   /* USER CODE BEGIN FMAC_MspInit 1 */
 
   /* USER CODE END FMAC_MspInit 1 */
+
   }
 
 }

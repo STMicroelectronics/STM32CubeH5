@@ -129,7 +129,7 @@ UINT MX_USBX_Device_Init(VOID)
   hid_mouse_parameter.ux_slave_class_hid_instance_deactivate       = USBD_HID_Mouse_Deactivate;
   hid_mouse_parameter.ux_device_class_hid_parameter_report_address = USBD_HID_ReportDesc(INTERFACE_HID_MOUSE);
   hid_mouse_parameter.ux_device_class_hid_parameter_report_length  = USBD_HID_ReportDesc_length(INTERFACE_HID_MOUSE);
-  hid_mouse_parameter.ux_device_class_hid_parameter_report_id      = UX_TRUE;
+  hid_mouse_parameter.ux_device_class_hid_parameter_report_id      = UX_FALSE;
   hid_mouse_parameter.ux_device_class_hid_parameter_callback       = USBD_HID_Mouse_SetReport;
   hid_mouse_parameter.ux_device_class_hid_parameter_get_callback   = USBD_HID_Mouse_GetReport;
 

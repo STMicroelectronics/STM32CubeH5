@@ -17,27 +17,14 @@ set ob_flash_log="ob_flash_programming.log"
 set obkey_programming_log="obkey_programming.log"
 set provisioning_log="provisioning.log"
 
-if "%isGeneratedByCubeMX%" == "true" (
-set appli_dir=%oemirot_boot_path_project%
-) else (
-set appli_dir=../../../%oemirot_boot_path_project%
-)
-
 set "flash_layout=%cube_fw_path%\Projects\STM32H573I-DK\Applications\ROT\OEMiROT_Boot\Inc\flash_layout.h"
 
 :: Get config updated by OEMiROT_Boot
-set tmp_file=%cube_fw_path%/Projects/STM32H573I-DK/ROT_Provisioning/img_config.bat
-
-set fw_in_bin="Firmware binary input file"
-set fw_out_bin="Image output file"
-set ns_app_bin="%appli_dir%/Binary/rot_tz_ns_app.bin"
-set s_app_bin="%appli_dir%/Binary/rot_tz_s_app.bin"
-set s_code_image_file="%projectdir%Images\OEMiROT_S_Code_Image.xml"
-set ns_code_image_file="%projectdir%Images\OEMiROT_NS_Code_Image.xml"
+set tmp_file=%projectdir%/img_config.bat
 set s_data_xml="%projectdir%Images\OEMiROT_S_Data_Image.xml"
 set ns_data_xml="%projectdir%Images\OEMiROT_NS_Data_Image.xml"
-set ns_app_enc_sign_hex="%appli_dir%/Binary/rot_tz_ns_app_enc_sign.hex"
-set s_app_enc_sign_hex="%appli_dir%/Binary/rot_tz_s_app_enc_sign.hex"
+set s_data_init_xml="%projectdir%Images\OEMiROT_S_Data_Init_Image.xml"
+set ns_data_init_xml="%projectdir%Images\OEMiROT_NS_Data_Init_Image.xml"
 
 :: Initial configuration
 set product_state=OPEN
@@ -102,6 +89,15 @@ echo.
 if [%1] neq [AUTO] pause >nul
 :: ========================================================= Images generation steps ========================================================
 :cubemx
+if "%isGeneratedByCubeMX%" == "true" (
+    echo Step 1 : Configuration management
+    echo    * OEMiROT_Config.obk was created during CubeMX code generation
+    echo.
+    echo    * DA_Config.obk was created during CubeMX code generation
+    echo        Press any key to continue...
+    echo.
+    if [%1] neq [AUTO] pause >nul
+)
 :: Configure OEMIROT_Boot project as OEMIROT
 set "command=%python%%applicfg% setdefine -a comment -n OEMUROT_ENABLE -v 1 %flash_layout%"
 %command%
@@ -116,50 +112,46 @@ if [%1] neq [AUTO] pause >nul
 ::update xml file
 if "%isGeneratedByCubeMX%" == "true" goto :cubemx1
 call %tmp_file%
-if  "%app_image_number%" == "2" goto :next
-set ns_app_enc_sign_hex="%appli_dir%/Binary/rot_tz_app_enc_sign.hex"
-set ns_app_bin="%appli_dir%/Binary/rot_tz_app.bin"
-:next
-set "command=%python%%applicfg% xmlval -v %s_app_bin% --string -n %fw_in_bin% %s_code_image_file%"
-%command%
-IF !errorlevel! NEQ 0 goto :step_error
-set "command=%python%%applicfg% xmlval -v %ns_app_bin% --string -n %fw_in_bin% %ns_code_image_file%"
-%command%
-IF !errorlevel! NEQ 0 goto :step_error
-set "command=%python%%applicfg% xmlval -v %s_app_enc_sign_hex% --string -n %fw_out_bin% %s_code_image_file%"
-%command%
-IF !errorlevel! NEQ 0 goto :step_error
-set "command=%python%%applicfg% xmlval -v %ns_app_enc_sign_hex% --string -n %fw_out_bin% %ns_code_image_file%"
-%command%
-IF !errorlevel! NEQ 0 goto :step_error
+
+:cubemx1
 echo    * Code firmware image generation
-echo        Open the OEMiROT_Appli_TrustZone project with preferred toolchain.
-echo        Rebuild all files. The appli_enc_sign.hex file is generated with the postbuild command.
+if "%isGeneratedByCubeMX%" == "true" (
+    echo        If the configuration of OEMiROT_Boot project has been updated, reload and regenerate STM32CubeMX application project.
+    echo        Open the regenerated application project with preferred toolchain and rebuild all files.
+) else (
+    echo        Open the OEMiROT_Appli_TrustZone project with your preferred toolchain
+    echo        Rebuild all files. The appli_enc_sign.hex file is generated with the postbuild command
+)
 echo        Press any key to continue...
 echo.
 if [%1] neq [AUTO] pause >nul
+if "%isGeneratedByCubeMX%" == "true" goto :cubemx2
 echo    * Data secure generation (if Data secure image is enabled)
 echo        Select OEMiRoT_S_Data_Image.xml(Default path is \ROT_Provisioning\OEMiROT\Images\OEMiRoT_S_Data_Image.xml)
-echo        Generate the data_enc_sign.hex image
+echo        Generate the s_data_enc_sign.hex image
 echo        Press any key to continue...
 echo.
 if [%1] neq [AUTO] pause >nul
 if "%s_data_image_number%" == "0" (goto :no_s_data)
 %stm32tpccli% -pb %s_data_xml% >> %provisioning_log%
 if !errorlevel! neq 0 goto :step_error
+%stm32tpccli% -pb %s_data_init_xml% >> %provisioning_log%
+if !errorlevel! neq 0 goto :step_error
 :no_s_data
 
 echo    * Data non secure generation (if Data non secure image is enabled)
 echo        Select OEMiROT_NS_Data_Image.xml(Default path is \ROT_Provisioning\OEMiROT\Images\OEMiROT_NS_Data_Image.xml)
-echo        Generate the data_enc_sign.hex image
+echo        Generate the ns_data_enc_sign.hex image
 echo        Press any key to continue...
 echo.
 if [%1] neq [AUTO] pause >nul
 if "%ns_data_image_number%" == "0" (goto :no_ns_data)
 %stm32tpccli% -pb %ns_data_xml% >> %provisioning_log%
 if !errorlevel! neq 0 goto :step_error
+%stm32tpccli% -pb %ns_data_init_xml% >> %provisioning_log%
+if !errorlevel! neq 0 goto :step_error
 :no_ns_data
-:cubemx1
+:cubemx2
 :: ========================================================= Board provisioning steps =======================================================
 echo Step 3 : Provisioning
 echo    * BOOT0 pin should be disconnected from VDD

@@ -28,10 +28,31 @@ config=$2
 
 s_code_xml="$provisioningdir/OEMiROT/Images/OEMiROT_S_Code_Image.xml"
 ns_code_xml="$provisioningdir/OEMiROT/Images/OEMiROT_NS_Code_Image.xml"
-s_code_bin="$project_dir/Secure/$config/NUCLEO-H563ZI_OEMiROT_Appli_TrustZone_S.bin"
-ns_code_bin="$project_dir/NonSecure/$config/NUCLEO-H563ZI_OEMiROT_Appli_TrustZone_NS.bin"
+s_code_init_xml="$provisioningdir/OEMiROT/Images/OEMiROT_S_Code_Init_Image.xml"
+ns_code_init_xml="$provisioningdir/OEMiROT/Images/OEMiROT_NS_Code_Init_Image.xml"
+s_data_xml="$provisioningdir/OEMiROT/Images/OEMiROT_S_Data_Image.xml"
+ns_data_xml="$provisioningdir/OEMiROT/Images/OEMiROT_NS_Data_Image.xml"
+s_data_init_xml="$provisioningdir/OEMiROT/Images/OEMiROT_S_Data_Init_Image.xml"
+ns_data_init_xml="$provisioningdir/OEMiROT/Images/OEMiROT_NS_Data_Init_Image.xml"
+s_code_bin="$project_dir/Secure/$config/OEMiROT_Appli_TrustZone_Secure.bin"
+ns_code_bin="$project_dir/NonSecure/$config/OEMiROT_Appli_TrustZone_NonSecure.bin"
 bin_dest_dir="$project_dir/../Binary"
 one_code_bin="$project_dir/../Binary/rot_tz_app.bin"
+
+# Variables for image xml configuration
+appli_dir="../../../Applications/ROT/OEMiROT_Appli_TrustZone"
+fw_in_bin="Firmware binary input file"
+fw_out_bin="Image output file"
+ns_app_bin="$appli_dir/Binary/rot_tz_ns_app.bin"
+s_app_bin="$appli_dir/Binary/rot_tz_s_app.bin"
+ns_app_enc_sign_hex="$appli_dir/Binary/rot_tz_ns_app_enc_sign.hex"
+s_app_enc_sign_hex="$appli_dir/Binary/rot_tz_s_app_enc_sign.hex"
+s_app_init_sign_hex="$appli_dir/Binary/rot_tz_s_app_init_sign.hex"
+ns_app_init_sign_hex="$appli_dir/Binary/rot_tz_ns_app_init_sign.hex"
+s_data_enc_sign_hex="$provisioningdir/OEMiROT/Binary/s_data_enc_sign.hex"
+ns_data_enc_sign_hex="$provisioningdir/OEMiROT/Binary/ns_data_enc_sign.hex"
+s_data_init_sign_hex="$provisioningdir/OEMiROT/Binary/s_data_init_sign.hex"
+ns_data_init_sign_hex="$provisioningdir/OEMiROT/Binary/ns_data_init_sign.hex"
 
 #Variables updated by OEMiROT_Boot postbuild
 app_image_number=2
@@ -57,6 +78,9 @@ if  [ $app_image_number -eq 1 ] && [ $signing == "nonsecure" ]; then
     echo "Creating only one image" >> $current_log_file 2>&1
     $python$applicfg oneimage -fb $s_code_bin -o $image_s_size -sb $ns_code_bin -i 0x0 -ob $one_code_bin --vb >> $current_log_file 2>&1
     if [ $? != 0 ]; then error; fi
+    ns_app_enc_sign_hex="$appli_dir/Binary/rot_tz_app_enc_sign.hex"
+    ns_app_init_sign_hex="$appli_dir/Binary/rot_tz_app_init_sign.hex"
+    ns_app_bin="$appli_dir/Binary/rot_tz_app.bin"
 fi
 
 if  [ $signing == "secure" ]; then
@@ -65,8 +89,32 @@ if  [ $signing == "secure" ]; then
     if [ $? != 0 ]; then error; fi
 
     echo "Creating secure image"  >> $current_log_file 2>&1
+
+    # update xml file : input file
+    $python$applicfg xmlval -v $s_app_bin --string -n "$fw_in_bin" $s_code_xml --vb >> $current_log_file 2>&1
+    if [ $? != "0" ]; then step_error; fi
+    # update xml file : output file
+    $python$applicfg xmlval -v $s_app_enc_sign_hex --string -n "$fw_out_bin" $s_code_xml --vb >> $current_log_file 2>&1
+    if [ $? != "0" ]; then step_error; fi
+
     "$stm32tpccli" -pb $s_code_xml >> $current_log_file 2>&1
     if [ $? != 0 ]; then error; fi
+
+    # update xml file : input file
+    $python$applicfg xmlval -v $s_app_bin --string -n "$fw_in_bin" $s_code_init_xml --vb >> $current_log_file 2>&1
+    if [ $? != "0" ]; then step_error; fi
+    # update xml file : output file
+    $python$applicfg xmlval -v $s_app_init_sign_hex --string -n "$fw_out_bin" $s_code_init_xml --vb >> $current_log_file 2>&1
+    if [ $? != "0" ]; then step_error; fi
+
+    "$stm32tpccli" -pb $s_code_init_xml >> $current_log_file 2>&1
+    if [ $? != 0 ]; then error; fi
+
+    # update xml file : output file
+    $python$applicfg xmlval -v $s_data_enc_sign_hex --string -n "$fw_out_bin" $s_data_xml --vb >> $current_log_file 2>&1
+    if [ $? != "0" ]; then step_error; fi
+    $python$applicfg xmlval -v $s_data_init_sign_hex --string -n "$fw_out_bin" $s_data_init_xml --vb >> $current_log_file 2>&1
+    if [ $? != "0" ]; then step_error; fi
 fi
 
 if  [ $signing == "nonsecure" ]; then
@@ -75,7 +123,31 @@ if  [ $signing == "nonsecure" ]; then
     if [ $? != 0 ]; then error; fi
 
     echo "Creating nonsecure image"  >> $current_log_file 2>&1
+
+    # update xml file : input file
+    $python$applicfg xmlval -v $ns_app_bin --string -n "$fw_in_bin" $ns_code_xml --vb >> $current_log_file 2>&1
+    if [ $? != "0" ]; then step_error; fi
+    # update xml file : output file
+    $python$applicfg xmlval -v $ns_app_enc_sign_hex --string -n "$fw_out_bin" $ns_code_xml --vb >> $current_log_file 2>&1
+    if [ $? != "0" ]; then step_error; fi
+
     "$stm32tpccli" -pb $ns_code_xml >> $current_log_file 2>&1
     if [ $? != 0 ]; then error; fi
+
+    # update xml file : input file
+    $python$applicfg xmlval -v $ns_app_bin --string -n "$fw_in_bin" $ns_code_init_xml --vb >> $current_log_file 2>&1
+    if [ $? != "0" ]; then step_error; fi
+    # update xml file : output file
+    $python$applicfg xmlval -v $ns_app_init_sign_hex --string -n "$fw_out_bin" $ns_code_init_xml --vb >> $current_log_file 2>&1
+    if [ $? != "0" ]; then step_error; fi
+
+    "$stm32tpccli" -pb $ns_code_init_xml >> $current_log_file 2>&1
+    if [ $? != 0 ]; then error; fi
+
+    # update xml file : output file
+    $python$applicfg xmlval -v $ns_data_enc_sign_hex --string -n "$fw_out_bin" $ns_data_xml --vb >> $current_log_file 2>&1
+    if [ $? != "0" ]; then step_error; fi
+    $python$applicfg xmlval -v $ns_data_init_sign_hex --string -n "$fw_out_bin" $ns_data_init_xml --vb >> $current_log_file 2>&1
+    if [ $? != "0" ]; then step_error; fi
 fi
 exit 0

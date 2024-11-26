@@ -84,21 +84,23 @@ UINT MX_NetXDuo_Init(VOID *memory_ptr);
 
 /* Private defines -----------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define WINDOW_SIZE              512
+#define WINDOW_SIZE                           512
 
-#define DEFAULT_MEMORY_SIZE      1024
-#define DEFAULT_PRIORITY         10
+#define DEFAULT_MEMORY_SIZE                   1024
+#define DEFAULT_PRIORITY                      10
 
-#define LINK_PRIORITY            11
+#define LINK_PRIORITY                         11
 
-#define NULL_ADDRESS             0
+#define NULL_ADDRESS                          0
 
-#define DEFAULT_PORT             6000
-#define TCP_SERVER_PORT          DEFAULT_PORT
-#define TCP_SERVER_ADDRESS       IP_ADDRESS(192, 168, 1, 1)
+#define DEFAULT_PORT                          6000
+#define TCP_SERVER_PORT                       DEFAULT_PORT
+#define TCP_SERVER_ADDRESS                    IP_ADDRESS(192, 168, 1, 1)
 
-#define MAX_PACKET_COUNT         100
-#define DEFAULT_MESSAGE          "TCP Client on STM32H573-DK"
+#define MAX_PACKET_COUNT                      100
+#define DEFAULT_MESSAGE                       "TCP Client on STM32H573-DK"
+
+#define NX_APP_CABLE_CONNECTION_CHECK_PERIOD  (1 * NX_IP_PERIODIC_RATE)
 /* USER CODE END PD */
 
 #define NX_APP_DEFAULT_TIMEOUT               (10 * NX_IP_PERIODIC_RATE)

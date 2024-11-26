@@ -32,7 +32,7 @@ oemirot_boot_path_project=Applications/ROT/OEMiROT_Appli_TrustZone
 # ==============================================================================
 PROJECT_GENERATED_BY_CUBEMX=false
 cube_fw_path=$projectdir/../../../
-oemirot_appli_secure=rot_tz_s_app_enc_sign.hex
-oemirot_appli_non_secure=rot_tz_ns_app_enc_sign.hex
-oemirot_appli_assembly_sign=rot_tz_app_enc_sign.hex
+oemirot_appli_secure=rot_tz_s_app_init_sign.hex
+oemirot_appli_non_secure=rot_tz_ns_app_init_sign.hex
+oemirot_appli_assembly_sign=rot_tz_app_init_sign.hex
 rot_provisioning_path=$projectdir

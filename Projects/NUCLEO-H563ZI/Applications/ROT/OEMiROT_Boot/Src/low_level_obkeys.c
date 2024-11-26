@@ -25,7 +25,7 @@
 #include "boot_hal_flowcontrol.h"
 #include "boot_hal_cfg.h"
 #include "flash_layout.h"
-#include "config-boot.h"
+#include "mbedtls_config.h"
 #include <string.h>
 
 /* Private typedef -----------------------------------------------------------*/

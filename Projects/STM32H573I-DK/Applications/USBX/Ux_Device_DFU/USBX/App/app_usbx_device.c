@@ -5,7 +5,7 @@
   * @author  MCD Application Team
   * @brief   USBX Device applicative file
   ******************************************************************************
-    * @attention
+  * @attention
   *
   * Copyright (c) 2023 STMicroelectronics.
   * All rights reserved.
@@ -57,6 +57,9 @@ extern PCD_HandleTypeDef hpcd_USB_DRD_FS;
   #pragma data_alignment=4
 #endif /* defined ( __ICCARM__ ) */
 __ALIGN_BEGIN USB_MODE_STATE USB_Device_State_Msg __ALIGN_END;
+#if defined ( __ICCARM__ ) /* IAR Compiler */
+  #pragma data_alignment=4
+#endif /* defined ( __ICCARM__ ) */
 __ALIGN_BEGIN ux_dfu_downloadInfotypeDef ux_dfu_download __ALIGN_END;
 /* USER CODE END PV */
 
@@ -259,7 +262,7 @@ static VOID app_ux_device_thread_entry(ULONG thread_input)
     if (tx_queue_receive(&ux_usbpd_app_MsgQueue, &USB_Device_State_Msg,
                          TX_WAIT_FOREVER)!= TX_SUCCESS)
     {
-      /*Error*/
+      /* Error */
       Error_Handler();
     }
     /* Check if received message equal to USB_PCD_START */
@@ -277,7 +280,7 @@ static VOID app_ux_device_thread_entry(ULONG thread_input)
     /* Else Error */
     else
     {
-      /*Error*/
+      /* Error */
       Error_Handler();
     }
   }

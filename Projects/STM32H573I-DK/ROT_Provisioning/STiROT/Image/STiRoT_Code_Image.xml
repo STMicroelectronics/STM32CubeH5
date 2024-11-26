@@ -105,14 +105,14 @@
 		<Hidden>1</Hidden>
 		<Default>16</Default>
 	</Param>
-  <Param>
+	<Param>
 		<Name>Firmware download area offset</Name>
 		<Link>+0x8000000</Link>
 		<Type>Data</Type>
 		<Command>-x</Command>
 		<Hidden>0</Hidden>
 		<Default></Default>
-  </Param>
+	</Param>
 	<Param>
 		<Name>Firmware binary input file</Name>
 		<Value>../../../Applications/ROT/STiROT_Appli/Binary/appli.bin</Value>

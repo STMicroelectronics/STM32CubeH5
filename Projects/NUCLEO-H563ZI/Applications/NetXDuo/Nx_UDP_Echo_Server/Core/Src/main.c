@@ -1,8 +1,9 @@
 /* USER CODE BEGIN Header */
 /**
   ******************************************************************************
-  * @file           : main.c
-  * @brief          : Main program body
+  * @file    ThreadX/Tx_SecureLEDToggle_TrustZone/NonSecure/Src/main.c
+  * @author  MCD Application Team
+  * @brief   Main program body
   ******************************************************************************
   * @attention
   *
@@ -19,7 +20,6 @@
 /* Includes ------------------------------------------------------------------*/
 #include "app_threadx.h"
 #include "main.h"
-#include "string.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -46,7 +46,6 @@
 
 /* Private variables ---------------------------------------------------------*/
 
-ETH_TxPacketConfigTypeDef TxConfig;
 ETH_DMADescTypeDef  DMARxDscrTab[ETH_RX_DESC_CNT]; /* Ethernet Rx DMA Descriptors */
 ETH_DMADescTypeDef  DMATxDscrTab[ETH_TX_DESC_CNT]; /* Ethernet Tx DMA Descriptors */
 
@@ -81,12 +80,12 @@ int iar_fputc(int ch);
 /* USER CODE BEGIN 0 */
 void Success_Handler(void)
 {
-   HAL_GPIO_WritePin(GPIOG, GPIO_PIN_4, GPIO_PIN_RESET);
-   while(1)
-   {
-     HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_0);
-     tx_thread_sleep(50);
-   }
+  HAL_GPIO_WritePin(GPIOG, GPIO_PIN_4, GPIO_PIN_RESET);
+  while(1)
+  {
+    HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_0);
+    tx_thread_sleep(50);
+  }
 }
 
 /* USER CODE END 0 */
@@ -236,11 +235,6 @@ static void MX_ETH_Init(void)
   {
     Error_Handler();
   }
-
-  memset(&TxConfig, 0 , sizeof(ETH_TxPacketConfigTypeDef));
-  TxConfig.Attributes = ETH_TX_PACKETS_FEATURES_CSUM | ETH_TX_PACKETS_FEATURES_CRCPAD;
-  TxConfig.ChecksumCtrl = ETH_CHECKSUM_IPHDR_PAYLOAD_INSERT_PHDR_CALC;
-  TxConfig.CRCPadCtrl = ETH_CRC_PAD_INSERT;
   /* USER CODE BEGIN ETH_Init 2 */
 
   /* USER CODE END ETH_Init 2 */
@@ -367,6 +361,13 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
+/**
+  * @brief  Retargets the C library __write function to the IAR function iar_fputc.
+  * @param  file: file descriptor.
+  * @param  ptr: pointer to the buffer where the data is stored.
+  * @param  len: length of the data to write in bytes.
+  * @retval length of the written data in bytes.
+  */
 #if defined(__ICCARM__)
 size_t __write(int file, unsigned char const *ptr, size_t len)
 {

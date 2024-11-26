@@ -5,7 +5,7 @@
   * @author  MCD Application Team
   * @brief   NetXDuo applicative header file
   ******************************************************************************
-    * @attention
+  * @attention
   *
   * Copyright (c) 2023 STMicroelectronics.
   * All rights reserved.
@@ -82,7 +82,8 @@ extern "C" {
 #define NULL_ADDRESS                0
 #define USER_DNS_ADDRESS            IP_ADDRESS(1, 1, 1, 1)   /* User should configure it with his DNS address */
 #define DEFAULT_TIMEOUT             5 * NX_IP_PERIODIC_RATE
-
+/* This define defines the period of checking the connection of network cable.*/
+#define NX_ETH_CABLE_CONNECTION_CHECK_PERIOD      (1 * NX_IP_PERIODIC_RATE)
 /* USER CODE END EC */
 /* The DEFAULT_PAYLOAD_SIZE should match with RxBuffLen configured via MX_ETH_Init */
 #ifndef DEFAULT_PAYLOAD_SIZE

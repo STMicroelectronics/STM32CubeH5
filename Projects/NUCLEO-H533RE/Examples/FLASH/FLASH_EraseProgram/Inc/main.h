@@ -62,7 +62,7 @@ void Error_Handler(void);
 /* Base address of the Flash sectors */
 
 #define ADDR_FLASH_SECTOR_3     ((uint32_t)0x08006000) /* Base @ of SECTOR 3, 8 Kbytes */
-#define ADDR_FLASH_SECTOR_31   ((uint32_t)0x0800F800) /* Base @ of SECTOR 31, 8 Kbytes */
+#define ADDR_FLASH_SECTOR_31    ((uint32_t)0x0803E000) /* Base @ of SECTOR 31, 8 Kbytes */
 
 /* USER CODE END Private defines */
 

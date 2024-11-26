@@ -42,6 +42,8 @@ set appli_linker_file="%appli_dir%\EWARM\stm32h503xx_flash.icf"
 set "map_properties=%projectdir%\..\..\OEMiROT_Boot\map.properties"
 set code_xml="%projectdir%\..\..\..\..\ROT_Provisioning\OEMiROT\Images\OEMiROT_Code_Image.xml"
 set data_xml="%projectdir%\..\..\..\..\ROT_Provisioning\OEMiROT\Images\OEMiROT_Data_Image.xml"
+set code_init_xml="%projectdir%\..\..\..\..\ROT_Provisioning\OEMiROT\Images\OEMiROT_Code_Init_Image.xml"
+set data_init_xml="%projectdir%\..\..\..\..\ROT_Provisioning\OEMiROT\Images\OEMiROT_Data_Init_Image.xml"
 
 set "command=%python%%applicfg% flash --layout %preprocess_bl2_file% -b CODE_REGION_START -m  RE_IMAGE_FLASH_ADDRESS %map_properties% --vb >> %current_log_file% 2>&1"
 %command%
@@ -168,6 +170,13 @@ set "command=%python%%applicfg% flash --layout %preprocess_bl2_file%  -b data_im
 %command%
 IF !errorlevel! NEQ 0 goto :error
 
+::xml for init image generation
+
+copy %code_xml% %code_init_xml%
+IF !errorlevel! NEQ 0 goto :error
+
+copy %data_xml% %data_init_xml%
+IF !errorlevel! NEQ 0 goto :error
 exit 0
 
 :error

@@ -5,7 +5,7 @@
   * @author  MCD Application Team
   * @brief   NetXDuo applicative file
   ******************************************************************************
-    * @attention
+  * @attention
   *
   * Copyright (c) 2023 STMicroelectronics.
   * All rights reserved.
@@ -88,7 +88,7 @@ static VOID time_update_callback(NX_SNTP_TIME_MESSAGE *time_update_ptr, NX_SNTP_
 static ULONG nx_secure_tls_session_time_function(void);
 static UINT dns_create(NX_DNS *dns_ptr);
 static UINT message_generate(void);
-static UINT tls_setup_callback(NXD_MQTT_CLIENT *client_pt, 
+static UINT tls_setup_callback(NXD_MQTT_CLIENT *client_pt,
                         NX_SECURE_TLS_SESSION *TLS_session_ptr,
                         NX_SECURE_X509_CERT *certificate_ptr,
                         NX_SECURE_X509_CERT *trusted_certificate_ptr);
@@ -111,14 +111,14 @@ UINT MX_NetXDuo_Init(VOID *memory_ptr)
 
   /* USER CODE END App_NetXDuo_MEM_POOL */
   /* USER CODE BEGIN 0 */
-  printf("Nx_MQTT_Client application started..\n");
+
   /* USER CODE END 0 */
 
   /* Initialize the NetXDuo system. */
   CHAR *pointer;
   nx_system_initialize();
 
-    /* Allocate the memory for packet_pool.  */
+  /* Allocate the memory for packet_pool. */
   if (tx_byte_allocate(byte_pool, (VOID **) &pointer, NX_APP_PACKET_POOL_SIZE, TX_NO_WAIT) != TX_SUCCESS)
   {
     return TX_POOL_ERROR;
@@ -134,13 +134,13 @@ UINT MX_NetXDuo_Init(VOID *memory_ptr)
     return NX_POOL_ERROR;
   }
 
-    /* Allocate the memory for Ip_Instance */
+  /* Allocate the memory for Ip_Instance */
   if (tx_byte_allocate(byte_pool, (VOID **) &pointer, Nx_IP_INSTANCE_THREAD_SIZE, TX_NO_WAIT) != TX_SUCCESS)
   {
     return TX_POOL_ERROR;
   }
 
-   /* Create the main NX_IP instance */
+  /* Create the main NX_IP instance */
   ret = nx_ip_create(&NetXDuoEthIpInstance, "NetX Ip instance", NX_APP_DEFAULT_IP_ADDRESS, NX_APP_DEFAULT_NET_MASK, &NxAppPool, nx_stm32_eth_driver,
                      pointer, Nx_IP_INSTANCE_THREAD_SIZE, NX_APP_INSTANCE_PRIORITY);
 
@@ -149,7 +149,7 @@ UINT MX_NetXDuo_Init(VOID *memory_ptr)
     return NX_NOT_SUCCESSFUL;
   }
 
-    /* Allocate the memory for ARP */
+  /* Allocate the memory for ARP */
   if (tx_byte_allocate(byte_pool, (VOID **) &pointer, DEFAULT_ARP_CACHE_SIZE, TX_NO_WAIT) != TX_SUCCESS)
   {
     return TX_POOL_ERROR;
@@ -194,7 +194,7 @@ UINT MX_NetXDuo_Init(VOID *memory_ptr)
     return NX_NOT_SUCCESSFUL;
   }
 
-  /* Enable the UDP protocol required for  DHCP communication */
+  /* Enable the UDP protocol required for DHCP communication */
 
   /* USER CODE BEGIN UDP_Protocol_Initialization */
 
@@ -207,7 +207,7 @@ UINT MX_NetXDuo_Init(VOID *memory_ptr)
     return NX_NOT_SUCCESSFUL;
   }
 
-   /* Allocate the memory for main thread   */
+  /* Allocate the memory for main thread */
   if (tx_byte_allocate(byte_pool, (VOID **) &pointer, NX_APP_THREAD_STACK_SIZE, TX_NO_WAIT) != TX_SUCCESS)
   {
     return TX_POOL_ERROR;
@@ -235,11 +235,13 @@ UINT MX_NetXDuo_Init(VOID *memory_ptr)
     return NX_DHCP_ERROR;
   }
 
-  /* set DHCP notification callback  */
+  /* set DHCP notification callback */
   tx_semaphore_create(&DHCPSemaphore, "DHCP Semaphore", 0);
 
   /* USER CODE BEGIN MX_NetXDuo_Init */
-      /* Allocate the memory for SNTP client thread   */
+  printf("Nx_MQTT_Client application started..\n");
+
+  /* Allocate the memory for SNTP client thread */
   if (tx_byte_allocate(byte_pool, (VOID **) &pointer, SNTP_CLIENT_THREAD_MEMORY, TX_NO_WAIT) != TX_SUCCESS)
   {
     return TX_POOL_ERROR;
@@ -263,22 +265,22 @@ UINT MX_NetXDuo_Init(VOID *memory_ptr)
     return NX_NOT_ENABLED;
   }
 
-  /* Allocate the memory for MQTT client thread   */
+  /* Allocate the memory for MQTT client thread */
   if (tx_byte_allocate(byte_pool, (VOID **) &pointer, NX_APP_THREAD_STACK_SIZE, TX_NO_WAIT) != TX_SUCCESS)
   {
     return TX_POOL_ERROR;
   }
-  
+
   /* create the MQTT client thread */
   ret = tx_thread_create(&AppMQTTClientThread, "App MQTT Thread", App_MQTT_Client_Thread_Entry, 0, pointer, NX_APP_THREAD_STACK_SIZE,
                          MQTT_PRIORITY, MQTT_PRIORITY, TX_NO_TIME_SLICE, TX_DONT_START);
-  
+
   if (ret != TX_SUCCESS)
   {
     return TX_THREAD_ERROR;
   }
 
-  /* Allocate the memory for Link thread   */
+  /* Allocate the memory for Link thread */
   if (tx_byte_allocate(byte_pool, (VOID **) &pointer,2 *  DEFAULT_MEMORY_SIZE, TX_NO_WAIT) != TX_SUCCESS)
   {
     return TX_POOL_ERROR;
@@ -299,26 +301,32 @@ UINT MX_NetXDuo_Init(VOID *memory_ptr)
 }
 
 /**
-* @brief  ip address change callback.
-* @param ip_instance: NX_IP instance
-* @param ptr: user data
-* @retval none
-*/
+  * @brief  ip address change callback.
+  * @param ip_instance: NX_IP instance
+  * @param ptr: user data
+  * @retval none
+  */
 static VOID ip_address_change_notify_callback(NX_IP *ip_instance, VOID *ptr)
 {
   /* USER CODE BEGIN ip_address_change_notify_callback */
-
+  if (nx_ip_address_get(&NetXDuoEthIpInstance, &IpAddress, &NetMask) != NX_SUCCESS)
+  {
+    /* USER CODE BEGIN IP address change callback error */
+    Error_Handler();
+    /* USER CODE END IP address change callback error */
+  }
+  if(IpAddress != NULL_ADDRESS)
+  {
+    tx_semaphore_put(&DHCPSemaphore);
+  }
   /* USER CODE END ip_address_change_notify_callback */
-
-  /* release the semaphore as soon as an IP address is available */
-  tx_semaphore_put(&DHCPSemaphore);
 }
 
 /**
-* @brief  Main thread entry.
-* @param thread_input: ULONG user argument used by the thread entry
-* @retval none
-*/
+  * @brief  Main thread entry.
+  * @param thread_input: ULONG user argument used by the thread entry
+  * @retval none
+  */
 static VOID App_Main_Thread_Entry (ULONG thread_input)
 {
   /* USER CODE BEGIN Nx_App_Thread_Entry 0 */
@@ -328,79 +336,76 @@ static VOID App_Main_Thread_Entry (ULONG thread_input)
   UINT ret = NX_SUCCESS;
 
   /* USER CODE BEGIN Nx_App_Thread_Entry 1 */
+  /* Create a DNS client */
   ret = dns_create(&DnsClient);
+
+  if (ret != NX_SUCCESS)
+  {
+    Error_Handler();
+  }
   /* USER CODE END Nx_App_Thread_Entry 1 */
 
-  /* register the IP address change callback */
+  /* Register the IP address change callback */
   ret = nx_ip_address_change_notify(&NetXDuoEthIpInstance, ip_address_change_notify_callback, NULL);
   if (ret != NX_SUCCESS)
   {
     /* USER CODE BEGIN IP address change callback error */
-
+    Error_Handler();
     /* USER CODE END IP address change callback error */
   }
 
-  /* start the DHCP client */
+  /* Start the DHCP client */
   ret = nx_dhcp_start(&DHCPClient);
   if (ret != NX_SUCCESS)
   {
     /* USER CODE BEGIN DHCP client start error */
-
+    Error_Handler();
     /* USER CODE END DHCP client start error */
   }
-
-  /* wait until an IP address is ready */
-  if(tx_semaphore_get(&DHCPSemaphore, NX_APP_DEFAULT_TIMEOUT) != TX_SUCCESS)
+  printf("Looking for DHCP server ..\n");
+  /* Wait until an IP address is ready */
+  if(tx_semaphore_get(&DHCPSemaphore, TX_WAIT_FOREVER) != TX_SUCCESS)
   {
     /* USER CODE BEGIN DHCPSemaphore get error */
-
+    Error_Handler();
     /* USER CODE END DHCPSemaphore get error */
   }
 
   /* USER CODE BEGIN Nx_App_Thread_Entry 2 */
-  ret = nx_ip_address_get(&NetXDuoEthIpInstance, &IpAddress, &NetMask);
-
-  if (ret != TX_SUCCESS)
-  {
-    Error_Handler();
-  }
-
   PRINT_IP_ADDRESS(IpAddress);
 
-  /* start the SNTP client thread */
+  /* Start the SNTP client thread */
   tx_thread_resume(&AppSNTPThread);
 
-  /* this thread is not needed any more, we relinquish it */
+  /* This thread is not needed any more, we relinquish it */
   tx_thread_relinquish();
-
-  return;
   /* USER CODE END Nx_App_Thread_Entry 2 */
 
 }
 /* USER CODE BEGIN 1 */
 /**
-* @brief  DNS Create Function.
-* @param dns_ptr
-* @retval ret
-*/
+  * @brief  DNS Create Function.
+  * @param dns_ptr
+  * @retval ret
+  */
 
 UINT dns_create(NX_DNS *dns_ptr)
 {
   UINT ret = NX_SUCCESS;
-  
+
   /* Create a DNS instance for the Client */
   ret = nx_dns_create(dns_ptr, &NetXDuoEthIpInstance, (UCHAR *)"DNS Client");
-  if (ret)
+  if (ret != NX_SUCCESS)
   {
     Error_Handler();
   }
   /* Initialize DNS instance with a dummy server */
   ret = nx_dns_server_add(dns_ptr, USER_DNS_ADDRESS);
-  if (ret)
+  if (ret != NX_SUCCESS)
   {
     Error_Handler();
   }
-  
+
   return ret;
 }
 
@@ -421,22 +426,22 @@ static VOID my_notify_func(NXD_MQTT_CLIENT* client_ptr, UINT number_of_messages)
 }
 
 /**
-* @brief  message generation Function.
-* @param  RandomNbr
-* @retval none
-*/
+  * @brief  message generation Function.
+  * @param  RandomNbr
+  * @retval none
+  */
 static UINT message_generate(void)
 {
   uint32_t RandomNbr = 0;
-  
+
   HAL_RNG_Init(&hrng);
-  
-  /* generate a random number */
+
+  /* Generate a random number */
   if(HAL_RNG_GenerateRandomNumber(&hrng, &RandomNbr) != HAL_OK)
   {
     Error_Handler();
   }
-  
+
   return RandomNbr %= 50;
 }
 
@@ -447,72 +452,72 @@ ULONG nx_secure_tls_session_time_function(void)
 }
 
 /* Callback to setup TLS parameters for secure MQTT connection. */
-UINT tls_setup_callback(NXD_MQTT_CLIENT *client_pt, 
+UINT tls_setup_callback(NXD_MQTT_CLIENT *client_pt,
                         NX_SECURE_TLS_SESSION *TLS_session_ptr,
                         NX_SECURE_X509_CERT *certificate_ptr,
                         NX_SECURE_X509_CERT *trusted_certificate_ptr)
 {
   UINT ret = NX_SUCCESS;
   NX_PARAMETER_NOT_USED(client_pt);
-  
+
   /* Initialize TLS module */
   nx_secure_tls_initialize();
-  
+
   /* Create a TLS session */
   ret = nx_secure_tls_session_create(TLS_session_ptr, &nx_crypto_tls_ciphers,
-                                     crypto_metadata_client, sizeof(crypto_metadata_client)); 
-  if (ret != TX_SUCCESS)
+                                     crypto_metadata_client, sizeof(crypto_metadata_client));
+  if (ret != NX_SUCCESS)
   {
     Error_Handler();
-  }   
-  
+  }
+
   /* Need to allocate space for the certificate coming in from the broker. */
   memset((certificate_ptr), 0, sizeof(NX_SECURE_X509_CERT));
-  
+
     ret = nx_secure_tls_session_time_function_set(TLS_session_ptr, nx_secure_tls_session_time_function);
 
-  if (ret != TX_SUCCESS)
+  if (ret != NX_SUCCESS)
   {
     Error_Handler();
   }
 
   /* Allocate space for packet reassembly. */
-  ret = nx_secure_tls_session_packet_buffer_set(TLS_session_ptr, tls_packet_buffer, 
+  ret = nx_secure_tls_session_packet_buffer_set(TLS_session_ptr, tls_packet_buffer,
                                                 sizeof(tls_packet_buffer));
-  if (ret != TX_SUCCESS)
+  if (ret != NX_SUCCESS)
   {
     Error_Handler();
-  } 
-  
-  /* allocate space for the certificate coming in from the remote host */
-  ret = nx_secure_tls_remote_certificate_allocate(TLS_session_ptr, certificate_ptr, 
+  }
+
+  /* Allocate space for the certificate coming in from the remote host */
+  ret = nx_secure_tls_remote_certificate_allocate(TLS_session_ptr, certificate_ptr,
                                                   tls_packet_buffer, sizeof(tls_packet_buffer));
-  if (ret != TX_SUCCESS)
+  if (ret != NX_SUCCESS)
   {
     Error_Handler();
-  }   
-  
-  /* initialize Certificate to verify incoming server certificates. */
-  ret = nx_secure_x509_certificate_initialize(trusted_certificate_ptr, (UCHAR*)mosquitto_org_der, 
-                                              mosquitto_org_der_len, NX_NULL, 0, NULL, 0, 
+  }
+
+  /* Initialize Certificate to verify incoming server certificates. */
+  ret = nx_secure_x509_certificate_initialize(trusted_certificate_ptr, (UCHAR*)mosquitto_org_der,
+                                              mosquitto_org_der_len, NX_NULL, 0, NULL, 0,
                                               NX_SECURE_X509_KEY_TYPE_NONE);
-  if (ret != TX_SUCCESS)
+  if (ret != NX_SUCCESS)
   {
     printf("Certificate issue..\nPlease make sure that your X509_certificate is valid. \n");
     Error_Handler();
-  }   
-  
+  }
+
   /* Add a CA Certificate to our trusted store */
   ret = nx_secure_tls_trusted_certificate_add(TLS_session_ptr, trusted_certificate_ptr);
   if (ret != TX_SUCCESS)
   {
     Error_Handler();
-  }   
-  
+  }
+
   return ret;
 }
 
-/* This application defined handler for notifying SNTP time update event.  */
+/* This callback defined handler for notifying SNTP time update event. */
 static VOID time_update_callback(NX_SNTP_TIME_MESSAGE *time_update_ptr, NX_SNTP_TIME *local_time)
 {
   NX_PARAMETER_NOT_USED(time_update_ptr);
@@ -522,9 +527,9 @@ static VOID time_update_callback(NX_SNTP_TIME_MESSAGE *time_update_ptr, NX_SNTP_
 }
 
 /** @brief  SNTP Client thread entry.
-* @param thread_input: ULONG user argument used by the thread entry
-* @retval none
-*/
+  * @param thread_input: ULONG user argument used by the thread entry
+  * @retval none
+  */
 static VOID App_SNTP_Thread_Entry(ULONG thread_input)
 {
   UINT ret;
@@ -585,10 +590,14 @@ static VOID App_SNTP_Thread_Entry(ULONG thread_input)
       /* We do not have a valid update. */
       Error_Handler();
     }
-    /* We have a valid update.  Get the SNTP Client time.  */
+    /* We have a valid update.  Get the SNTP Client time. */
     ret = nx_sntp_client_get_local_time_extended(&SntpClient, &current_time, &fraction, NX_NULL, 0);
 
-    /* take off 70 years difference */
+    if (ret != NX_SUCCESS)
+    {
+      Error_Handler();
+    }
+    /* Take off 70 years difference */
     current_time -= EPOCH_TIME_DIFF;
 
   }
@@ -603,10 +612,10 @@ static VOID App_SNTP_Thread_Entry(ULONG thread_input)
 }
 
 /**
-* @brief  MQTT Client thread entry.
-* @param thread_input: ULONG user argument used by the thread entry
-* @retval none
-*/
+  * @brief  MQTT Client thread entry.
+  * @param thread_input: ULONG user argument used by the thread entry
+  * @retval none
+  */
 static VOID App_MQTT_Client_Thread_Entry(ULONG thread_input)
 {
   UINT ret = NX_SUCCESS;
@@ -617,73 +626,73 @@ static VOID App_MQTT_Client_Thread_Entry(ULONG thread_input)
   UINT remaining_msg = NB_MESSAGE;
   UINT message_count = 0;
   UINT unlimited_publish = NX_FALSE;
-  
+
   mqtt_server_ip.nxd_ip_version = 4;
-  
+
   /* Look up MQTT Server address. */
-  ret = nx_dns_host_by_name_get(&DnsClient, (UCHAR *)MQTT_BROKER_NAME, 
+  ret = nx_dns_host_by_name_get(&DnsClient, (UCHAR *)MQTT_BROKER_NAME,
                                 &mqtt_server_ip.nxd_ip_address.v4, DEFAULT_TIMEOUT);
-  
-  /* Check status.  */
+
+  /* Check status. */
   if (ret != NX_SUCCESS)
   {
     Error_Handler();
   }
-  
+
   /* Create MQTT client instance. */
   ret = nxd_mqtt_client_create(&MqttClient, "my_client", CLIENT_ID_STRING, STRLEN(CLIENT_ID_STRING),
                                &NetXDuoEthIpInstance, &NxAppPool, (VOID*)mqtt_client_stack, MQTT_CLIENT_STACK_SIZE,
                                MQTT_THREAD_PRIORTY, NX_NULL, 0);
-  
+
   if (ret != NX_SUCCESS)
   {
     Error_Handler();
-  }  
-  
+  }
+
   /* Register the disconnect notification function. */
   nxd_mqtt_client_disconnect_notify_set(&MqttClient, my_disconnect_func);
-  
+
   /* Set the receive notify function. */
   nxd_mqtt_client_receive_notify_set(&MqttClient, my_notify_func);
-  
+
   /* Create an MQTT flag */
   ret = tx_event_flags_create(&mqtt_app_flag, "my app event");
   if (ret != TX_SUCCESS)
   {
     Error_Handler();
-  }   
-  
+  }
+
   /* Start a secure connection to the server. */
   ret = nxd_mqtt_client_secure_connect(&MqttClient, &mqtt_server_ip, MQTT_PORT, tls_setup_callback,
                                        MQTT_KEEP_ALIVE_TIMER, CLEAN_SESSION, NX_WAIT_FOREVER);
-  
+
   if (ret != NX_SUCCESS)
   {
     printf("\nMQTT client failed to connect to broker < %s >.\n",MQTT_BROKER_NAME);
     Error_Handler();
   }
-  else 
+  else
   {
     printf("\nMQTT client connected to broker < %s > at PORT %d :\n",MQTT_BROKER_NAME, MQTT_PORT);
   }
-  
+
   /* Subscribe to the topic with QoS level 1. */
   ret = nxd_mqtt_client_subscribe(&MqttClient, TOPIC_NAME, STRLEN(TOPIC_NAME), QOS1);
-  
+
   if (ret != NX_SUCCESS)
   {
     Error_Handler();
   }
-  
+
   if (NB_MESSAGE ==0)
     unlimited_publish = NX_TRUE;
-  
+
   while(unlimited_publish || remaining_msg)
   {
     aRandom32bit = message_generate();
-    
+
     snprintf(message, STRLEN(message), "%u", aRandom32bit);
-    
+
     /* Publish a message with QoS Level 1. */
     ret = nxd_mqtt_client_publish(&MqttClient, TOPIC_NAME, STRLEN(TOPIC_NAME),
                                   (CHAR*)message, STRLEN(message), NX_TRUE, QOS1, NX_WAIT_FOREVER);
@@ -691,15 +700,15 @@ static VOID App_MQTT_Client_Thread_Entry(ULONG thread_input)
     {
       Error_Handler();
     }
-    
-    /* wait for the broker to publish the message. */
+
+    /* Wait for the broker to publish the message. */
     tx_event_flags_get(&mqtt_app_flag, DEMO_ALL_EVENTS, TX_OR_CLEAR, &events, TX_WAIT_FOREVER);
-    
-    /* check event received */
+
+    /* Check event received */
     if(events & DEMO_MESSAGE_EVENT)
     {
-      /* get message from the broker */
-      ret = nxd_mqtt_client_message_get(&MqttClient, topic_buffer, sizeof(topic_buffer), &topic_length, 
+      /* Get message from the broker */
+      ret = nxd_mqtt_client_message_get(&MqttClient, topic_buffer, sizeof(topic_buffer), &topic_length,
                                         message_buffer, sizeof(message_buffer), &message_length);
       if(ret == NXD_MQTT_SUCCESS)
       {
@@ -710,57 +719,57 @@ static VOID App_MQTT_Client_Thread_Entry(ULONG thread_input)
         Error_Handler();
       }
     }
-    
+
     /* Decrement message numbre */
     remaining_msg -- ;
     message_count ++ ;
-    
+
     /* Delay 1s between each pub */
     tx_thread_sleep(100);
-    
+
   }
 
-	/* send an empty message at the end of the session to avoid the "Retain" message behavior */
+  /* send an empty message at the end of the session to avoid the "Retain" message behavior */
   ret = nxd_mqtt_client_publish(&MqttClient, TOPIC_NAME, STRLEN(TOPIC_NAME), NULL, 0, NX_TRUE, QOS1, NX_WAIT_FOREVER);
 
   if (ret != NX_SUCCESS)
   {
     Error_Handler();
   }
-  
+
   /* Now unsubscribe the topic. */
   ret = nxd_mqtt_client_unsubscribe(&MqttClient, TOPIC_NAME, STRLEN(TOPIC_NAME));
-  
+
   if (ret != NX_SUCCESS)
   {
     Error_Handler();
   }
-  
+
   /* Disconnect from the broker. */
   ret = nxd_mqtt_client_disconnect(&MqttClient);
-  
+
   if (ret != NX_SUCCESS)
   {
     Error_Handler();
   }
-  
+
   /* Delete the client instance, release all the resources. */
   ret = nxd_mqtt_client_delete(&MqttClient);
-  
+
   if (ret != NX_SUCCESS)
   {
     Error_Handler();
   }
-  
-  /* test OK -> success Handler */
+
+  /* Test OK -> success Handler */
   Success_Handler();
 }
 
 /**
-* @brief  Link thread entry
-* @param thread_input: ULONG thread parameter
-* @retval none
-*/
+  * @brief  Link thread entry
+  * @param thread_input: ULONG thread parameter
+  * @retval none
+  */
 static VOID App_Link_Thread_Entry(ULONG thread_input)
 {
   ULONG actual_status;
@@ -768,34 +777,51 @@ static VOID App_Link_Thread_Entry(ULONG thread_input)
 
   while(1)
   {
-    /* Get Physical Link stackavailtus. */
+    /* Send request to check if the Ethernet cable is connected. */
     status = nx_ip_interface_status_check(&NetXDuoEthIpInstance, 0, NX_IP_LINK_ENABLED,
-                                      &actual_status, 10);
+                                          &actual_status, 10);
 
     if(status == NX_SUCCESS)
     {
       if(linkdown == 1)
       {
         linkdown = 0;
+
+        /* The network cable is connected. */
+        printf("The network cable is connected.\n");
+
+        /* Send request to enable PHY Link. */
+        nx_ip_driver_direct_command(&NetXDuoEthIpInstance, NX_LINK_ENABLE,
+                                    &actual_status);
+
+        /* Send request to check if an address is resolved. */
         status = nx_ip_interface_status_check(&NetXDuoEthIpInstance, 0, NX_IP_ADDRESS_RESOLVED,
-                                      &actual_status, 10);
+                                              &actual_status, 10);
         if(status == NX_SUCCESS)
         {
-          /* The network cable is connected again. */
-          printf("The network cable is connected again.\n");
-          /* Print MQTT Client is available again. */
-          printf("MQTT Client is available again.\n");
+          /* Stop DHCP */
+          nx_dhcp_stop(&DHCPClient);
+
+          /* Reinitialize DHCP */
+          nx_dhcp_reinitialize(&DHCPClient);
+
+          /* Start DHCP */
+          nx_dhcp_start(&DHCPClient);
+
+          /* Wait until an IP address is ready */
+          if(tx_semaphore_get(&DHCPSemaphore, TX_WAIT_FOREVER) != TX_SUCCESS)
+          {
+            /* USER CODE BEGIN DHCPSemaphore get error */
+            Error_Handler();
+            /* USER CODE END DHCPSemaphore get error */
+          }
+
+          PRINT_IP_ADDRESS(IpAddress);
         }
         else
         {
-          /* The network cable is connected. */
-          printf("The network cable is connected.\n");
-          /* Send command to Enable Nx driver. */
-          nx_ip_driver_direct_command(&NetXDuoEthIpInstance, NX_LINK_ENABLE,
-                                      &actual_status);
-          /* Restart DHCP Client. */
-          nx_dhcp_stop(&DHCPClient);
-          nx_dhcp_start(&DHCPClient);
+          /* Set the DHCP Client's remaining lease time to 0 seconds to trigger an immediate renewal request for a DHCP address. */
+          nx_dhcp_client_update_time_remaining(&DHCPClient, 0);
         }
       }
     }
@@ -806,6 +832,8 @@ static VOID App_Link_Thread_Entry(ULONG thread_input)
         linkdown = 1;
         /* The network cable is not connected. */
         printf("The network cable is not connected.\n");
+        nx_ip_driver_direct_command(&NetXDuoEthIpInstance, NX_LINK_DISABLE,
+                                    &actual_status);
       }
     }
 

@@ -367,13 +367,13 @@ static uint32_t GetSector_EDATA(uint32_t Address)
   if((Address >= FLASH_EDATA_BASE) && (Address < FLASH_EDATA_BASE + (FLASH_EDATA_SIZE / 2)))
   {
     sector = (Address & ~FLASH_EDATA_BASE) / edataSectorSize;
-    sector += 120;
+    sector += 24;
   }
   /* Check if the address is located in the FLASH high-cycle data area of BANK2 */
   else if ((Address >= FLASH_EDATA_BASE + (FLASH_EDATA_SIZE / 2)) && (Address < FLASH_EDATA_BASE + FLASH_EDATA_SIZE))
   {
     sector = ((Address & ~FLASH_EDATA_BASE) - (FLASH_EDATA_SIZE / 2)) / edataSectorSize;
-    sector += 120;
+    sector += 24;
   }
   else
   {

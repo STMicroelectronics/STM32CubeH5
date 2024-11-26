@@ -44,15 +44,15 @@ Each thread is running in an infinite loop as following:</p>
 <ul>
 <li>‘ThreadOne’:
 <ul>
-<li>try to acquire the ‘SyncObject’ immediately.</li>
+<li>Try to acquire the ‘SyncObject’ immediately.</li>
 <li>On Success toggle the ‘LED_GREEN’ each 500ms for 5 seconds.</li>
 <li>Release the ‘SyncObject’</li>
 <li>Sleep for 10ms.</li>
-<li>repeat the steps above</li>
+<li>Repeat the steps above</li>
 </ul></li>
 <li>‘ThreadTwo’:
 <ul>
-<li>try to acquire the ‘SyncObject’ immediately.</li>
+<li>Try to acquire the ‘SyncObject’ immediately.</li>
 <li>On Success toggle the ‘LED_RED’ each 500ms for 5 seconds.</li>
 <li>Release the ‘SyncObject’</li>
 <li>Sleep for 10ms.</li>
@@ -77,7 +77,7 @@ the SyncObject.</li>
 </ul></li>
 </ul>
 <h4 id="error-behaviors"><b>Error behaviors</b></h4>
-<p>‘LED_RED’ toggles every 1 second if any error occurs.</p>
+<p>‘LED_RED’ toggles every 1 second if any error occurs while the 'LED_GREEN' is turned off.</p>
 <h4 id="assumptions-if-any"><b>Assumptions if any</b></h4>
 <p>None</p>
 <h4 id="known-limitations"><b>Known limitations</b></h4>
@@ -86,11 +86,10 @@ the SyncObject.</li>
 <ul>
 <li>ThreadX uses the Systick as time base, thus it is mandatory that the
 HAL uses a separate time base through the TIM IPs.</li>
-<li>ThreadX is configured with 100 ticks/sec by default, this should be
-taken into account when using delays or timeouts at application. It is
-always possible to reconfigure it in the “tx_user.h”, the
-“TX_TIMER_TICKS_PER_SECOND” define,but this should be reflected in
-“tx_initialize_low_level.S” file too.</li>
+<li>ThreadX is configured with 100 ticks/sec by default, this should be taken into
+account when using delays or timeouts at application. It is always possible to reconfigure it,
+by updating the "TX_TIMER_TICKS_PER_SECOND" define in the "tx_user.h" file.
+The update should be reflected in "tx_initialize_low_level.S" file too.</li>
 <li>ThreadX is disabling all interrupts during kernel start-up to avoid
 any unexpected behavior, therefore all system related calls (HAL, BSP)
 should be done either at the beginning of the application or inside the
@@ -103,7 +102,7 @@ way contain a system API call (HAL or BSP).</li>
 <li>Using dynamic memory allocation requires to apply some changes to
 the linker file. ThreadX needs to pass a pointer to the first free
 memory location in RAM to the tx_application_define() function, using
-the “first_unused_memory” argument. This require changes in the linker
+the “first_unused_memory” argument. This requires changes in the linker
 files to expose this memory location.
 <ul>
 <li>For EWARM add the following section into the .icf file:</li>
@@ -113,7 +112,7 @@ files to expose this memory location.
 <li>For MDK-ARM:</li>
 </ul>
 <pre><code>either define the RW_IRAM1 region in the &quot;.sct&quot; file
-or modify the line below in &quot;tx_low_level_initilize.s to match the memory region being used
+or modify the line below in &quot;tx_low_level_initilize.S to match the memory region being used
     LDR r1, =|Image$$RW_IRAM1$$ZI$$Limit|</code></pre>
 <ul>
 <li>For STM32CubeIDE add the following section into the .ld file:</li>
@@ -140,9 +139,9 @@ the “USE_DYNAMIC_MEMORY_ALLOCATION” flag.</li>
 <h3 id="hardware-and-software-environment"><b>Hardware and Software
 environment</b></h3>
 <ul>
-<li>This example runs on STM32H563xx devices</li>
-<li>This example has been tested with STMicroelectronics NUCLEO-H563ZI
-boards Revision: MB1404-H563ZI-A01. and can be easily tailored to any
+<li>This application runs on STM32H563xx devices</li>
+<li>This application has been tested with STMicroelectronics NUCLEO-H563ZI
+boards revision: MB1404-H563ZI-C01. and can be easily tailored to any
 other supported device and development board.</li>
 <li>A virtual COM port appears in the HyperTerminal:
 <ul>

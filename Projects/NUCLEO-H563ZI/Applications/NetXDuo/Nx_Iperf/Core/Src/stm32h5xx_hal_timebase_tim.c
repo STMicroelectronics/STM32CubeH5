@@ -1,7 +1,7 @@
 /* USER CODE BEGIN Header */
 /**
   ******************************************************************************
-  * @file    stm32h5xx_hal_timebase_TIM.c
+  * @file    stm32h5xx_hal_timebase_tim.c
   * @brief   HAL time base based on the hardware TIM.
   ******************************************************************************
   * @attention
@@ -99,7 +99,7 @@ HAL_StatusTypeDef HAL_InitTick(uint32_t TickPriority)
         status = HAL_ERROR;
       }
     }
-}
+  }
 
   /* Enable the TIM6 global Interrupt */
   HAL_NVIC_EnableIRQ(TIM6_IRQn);

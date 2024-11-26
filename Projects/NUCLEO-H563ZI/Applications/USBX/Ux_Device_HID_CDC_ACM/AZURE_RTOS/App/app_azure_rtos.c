@@ -5,7 +5,7 @@
   * @author  MCD Application Team
   * @brief   app_azure_rtos application implementation file
   ******************************************************************************
-    * @attention
+  * @attention
   *
   * Copyright (c) 2023 STMicroelectronics.
   * All rights reserved.
@@ -77,7 +77,7 @@ static TX_BYTE_POOL usbpd_app_byte_pool;
 
 /* USER CODE END PFP */
 
-  /**
+/**
   * @brief  Define the initial system.
   * @param  first_unused_memory : Pointer to the first unused memory
   * @retval None
@@ -107,22 +107,25 @@ VOID tx_application_define(VOID *first_unused_memory)
     status = App_ThreadX_Init(memory_ptr);
     if (status != TX_SUCCESS)
     {
-      /* USER CODE BEGIN  App_ThreadX_Init_Error */
+      /* USER CODE BEGIN App_ThreadX_Init_Error */
       while(1)
       {
       }
-      /* USER CODE END  App_ThreadX_Init_Error */
+      /* USER CODE END App_ThreadX_Init_Error */
     }
-    /* USER CODE BEGIN  App_ThreadX_Init_Success */
+    /* USER CODE BEGIN App_ThreadX_Init_Success */
 
-    /* USER CODE END  App_ThreadX_Init_Success */
+    /* USER CODE END App_ThreadX_Init_Success */
 
   }
 
   if (tx_byte_pool_create(&ux_device_app_byte_pool, "Ux App memory pool", ux_device_byte_pool_buffer, UX_DEVICE_APP_MEM_POOL_SIZE) != TX_SUCCESS)
   {
     /* USER CODE BEGIN UX_Device_Byte_Pool_Error */
-
+    printf("Ux byte pool creation failed: \n");
+    while(1)
+    {
+    }
     /* USER CODE END UX_Device_Byte_Pool_Error */
   }
   else
@@ -135,20 +138,22 @@ VOID tx_application_define(VOID *first_unused_memory)
     status = MX_USBX_Device_Init(memory_ptr);
     if (status != UX_SUCCESS)
     {
-      /* USER CODE BEGIN  MX_USBX_Device_Init_Error */
+      /* USER CODE BEGIN MX_USBX_Device_Init_Error */
       while(1)
       {
       }
-      /* USER CODE END  MX_USBX_Device_Init_Error */
+      /* USER CODE END MX_USBX_Device_Init_Error */
     }
-    /* USER CODE BEGIN  MX_USBX_Device_Init_Success */
+    /* USER CODE BEGIN MX_USBX_Device_Init_Success */
 
-    /* USER CODE END  MX_USBX_Device_Init_Success */
+    /* USER CODE END MX_USBX_Device_Init_Success */
   }
   if (tx_byte_pool_create(&usbpd_app_byte_pool, "USBPD App memory pool", usbpd_byte_pool_buffer, USBPD_DEVICE_APP_MEM_POOL_SIZE) != TX_SUCCESS)
   {
     /* USER CODE BEGIN USBPD_Byte_Pool_Error */
-
+      while(1)
+      {
+      }
     /* USER CODE END USBPD_Byte_Pool_Error */
   }
   else
@@ -161,15 +166,15 @@ VOID tx_application_define(VOID *first_unused_memory)
     status = MX_USBPD_Init(memory_ptr);
     if (status != USBPD_OK)
     {
-      /* USER CODE BEGIN  MX_USBPD_Init_Error */
+      /* USER CODE BEGIN MX_USBPD_Init_Error */
       while(1)
       {
       }
-      /* USER CODE END  MX_USBPD_Init_Error */
+      /* USER CODE END MX_USBPD_Init_Error */
     }
-    /* USER CODE BEGIN  MX_USBPD_Init */
+    /* USER CODE BEGIN MX_USBPD_Init */
 
-    /* USER CODE END  MX_USBPD_Init */
+    /* USER CODE END MX_USBPD_Init */
   }
 #else
 /*

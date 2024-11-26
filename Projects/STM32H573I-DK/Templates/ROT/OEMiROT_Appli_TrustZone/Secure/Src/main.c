@@ -63,6 +63,12 @@ int main(void)
      */
   HAL_Init();
 
+  /* !!! To boot in a secure way, the RoT has configured and activated the Memory Protection Unit
+      In order to keep a secure environment execution, you should reconfigure the
+      MPU to make it compatible with your application
+      In this example, MPU is disabled */
+  HAL_MPU_Disable();
+
   /* This project template calls CACHE_Enable() in order to enable the Instruction
      and Data Cache. This function is provided as template implementation that
      User may integrate in his application in order to enhance performance */

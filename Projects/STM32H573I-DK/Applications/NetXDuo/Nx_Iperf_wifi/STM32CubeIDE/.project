@@ -3714,6 +3714,16 @@
 			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/ST/netxduo/common/src/nxe_udp_socket_bytes_available.c</locationURI>
 		</link>
 		<link>
+			<name>Middlewares/NetXDuo/Network/NetXDuo/NX Core/nxe_udp_socket_vlan_priority_set.c</name>
+			<type>1</type>
+			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/ST/netxduo/common/src/nxe_udp_socket_vlan_priority_set.c</locationURI>
+		</link>
+		<link>
+			<name>Middlewares/NetXDuo/Network/NetXDuo/NX Core/nxe_tcp_socket_vlan_priority_set.c</name>
+			<type>1</type>
+			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/ST/netxduo/common/src/nxe_tcp_socket_vlan_priority_set.c</locationURI>
+		</link>
+		<link>
 			<name>Middlewares/NetXDuo/NX Core/nxe_udp_socket_checksum_disable.c</name>
 			<type>1</type>
 			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/ST/netxduo/common/src/nxe_udp_socket_checksum_disable.c</locationURI>

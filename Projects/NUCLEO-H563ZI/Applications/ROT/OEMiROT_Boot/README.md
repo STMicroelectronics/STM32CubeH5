@@ -30,7 +30,7 @@ TrustZone, OEMiROT, boot path, Root Of Trust, Security, mcuboot
   - OEMiROT_Boot/Inc/boot_hal_hash_ref.h             Header file for hash reference code in boot_hal.c
   - OEMiROT_Boot/Inc/boot_hal_imagevalid.h           Header file for image validation code in boot_hal.c
   - OEMiROT_Boot/Inc/cmsis.h                         Header file for CMSIS
-  - OEMiROT_Boot/Inc/config-boot.h                   Mbed-crypto configuration file
+  - OEMiROT_Boot/Inc/mbedtls_config.h                Mbed-crypto configuration file
   - OEMiROT_Boot/Inc/flash_layout.h                  Flash mapping
   - OEMiROT_Boot/Inc/low_level_flash.h               Header file for low_level_flash.c
   - OEMiROT_Boot/Inc/low_level_obkeys.h              Header file for low_level_obkeys.c
@@ -62,6 +62,7 @@ TrustZone, OEMiROT, boot path, Root Of Trust, Security, mcuboot
 ### <b>Hardware and Software environment</b>
 
   - This example runs on STM32H563xx (2MBytes) devices with security enabled (TZEN=B4).
+  - It can be configured for STM32H563xx 1M device by uncommenting DEVICE_1M_FLASH_ENABLE (flash_layout.h).
   - This example has been tested with STMicroelectronics NUCLEO-H563ZI (MB1404)
     board and can be easily tailored to any other supported device
     and development board.

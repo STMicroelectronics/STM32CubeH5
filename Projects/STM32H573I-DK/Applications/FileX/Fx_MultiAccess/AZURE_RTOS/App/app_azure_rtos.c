@@ -5,7 +5,7 @@
   * @author  MCD Application Team
   * @brief   app_azure_rtos application implementation file
   ******************************************************************************
-    * @attention
+  * @attention
   *
   * Copyright (c) 2023 STMicroelectronics.
   * All rights reserved.
@@ -70,16 +70,16 @@ static TX_BYTE_POOL fx_app_byte_pool;
 
 /* USER CODE END PFP */
 
-  /**
+/**
   * @brief  Define the initial system.
   * @param  first_unused_memory : Pointer to the first unused memory
   * @retval None
   */
 VOID tx_application_define(VOID *first_unused_memory)
 {
-  /* USER CODE BEGIN  tx_application_define_1*/
+  /* USER CODE BEGIN tx_application_define_1 */
 
-  /* USER CODE END  tx_application_define_1 */
+  /* USER CODE END tx_application_define_1 */
 #if (USE_STATIC_ALLOCATION == 1)
   UINT status = TX_SUCCESS;
   VOID *memory_ptr;
@@ -102,17 +102,17 @@ VOID tx_application_define(VOID *first_unused_memory)
     {
       /* USER CODE BEGIN  App_ThreadX_Init_Error */
        Error_Handler();
-      /* USER CODE END  App_ThreadX_Init_Error */
+      /* USER CODE END App_ThreadX_Init_Error */
     }
-    /* USER CODE BEGIN  App_ThreadX_Init_Success */
+    /* USER CODE BEGIN App_ThreadX_Init_Success */
 
-    /* USER CODE END  App_ThreadX_Init_Success */
+    /* USER CODE END App_ThreadX_Init_Success */
 
   }
   if (tx_byte_pool_create(&fx_app_byte_pool, "Fx App memory pool", fx_byte_pool_buffer, FX_APP_MEM_POOL_SIZE) != TX_SUCCESS)
   {
     /* USER CODE BEGIN FX_Byte_Pool_Error */
-     Error_Handler();
+    Error_Handler();
     /* USER CODE END FX_Byte_Pool_Error */
   }
   else
@@ -125,13 +125,13 @@ VOID tx_application_define(VOID *first_unused_memory)
     status = MX_FileX_Init(memory_ptr);
     if (status != FX_SUCCESS)
     {
-      /* USER CODE BEGIN  MX_FileX_Init_Error */
-       Error_Handler();
-      /* USER CODE END  MX_FileX_Init_Error */
+      /* USER CODE BEGIN MX_FileX_Init_Error */
+      Error_Handler();
+      /* USER CODE END MX_FileX_Init_Error */
     }
-    /* USER CODE BEGIN  MX_FileX_Init_Success */
+    /* USER CODE BEGIN MX_FileX_Init_Success */
 
-    /* USER CODE END  MX_FileX_Init_Success */
+    /* USER CODE END MX_FileX_Init_Success */
   }
 
 #else

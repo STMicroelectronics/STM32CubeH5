@@ -14,12 +14,11 @@
 #define NX_STM32_ETH_CONFIG_H
 
 #ifdef __cplusplus
- extern "C" {
+extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32h5xx_hal.h"
-
 #include "lan8742.h"
 
 /* USER CODE BEGIN Includes */

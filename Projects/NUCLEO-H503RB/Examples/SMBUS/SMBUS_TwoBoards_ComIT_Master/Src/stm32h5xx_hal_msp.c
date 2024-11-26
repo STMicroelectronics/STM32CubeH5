@@ -121,6 +121,7 @@ void HAL_SMBUS_MspInit(SMBUS_HandleTypeDef* hsmbus)
   /* USER CODE BEGIN I2C2_MspInit 1 */
 
   /* USER CODE END I2C2_MspInit 1 */
+
   }
 
 }

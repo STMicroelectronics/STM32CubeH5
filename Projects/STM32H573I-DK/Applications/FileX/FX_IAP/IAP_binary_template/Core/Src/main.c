@@ -58,11 +58,12 @@ static void MX_USART1_UART_Init(void);
 /* New definition from EWARM V9, compatible with EWARM8 */
 int iar_fputc(int ch);
 #define PUTCHAR_PROTOTYPE int iar_fputc(int ch)
-#elif defined ( __CC_ARM ) || defined(__ARMCC_VERSION)
-/* ARM Compiler 5/6*/
-#define PUTCHAR_PROTOTYPE int fputc(int ch, FILE *f)
-#elif defined(__GNUC__)
+#elif defined ( __GNUC__) && !defined(__clang__)
+/* With GCC, small printf (option LD Linker->Libraries->Small printf
+   set to 'Yes') calls __io_putchar() */
 #define PUTCHAR_PROTOTYPE int __io_putchar(int ch)
+#else
+#define PUTCHAR_PROTOTYPE int fputc(int ch, FILE *f)
 #endif /* __ICCARM__ */
 /* USER CODE END PFP */
 
@@ -296,6 +297,13 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
+/**
+  * @brief  Retargets the C library __write function to the IAR function iar_fputc.
+  * @param  file: file descriptor.
+  * @param  ptr: pointer to the buffer where the data is stored.
+  * @param  len: length of the data to write in bytes.
+  * @retval length of the written data in bytes.
+  */
 #if defined(__ICCARM__)
 size_t __write(int file, unsigned char const *ptr, size_t len)
 {
@@ -316,7 +324,7 @@ size_t __write(int file, unsigned char const *ptr, size_t len)
   */
 PUTCHAR_PROTOTYPE
 {
-  /* Place your implementation of putchar here */
+  /* Place your implementation of fputc here */
   /* e.g. write a character to the USART1 and Loop until the end of transmission */
   HAL_UART_Transmit(&huart1, (uint8_t *)&ch, 1, 0xFFFF);
 
@@ -353,7 +361,11 @@ void assert_failed(uint8_t *file, uint32_t line)
 {
   /* USER CODE BEGIN 6 */
   /* User can add his own implementation to report the file name and line number,
-     ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
+  ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
+  /* Infinite loop */
+  while (1)
+  {
+  }
   /* USER CODE END 6 */
 }
 #endif /* USE_FULL_ASSERT */

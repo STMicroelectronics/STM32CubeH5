@@ -151,6 +151,7 @@ void HAL_CORDIC_MspInit(CORDIC_HandleTypeDef* hcordic)
   /* USER CODE BEGIN CORDIC_MspInit 1 */
 
   /* USER CODE END CORDIC_MspInit 1 */
+
   }
 
 }

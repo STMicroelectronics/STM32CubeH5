@@ -109,6 +109,7 @@ void HAL_TIM_IC_MspInit(TIM_HandleTypeDef* htim_ic)
   /* USER CODE BEGIN TIM1_MspInit 1 */
 
   /* USER CODE END TIM1_MspInit 1 */
+
   }
 
 }

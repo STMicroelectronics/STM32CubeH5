@@ -25,8 +25,8 @@ set ns_data_image_number=0
 set s_code_image=%oemirot_appli_secure%
 set ns_code_image=%oemirot_appli_non_secure%
 set one_code_image=%oemirot_appli_assembly_sign%
-set s_data_image=s_data_enc_sign.hex
-set ns_data_image=ns_data_enc_sign.hex
+set s_data_image=s_data_init_sign.hex
+set ns_data_image=ns_data_init_sign.hex
 
 set connect_no_reset=-c port=SWD speed=fast ap=1 mode=Hotplug
 set connect_reset=-c port=SWD speed=fast ap=1 mode=UR

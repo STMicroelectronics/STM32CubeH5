@@ -98,7 +98,7 @@ messages.</li>
 <h4 id="error-behaviors"><b> Error behaviors</b></h4>
 <ul>
 <li>The red LED is toggling to indicate any error that has
-occurred.</li>
+occurred while the green LED is turned OFF.</li>
 </ul>
 <h4 id="assumptions-if-any"><b> Assumptions if any</b></h4>
 <ul>
@@ -157,11 +157,10 @@ name.</p></li>
 <ul>
 <li>ThreadX uses the Systick as time base, thus it is mandatory that the
 HAL uses a separate time base through the TIM IPs.</li>
-<li>ThreadX is configured with 100 ticks/sec by default, this should be
-taken into account when using delays or timeouts at application. It is
-always possible to reconfigure it in the “tx_user.h”, the
-“TX_TIMER_TICKS_PER_SECOND” define,but this should be reflected in
-“tx_initialize_low_level.S” file too.</li>
+<li>ThreadX is configured with 100 ticks/sec by default, this should be taken into
+account when using delays or timeouts at application. It is always possible to reconfigure it,
+by updating the "TX_TIMER_TICKS_PER_SECOND" define in the "tx_user.h" file.
+The update should be reflected in "tx_initialize_low_level.S" file too.</li>
 <li>ThreadX is disabling all interrupts during kernel start-up to avoid
 any unexpected behavior, therefore all system related calls (HAL, BSP)
 should be done either at the beginning of the application or inside the
@@ -174,7 +173,7 @@ way contain a system API call (HAL or BSP).</li>
 <li>Using dynamic memory allocation requires to apply some changes to
 the linker file. ThreadX needs to pass a pointer to the first free
 memory location in RAM to the tx_application_define() function, using
-the “first_unused_memory” argument. This require changes in the linker
+the “first_unused_memory” argument. This requires changes in the linker
 files to expose this memory location.
 <ul>
 <li>For EWARM add the following section into the .icf file:</li>
@@ -221,7 +220,7 @@ environment</b></h4>
 <ul>
 <li><p>This application runs on STM32H573xx devices.</p></li>
 <li><p>This application has been tested with STMicroelectronics
-STM32H573I-DK boards Revision: MB1677-H573I and can be easily tailored
+STM32H573I-DK boards revision: MB1677-H573I-C01 and can be easily tailored
 to any other supported device and development board.</p></li>
 <li><p>This application uses USART1 to display logs, the hyperterminal
 configuration is as follows:</p>

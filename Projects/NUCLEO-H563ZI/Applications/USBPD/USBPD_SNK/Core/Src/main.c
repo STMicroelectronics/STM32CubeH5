@@ -284,7 +284,6 @@ static void MX_UCPD1_Init(void)
   DMA_InitStruct.DestIncMode = LL_DMA_DEST_INCREMENT;
   DMA_InitStruct.Priority = LL_DMA_LOW_PRIORITY_LOW_WEIGHT;
   DMA_InitStruct.BlkDataLength = 0x00000000U;
-  DMA_InitStruct.Mode = LL_DMA_NORMAL;
   DMA_InitStruct.TriggerMode = LL_DMA_TRIGM_BLK_TRANSFER;
   DMA_InitStruct.TriggerPolarity = LL_DMA_TRIG_POLARITY_MASKED;
   DMA_InitStruct.TriggerSelection = 0x00000000U;
@@ -313,7 +312,6 @@ static void MX_UCPD1_Init(void)
   DMA_InitStruct.DestIncMode = LL_DMA_DEST_FIXED;
   DMA_InitStruct.Priority = LL_DMA_LOW_PRIORITY_LOW_WEIGHT;
   DMA_InitStruct.BlkDataLength = 0x00000000U;
-  DMA_InitStruct.Mode = LL_DMA_NORMAL;
   DMA_InitStruct.TriggerMode = LL_DMA_TRIGM_BLK_TRANSFER;
   DMA_InitStruct.TriggerPolarity = LL_DMA_TRIG_POLARITY_MASKED;
   DMA_InitStruct.TriggerSelection = 0x00000000U;
@@ -400,7 +398,6 @@ static void MX_USART3_UART_Init(void)
   DMA_InitStruct.DestIncMode = LL_DMA_DEST_FIXED;
   DMA_InitStruct.Priority = LL_DMA_LOW_PRIORITY_LOW_WEIGHT;
   DMA_InitStruct.BlkDataLength = 0x00000000U;
-  DMA_InitStruct.Mode = LL_DMA_NORMAL;
   DMA_InitStruct.TriggerMode = LL_DMA_TRIGM_BLK_TRANSFER;
   DMA_InitStruct.TriggerPolarity = LL_DMA_TRIG_POLARITY_MASKED;
   DMA_InitStruct.TriggerSelection = 0x00000000U;

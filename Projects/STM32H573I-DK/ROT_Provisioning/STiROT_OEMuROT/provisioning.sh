@@ -20,25 +20,13 @@ project_dir=`dirname $SCRIPT`
 ob_flash_programming="ob_flash_programming.sh"
 ob_key_provisioning="obkey_provisioning.sh"
 
-if [ $isGeneratedByCubeMX == "true" ]; then
-   appli_dir=$oemirot_boot_path_project
-else
-   appli_dir="../../../$oemirot_boot_path_project"
-fi
-
 ## Get config updated by OEMiROT_Boot
-tmp_file=$cube_fw_path/Projects/STM32H573I-DK/ROT_Provisioning/img_config.sh
+tmp_file="$project_dir/img_config.sh"
 
-fw_in_bin="Firmware binary input file"
-fw_out_bin="Image output file"
-ns_app_bin="$appli_dir/Binary/rot_tz_ns_app.bin"
-s_app_bin="$appli_dir/Binary/rot_tz_s_app.bin"
-s_code_image_file="$project_dir/Images/OEMuROT_S_Code_Image.xml"
-ns_code_image_file="$project_dir/Images/OEMuROT_NS_Code_Image.xml"
 s_data_xml="$project_dir/Images/OEMuROT_S_Data_Image.xml"
 ns_data_xml="$project_dir/Images/OEMuROT_NS_Data_Image.xml"
-ns_app_enc_sign_hex="$appli_dir/Binary/rot_tz_ns_app_enc_sign.hex"
-s_app_enc_sign_hex="$appli_dir/Binary/rot_tz_s_app_enc_sign.hex"
+s_data_init_xml="$project_dir/Images/OEMuROT_S_Data_Init_Image.xml"
+ns_data_init_xml="$project_dir/Images/OEMuROT_NS_Data_Init_Image.xml"
 
 #provisioning
 ob_key_provisioning_log="obkey_provisioning.log"
@@ -232,6 +220,7 @@ if [ $isGeneratedByCubeMX != "true" ]; then
   echo "   * STiRoT_Config.obk generation:"
   echo "       From TrustedPackageCreator (OBkey tab in Security panel)"
   echo "       Select STiRoT_Config.xml(Default path is /ROT_Provisioning/STiROT_OEMuROT/Config/STiRoT_Config.xml)"
+  echo "       Warning: Default keys must NOT be used in a product. Make sure to regenerate your own keys!"
   echo "       Update the configuration (if/as needed) then generate STiRoT_Config.obk file"
   echo "       Press any key to continue..."
   if [ "$mode" != "AUTO" ]; then read -p "" -n1 -s; fi
@@ -251,12 +240,22 @@ if [ $isGeneratedByCubeMX != "true" ]; then
   echo
   echo "   * OEMuRoT_Config.obk generation:"
   echo "       From TrustedPackageCreator (OBkey tab in Security panel)"
-  echo "       Select OEMuRoT_Config.xml(Default path is /ROT_Provisioning/STiROT_OEMuROT/Config/OEMuRoT_Config.xml)"
+  echo "       Select OEMuRoT_Config_Keys.xml(Default path is /ROT_Provisioning/STiROT_OEMuROT/Config/OEMuRoT_Config_Keys.xml)"
+  echo "       Warning: Default keys must NOT be used in a product. Make sure to regenerate your own keys!"
   echo "       Update the configuration (if/as needed) then generate OEMuRoT_Config.obk file"
   echo "       Press any key to continue..."
   if [ "$mode" != "AUTO" ]; then read -p "" -n1 -s; fi
   "$stm32tpccli" -obk Config/OEMuRoT_Config_Keys.xml >> $current_log_file
   if [ $? != "0" ]; then error_config; fi
+else
+  echo "Step 1 : Configuration management"
+  echo "   * STiROT_Config.obk was created during CubeMX code generation"
+  echo
+  echo "   * DA_Config.obk was created during CubeMX code generation"
+  echo
+  echo "       Press any key to continue..."
+  echo
+  if [ "$mode" != "AUTO" ]; then read -p "" -n1 -s; fi
 fi
 
 "$stm32tpccli" -pb ST/OEMuRoT_ST_Settings_1.xml >> $current_log_file
@@ -265,12 +264,10 @@ if [ $? != "0" ]; then error_config; fi
 if [ $? != "0" ]; then error_config; fi
 echo "       Successful OEMuRoT_Config.obk file generation"
 
-if [ $isGeneratedByCubeMX != "true" ]; then
-  #uncomment OEMUROT_ENABLE flag
-  $python$applicfg setdefine -a uncomment -n OEMUROT_ENABLE -v 1 $flash_layout
-  if [ $? != "0" ]; then error_config; fi
+#uncomment OEMUROT_ENABLE flag
+$python$applicfg setdefine -a uncomment -n OEMUROT_ENABLE -v 1 $flash_layout
+if [ $? != "0" ]; then error_config; fi
 
-fi
 # ========================================================= Images generation steps ========================================================  
 echo
 echo "Step 2 : Images generation"
@@ -283,40 +280,39 @@ echo
 #update xml file
 if [ $isGeneratedByCubeMX != "true" ]; then
   source $tmp_file
-  if [ "$app_image_number" != "2" ]; then
-    ns_app_enc_sign_hex="$appli_dir/Binary/rot_tz_app_enc_sign.hex"
-    ns_app_bin="$appli_dir/Binary/rot_tz_app.bin"
-  fi
-  $python$applicfg xmlval -v $s_app_bin --string -n "$fw_in_bin" $s_code_image_file --vb >> $current_log_file
-  if [ $? != "0" ]; then error_config; fi
-  $python$applicfg xmlval -v $ns_app_bin --string -n "$fw_in_bin" $ns_code_image_file --vb >> $current_log_file
-  if [ $? != "0" ]; then error_config; fi
-  $python$applicfg xmlval -v $s_app_enc_sign_hex --string -n "$fw_out_bin" $s_code_image_file --vb >> $current_log_file
-  if [ $? != "0" ]; then error_config; fi
-  $python$applicfg xmlval -v $ns_app_enc_sign_hex --string -n "$fw_out_bin" $ns_code_image_file --vb >> $current_log_file
-  if [ $? != "0" ]; then error_config; fi
 
   echo "   * Code firmware image generation"
-  echo "       Open the OEMxROT_Appli project with preferred toolchain."
+  echo "       Open the OEMiROT_Appli_TrustZone project with preferred toolchain."
   echo "       Rebuild all files. The appli_enc_sign.hex file is generated with the postbuild command."
   echo "       Press any key to continue..."
   if [ "$mode" != "AUTO" ]; then read -p "" -n1 -s; fi
-  
+  echo
+
+  echo "   * Data secure generation (if Data secure image is enabled)"
+  echo "        Select OEMuROT_S_Data_Image.xml(Default path is \ROT_Provisioning\STiROT_OEMuROT\Images\OEMuROT_S_Data_Image.xml)"
+  echo "        Generate the s_data_enc_sign.hex image"
+  echo "        Press any key to continue"
+  if [ "$mode" != "AUTO" ]; then read -p "" -n1 -s; fi
+  echo
+
   if [ "$s_data_image_number" != "0" ]; then
     "$stm32tpccli" -pb $s_data_xml >> $provisioning_log
     if [ $? != "0" ]; then error_config; fi
+    "$stm32tpccli" -pb $s_data_init_xml >> $provisioning_log
+    if [ $? != "0" ]; then error_config; fi
   fi
-  
-  echo
-  echo "   * Data generation (if Data image is enabled):"
-  echo "       Select STiRoT_Data_Image.xml(Default path is /ROT_Provisioning/STiROT_OEMuROT/Image/STiRoT_Data_Image.xml)"
-  echo "       Generate the data_enc_sign.hex image"
+
+  echo "   * Data non secure generation (if Data non secure image is enabled)"
+  echo "       Select OEMuROT_NS_Data_Image.xml(Default path is \ROT_Provisioning\STiROT_OEMuROT\Images\OEMuROT_NS_Data_Image.xml)"
+  echo "       Generate the ns_data_enc_sign.hex image"
   echo "       Press any key to continue..."
   if [ "$mode" != "AUTO" ]; then read -p "" -n1 -s; fi
   echo
 
   if [ "$ns_data_image_number" != "0" ]; then
     "$stm32tpccli" -pb $ns_data_xml >> $provisioning_log
+    if [ $? != "0" ]; then error_config; fi
+    "$stm32tpccli" -pb $ns_data_init_xml >> $provisioning_log
     if [ $? != "0" ]; then error_config; fi
   fi
 fi

@@ -51,7 +51,7 @@ static UX_SLAVE_CLASS_CDC_ACM_PARAMETER cdc_acm_parameter;
 static TX_THREAD ux_device_app_thread;
 
 /* USER CODE BEGIN PV */
-TX_QUEUE                         ux_app_MsgQueue;
+TX_QUEUE ux_app_MsgQueue;
 static TX_THREAD ux_hid_thread;
 static TX_THREAD ux_cdc_read_thread;
 static TX_THREAD ux_cdc_write_thread;
@@ -60,8 +60,8 @@ extern uint8_t User_Button_State;
 #if defined ( __ICCARM__ ) /* IAR Compiler */
   #pragma data_alignment=4
 #endif /* defined ( __ICCARM__ ) */
-__ALIGN_BEGIN USB_MODE_STATE                  USB_Device_State_Msg   __ALIGN_END;
-extern PCD_HandleTypeDef         hpcd_USB_DRD_FS;
+__ALIGN_BEGIN USB_MODE_STATE USB_Device_State_Msg __ALIGN_END;
+extern PCD_HandleTypeDef hpcd_USB_DRD_FS;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -144,7 +144,7 @@ UINT MX_USBX_Device_Init(VOID *memory_ptr)
   hid_mouse_parameter.ux_slave_class_hid_instance_deactivate       = USBD_HID_Mouse_Deactivate;
   hid_mouse_parameter.ux_device_class_hid_parameter_report_address = USBD_HID_ReportDesc(INTERFACE_HID_MOUSE);
   hid_mouse_parameter.ux_device_class_hid_parameter_report_length  = USBD_HID_ReportDesc_length(INTERFACE_HID_MOUSE);
-  hid_mouse_parameter.ux_device_class_hid_parameter_report_id      = UX_TRUE;
+  hid_mouse_parameter.ux_device_class_hid_parameter_report_id      = UX_FALSE;
   hid_mouse_parameter.ux_device_class_hid_parameter_callback       = USBD_HID_Mouse_SetReport;
   hid_mouse_parameter.ux_device_class_hid_parameter_get_callback   = USBD_HID_Mouse_GetReport;
 
@@ -392,7 +392,7 @@ void HAL_GPIO_EXTI_Rising_Callback(uint16_t GPIO_Pin)
 {
 
   /* Check if EXTI from User Button */
-  if (GPIO_Pin == GPIO_PIN_13)
+  if (GPIO_Pin == BUTTON_USER_Pin)
   {
     User_Button_State ^= 1U;
   }

@@ -25,8 +25,8 @@ set ns_data_image_number=0
 set s_code_image=%oemirot_appli_secure%
 set ns_code_image=%oemirot_appli_non_secure%
 set one_code_image=%oemirot_appli_assembly_sign%
-set s_data_image=s_data_enc_sign.hex
-set ns_data_image=ns_data_enc_sign.hex
+set s_data_image=s_data_init_sign.hex
+set ns_data_image=ns_data_init_sign.hex
 
 set connect_no_reset=-c port=SWD speed=fast ap=1 mode=Hotplug
 set connect_reset=-c port=SWD speed=fast ap=1 mode=UR
@@ -38,7 +38,7 @@ set appli_dir=../../%oemirot_boot_path_project%
 )
 
 :: =============================================== Remove protections and initialize Option Bytes ==========================================
-set remove_protect_init=-ob SECWM1_STRT=1 SECWM1_END=0 WRPSGn1=0xffffffff WRPSGn2=0xffffffff SECWM2_STRT=1 SECWM2_END=0 HDP1_STRT=1 HDP1_END=0 HDP2_STRT=1 HDP2_END=0 SECBOOT_LOCK=0xC3 SECBOOTADD=%bootob% SWAP_BANK=0 SRAM2_RST=0 SRAM2_ECC=0 BOOT_UBE=0xB4
+set remove_protect_init=-ob SECWM1_STRT=1 SECWM1_END=0 WRPSGn1=0xffffffff WRPSGn2=0xffffffff SECWM2_STRT=1 SECWM2_END=0 HDP1_STRT=1 HDP1_END=0 HDP2_STRT=1 HDP2_END=0 SECBOOT_LOCK=0xC3 SECBOOTADD=%bootob% SWAP_BANK=0 SRAM2_RST=0 SRAM2_ECC=0 SRAM3_ECC=1 BOOT_UBE=0xB4
 
 :: =============================================== Erase the user flash =====================================================================
 set erase_all=-e all

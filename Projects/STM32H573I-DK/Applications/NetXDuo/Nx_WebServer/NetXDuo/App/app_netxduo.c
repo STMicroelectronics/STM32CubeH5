@@ -5,7 +5,7 @@
   * @author  MCD Application Team
   * @brief   NetXDuo applicative file
   ******************************************************************************
-    * @attention
+  * @attention
   *
   * Copyright (c) 2023 STMicroelectronics.
   * All rights reserved.
@@ -107,10 +107,10 @@ UINT MX_NetXDuo_Init(VOID *memory_ptr)
   UINT ret = NX_SUCCESS;
   TX_BYTE_POOL *byte_pool = (TX_BYTE_POOL*)memory_ptr;
 
-   /* USER CODE BEGIN App_NetXDuo_MEM_POOL */
+  /* USER CODE BEGIN App_NetXDuo_MEM_POOL */
   /* USER CODE END App_NetXDuo_MEM_POOL */
   /* USER CODE BEGIN 0 */
- printf("Nx_Webserver application started..\n");
+  printf("Nx_Webserver application started..\n");
 
   /* USER CODE END 0 */
 
@@ -118,7 +118,7 @@ UINT MX_NetXDuo_Init(VOID *memory_ptr)
   CHAR *pointer;
   nx_system_initialize();
 
-    /* Allocate the memory for packet_pool.  */
+  /* Allocate the memory for packet_pool. */
   if (tx_byte_allocate(byte_pool, (VOID **) &pointer, NX_APP_PACKET_POOL_SIZE, TX_NO_WAIT) != TX_SUCCESS)
   {
     return TX_POOL_ERROR;
@@ -134,13 +134,13 @@ UINT MX_NetXDuo_Init(VOID *memory_ptr)
     return NX_POOL_ERROR;
   }
 
-    /* Allocate the memory for Ip_Instance */
+  /* Allocate the memory for Ip_Instance */
   if (tx_byte_allocate(byte_pool, (VOID **) &pointer, Nx_IP_INSTANCE_THREAD_SIZE, TX_NO_WAIT) != TX_SUCCESS)
   {
     return TX_POOL_ERROR;
   }
 
-   /* Create the main NX_IP instance */
+  /* Create the main NX_IP instance */
   ret = nx_ip_create(&NetXDuoEthIpInstance, "NetX Ip instance", NX_APP_DEFAULT_IP_ADDRESS, NX_APP_DEFAULT_NET_MASK, &NxAppPool, nx_stm32_eth_driver,
                      pointer, Nx_IP_INSTANCE_THREAD_SIZE, NX_APP_INSTANCE_PRIORITY);
 
@@ -149,7 +149,7 @@ UINT MX_NetXDuo_Init(VOID *memory_ptr)
     return NX_NOT_SUCCESSFUL;
   }
 
-    /* Allocate the memory for ARP */
+  /* Allocate the memory for ARP */
   if (tx_byte_allocate(byte_pool, (VOID **) &pointer, DEFAULT_ARP_CACHE_SIZE, TX_NO_WAIT) != TX_SUCCESS)
   {
     return TX_POOL_ERROR;
@@ -194,7 +194,7 @@ UINT MX_NetXDuo_Init(VOID *memory_ptr)
     return NX_NOT_SUCCESSFUL;
   }
 
-  /* Enable the UDP protocol required for  DHCP communication */
+  /* Enable the UDP protocol required for DHCP communication */
 
   /* USER CODE BEGIN UDP_Protocol_Initialization */
 
@@ -207,7 +207,7 @@ UINT MX_NetXDuo_Init(VOID *memory_ptr)
     return NX_NOT_SUCCESSFUL;
   }
 
-   /* Allocate the memory for main thread   */
+  /* Allocate the memory for main thread */
   if (tx_byte_allocate(byte_pool, (VOID **) &pointer, NX_APP_THREAD_STACK_SIZE, TX_NO_WAIT) != TX_SUCCESS)
   {
     return TX_POOL_ERROR;
@@ -225,12 +225,12 @@ UINT MX_NetXDuo_Init(VOID *memory_ptr)
   /* Create the DHCP client */
 
   /* USER CODE BEGIN DHCP_Protocol_Initialization */
- /* Allocate the TCP server thread stack. */
+  /* Allocate the TCP server thread stack. */
   if (tx_byte_allocate(byte_pool, (VOID **) &pointer, 2 * DEFAULT_MEMORY_SIZE, TX_NO_WAIT)!= TX_SUCCESS)
   {
     return TX_POOL_ERROR;
   }
-    /* create the web server thread */
+  /* create the web server thread */
   ret = tx_thread_create(&AppServerThread, "App Server Thread", nx_server_thread_entry, 0, pointer, 2 * DEFAULT_MEMORY_SIZE,
                          DEFAULT_PRIORITY, DEFAULT_PRIORITY, TX_NO_TIME_SLICE, TX_DONT_START);
 
@@ -238,7 +238,7 @@ UINT MX_NetXDuo_Init(VOID *memory_ptr)
   {
     return TX_THREAD_ERROR;
   }
-    /* Allocate the memory for toggle green led thread  */
+  /* Allocate the memory for toggle green led thread */
   if (tx_byte_allocate(byte_pool, (VOID **) &pointer, DEFAULT_MEMORY_SIZE, TX_NO_WAIT) != TX_SUCCESS)
   {
     return TX_POOL_ERROR;
@@ -253,7 +253,7 @@ UINT MX_NetXDuo_Init(VOID *memory_ptr)
     return TX_THREAD_ERROR;
   }
 
-  /* Allocate the memory for Link thread   */
+  /* Allocate the memory for Link thread */
   if (tx_byte_allocate(byte_pool, (VOID **) &pointer,2 *  DEFAULT_MEMORY_SIZE, TX_NO_WAIT) != TX_SUCCESS)
   {
     return TX_POOL_ERROR;
@@ -313,26 +313,35 @@ UINT MX_NetXDuo_Init(VOID *memory_ptr)
 }
 
 /**
-* @brief  ip address change callback.
-* @param ip_instance: NX_IP instance
-* @param ptr: user data
-* @retval none
-*/
+  * @brief  ip address change callback.
+  * @param ip_instance: NX_IP instance
+  * @param ptr: user data
+  * @retval none
+  */
 static VOID ip_address_change_notify_callback(NX_IP *ip_instance, VOID *ptr)
 {
   /* USER CODE BEGIN ip_address_change_notify_callback */
+  if (nx_ip_address_get(&NetXDuoEthIpInstance, &IpAddress, &NetMask) != NX_SUCCESS)
+  {
+    /* USER CODE BEGIN IP address change callback error */
 
+    /* Error, call error handler. */
+    Error_Handler();
+
+    /* USER CODE END IP address change callback error */
+  }
+  if(IpAddress != NULL_IP_ADDRESS)
+  {
+    tx_semaphore_put(&DHCPSemaphore);
+  }
   /* USER CODE END ip_address_change_notify_callback */
-
-  /* release the semaphore as soon as an IP address is available */
-  tx_semaphore_put(&DHCPSemaphore);
 }
 
 /**
-* @brief  Main thread entry.
-* @param thread_input: ULONG user argument used by the thread entry
-* @retval none
-*/
+  * @brief  Main thread entry.
+  * @param thread_input: ULONG user argument used by the thread entry
+  * @retval none
+  */
 static VOID App_Main_Thread_Entry (ULONG thread_input)
 {
   /* USER CODE BEGIN Nx_App_Thread_Entry 0 */
@@ -350,6 +359,8 @@ static VOID App_Main_Thread_Entry (ULONG thread_input)
   if (ret != NX_SUCCESS)
   {
     /* USER CODE BEGIN IP address change callback error */
+
+    /* Error, call error handler. */
     Error_Handler();
 
     /* USER CODE END IP address change callback error */
@@ -360,31 +371,27 @@ static VOID App_Main_Thread_Entry (ULONG thread_input)
   if (ret != NX_SUCCESS)
   {
     /* USER CODE BEGIN DHCP client start error */
+
+    /* Error, call error handler. */
     Error_Handler();
 
     /* USER CODE END DHCP client start error */
   }
-
+  printf("Looking for DHCP server ..\n");
   /* wait until an IP address is ready */
-  if(tx_semaphore_get(&DHCPSemaphore, NX_APP_DEFAULT_TIMEOUT) != TX_SUCCESS)
+  if(tx_semaphore_get(&DHCPSemaphore, TX_WAIT_FOREVER) != TX_SUCCESS)
   {
     /* USER CODE BEGIN DHCPSemaphore get error */
+
+    /* Error, call error handler. */
     Error_Handler();
 
     /* USER CODE END DHCPSemaphore get error */
   }
 
   /* USER CODE BEGIN Nx_App_Thread_Entry 2 */
-  /* get IP address */
-  ret = nx_ip_address_get(&NetXDuoEthIpInstance, &IpAddress, &NetMask);
-
   PRINT_IP_ADDRESS(IpAddress);
 
-  if (ret != TX_SUCCESS)
-  {
-    Error_Handler();
-  }
-  
   /* the network is correctly initialized, start the WEB server thread */
   tx_thread_resume(&AppServerThread);
 
@@ -397,9 +404,10 @@ static VOID App_Main_Thread_Entry (ULONG thread_input)
 
 }
 /* USER CODE BEGIN 1 */
+
 UINT webserver_request_notify_callback(NX_WEB_HTTP_SERVER *server_ptr, UINT request_type, CHAR *resource, NX_PACKET *packet_ptr)
 {
-  
+
   CHAR temp_string[30] = {'\0'};
   CHAR data[512] = {'\0'};
   UINT string_length;
@@ -419,7 +427,7 @@ UINT webserver_request_notify_callback(NX_WEB_HTTP_SERVER *server_ptr, UINT requ
   CHAR *main_thread_name;
   CHAR *server_thread_name;
   CHAR *led_thread_name;
- 
+
   /*
   * At each new request we toggle the green led, but in a real use case this callback can serve
   * to trigger more advanced tasks, like starting background threads or gather system info
@@ -430,7 +438,7 @@ UINT webserver_request_notify_callback(NX_WEB_HTTP_SERVER *server_ptr, UINT requ
   {
     /* Let HTTP server know the response has been sent. */
     tx_thread_performance_system_info_get(&resumptions, &suspensions, NULL, NULL, NULL, NULL, NULL, NULL, NULL, &non_idle_returns, &idle_returns);
-    
+
     sprintf (data, "%lu,%lu,%lu,%lu", resumptions, suspensions, idle_returns, non_idle_returns);
   }
   else if (strcmp(resource, "/GetNXData") == 0)
@@ -442,23 +450,23 @@ UINT webserver_request_notify_callback(NX_WEB_HTTP_SERVER *server_ptr, UINT requ
   {
    sprintf(data, "%lu.%lu.%lu.%lu,%d", (IpAddress >> 24) & 0xff, (IpAddress >> 16) & 0xff, (IpAddress >> 8) & 0xff, IpAddress& 0xff, CONNECTION_PORT);
   }
-  
+
     else if (strcmp(resource, "/GetTxCount") == 0)
   {
     tx_thread_info_get(&NxAppThread, &main_thread_name, NULL, &main_thread_count, NULL, NULL, NULL, NULL, NULL);
     tx_thread_info_get(&AppServerThread, &server_thread_name, NULL, &server_thread_count, NULL, NULL, NULL, NULL, NULL);
     tx_thread_info_get(&LedThread, &led_thread_name, NULL, &led_thread_count, NULL, NULL, NULL, NULL, NULL);  
     sprintf (data, "%s,%lu ,%s,%lu,%s,%lu", main_thread_name, main_thread_count, server_thread_name, server_thread_count,led_thread_name, led_thread_count);
-  
+
   }
     else if (strcmp(resource, "/GetNXPacket") == 0)
   {
     sprintf (data, "%lu", NxAppPool.nx_packet_pool_available);
-  }   
+  }
     else if (strcmp(resource, "/GetNXPacketlen") == 0)
   {
     sprintf (data, "%lu", (NxAppPool.nx_packet_pool_available_list)->nx_packet_length );
-  }   
+  }
   else if (strcmp(resource, "/LedOn") == 0)
   {
     printf(" Toggling Green Led On \n");
@@ -476,17 +484,17 @@ UINT webserver_request_notify_callback(NX_WEB_HTTP_SERVER *server_ptr, UINT requ
   }
   /* Derive the client request type from the client request. */
   nx_web_http_server_type_get(server_ptr, server_ptr -> nx_web_http_server_request_resource, temp_string, &string_length);
-  
+
   /* Null terminate the string. */
   temp_string[string_length] = '\0';
-  
+
   /* Now build a response header with server status is OK and no additional header info. */
   status = nx_web_http_server_callback_generate_response_header(server_ptr, &resp_packet_ptr, NX_WEB_HTTP_STATUS_OK,
                                                                 strlen(data), temp_string, NX_NULL);
-  
+
   status = _nxe_packet_data_append(resp_packet_ptr, data, strlen(data), server_ptr->nx_web_http_server_packet_pool_ptr, NX_WAIT_FOREVER);
   /* Now send the packet! */
-  
+
   status = nx_web_http_server_callback_packet_send(server_ptr, resp_packet_ptr);
   if (status != NX_SUCCESS)
   {
@@ -497,10 +505,10 @@ UINT webserver_request_notify_callback(NX_WEB_HTTP_SERVER *server_ptr, UINT requ
 }
 
 /**
-* @brief  Application thread for HTTP web server
-* @param  thread_input : thread input
-* @retval None
-*/
+  * @brief  Application thread for HTTP web server
+  * @param  thread_input : thread input
+  * @retval None
+  */
 
 static NX_WEB_HTTP_SERVER_MIME_MAP app_mime_maps[] =
 {
@@ -534,12 +542,12 @@ void nx_server_thread_entry(ULONG thread_input)
    
     fx_media_space_available(&SDMedia, &free_bytes); 
   }
-  
+
   status = nx_web_http_server_mime_maps_additional_set(&HTTPServer,&app_mime_maps[0], 4);
-  
+
   /* Start the WEB HTTP Server. */
   status = nx_web_http_server_start(&HTTPServer);
-  
+
   /* Check the WEB HTTP Server starting status. */
   if (status != NX_SUCCESS)
   {
@@ -572,10 +580,10 @@ void LedThread_Entry(ULONG thread_input)
 }
 
 /**
-* @brief  Link thread entry
-* @param thread_input: ULONG thread parameter
-* @retval none
-*/
+  * @brief  Link thread entry
+  * @param thread_input: ULONG thread parameter
+  * @retval none
+  */
 static VOID App_Link_Thread_Entry(ULONG thread_input)
 {
   ULONG actual_status;
@@ -583,34 +591,51 @@ static VOID App_Link_Thread_Entry(ULONG thread_input)
 
   while(1)
   {
-    /* Get Physical Link stackavailtus. */
+    /* Send request to check if the Ethernet cable is connected. */
     status = nx_ip_interface_status_check(&NetXDuoEthIpInstance, 0, NX_IP_LINK_ENABLED,
-                                      &actual_status, 10);
+                                          &actual_status, 10);
 
     if(status == NX_SUCCESS)
     {
       if(linkdown == 1)
       {
         linkdown = 0;
+
+        /* The network cable is connected. */
+        printf("The network cable is connected.\n");
+
+        /* Send request to enable PHY Link. */
+        nx_ip_driver_direct_command(&NetXDuoEthIpInstance, NX_LINK_ENABLE,
+                                    &actual_status);
+
+        /* Send request to check if an address is resolved. */
         status = nx_ip_interface_status_check(&NetXDuoEthIpInstance, 0, NX_IP_ADDRESS_RESOLVED,
-                                      &actual_status, 10);
+                                              &actual_status, 10);
         if(status == NX_SUCCESS)
         {
-          /* The network cable is connected again. */
-          printf("The network cable is connected again.\n");
-          /* Print Webserver Client is available again. */
-          printf("Webserver Client is available again.\n");
+          /* Stop DHCP */
+          nx_dhcp_stop(&DHCPClient);
+
+          /* Reinitialize DHCP */
+          nx_dhcp_reinitialize(&DHCPClient);
+
+          /* Start DHCP */
+          nx_dhcp_start(&DHCPClient);
+
+          /* wait until an IP address is ready */
+          if(tx_semaphore_get(&DHCPSemaphore, TX_WAIT_FOREVER) != TX_SUCCESS)
+          {
+            /* USER CODE BEGIN DHCPSemaphore get error */
+            Error_Handler();
+            /* USER CODE END DHCPSemaphore get error */
+          }
+
+          PRINT_IP_ADDRESS(IpAddress);
         }
         else
         {
-          /* The network cable is connected. */
-          printf("The network cable is connected.\n");
-          /* Send command to Enable Nx driver. */
-          nx_ip_driver_direct_command(&NetXDuoEthIpInstance, NX_LINK_ENABLE,
-                                      &actual_status);
-          /* Restart DHCP Client. */
-          nx_dhcp_stop(&DHCPClient);
-          nx_dhcp_start(&DHCPClient);
+          /* Set the DHCP Client's remaining lease time to 0 seconds to trigger an immediate renewal request for a DHCP address. */
+          nx_dhcp_client_update_time_remaining(&DHCPClient, 0);
         }
       }
     }
@@ -621,6 +646,8 @@ static VOID App_Link_Thread_Entry(ULONG thread_input)
         linkdown = 1;
         /* The network cable is not connected. */
         printf("The network cable is not connected.\n");
+        nx_ip_driver_direct_command(&NetXDuoEthIpInstance, NX_LINK_DISABLE,
+                                    &actual_status);
       }
     }
 

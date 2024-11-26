@@ -243,6 +243,22 @@ static void MX_COMP1_Init(void)
   }
   LL_EXTI_DisableEvent_0_31(LL_EXTI_LINE_29);
   LL_EXTI_DisableIT_0_31(LL_EXTI_LINE_29);
+  /* Caution: On STM32H5, comparator interruption must be enabled
+  through direct line to NVIC (featuring low latency interrupt).
+  Moreover, 2 constraints must be taken into account,
+  interruption specificity:
+  - Triggering on level (instead of edge) implies to disable
+  interrupt in comparator IRQ handler at each interruption
+  occurrence. After interruption occurrence, comparator
+  interruption can be rearmed if needed.
+  - Triggering on high level implies that comparator output
+  initial state must at low level.
+  Application must check initial state and inverts compartors
+  polarity if needed to ensure functionality
+  in all initial levels. Therefore, this should be done after
+  comparator enable.
+  */
+
   /* USER CODE BEGIN COMP1_Init 2 */
 
   /* USER CODE END COMP1_Init 2 */

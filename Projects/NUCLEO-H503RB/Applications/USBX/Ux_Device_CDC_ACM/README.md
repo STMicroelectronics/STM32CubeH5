@@ -102,7 +102,7 @@ RTOS, ThreadX, USBX, USBXDevice, USB_DRD, Full Speed, CDC, VCP, USART, DMA.
 ### <b>Hardware and Software environment</b>
 
   - This application runs on STM32H5xx devices
-  - This application has been tested with STMicroelectronics NUCLEO-H503RB boards Revision MB1814-WS.
+  - This application has been tested with STMicroelectronics NUCLEO-H503RB boards Revision MB1814-C01.
     and can be easily tailored to any other supported device and development board.
 
   - NUCLEO-H503RB Set-up:

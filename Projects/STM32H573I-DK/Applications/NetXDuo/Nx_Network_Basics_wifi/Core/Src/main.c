@@ -439,8 +439,8 @@ static void MX_USART1_UART_Init(void)
 static void MX_GPIO_Init(void)
 {
   GPIO_InitTypeDef GPIO_InitStruct = {0};
-/* USER CODE BEGIN MX_GPIO_Init_1 */
-/* USER CODE END MX_GPIO_Init_1 */
+  /* USER CODE BEGIN MX_GPIO_Init_1 */
+  /* USER CODE END MX_GPIO_Init_1 */
 
   /* GPIO Ports Clock Enable */
   __HAL_RCC_GPIOB_CLK_ENABLE();
@@ -497,8 +497,8 @@ static void MX_GPIO_Init(void)
   HAL_NVIC_SetPriority(EXTI4_IRQn, 2, 0);
   HAL_NVIC_EnableIRQ(EXTI4_IRQn);
 
-/* USER CODE BEGIN MX_GPIO_Init_2 */
-/* USER CODE END MX_GPIO_Init_2 */
+  /* USER CODE BEGIN MX_GPIO_Init_2 */
+  /* USER CODE END MX_GPIO_Init_2 */
 }
 
 /* USER CODE BEGIN 4 */
@@ -525,7 +525,6 @@ void ttywrch(int ch) { stdout_putchar(ch); }
 #endif /* __MICROLIB */
 #endif /* __GNUC__ */
 
-
 /**
   * @brief  Retargets the C library printf function to the USART.
   * @param  None
@@ -538,7 +537,6 @@ PUTCHAR_PROTOTYPE
 
   return ch;
 }
-
 
 #if defined(__ICCARM__)
 size_t __write(int file, unsigned char const *ptr, size_t len)
@@ -554,7 +552,6 @@ size_t __write(int file, unsigned char const *ptr, size_t len)
   return len;
 }
 #endif /* __ICCARM__ */
-
 
 #if (defined(__GNUC__) && !defined(__ARMCC_VERSION))
 #define GETCHAR_PROTOTYPE int __io_getchar(void)
@@ -590,8 +587,6 @@ GETCHAR_PROTOTYPE
   }
   return ch;
 }
-
-
 
 /**
   * @brief Rx Transfer completed callback.

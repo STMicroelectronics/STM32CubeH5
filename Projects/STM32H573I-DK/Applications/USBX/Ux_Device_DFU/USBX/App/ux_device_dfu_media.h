@@ -3,7 +3,7 @@
   ******************************************************************************
   * @file    ux_device_dfu_media.h
   * @author  MCD Application Team
-  * @brief   USBX Device DFU interface header file
+  * @brief   USBX Device DFU applicative header file
   ******************************************************************************
   * @attention
   *

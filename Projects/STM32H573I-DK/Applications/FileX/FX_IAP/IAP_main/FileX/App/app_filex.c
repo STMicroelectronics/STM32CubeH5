@@ -46,30 +46,28 @@
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
-/* Main thread global data structures.  */
-TX_THREAD       fx_app_thread;
+/* Main thread global data structures. */
+TX_THREAD fx_app_thread;
 
 /* Buffer for FileX FX_MEDIA sector cache. */
 ALIGN_32BYTES (uint32_t fx_sd_media_memory[FX_STM32_SD_DEFAULT_SECTOR_SIZE / sizeof(uint32_t)]);
-/* Define FileX global data structures.  */
-FX_MEDIA        sdio_disk;
+/* Define FileX global data structures. */
+FX_MEDIA sdio_disk;
 
 /* USER CODE BEGIN PV */
 
-/* Flash buffer*/
+/* Flash buffer */
 UINT *read_buffer;
-/* Define FileX global data structures.  */
+/* Define FileX global data structures. */
 
-FX_FILE         fx_file;
-/* Define ThreadX global data structures.  */
-TX_THREAD       fx_thread;
-
-
+FX_FILE fx_file;
+/* Define ThreadX global data structures. */
+TX_THREAD fx_thread;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
 
-/* Main thread entry function.  */
+/* Main thread entry function. */
 void fx_thread_entry(ULONG thread_input);
 
 /* USER CODE BEGIN PFP */
@@ -80,42 +78,42 @@ static VOID os_delay(ULONG delay);
   * @brief  Application FileX Initialization.
   * @param memory_ptr: memory pointer
   * @retval int
-*/
+  */
 UINT MX_FileX_Init(VOID *memory_ptr)
 {
   UINT ret = FX_SUCCESS;
   TX_BYTE_POOL *byte_pool = (TX_BYTE_POOL*)memory_ptr;
   VOID *pointer;
 
-/* USER CODE BEGIN MX_FileX_MEM_POOL */
-  
-/* USER CODE END MX_FileX_MEM_POOL */
+  /* USER CODE BEGIN MX_FileX_MEM_POOL */
 
-/* USER CODE BEGIN 0 */
+  /* USER CODE END MX_FileX_MEM_POOL */
 
-/* USER CODE END 0 */
+  /* USER CODE BEGIN 0 */
 
-/*Allocate memory for the main thread's stack*/
+  /* USER CODE END 0 */
+
+  /*Allocate memory for the main thread's stack */
   ret = tx_byte_allocate(byte_pool, &pointer, FX_APP_THREAD_STACK_SIZE, TX_NO_WAIT);
 
-/* Check FX_APP_THREAD_STACK_SIZE allocation*/
+  /* Check FX_APP_THREAD_STACK_SIZE allocation */
   if (ret != FX_SUCCESS)
   {
     return TX_POOL_ERROR;
   }
 
-/* Create the main thread.  */
+  /* Create the main thread. */
   ret = tx_thread_create(&fx_app_thread, FX_APP_THREAD_NAME, fx_thread_entry, 0, pointer, FX_APP_THREAD_STACK_SIZE,
                          FX_APP_THREAD_PRIO, FX_APP_PREEMPTION_THRESHOLD, FX_APP_THREAD_TIME_SLICE, FX_APP_THREAD_AUTO_START);
 
-/* Check main thread creation */
+  /* Check main thread creation */
   if (ret != FX_SUCCESS)
   {
     return TX_THREAD_ERROR;
   }
 
-/* USER CODE BEGIN MX_FileX_Init */
-/* Allocate memory for the flash buffer */
+  /* USER CODE BEGIN MX_FileX_Init */
+  /* Allocate memory for the flash buffer */
   ret = tx_byte_allocate(byte_pool, (VOID **) &read_buffer, FLASH_WORD_SIZE, TX_NO_WAIT);
 
   if (ret != FX_SUCCESS)
@@ -124,72 +122,72 @@ UINT MX_FileX_Init(VOID *memory_ptr)
     Error_Handler();
   }
 
-/* USER CODE END MX_FileX_Init */
+  /* USER CODE END MX_FileX_Init */
 
-/* Initialize FileX.  */
+  /* Initialize FileX. */
   fx_system_initialize();
 
-/* USER CODE BEGIN MX_FileX_Init 1*/
+  /* USER CODE BEGIN MX_FileX_Init 1 */
 
-/* USER CODE END MX_FileX_Init 1*/
+  /* USER CODE END MX_FileX_Init 1 */
 
   return ret;
 }
 
 /**
- * @brief  Main thread entry.
- * @param thread_input: ULONG user argument used by the thread entry
- * @retval none
-*/
+  * @brief  Main thread entry.
+  * @param thread_input: ULONG user argument used by the thread entry
+  * @retval none
+  */
  void fx_thread_entry(ULONG thread_input)
  {
 
   UINT sd_status = FX_SUCCESS;
 
-/* USER CODE BEGIN fx_thread_entry 0*/
-  
+  /* USER CODE BEGIN fx_thread_entry 0 */
+
   ULONG bytes_read = 0;
   ULONG FlashAddress = APP_ADDRESS;
   ULONG flash_ret;
   uint32_t PageError;
   FLASH_EraseInitTypeDef EraseInitStruct;
   TX_INTERRUPT_SAVE_AREA
-/* USER CODE END fx_thread_entry 0*/
+  /* USER CODE END fx_thread_entry 0 */
 
-/* Open the SD disk driver */
-  sd_status =  fx_media_open(&sdio_disk, FX_SD_VOLUME_NAME, fx_stm32_sd_driver, (VOID *)FX_NULL, (VOID *) fx_sd_media_memory, sizeof(fx_sd_media_memory));
+  /* Open the SD disk driver */
+  sd_status = fx_media_open(&sdio_disk, FX_SD_VOLUME_NAME, fx_stm32_sd_driver, (VOID *)FX_NULL, (VOID *) fx_sd_media_memory, sizeof(fx_sd_media_memory));
 
-/* Check the media open sd_status */
+  /* Check the media open sd_status */
   if (sd_status != FX_SUCCESS)
   {
      /* USER CODE BEGIN SD DRIVER get info error */
-    Error_Handler();
+     Error_Handler();
     /* USER CODE END SD DRIVER get info error */
   }
 
-/* USER CODE BEGIN fx_thread_entry 1*/
-      
- /* Open the test file.  */
-  sd_status =  fx_file_open(&sdio_disk, &fx_file, FW_NAME_STRING, FX_OPEN_FOR_READ);
+  /* USER CODE BEGIN fx_thread_entry 1 */
 
-  /* Check the file open sd_status.  */
+  /* Open the test file. */
+  sd_status = fx_file_open(&sdio_disk, &fx_file, FW_NAME_STRING, FX_OPEN_FOR_READ);
+
+  /* Check the file open sd_status. */
   if (sd_status != FX_SUCCESS)
   {
-    /* Error opening file, call error handler.  */
+    /* Error opening file, call error handler. */
     Error_Handler();
   }
 
-  /* Seek to the beginning of the test file.  */
+  /* Seek to the beginning of the test file. */
   sd_status =  fx_file_seek(&fx_file, 0);
 
-  /* Check the file seek sd_status.  */
+  /* Check the file seek sd_status. */
   if (sd_status != FX_SUCCESS)
   {
-    /* Error performing file seek, call error handler.  */
+    /* Error performing file seek, call error handler. */
     Error_Handler();
   }
 
-   /* Unlock flash access to start programming operations */
+   /* Unlock flash access to start programming operations  */
   flash_ret = HAL_FLASH_Unlock();
 
   /* Check the flash unlock sd_status */
@@ -198,7 +196,7 @@ UINT MX_FileX_Init(VOID *memory_ptr)
     Error_Handler();
   }
 
-    /* Configure flash erase of sector 0 */
+  /* Configure flash erase of sector 0 */
   EraseInitStruct.TypeErase = FLASH_TYPEERASE_SECTORS;
   EraseInitStruct.Banks = FLASH_BANK_2;
   EraseInitStruct.Sector = FLASH_SECTOR_0;
@@ -211,18 +209,19 @@ UINT MX_FileX_Init(VOID *memory_ptr)
 
   TX_RESTORE
 
-  if(flash_ret != HAL_OK) {
+  if(flash_ret != HAL_OK)
+  {
     /* Error while erasing, call error handler */
     Error_Handler();
   }
 
-    /* Start flash programming */
+  /* Start flash programming */
   do {
 
-    /* Read FLASH_WORD_SIZE chunk from the exec into buffer.  */
-    sd_status =  fx_file_read(&fx_file, (VOID *) read_buffer, FLASH_WORD_SIZE, &bytes_read);
+    /* Read FLASH_WORD_SIZE chunk from the exec into buffer. */
+    sd_status = fx_file_read(&fx_file, (VOID *) read_buffer, FLASH_WORD_SIZE, &bytes_read);
 
-    /* Check the file read sd_status.  */
+    /* Check the file read sd_status. */
     if (sd_status != FX_SUCCESS)
     {
       /* We check if we reached EOF */
@@ -231,8 +230,8 @@ UINT MX_FileX_Init(VOID *memory_ptr)
         break;
       }
 
-      /* Error while reading file, call error handler.  */
-        Error_Handler();
+      /* Error while reading file, call error handler. */
+      Error_Handler();
     }
 
     /* Program 32 bytes into flash */
@@ -247,7 +246,7 @@ UINT MX_FileX_Init(VOID *memory_ptr)
     /* Increment the flash address by 32 bytes */
     FlashAddress = FlashAddress + FLASH_WORD_SIZE;
 
-  } while (bytes_read);
+     } while (bytes_read);
 
   /* Flash programmed, can be locked again */
   flash_ret = HAL_FLASH_Lock();
@@ -258,32 +257,33 @@ UINT MX_FileX_Init(VOID *memory_ptr)
     Error_Handler();
   }
 
-  /* Close the test file.  */
-  sd_status =  fx_file_close(&fx_file);
+  /* Close the test file. */
+  sd_status = fx_file_close(&fx_file);
 
-  /* Check the file close sd_status.  */
+  /* Check the file close sd_status. */
   if (sd_status != FX_SUCCESS)
   {
-    /* Error closing the file, call error handler.  */
+    /* Error closing the file, call error handler. */
     Error_Handler();
   }
 
-  /* Close the media.  */
-  sd_status =  fx_media_close(&sdio_disk);
+  /* Close the media. */
+  sd_status = fx_media_close(&sdio_disk);
 
-  /* Check the media close sd_status.  */
+  /* Check the media close sd_status. */
   if (sd_status != FX_SUCCESS)
   {
-    /* Error closing the media, call error handler.  */
+    /* Error closing the media, call error handler. */
     Error_Handler();
   }
 
+  /* Toggle green LED to indicate programming finish OK */
   while(1)
   {
     HAL_GPIO_TogglePin(GPIOI, GPIO_PIN_9);
     os_delay(40);
   }
-/* USER CODE END fx_thread_entry 1*/
+/* USER CODE END fx_thread_entry 1 */
   }
 
 /* USER CODE BEGIN 1 */

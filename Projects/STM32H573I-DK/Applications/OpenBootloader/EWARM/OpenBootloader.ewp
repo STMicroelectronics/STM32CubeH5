@@ -1912,6 +1912,12 @@
                     <name>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_utility_debug_callback_register.c</name>
                 </file>
                 <file>
+                    <name>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_utility_memory_byte_pool_create.c</name>
+                </file>
+                <file>
+                   <name>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_utility_memory_byte_pool_search.c</name>
+                </file>
+				<file>
                     <name>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_utility_debug_log.c</name>
                 </file>
                 <file>

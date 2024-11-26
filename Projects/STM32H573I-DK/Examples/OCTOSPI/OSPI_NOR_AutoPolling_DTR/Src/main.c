@@ -324,7 +324,7 @@ static void MX_OCTOSPI1_Init(void)
   hospi1.Init.FifoThresholdByte = 4;
   hospi1.Init.MemoryMode = HAL_XSPI_SINGLE_MEM;
   hospi1.Init.MemoryType = HAL_XSPI_MEMTYPE_MACRONIX;
-  hospi1.Init.MemorySize = HAL_XSPI_SIZE_8MB;
+  hospi1.Init.MemorySize = HAL_XSPI_SIZE_512MB;
   hospi1.Init.ChipSelectHighTimeCycle = 2;
   hospi1.Init.FreeRunningClock = HAL_XSPI_FREERUNCLK_DISABLE;
   hospi1.Init.ClockMode = HAL_XSPI_CLOCK_MODE_0;
@@ -391,8 +391,8 @@ void HAL_XSPI_ErrorCallback(XSPI_HandleTypeDef *hospi)
   */
 static void XSPI_WriteEnable(XSPI_HandleTypeDef *hospi)
 {
-  XSPI_RegularCmdTypeDef  sCommand;
-  uint8_t reg[2];
+  XSPI_RegularCmdTypeDef  sCommand ={0};
+  XSPI_AutoPollingTypeDef sConfig  ={0};
 
   /* Enable write operations ------------------------------------------ */
   sCommand.OperationType      = HAL_XSPI_OPTYPE_COMMON_CFG;
@@ -424,18 +424,21 @@ static void XSPI_WriteEnable(XSPI_HandleTypeDef *hospi)
   sCommand.DummyCycles    = DUMMY_CLOCK_CYCLES_READ_OCTAL;
   sCommand.DQSMode        = HAL_XSPI_DQS_ENABLE;
 
-   do
+  if (HAL_XSPI_Command(hospi, &sCommand, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
   {
-    if (HAL_XSPI_Command(hospi, &sCommand, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
-    {
-      Error_Handler();
-    }
+    Error_Handler();
+  }
 
-    if (HAL_XSPI_Receive(hospi, reg, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
-    {
-      Error_Handler();
-    }
-  } while((reg[0] & WRITE_ENABLE_MASK_VALUE) != WRITE_ENABLE_MATCH_VALUE);
+  sConfig.MatchValue    = WRITE_ENABLE_MATCH_VALUE;
+  sConfig.MatchMask     = WRITE_ENABLE_MASK_VALUE;
+  sConfig.MatchMode     = HAL_XSPI_MATCH_MODE_AND;
+  sConfig.IntervalTime  = AUTO_POLLING_INTERVAL;
+  sConfig.AutomaticStop = HAL_XSPI_AUTOMATIC_STOP_ENABLE;
+
+  if (HAL_XSPI_AutoPolling(hospi, &sConfig, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
+  {
+    Error_Handler();
+  }
 }
 
 /**

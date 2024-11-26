@@ -158,13 +158,6 @@ echo
 print_version "$OPENSSL" "version" "default"
 echo
 
-if [ -n "${OPENSSL_LEGACY+set}" ]; then
-    print_version "$OPENSSL_LEGACY" "version" "legacy"
-else
-    echo " * openssl (legacy): Not configured."
-fi
-echo
-
 if [ -n "${OPENSSL_NEXT+set}" ]; then
     print_version "$OPENSSL_NEXT" "version" "next"
 else

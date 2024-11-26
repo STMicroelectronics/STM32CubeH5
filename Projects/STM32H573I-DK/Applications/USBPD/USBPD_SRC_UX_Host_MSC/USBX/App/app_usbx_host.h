@@ -5,7 +5,7 @@
   * @author  MCD Application Team
   * @brief   USBX Host applicative header file
   ******************************************************************************
-    * @attention
+  * @attention
   *
   * Copyright (c) 2023 STMicroelectronics.
   * All rights reserved.
@@ -42,7 +42,7 @@ extern "C" {
 
 /* Exported types ------------------------------------------------------------*/
 /* USER CODE BEGIN ET */
-extern HCD_HandleTypeDef hhcd_USB_DRD_FS;
+
 /* USER CODE END ET */
 
 /* Exported constants --------------------------------------------------------*/

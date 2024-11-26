@@ -349,7 +349,6 @@ static void MX_SPI1_Init(void)
   DMA_InitStruct.DestIncMode = LL_DMA_DEST_FIXED;
   DMA_InitStruct.Priority = LL_DMA_LOW_PRIORITY_LOW_WEIGHT;
   DMA_InitStruct.BlkDataLength = 0x00000000U;
-  DMA_InitStruct.Mode = LL_DMA_NORMAL;
   DMA_InitStruct.TriggerMode = LL_DMA_TRIGM_BLK_TRANSFER;
   DMA_InitStruct.TriggerPolarity = LL_DMA_TRIG_POLARITY_MASKED;
   DMA_InitStruct.TriggerSelection = 0x00000000U;
@@ -444,7 +443,7 @@ static void MX_SPI3_Init(void)
 
   /* SPI3 DMA Init */
 
-  /* GPDMA1_REQUEST_SPI3_RX Init */
+  /* GPDMA2_REQUEST_SPI3_RX Init */
   DMA_InitStruct.SrcAddress = 0x00000000U;
   DMA_InitStruct.DestAddress = 0x00000000U;
   DMA_InitStruct.Direction = LL_DMA_DIRECTION_PERIPH_TO_MEMORY;
@@ -458,11 +457,10 @@ static void MX_SPI3_Init(void)
   DMA_InitStruct.DestIncMode = LL_DMA_DEST_INCREMENT;
   DMA_InitStruct.Priority = LL_DMA_LOW_PRIORITY_LOW_WEIGHT;
   DMA_InitStruct.BlkDataLength = 0x00000000U;
-  DMA_InitStruct.Mode = LL_DMA_NORMAL;
   DMA_InitStruct.TriggerMode = LL_DMA_TRIGM_BLK_TRANSFER;
   DMA_InitStruct.TriggerPolarity = LL_DMA_TRIG_POLARITY_MASKED;
   DMA_InitStruct.TriggerSelection = 0x00000000U;
-  DMA_InitStruct.Request = LL_GPDMA1_REQUEST_SPI3_RX;
+  DMA_InitStruct.Request = LL_GPDMA2_REQUEST_SPI3_RX;
   DMA_InitStruct.TransferEventMode = LL_DMA_TCEM_BLK_TRANSFER;
   DMA_InitStruct.Mode = LL_DMA_NORMAL;
   DMA_InitStruct.SrcAllocatedPort = LL_DMA_SRC_ALLOCATED_PORT0;

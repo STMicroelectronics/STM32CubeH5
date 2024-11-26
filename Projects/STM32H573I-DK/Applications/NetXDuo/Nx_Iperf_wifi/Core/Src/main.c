@@ -652,7 +652,6 @@ void Error_Handler(void)
   /* User may add here some code to deal with this error */
   printf("\n\nError_Handler()>\n");
 
-  __disable_irq();
   while (1)
   {
   }

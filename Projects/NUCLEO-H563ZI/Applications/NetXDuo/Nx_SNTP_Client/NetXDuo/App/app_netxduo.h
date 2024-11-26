@@ -5,7 +5,7 @@
   * @author  MCD Application Team
   * @brief   NetXDuo applicative header file
   ******************************************************************************
-    * @attention
+  * @attention
   *
   * Copyright (c) 2023 STMicroelectronics.
   * All rights reserved.
@@ -45,7 +45,7 @@ extern "C" {
 
 /* Exported constants --------------------------------------------------------*/
 /* USER CODE BEGIN EC */
- #define SNTP_SERVER_NAME             "0.fr.pool.ntp.org"
+#define SNTP_SERVER_NAME             "0.fr.pool.ntp.org"
 
 #define SNTP_UPDATE_EVENT            1
 
@@ -55,12 +55,9 @@ extern "C" {
 /* Define how often we check on SNTP server status. */
 #define CHECK_SNTP_UPDATES_TIMEOUT   (180 * NX_IP_PERIODIC_RATE)
 
-
-
 #define DEFAULT_MEMORY_SIZE          1024
 #define ARP_MEMORY_SIZE              DEFAULT_MEMORY_SIZE
 #define SNTP_CLIENT_THREAD_MEMORY    6 * DEFAULT_MEMORY_SIZE
-
 
 #define DEFAULT_MAIN_PRIORITY        10
 #define DEFAULT_PRIORITY             5
@@ -69,13 +66,13 @@ extern "C" {
 #define NULL_ADDRESS                 0
 #define USER_DNS_ADDRESS             IP_ADDRESS(1, 1, 1, 1)
 
-
-
 /* EPOCH_TIME_DIFF is equivalent to 70 years in sec
    calculated with www.epochconverter.com/date-difference
    This constant is used to delete difference between :
    Epoch converter (referenced to 1970) and SNTP (referenced to 1900) */
 #define EPOCH_TIME_DIFF             2208988800
+/* This define defines the period of checking the connection of network cable.*/
+#define NX_ETH_CABLE_CONNECTION_CHECK_PERIOD      (1 * NX_IP_PERIODIC_RATE)
 /* USER CODE END EC */
 /* The DEFAULT_PAYLOAD_SIZE should match with RxBuffLen configured via MX_ETH_Init */
 #ifndef DEFAULT_PAYLOAD_SIZE

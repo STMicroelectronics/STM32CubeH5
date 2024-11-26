@@ -8,6 +8,10 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
+#include <test/helpers.h>
+
+#if defined(MBEDTLS_PSA_CRYPTO_BUILTIN_KEYS)
+
 #include <psa/crypto.h>
 #include <psa/crypto_extra.h>
 
@@ -74,3 +78,5 @@ psa_status_t mbedtls_psa_platform_get_builtin_key(
 
     return PSA_ERROR_DOES_NOT_EXIST;
 }
+
+#endif /* MBEDTLS_PSA_CRYPTO_BUILTIN_KEYS */

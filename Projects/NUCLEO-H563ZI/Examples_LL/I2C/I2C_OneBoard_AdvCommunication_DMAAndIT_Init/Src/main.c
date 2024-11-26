@@ -12,10 +12,9 @@
   * Copyright (c) 2023 STMicroelectronics.
   * All rights reserved.
   *
-  * This software component is licensed by ST under BSD 3-Clause license,
-  * the "License"; You may not use this file except in compliance with the
-  * License. You may obtain a copy of the License at:
-  *                        opensource.org/licenses/BSD-3-Clause
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
   *
   ******************************************************************************
   */
@@ -430,7 +429,6 @@ static void MX_I2C2_Init(void)
   DMA_InitStruct.DestIncMode = LL_DMA_DEST_INCREMENT;
   DMA_InitStruct.Priority = LL_DMA_LOW_PRIORITY_HIGH_WEIGHT;
   DMA_InitStruct.BlkDataLength = 0x00000000U;
-  DMA_InitStruct.Mode = LL_DMA_NORMAL;
   DMA_InitStruct.TriggerMode = LL_DMA_TRIGM_BLK_TRANSFER;
   DMA_InitStruct.TriggerPolarity = LL_DMA_TRIG_POLARITY_MASKED;
   DMA_InitStruct.TriggerSelection = 0x00000000U;
@@ -459,7 +457,6 @@ static void MX_I2C2_Init(void)
   DMA_InitStruct.DestIncMode = LL_DMA_DEST_FIXED;
   DMA_InitStruct.Priority = LL_DMA_LOW_PRIORITY_HIGH_WEIGHT;
   DMA_InitStruct.BlkDataLength = 0x00000000U;
-  DMA_InitStruct.Mode = LL_DMA_NORMAL;
   DMA_InitStruct.TriggerMode = LL_DMA_TRIGM_BLK_TRANSFER;
   DMA_InitStruct.TriggerPolarity = LL_DMA_TRIG_POLARITY_MASKED;
   DMA_InitStruct.TriggerSelection = 0x00000000U;

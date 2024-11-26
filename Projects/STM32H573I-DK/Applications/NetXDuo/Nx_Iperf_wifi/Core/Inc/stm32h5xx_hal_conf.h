@@ -1,12 +1,10 @@
 /* USER CODE BEGIN Header */
 /**
   **********************************************************************************************************************
-
   * @file    stm32h5xx_hal_conf.h
   * @author  MCD Application Team
   * @brief   HAL configuration file.
   **********************************************************************************************************************
-
   * @attention
   *
   * Copyright (c) 2023 STMicroelectronics.
@@ -17,7 +15,6 @@
   * If no LICENSE file comes with this software, it is provided AS-IS.
   *
   **********************************************************************************************************************
-
   */
 /* USER CODE END Header */
 
@@ -27,7 +24,7 @@
 #define STM32H5xx_HAL_CONF_H
 
 #ifdef __cplusplus
- extern "C" {
+extern "C" {
 #endif
 
 /* Exported types ----------------------------------------------------------------------------------------------------*/
@@ -182,7 +179,7 @@
   */
 
 #define  VDD_VALUE                  3300UL /*!< Value of VDD in mv */
-#define  TICK_INT_PRIORITY          (0UL)  /*!< tick interrupt priority (lowest by default) */
+#define  TICK_INT_PRIORITY          (0UL)  /*!< tick interrupt priority */
 #define  USE_RTOS                   0U
 #define  PREFETCH_ENABLE            0U               /*!< Enable prefetch */
 
@@ -193,7 +190,7 @@
   *        HAL drivers code
   */
 
- #define USE_FULL_ASSERT    1U
+//#define USE_FULL_ASSERT    1U
 
 /* ############################################ Register callback feature configuration ############################# */
 
@@ -485,12 +482,12 @@
   *         If expr is true, it returns no value.
   * @retval None
   */
-  #define assert_param(expr) ((expr) ? (void)0U : assert_failed((uint8_t *)__FILE__, __LINE__))
+#define assert_param(expr) ((expr) ? (void)0U : assert_failed((uint8_t *)__FILE__, __LINE__))
 /* Exported functions ----------------------------------------------------------------------------------------------- */
 
-  void assert_failed(uint8_t *file, uint32_t line);
+void assert_failed(uint8_t *file, uint32_t line);
 #else
-  #define assert_param(expr) ((void)0U)
+#define assert_param(expr) ((void)0U)
 #endif /* USE_FULL_ASSERT */
 
 #ifdef __cplusplus

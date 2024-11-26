@@ -30,13 +30,13 @@
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
-typedef  void (*pFunction)(void);
+typedef void (*pFunction)(void);
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define RAM_START_ADDRESS  0x20000000
-#define RAM_RANGE_MASK     0xFF000000
+#define RAM_START_ADDRESS  0x20010000
+#define RAM_RANGE_MASK     0xFFFF0000
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -365,7 +365,7 @@ static void CallUserApp(uint32_t Address)
          (unsigned int)Address, *(unsigned int*)Address, *(unsigned int*)(Address+4));
   printf("**************************************************\n");
 
-  /* Check App signature from loading address, the SP must point to the area 0x20000000 */
+  /* Check App signature from loading address, the SP must point to the area 0x20010000 */
   /* Please note that this assumes that the RAM region starts at RAM_START_ADDRESS, otherwise change it accotrdingly. */
   if(((*(__IO uint32_t*)Address) & RAM_RANGE_MASK ) != RAM_START_ADDRESS)
   {
@@ -405,6 +405,13 @@ static void CallUserApp(uint32_t Address)
   UserApp();
 }
 
+/**
+  * @brief  Retargets the C library __write function to the IAR function iar_fputc.
+  * @param  file: file descriptor.
+  * @param  ptr: pointer to the buffer where the data is stored.
+  * @param  len: length of the data to write in bytes.
+  * @retval length of the written data in bytes.
+  */
 #if defined(__ICCARM__)
 size_t __write(int file, unsigned char const *ptr, size_t len)
 {
@@ -425,7 +432,7 @@ size_t __write(int file, unsigned char const *ptr, size_t len)
   */
 PUTCHAR_PROTOTYPE
 {
-  /* Place your implementation of putchar here */
+  /* Place your implementation of fputc here */
   /* e.g. write a character to the USART1 and Loop until the end of transmission */
   HAL_UART_Transmit(&huart1, (uint8_t *)&ch, 1, 0xFFFF);
 
@@ -462,6 +469,7 @@ void Error_Handler(void)
 {
   /* USER CODE BEGIN Error_Handler_Debug */
   /* User can add his own implementation to report the HAL error return state */
+  HAL_GPIO_WritePin(GPIOI, GPIO_PIN_9, GPIO_PIN_SET);
   while (1)
   {
     HAL_GPIO_TogglePin(GPIOF, GPIO_PIN_1);
@@ -483,6 +491,10 @@ void assert_failed(uint8_t *file, uint32_t line)
   /* USER CODE BEGIN 6 */
   /* User can add his own implementation to report the file name and line number,
      ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
+  /* Infinite loop */
+  while (1)
+  {
+  }
   /* USER CODE END 6 */
 }
 #endif /* USE_FULL_ASSERT */

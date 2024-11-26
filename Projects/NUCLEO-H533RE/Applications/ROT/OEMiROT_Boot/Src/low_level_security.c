@@ -364,16 +364,16 @@ static const uint32_t ProductStatePrioList[] = {
 /*----------------------|  SPI  |-------------------------------------*/
 /* SPI: SPI1 + SPI2 + SPI3*/
 /* SPI1: _MOSI  =  PA7, _MISO = PA6 , _SCK = PA5, _NSS= PA4 */
-/* SPI2: _MOSI  =  PC1, _MISO = PB14 , _SCK = PB10, _NSS= PB12 */
+/* SPI2: _MOSI  =  PC1 or PB15, _MISO = PB14 , _SCK = PB10, _NSS= PB12 */
 /* SPI3: _MOSI  =  PC12, _MISO = PC11 , _SCK = PC10, !! _NSS= PA15 */
 
 /*----------------------| I2C  |---------------------------------------*/
-/*I2C:  I2C3 + I2C4*/
-/*I2C3 (_SCL: PA8, _SDA:PC9 ) */
-/*I2C4 (_SCL=PD12, _SDA=PD13 ) */
+/*I2C:  I2C1 + I2C3*/
+/*I2C1 (_SCL: PB8, _SDA: PB9 ) */
+/*I2C3 (_SCL: PA8, _SDA: PB4 ) */
 
 /*----------------------| I3C  |---------------------------------------*/
-/*I3C1 (_SCL: PB6, _SDA:PB7 ) */
+/*I3C1 (_SCL: PB6 or PB8, _SDA: PB7 ) */
 
 /*----------------------|  USB |---------------------------------------*/
 /* USB*/
@@ -383,12 +383,12 @@ static const uint32_t ProductStatePrioList[] = {
 /*FDCAN2 */
 /*CAN (_RX = PB5, _TX = PB13 ) */
 
-#define GPIOA_MASK_SECCFG    (GPIO_PIN_10 | GPIO_PIN_9  | GPIO_PIN_3  | GPIO_PIN_2  | GPIO_PIN_7  | GPIO_PIN_6 | GPIO_PIN_5 | GPIO_PIN_4 | \
-                              GPIO_PIN_15 | GPIO_PIN_8  | GPIO_PIN_11 | GPIO_PIN_12)
-#define GPIOB_MASK_SECCFG    (GPIO_PIN_14 |\
-                              GPIO_PIN_10 | GPIO_PIN_12 | GPIO_PIN_6  | GPIO_PIN_7  | GPIO_PIN_5 | GPIO_PIN_13)
-#define GPIOC_MASK_SECCFG    (GPIO_PIN_1  | GPIO_PIN_12 | GPIO_PIN_11 | GPIO_PIN_10 | GPIO_PIN_9)
-#define GPIOD_MASK_SECCFG    (GPIO_PIN_9  | GPIO_PIN_8  | GPIO_PIN_12 | GPIO_PIN_13)
+#define GPIOA_MASK_SECCFG    (GPIO_PIN_15 | GPIO_PIN_12  | GPIO_PIN_11  | GPIO_PIN_10  | GPIO_PIN_9  | GPIO_PIN_8 | \
+                              GPIO_PIN_7 | GPIO_PIN_6 | GPIO_PIN_5 | GPIO_PIN_4  | GPIO_PIN_3 | GPIO_PIN_2)
+#define GPIOB_MASK_SECCFG    (GPIO_PIN_15 | GPIO_PIN_14 | GPIO_PIN_13 | GPIO_PIN_12  | GPIO_PIN_10  | \
+                              GPIO_PIN_7 | GPIO_PIN_6 | GPIO_PIN_5 | GPIO_PIN_4)
+#define GPIOC_MASK_SECCFG    (GPIO_PIN_12  | GPIO_PIN_11 | GPIO_PIN_10 | GPIO_PIN_1)
+#define GPIOD_MASK_SECCFG    (GPIO_PIN_9  | GPIO_PIN_8)
 
 /* Peripherals configuration
    ========================= */
@@ -418,7 +418,7 @@ static const uint32_t ProductStatePrioList[] = {
 /* IWDG */
 
 #define TZSC_MASK_R1  (GTZC_CFGR1_USART2_Msk | GTZC_CFGR1_USART3_Msk | GTZC_CFGR1_SPI3_Msk  | GTZC_CFGR1_SPI2_Msk | \
-                       GTZC_CFGR1_I3C1_Msk   | GTZC_CFGR1_IWDG_Msk)
+                       GTZC_CFGR1_I2C1_Msk | GTZC_CFGR1_I3C1_Msk   | GTZC_CFGR1_IWDG_Msk)
 
 #define TZSC_MASK_R2  (GTZC_CFGR2_USART1_Msk | GTZC_CFGR2_SPI1_Msk   | GTZC_CFGR2_I2C3_Msk   | \
                        GTZC_CFGR2_USB_Msk  | GTZC_CFGR2_FDCAN2_Msk  | GTZC_CFGR2_FDCAN1_Msk | GTZC_CFGR2_UCPD1_Msk)
@@ -523,17 +523,17 @@ static const struct sau_cfg_t region_sau_load_cfg[] =
 /*in ITNS2 OTG_FS_IRQn 74, i.e bit 10 is non secure (1) */
 #define RSS_NVIC_INIT_ITNS2_VAL      (0x00000400U)
 
-/*Interrupts 96 .. 128 */
-/*I3C1_EV_IRQn = 123*/
+/*Interrupts 96 .. 127 */
+/*I3C1_EV_IRQn = 123 */
 #define RSS_NVIC_INIT_ITNS3_VAL      (0x08000000U)
 
 /* SRAM1 configuration
    =================== */
 /* SRAM1 NB super-block */
-#define GTZC_MPCBB1_NB_VCTR (16U)
+#define GTZC_MPCBB1_NB_VCTR (8U)
 
 /* SRAM3 NB super-block */
-#define GTZC_MPCBB3_NB_VCTR (20U)
+#define GTZC_MPCBB3_NB_VCTR (4U)
 
 /* MPCBB : All SRAM block non secure */
 #define GTZC_MPCBB_ALL_NSEC (0x00000000UL)

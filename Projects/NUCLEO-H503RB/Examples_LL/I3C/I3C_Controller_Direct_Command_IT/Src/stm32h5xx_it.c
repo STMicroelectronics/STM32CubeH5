@@ -223,7 +223,7 @@ void EXTI13_IRQHandler(void)
 }
 
 /**
-  * @brief This function handles I3C1 event interrupt.
+  * @brief This function handles I3C1 Event interrupt.
   */
 void I3C1_EV_IRQHandler(void)
 {
@@ -265,7 +265,7 @@ void I3C1_EV_IRQHandler(void)
 }
 
 /**
-  * @brief This function handles I3C1 error interrupt.
+  * @brief This function handles I3C1 Error interrupt.
   */
 void I3C1_ER_IRQHandler(void)
 {

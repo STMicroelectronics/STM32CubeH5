@@ -69,13 +69,13 @@ UINT App_ThreadX_Init(VOID *memory_ptr)
   /* USER CODE END App_ThreadX_MEM_POOL */
   CHAR *pointer;
 
-  /* Allocate the stack for Main Thread  */
+  /* Allocate the stack for Main Thread */
   if (tx_byte_allocate(byte_pool, (VOID**) &pointer,
                        TX_APP_STACK_SIZE, TX_NO_WAIT) != TX_SUCCESS)
   {
     return TX_POOL_ERROR;
   }
-  /* Create Main Thread.  */
+  /* Create Main Thread. */
   if (tx_thread_create(&tx_app_thread, "Main Thread", MainThread_Entry, 0, pointer,
                        TX_APP_STACK_SIZE, TX_APP_THREAD_PRIO, TX_APP_THREAD_PREEMPTION_THRESHOLD,
                        TX_APP_THREAD_TIME_SLICE, TX_APP_THREAD_AUTO_START) != TX_SUCCESS)
@@ -83,7 +83,7 @@ UINT App_ThreadX_Init(VOID *memory_ptr)
     return TX_THREAD_ERROR;
   }
 
-  /* Create Semaphore.  */
+  /* Create Semaphore. */
   if (tx_semaphore_create(&tx_app_semaphore, "Semaphore", 0) != TX_SUCCESS)
   {
     return TX_SEMAPHORE_ERROR;
@@ -112,9 +112,9 @@ void MainThread_Entry(ULONG thread_input)
     {
       for (i=0; i<10; i++)
       {
-      /* Toggle LED to indicate status*/
-      HAL_GPIO_TogglePin(LED1_GPIO_Port, LED1_Pin);
-      App_Delay(50);
+        /* Toggle LED to indicate status */
+        HAL_GPIO_TogglePin(LED1_GPIO_Port, LED1_Pin);
+        App_Delay(50);
       }
     }
   }
@@ -128,27 +128,15 @@ void MainThread_Entry(ULONG thread_input)
   */
 void MX_ThreadX_Init(void)
 {
-  /* USER CODE BEGIN  Before_Kernel_Start */
+  /* USER CODE BEGIN Before_Kernel_Start */
 
-  /* USER CODE END  Before_Kernel_Start */
+  /* USER CODE END Before_Kernel_Start */
 
   tx_kernel_enter();
 
-  /* USER CODE BEGIN  Kernel_Start_Error */
+  /* USER CODE BEGIN Kernel_Start_Error */
 
-  /* USER CODE END  Kernel_Start_Error */
-}
-
-/**
-  * @brief  App_ThreadX_LowPower_Timer_Setup
-  * @param  count : TX timer count
-  * @retval None
-  */
-void App_ThreadX_LowPower_Timer_Setup(ULONG count)
-{
-  /* USER CODE BEGIN  App_ThreadX_LowPower_Timer_Setup */
-
-  /* USER CODE END  App_ThreadX_LowPower_Timer_Setup */
+  /* USER CODE END Kernel_Start_Error */
 }
 
 /**
@@ -176,18 +164,6 @@ void App_ThreadX_LowPower_Exit(void)
   HAL_RCC_DeInit();
   SystemClock_Config();
   /* USER CODE END  App_ThreadX_LowPower_Exit */
-}
-
-/**
-  * @brief  App_ThreadX_LowPower_Timer_Adjust
-  * @param  None
-  * @retval Amount of time (in ticks)
-  */
-ULONG App_ThreadX_LowPower_Timer_Adjust(void)
-{
-  /* USER CODE BEGIN  App_ThreadX_LowPower_Timer_Adjust */
-  return 0;
-  /* USER CODE END  App_ThreadX_LowPower_Timer_Adjust */
 }
 
 /* USER CODE BEGIN 1 */

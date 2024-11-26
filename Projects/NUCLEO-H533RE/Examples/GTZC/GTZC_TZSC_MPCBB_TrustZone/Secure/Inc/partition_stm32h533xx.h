@@ -402,11 +402,11 @@
 //   <o.24> EXTI13_IRQn           <1=> Non-Secure state
 //   <o.25> EXTI14_IRQn           <0=> Secure state
 //   <o.26> EXTI15_IRQn           <0=> Secure state
-//   <o.27> IWDG_IRQn             <0=> Secure state
-//   <o.28> SAES_IRQn             <0=> Secure state
-//   <o.29> GPDMA1_Channel0_IRQn  <0=> Secure state
-//   <o.30> GPDMA1_Channel1_IRQn  <0=> Secure state
-//   <o.31> GPDMA1_Channel2_IRQn  <0=> Secure state
+//   <o.27> GPDMA1_Channel0_IRQn  <0=> Secure state
+//   <o.28> GPDMA1_Channel1_IRQn  <0=> Secure state
+//   <o.29> GPDMA1_Channel2_IRQn  <0=> Secure state
+//   <o.30> GPDMA1_Channel3_IRQn  <0=> Secure state
+//   <o.31> GPDMA1_Channel4_IRQn  <0=> Secure state
 */
 #define NVIC_INIT_ITNS0_VAL      0x01000000
 /*
@@ -420,11 +420,11 @@
 
 /*
 // Interrupts 32..63
-//   <o.0>  GPDMA1_Channel3_IRQn  <0=> Secure state
-//   <o.1>  GPDMA1_Channel4_IRQn  <0=> Secure state
-//   <o.2>  GPDMA1_Channel5_IRQn  <0=> Secure state
-//   <o.3>  GPDMA1_Channel6_IRQn  <0=> Secure state
-//   <o.4>  GPDMA1_Channel7_IRQn  <0=> Secure state
+//   <o.0>  GPDMA1_Channel5_IRQn  <0=> Secure state
+//   <o.1>  GPDMA1_Channel6_IRQn  <0=> Secure state
+//   <o.2>  GPDMA1_Channel7_IRQn  <0=> Secure state
+//   <o.3>  IWDG_IRQn             <0=> Secure state
+//   <o.4>  SAES_IRQn             <0=> Secure state
 //   <o.5>  ADC1_IRQn             <0=> Secure state
 //   <o.6>  DAC1_IRQn             <0=> Secure state
 //   <o.7>  FDCAN1_IT0_IRQn       <0=> Secure state
@@ -439,19 +439,19 @@
 //   <o.16> TIM5_IRQn             <0=> Secure state
 //   <o.17> TIM6_IRQn             <0=> Secure state
 //   <o.18> TIM7_IRQn             <0=> Secure state
-//   <o.19> TIM8_BRK_IRQn         <0=> Secure state
-//   <o.20> TIM8_UP_IRQn          <0=> Secure state
-//   <o.21> TIM8_TRG_COM_IRQn     <0=> Secure state
-//   <o.22> TIM8_CC_IRQn          <0=> Secure state
-//   <o.23> I2C1_EV_IRQn          <0=> Secure state
-//   <o.24> I2C1_ER_IRQn          <0=> Secure state
-//   <o.25> I2C2_EV_IRQn          <0=> Secure state
-//   <o.26> I2C2_ER_IRQn          <0=> Secure state
-//   <o.27> SPI1_IRQn             <0=> Secure state
-//   <o.28> SPI2_IRQn             <0=> Secure state
-//   <o.29> USART1_IRQn           <0=> Secure state
-//   <o.30> USART2_IRQn           <0=> Secure state
-//   <o.31> USART3_IRQn           <0=> Secure state
+//   <o.19> I2C1_EV_IRQn          <0=> Secure state
+//   <o.20> I2C1_ER_IRQn          <0=> Secure state
+//   <o.21> I2C2_EV_IRQn          <0=> Secure state
+//   <o.22> I2C2_ER_IRQn          <0=> Secure state
+//   <o.23> SPI1_IRQn             <0=> Secure state
+//   <o.24> SPI2_IRQn             <0=> Secure state
+//   <o.25> SPI3_IRQn             <0=> Secure state
+//   <o.26> USART1_IRQn           <0=> Secure state
+//   <o.27> USART2_IRQn           <0=> Secure state
+//   <o.28> USART3_IRQn           <0=> Secure state
+//   <o.29> UART4_IRQn            <0=> Secure state
+//   <o.30> UART5_IRQn            <0=> Secure state
+//   <o.31> LPUART1_IRQn          <0=> Secure state
 */
 
 #define NVIC_INIT_ITNS1_VAL      0x00000000
@@ -467,41 +467,30 @@
 
 /*
 // Interrupts 64..95
-//   <o.0>  UART4_IRQn            <0=> Secure state
-//   <o.1>  UART5_IRQn            <0=> Secure state
-//   <o.2>  LPUART1_IRQn          <0=> Secure state
-//   <o.3>  LPTIM1_IRQn           <0=> Secure state
-//   <o.4>  LPTIM2_IRQn           <0=> Secure state
-//   <o.5>  TIM15_IRQn            <0=> Secure state
-//   <o.6>  TIM16_IRQn            <0=> Secure state
-//   <o.7>  TIM17_IRQn            <0=> Secure state
-//   <o.8>  COMP_IRQn             <0=> Secure state
-//   <o.9>  OTG_FS_IRQn           <0=> Secure state
-//   <o.10> CRS_IRQn              <0=> Secure state
-//   <o.11> FMC_IRQn              <0=> Secure state
-//   <o.12> OCTOSPI1_IRQn         <0=> Secure state
-//   <o.13> PWR_S3WU_IRQn         <0=> Secure state
-
-//   <o.14> SDMMC1_IRQn           <0=> Secure state
-//   <o.15> SDMMC2_IRQn           <0=> Secure state
-
-//   <o.16> GPDMA1_Channel8_IRQn  <0=> Secure state
-//   <o.17> GPDMA1_Channel9_IRQn  <0=> Secure state
-//   <o.18> GPDMA1_Channel10_IRQn <0=> Secure state
-//   <o.19> GPDMA1_Channel11_IRQn <0=> Secure state
-//   <o.20> GPDMA1_Channel12_IRQn <0=> Secure state
-//   <o.21> GPDMA1_Channel13_IRQn <0=> Secure state
-//   <o.22> GPDMA1_Channel14_IRQn <0=> Secure state
-//   <o.23> GPDMA1_Channel15_IRQn <0=> Secure state
-//   <o.24> I2C3_EV_IRQn          <0=> Secure state
-//   <o.25> I2C3_ER_IRQn          <0=> Secure state
-//   <o.26> SAI1_IRQn             <0=> Secure state
-//   <o.27> SAI2_IRQn             <0=> Secure state
-//   <o.28> TSC_IRQn              <0=> Secure state
-//   <o.29> AES_IRQn              <0=> Secure state
-
-//   <o.30> RNG_IRQn              <0=> Secure state
-//   <o.31> FPU_IRQn              <0=> Secure state
+//   <o.0>  LPTIM1_IRQn           <0=> Secure state
+//   <o.1>  TIM8_BRK_IRQn         <0=> Secure state
+//   <o.2>  TIM8_UP_IRQn          <0=> Secure state
+//   <o.3>  TIM8_TRG_COM_IRQn     <0=> Secure state
+//   <o.4>  TIM8_CC_IRQn          <0=> Secure state
+//   <o.5>  ADC2_IRQn             <0=> Secure state
+//   <o.6>  LPTIM2_IRQn           <0=> Secure state
+//   <o.7>  TIM15_IRQn            <0=> Secure state
+//   <o.10> USB_DRD_FS_IRQn       <0=> Secure state
+//   <o.11> CRS_IRQn              <0=> Secure state
+//   <o.12> UCPD1_IRQn            <0=> Secure state
+//   <o.13> FMC_IRQn              <0=> Secure state
+//   <o.14> OCTOSPI1_IRQn         <0=> Secure state
+//   <o.15> SDMMC1_IRQn           <0=> Secure state
+//   <o.16> I2C3_EV_IRQn          <0=> Secure state
+//   <o.17> I2C3_ER_IRQn          <0=> Secure state
+//   <o.18> SPI4_IRQn             <0=> Secure state
+//   <o.21> USART6_IRQn           <0=> Secure state
+//   <o.26> GPDMA2_Channel0_IRQn  <0=> Secure state
+//   <o.27> GPDMA2_Channel1_IRQn  <0=> Secure state
+//   <o.28> GPDMA2_Channel2_IRQn  <0=> Secure state
+//   <o.29> GPDMA2_Channel3_IRQn  <0=> Secure state
+//   <o.30> GPDMA2_Channel4_IRQn  <0=> Secure state
+//   <o.31> GPDMA2_Channel5_IRQn  <0=> Secure state
 */
 
 #define NVIC_INIT_ITNS2_VAL      0x00000000
@@ -511,45 +500,51 @@
 */
 
 /*
-//   <e>Initialize ITNS 3 (Interrupts 96..108)
+//   <e>Initialize ITNS 3 (Interrupts 96..127)
 */
 #define NVIC_INIT_ITNS3    1
 
 /*
-// Interrupts 96..125
-//   <o.0>  HASH_IRQn             <0=> Secure state
-//   <o.1>  PKA_IRQn              <0=> Secure state
-//   <o.2>  LPTIM3_IRQn           <0=> Secure state
-//   <o.3>  SPI3_IRQn             <0=> Secure state
-//   <o.4>  I2C4_ER_IRQn          <0=> Secure state
-//   <o.5>  I2C4_EV_IRQn          <0=> Secure state
-//   <o.6>  MDF1_FLT0_IRQn        <0=> Secure state
-//   <o.7>  MDF1_FLT1_IRQn        <0=> Secure state
-//   <o.8>  MDF1_FLT2_IRQn        <0=> Secure state
-//   <o.9>  MDF1_FLT3_IRQn        <0=> Secure state
-//   <o.10> UCPD1_IRQn            <0=> Secure state
-//   <o.11> ICACHE_IRQn           <0=> Secure state
-//   <o.12> OTFDEC1_IRQn          <0=> Secure state
-//   <o.13> OTFDEC2_IRQn          <0=> Secure state
-//   <o.14> LPTIM4_IRQn           <0=> Secure state
-//   <o.15> DCACHE1_IRQn          <0=> Secure state
-//   <o.16> ADF1_IRQn             <0=> Secure state
-//   <o.17> ADC4_IRQn             <0=> Secure state
-//   <o.18> LPDMA1_Channel0_IRQn  <0=> Secure state
-//   <o.19> LPDMA1_Channel1_IRQn  <0=> Secure state
-//   <o.20> LPDMA1_Channel2_IRQn  <0=> Secure state
-//   <o.21> LPDMA1_Channel3_IRQn  <0=> Secure state
-//   <o.22> DMA2D_IRQn            <0=> Secure state
-//   <o.23> DCMI_PSSI_IRQn        <0=> Secure state
-//   <o.24> OCTOSPI2_IRQn         <0=> Secure state
-//   <o.25> MDF1_FLT4_IRQn        <0=> Secure state
-//   <o.26> MDF1_FLT5_IRQn        <0=> Secure state
-//   <o.27> CORDIC_IRQn           <0=> Secure state
-//   <o.28> FMAC_IRQn             <0=> Secure state
-
+// Interrupts 96..127
+//   <o.0>  GPDMA2_Channel6_IRQn  <0=> Secure state
+//   <o.1>  GPDMA2_Channel7_IRQn  <0=> Secure state
+//   <o.7>  FPU_IRQn              <0=> Secure state
+//   <o.8>  ICACHE_IRQn           <0=> Secure state
+//   <o.9>  DCACHE_IRQn           <0=> Secure state
+//   <o.12> DCMI_PSSI_IRQn        <0=> Secure state
+//   <o.13> FDCAN2_IT0_IRQn       <0=> Secure state
+//   <o.14> FDCAN2_IT1_IRQn       <0=> Secure state
+//   <o.17> DTS_IRQn              <0=> Secure state
+//   <o.18> RNG_IRQn              <0=> Secure state
+//   <o.19> OTFDEC1_IRQn          <0=> Secure state
+//   <o.20> AES_IRQn              <0=> Secure state
+//   <o.21> HASH_IRQn             <0=> Secure state
+//   <o.22> PKA_IRQn              <0=> Secure state
+//   <o.23> CEC_IRQn              <0=> Secure state
+//   <o.24> TIM12_IRQn            <0=> Secure state
+//   <o.27> I3C1_EV_IRQn          <0=> Secure state
+//   <o.28> I3C1_ER_IRQn          <0=> Secure state
 */
 
 #define NVIC_INIT_ITNS3_VAL      0x00000000
+
+/*
+//   </e>
+*/
+
+/*
+//   <e>Initialize ITNS 4 (Interrupts 131..132)
+*/
+#define NVIC_INIT_ITNS4    1
+
+/*
+// Interrupts 131..132
+//   <o.3> I3C2_EV_IRQn          <0=> Secure state
+//   <o.4> I3C2_ER_IRQn          <0=> Secure state
+
+*/
+
+#define NVIC_INIT_ITNS4_VAL      0x00000000
 
 /*
 //   </e>
@@ -661,6 +656,10 @@ __STATIC_INLINE void TZ_SAU_Setup (void)
 
   #if defined (NVIC_INIT_ITNS3) && (NVIC_INIT_ITNS3 == 1U)
     NVIC->ITNS[3] = NVIC_INIT_ITNS3_VAL;
+  #endif
+
+  #if defined (NVIC_INIT_ITNS4) && (NVIC_INIT_ITNS4 == 1U)
+    NVIC->ITNS[4] = NVIC_INIT_ITNS4_VAL;
   #endif
 
 }

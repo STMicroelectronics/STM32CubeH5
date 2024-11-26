@@ -62,6 +62,7 @@
   */
 void HAL_MspInit(void)
 {
+
   /* USER CODE BEGIN MspInit 0 */
 
   /* USER CODE END MspInit 0 */
@@ -120,6 +121,7 @@ void HAL_I3C_MspInit(I3C_HandleTypeDef* hi3c)
     HAL_NVIC_SetPriority(I3C1_ER_IRQn, 0, 0);
     HAL_NVIC_EnableIRQ(I3C1_ER_IRQn);
   /* USER CODE END I3C1_MspInit 1 */
+
   }
 
 }

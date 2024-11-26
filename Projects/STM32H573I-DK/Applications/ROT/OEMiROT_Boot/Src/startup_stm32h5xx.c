@@ -507,6 +507,11 @@ __no_init volatile uint32_t TamperEventCleared;
  *----------------------------------------------------------------------------*/
 void Reset_Handler(void)
 {
+  /* Configure DWT to enable cycles counter */
+  CoreDebug->DEMCR |= CoreDebug_DEMCR_TRCENA_Msk | CoreDebug_DEMCR_MON_EN_Msk;
+  DWT->CYCCNT = 0;
+  DWT->CTRL |= DWT_CTRL_CYCCNTENA_Msk;
+
   __set_MSPLIM((uint32_t)(&__STACK_LIMIT));
   /* CMSIS System Initialization */
   SystemInit();

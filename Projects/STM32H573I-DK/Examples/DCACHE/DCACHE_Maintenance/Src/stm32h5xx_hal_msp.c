@@ -92,6 +92,7 @@ void HAL_DCACHE_MspInit(DCACHE_HandleTypeDef* hdcache)
   /* USER CODE BEGIN DCACHE1_MspInit 1 */
 
   /* USER CODE END DCACHE1_MspInit 1 */
+
   }
 
 }
@@ -244,6 +245,7 @@ void HAL_XSPI_MspInit(XSPI_HandleTypeDef* hxspi)
   /* USER CODE BEGIN OCTOSPI1_MspInit 1 */
 
   /* USER CODE END OCTOSPI1_MspInit 1 */
+
   }
 
 }

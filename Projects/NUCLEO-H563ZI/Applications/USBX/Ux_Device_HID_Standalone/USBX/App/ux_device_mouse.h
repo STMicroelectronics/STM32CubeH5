@@ -3,7 +3,7 @@
   ******************************************************************************
   * @file    ux_device_mouse.h
   * @author  MCD Application Team
-  * @brief   USBX Device Mouse header file
+  * @brief   USBX Device HID Mouse applicative header file
   ******************************************************************************
   * @attention
   *
@@ -29,6 +29,7 @@ extern "C" {
 #include "ux_device_class_hid.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "main.h"
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/

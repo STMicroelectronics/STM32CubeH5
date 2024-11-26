@@ -5,8 +5,6 @@ setlocal EnableDelayedExpansion
 set connect_no_reset=-c port=SWD speed=fast ap=1 mode=Hotplug
 set connect_reset=-c port=SWD speed=fast ap=1 mode=UR
 
-set image_number=1
-
 if "%isGeneratedByCubeMX%" == "true" (
 set appli_dir=%stirot_boot_path_project%
 ) else (
@@ -55,17 +53,6 @@ IF not exist %appli_dir%\Binary\%stirot_appli% (
 goto :error)
 %stm32programmercli% %connect_no_reset% -d  %appli_dir%\Binary\%stirot_appli%
 IF !errorlevel! NEQ 0 goto :error
-
-if  "%image_number%" == "2" (
-set "action=Download the data image in the download slots"
-echo %action%
-IF not exist %~dp0.\Binary\data_enc_sign.hex (
-@echo [31mError: data_enc_sign.hex does not exist! use TPC to generate it[0m
-goto :error
-)
-%stm32programmercli% %connect_no_reset% -d %~dp0.\Binary\data_enc_sign.hex
-IF !errorlevel! NEQ 0 goto :error
-)
 
 set "action=Set UBE for STiRoT"
 echo %action%

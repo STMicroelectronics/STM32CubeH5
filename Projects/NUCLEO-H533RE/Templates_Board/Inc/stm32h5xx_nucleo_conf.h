@@ -52,6 +52,7 @@ extern "C" {
 
 /* IRQ priorities */
 #define BSP_BUTTON_USER_IT_PRIORITY         15U
+
 /**
   * @}
   */

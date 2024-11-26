@@ -14,8 +14,13 @@ How to use the DAC peripheral to do a simple conversion.
         Cortex:  run mode
       - Step 1:
 
-        DAC:     Low power mode
+        DAC:     Low power mode -  DAC value : 1.65V 
         Cortex:  Sleep mode
+        
+      - If a capacitor is effectively connected to DAC channel output,
+        the voltage appears as pseudo continuous (with refresh and hold variations).
+        But if no capacitor is connected on DAC channel output,
+        the voltage appears as discontinuous (phases with voltage grounded).
 
 NUCLEO-H563ZI board's LEDs can be used to monitor the process status:
 
@@ -47,8 +52,13 @@ Analog, DAC, Digital to Analog, Single conversion, Sample and Hold
 
       - Connect PA4 (DAC Channel1) (pin 32 in CN4) to an oscilloscope.
       - Press user button to switch between steps.
+      - Use external capacitor: Mode sample-and-hold requires an external 
+        capacitor to be connected between DAC channel output and ground.
+        Capacitor value depends on load on DAC channel output and 
+        sample-and-hold timings configured.
       - You may redo the tests by changing the sample and hold parameters 
         of the DAC.
+        
       
 
 ### <b>How to use it ?</b>

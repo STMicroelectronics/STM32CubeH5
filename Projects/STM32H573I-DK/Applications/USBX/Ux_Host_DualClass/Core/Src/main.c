@@ -293,7 +293,6 @@ static void MX_UCPD1_Init(void)
   DMA_InitStruct.DestIncMode = LL_DMA_DEST_FIXED;
   DMA_InitStruct.Priority = LL_DMA_LOW_PRIORITY_LOW_WEIGHT;
   DMA_InitStruct.BlkDataLength = 0x00000000U;
-  DMA_InitStruct.Mode = LL_DMA_NORMAL;
   DMA_InitStruct.TriggerMode = LL_DMA_TRIGM_BLK_TRANSFER;
   DMA_InitStruct.TriggerPolarity = LL_DMA_TRIG_POLARITY_MASKED;
   DMA_InitStruct.TriggerSelection = 0x00000000U;
@@ -322,7 +321,6 @@ static void MX_UCPD1_Init(void)
   DMA_InitStruct.DestIncMode = LL_DMA_DEST_FIXED;
   DMA_InitStruct.Priority = LL_DMA_LOW_PRIORITY_LOW_WEIGHT;
   DMA_InitStruct.BlkDataLength = 0x00000000U;
-  DMA_InitStruct.Mode = LL_DMA_NORMAL;
   DMA_InitStruct.TriggerMode = LL_DMA_TRIGM_BLK_TRANSFER;
   DMA_InitStruct.TriggerPolarity = LL_DMA_TRIG_POLARITY_MASKED;
   DMA_InitStruct.TriggerSelection = 0x00000000U;
@@ -454,6 +452,13 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
+/**
+  * @brief  Retargets the C library __write function to the IAR function iar_fputc.
+  * @param  file: file descriptor.
+  * @param  ptr: pointer to the buffer where the data is stored.
+  * @param  len: length of the data to write in bytes.
+  * @retval length of the written data in bytes.
+  */
 #if defined(__ICCARM__)
 size_t __write(int file, unsigned char const *ptr, size_t len)
 {
@@ -474,8 +479,8 @@ size_t __write(int file, unsigned char const *ptr, size_t len)
   */
 PUTCHAR_PROTOTYPE
 {
-  /* Place your implementation of putchar here */
-  /* e.g. write a character to the USART3 and Loop until the end of transmission */
+  /* Place your implementation of fputc here */
+  /* e.g. write a character to the USART1 and Loop until the end of transmission */
   HAL_UART_Transmit(&huart1, (uint8_t *)&ch, 1, 0xFFFF);
 
   return ch;
@@ -531,6 +536,10 @@ void assert_failed(uint8_t *file, uint32_t line)
   /* USER CODE BEGIN 6 */
   /* User can add his own implementation to report the file name and line number,
      ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
+  /* Infinite loop */
+  while (1)
+  {
+  }
   /* USER CODE END 6 */
 }
 #endif /* USE_FULL_ASSERT */

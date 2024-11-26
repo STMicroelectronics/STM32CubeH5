@@ -17,7 +17,7 @@ bootaddress=0x8004000
 app_image_number=1
 data_image_number=0
 code_image=$oemirot_appli
-data_image=data_enc_sign.hex
+data_image=data_init_sign.hex
 
 # CubeProgammer connection
 connect_no_reset="-c port=SWD speed=fast ap=1 mode=Hotplug"

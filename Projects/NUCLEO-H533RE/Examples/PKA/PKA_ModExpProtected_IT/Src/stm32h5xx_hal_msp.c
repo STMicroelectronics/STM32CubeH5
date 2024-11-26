@@ -95,6 +95,7 @@ void HAL_PKA_MspInit(PKA_HandleTypeDef* hpka)
   /* USER CODE BEGIN PKA_MspInit 1 */
 
   /* USER CODE END PKA_MspInit 1 */
+
   }
 
 }
@@ -155,6 +156,7 @@ void HAL_RNG_MspInit(RNG_HandleTypeDef* hrng)
   /* USER CODE BEGIN RNG_MspInit 1 */
 
   /* USER CODE END RNG_MspInit 1 */
+
   }
 
 }

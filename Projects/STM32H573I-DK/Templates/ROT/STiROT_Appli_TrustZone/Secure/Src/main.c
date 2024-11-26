@@ -65,7 +65,6 @@ int main(void)
      In order to keep a secure environment execution, you should reconfigure the MPU to make it compatible with your application
      In this example, MPU is disabled */
     HAL_MPU_Disable();
-    HAL_MPU_Disable_NS();
 
   /* This project template calls CACHE_Enable() in order to enable the Instruction
      and Data Cache. This function is provided as template implementation that

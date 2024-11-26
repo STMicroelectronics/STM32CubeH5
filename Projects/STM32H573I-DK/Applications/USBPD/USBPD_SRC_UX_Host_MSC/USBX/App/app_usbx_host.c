@@ -5,7 +5,7 @@
   * @author  MCD Application Team
   * @brief   USBX host applicative file
   ******************************************************************************
-    * @attention
+  * @attention
   *
   * Copyright (c) 2023 STMicroelectronics.
   * All rights reserved.
@@ -53,7 +53,7 @@ TX_QUEUE                                  ux_app_MsgQueue_UCPD;
 #if defined ( __ICCARM__ ) /* IAR Compiler */
   #pragma data_alignment=4
 #endif /* defined ( __ICCARM__ ) */
-USB_MODE_STATE                            USB_Host_State_Msg;
+__ALIGN_BEGIN USB_MODE_STATE USB_Host_State_Msg  __ALIGN_END;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -62,6 +62,7 @@ static UINT ux_host_event_callback(ULONG event, UX_HOST_CLASS *current_class, VO
 static VOID ux_host_error_callback(UINT system_level, UINT system_context, UINT error_code);
 /* USER CODE BEGIN PFP */
 
+extern HCD_HandleTypeDef hhcd_USB_DRD_FS;
 /* USER CODE END PFP */
 
 /**
@@ -138,7 +139,7 @@ UINT MX_USBX_Host_Init(VOID *memory_ptr)
 
   /* USER CODE BEGIN MX_USBX_Host_Init1 */
 
-  /* Allocate the stack for storrage app thread  */
+  /* Allocate the stack for storage app thread */
   if (tx_byte_allocate(byte_pool, (VOID **) &pointer,
                        (UX_HOST_APP_THREAD_STACK_SIZE * 2), TX_NO_WAIT) != TX_SUCCESS)
   {
@@ -153,14 +154,14 @@ UINT MX_USBX_Host_Init(VOID *memory_ptr)
     return TX_THREAD_ERROR;
   }
 
-   /* Allocate Memory for the ux_app_Queue_UCPD  */
+   /* Allocate Memory for the ux_app_Queue_UCPD */
   if (tx_byte_allocate(byte_pool, (VOID **) &pointer,
                        APP_QUEUE_SIZE * sizeof(ULONG), TX_NO_WAIT) != TX_SUCCESS)
   {
     return TX_POOL_ERROR;
   }
 
-  /* Create the MsgQueue for ucpd_app_thread   */
+  /* Create the MsgQueue for ucpd_app_thread */
   if (tx_queue_create(&ux_app_MsgQueue_UCPD, "Message Queue UCPD", TX_1_ULONG,
                       pointer, APP_QUEUE_SIZE * sizeof(ULONG)) != TX_SUCCESS)
   {
@@ -211,7 +212,7 @@ static VOID app_ux_host_thread_entry(ULONG thread_input)
     /* Else Error */
     else
     {
-      /*Error*/
+      /* Error */
       Error_Handler();
     }
    tx_thread_sleep(MS_TO_TICK(10));

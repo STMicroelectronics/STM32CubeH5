@@ -4,7 +4,7 @@
 	<GlobalParam>
 		<Command>sign</Command>
 		<Title>Firmware non secure image generation</Title>
-        <LinkedXML>../Config/OEMuRoT_Config_Keys.xml</LinkedXML>
+		<LinkedXML>../Config/OEMuRoT_Config_Keys.xml</LinkedXML>
 	</GlobalParam>
 	<Param>
 		<Name>Authentication non secure key</Name>

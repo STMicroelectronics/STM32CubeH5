@@ -25,5 +25,4 @@ if [ $? -ne 0 ]; then error; fi
 
 echo "regression script done, press key"
 if [ "$script_mode" != "AUTO" ]; then read -p "" -n1 -s; exit 0; fi
-return 0
 

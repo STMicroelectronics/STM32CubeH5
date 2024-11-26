@@ -111,7 +111,7 @@ void MemManage_Handler(void)
 }
 
 /**
-  * @brief This function handles Prefetch fault, memory access fault.
+  * @brief This function handles Pre-fetch fault, memory access fault.
   */
 void BusFault_Handler(void)
 {
@@ -216,7 +216,6 @@ void GPDMA1_Channel1_IRQHandler(void)
     TransferError();
   }
   /* USER CODE END GPDMA1_Channel1_IRQn 0 */
-
   /* USER CODE BEGIN GPDMA1_Channel1_IRQn 1 */
 
   /* USER CODE END GPDMA1_Channel1_IRQn 1 */

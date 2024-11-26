@@ -30,7 +30,6 @@ main_h="$appli_dir/Inc/main.h"
 s_main_h="$appli_dir/Secure/Inc/main.h"
 
 obk_cfg_file="$project_dir/Config/STiRoT_Config.xml"
-code_image="$project_dir/Image/STiRoT_Code_Image.xml"
 
 # Switch use case project Application TrustZone or Full secure
 Full_secure=1
@@ -39,13 +38,7 @@ Full_secure=1
 code_size="Firmware area size"
 code_offset="Firmware execution area offset"
 data_image_en="Number of images managed"
-fw_in_bin="Firmware binary input file"
-fw_out_bin="Image output file"
 secure_code_size="Size of the secure area"
-
-#Path adapted to IAR postbuild command
-stirot_app_bin="../$appli_dir/Binary/appli.bin"
-stirot_app_hex="../$appli_dir/Binary/appli_enc_sign.hex"
 
 # Define AppliCfg to execute
 applicfg="$cube_fw_path/Utilities/PC_Software/ROT_AppliConfig/dist/AppliCfg.exe"
@@ -74,14 +67,6 @@ AppliCfg="$python$applicfg"
 # ================================================ Updating test Application files ========================================================
 if [ "$Full_secure" == "1" ]; then
 
-  action="Update STiROT_Code_Image.xml input binary file"
-  $AppliCfg xmlval --name "$fw_in_bin" --value $stirot_app_bin --string --vb $code_image
-  if [ $? -ne 0 ]; then error; return 1; fi
-
-  action="Update STiROT_Code_Image.xml output encrypted/signed hexadecimal file"
-  $AppliCfg xmlval --name "$fw_out_bin" --value $stirot_app_hex --string --vb $code_image
-  if [ $? -ne 0 ]; then error; return 1; fi
-
   action="Updating Linker file"
   echo $action
 
@@ -108,15 +93,6 @@ if [ "$Full_secure" == "1" ]; then
 fi
 
 if [ "$Full_secure" == "0" ]; then
-
-  action="Update STiROT_Code_Image.xml input binary file"
-  $AppliCfg xmlval --name "$fw_in_bin" --value $stirot_app_bin --string --vb $code_image
-
-  if [ $? -ne 0 ]; then error; return 1; fi
-
-  action="Update STiROT_Code_Image.xml output encrypted/signed hexadecimal file"
-  $AppliCfg xmlval --name "$fw_out_bin" --value $stirot_app_hex --string --vb $code_image
-  if [ $? -ne 0 ]; then error; return 1; fi
 
   action="Update appli postbuild"
 

@@ -12,10 +12,9 @@
   * Copyright (c) 2023 STMicroelectronics.
   * All rights reserved.
   *
-  * This software component is licensed by ST under BSD 3-Clause license,
-  * the "License"; You may not use this file except in compliance with the
-  * License. You may obtain a copy of the License at:
-  *                        opensource.org/licenses/BSD-3-Clause
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
   *
   ******************************************************************************
   */
@@ -111,7 +110,7 @@ void MemManage_Handler(void)
 }
 
 /**
-  * @brief This function handles Prefetch fault, memory access fault.
+  * @brief This function handles Pre-fetch fault, memory access fault.
   */
 void BusFault_Handler(void)
 {
@@ -216,7 +215,6 @@ void GPDMA1_Channel0_IRQHandler(void)
     Transfer_Error_Callback();
   }
   /* USER CODE END GPDMA1_Channel0_IRQn 0 */
-
   /* USER CODE BEGIN GPDMA1_Channel0_IRQn 1 */
 
   /* USER CODE END GPDMA1_Channel0_IRQn 1 */
@@ -238,7 +236,6 @@ void GPDMA1_Channel1_IRQHandler(void)
     Transfer_Error_Callback();
   }
   /* USER CODE END GPDMA1_Channel1_IRQn 0 */
-
   /* USER CODE BEGIN GPDMA1_Channel1_IRQn 1 */
 
   /* USER CODE END GPDMA1_Channel1_IRQn 1 */

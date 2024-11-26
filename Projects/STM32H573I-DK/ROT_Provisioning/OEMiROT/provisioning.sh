@@ -20,28 +20,15 @@ provisioning_log="provisioning.log"
 # Initial configuration
 connect_no_reset="-c port=SWD speed=fast ap=1 mode=Hotplug"
 
-if [ $isGeneratedByCubeMX == "true" ]; then
-   appli_dir=$oemirot_boot_path_project
-else
-   appli_dir="../../../$oemirot_boot_path_project"
-fi
-
 flash_layout="$cube_fw_path/Projects/STM32H573I-DK/Applications/ROT/OEMiROT_Boot/Inc/flash_layout.h"
 
 ## Get config updated by OEMiROT_Boot
-tmp_file=$cube_fw_path/Projects/STM32H573I-DK/ROT_Provisioning/img_config.sh
+tmp_file=$project_dir"/img_config.sh"
 
-fw_in_bin="Firmware binary input file"
-fw_out_bin="Image output file"
-ns_app_bin="$appli_dir/Binary/rot_tz_ns_app.bin"
-s_app_bin="$appli_dir/Binary/rot_tz_s_app.bin"
-
-s_code_image_file=$project_dir"/Images/OEMiROT_S_Code_Image.xml"
-ns_code_image_file=$project_dir"/Images/OEMiROT_NS_Code_Image.xml"
 s_data_xml=$project_dir"/Images/OEMiROT_S_Data_Image.xml"
 ns_data_xml=$project_dir"/Images/OEMiROT_NS_Data_Image.xml"
-ns_app_enc_sign_hex=$appli_dir"/Binary/rot_tz_ns_app_enc_sign.hex"
-s_app_enc_sign_hex=$appli_dir"/Binary/rot_tz_s_app_enc_sign.hex"
+s_data_init_xml=$project_dir"/Images/OEMiROT_S_Data_Init_Image.xml"
+ns_data_init_xml=$project_dir"/Images/OEMiROT_NS_Data_Init_Image.xml"
 
 # Initial configuration
 product_state=OPEN
@@ -250,9 +237,20 @@ if [ $isGeneratedByCubeMX == "false" ]; then
   echo
   if [ "$mode" != "AUTO" ]; then read -p "" -n1 -s; fi
 
-  $python$applicfg setdefine -a comment -n OEMUROT_ENABLE -v 1 $flash_layout
-  if [ $? -ne 0 ]; then error; return 1; fi
+else
+  echo "Step 1 : Configuration management"
+  echo "   * OEMiROT_Config.obk was created during CubeMX code generation"
+  echo
+  echo "   * DA_Config.obk was created during CubeMX code generation"
+  echo
+  echo "       Press any key to continue..."
+  echo
+  if [ "$mode" != "AUTO" ]; then read -p "" -n1 -s; fi
 fi
+
+$python$applicfg setdefine -a comment -n OEMUROT_ENABLE -v 1 $flash_layout
+if [ $? -ne 0 ]; then error; return 1; fi
+
 # ========================================================= Images generation steps ========================================================
 echo "Step 2 : Images generation"
 echo "   * Boot firmware image generation"
@@ -265,18 +263,6 @@ if [ "$mode" != "AUTO" ]; then read -p "" -n1 -s; fi
 #update xml file
 if [ $isGeneratedByCubeMX == "false" ]; then
     source $tmp_file
-    if [ $app_image_number != "2" ]; then
-        ns_app_enc_sign_hex=$appli_dir"/Binary/rot_tz_app_enc_sign.hex"
-        ns_app_bin=$appli_dir"/Binary/rot_tz_app.bin"
-    fi
-    $python$applicfg xmlval -v $s_app_bin --string -n "$fw_in_bin" $s_code_image_file
-    if [ $? != "0" ]; then step_error; fi
-    $python$applicfg xmlval -v $ns_app_bin --string -n "$fw_in_bin" $ns_code_image_file
-    if [ $? != "0" ]; then step_error; fi
-    $python$applicfg xmlval -v $s_app_enc_sign_hex --string -n "$fw_out_bin" $s_code_image_file
-    if [ $? != "0" ]; then step_error; fi
-    $python$applicfg xmlval -v $ns_app_enc_sign_hex --string -n "$fw_out_bin" $ns_code_image_file
-    if [ $? != "0" ]; then step_error; fi
 
     echo "   * Code firmware image generation"
     echo "       Open the OEMiROT_Appli_TrustZone project with preferred toolchain."
@@ -286,26 +272,37 @@ if [ $isGeneratedByCubeMX == "false" ]; then
     if [ "$mode" != "AUTO" ]; then read -p "" -n1 -s; fi
 
     echo "   * Data secure generation (if Data secure image is enabled)"
-    echo "       Select OEMiRoT_S_Data_Image.xml(Default path is /ROT_Provisioning/OEMiROT/Images/OEMiRoT_S_Data_Image.xml)"
-    echo "       Generate the data_enc_sign.hex image"
+    echo "       Select OEMiROT_S_Data_Image.xml(Default path is /ROT_Provisioning/OEMiROT/Images/OEMiROT_S_Data_Image.xml)"
+    echo "       Generate the s_data_enc_sign.hex image"
     echo "       Press any key to continue..."
     echo
     if [ "$mode" != "AUTO" ]; then read -p "" -n1 -s; fi
     if [ $s_data_image_number != "0" ]; then
         "$stm32tpccli" -pb $s_data_xml >> $provisioning_log
         if [ $? != "0" ]; then step_error; fi
+        "$stm32tpccli" -pb $s_data_init_xml >> $provisioning_log
+        if [ $? != "0" ]; then step_error; fi
     fi
 
     echo "   * Data non secure generation (if Data non secure image is enabled)"
     echo "       Select OEMiROT_NS_Data_Image.xml(Default path is /ROT_Provisioning/OEMiROT/Images/OEMiROT_NS_Data_Image.xml)"
-    echo "       Generate the data_enc_sign.hex image"
+    echo "       Generate the ns_data_enc_sign.hex image"
     echo "       Press any key to continue..."
     echo
     if [ "$mode" != "AUTO" ]; then read -p "" -n1 -s; fi
     if [ $ns_data_image_number != "0" ]; then
       "$stm32tpccli" -pb $ns_data_xml >> $provisioning_log
       if [ $? != "0" ]; then step_error; fi
+      "$stm32tpccli" -pb $ns_data_init_xml >> $provisioning_log
+      if [ $? != "0" ]; then step_error; fi
     fi
+else
+    echo "   * Code firmware image generation"
+    echo "       If the configuration of OEMiROT_Boot project has been updated, reload and regenerate STM32CubeMX application project."
+    echo "       Open the regenerated application project with preferred toolchain and rebuild all files."
+    echo "       Press any key to continue..."
+    echo
+    if [ "$mode" != "AUTO" ]; then read -p "" -n1 -s; fi
 fi
 # ========================================================= Board provisioning steps =======================================================
 echo "Step 3 : Provisioning"

@@ -456,7 +456,7 @@ USBPD_StatusTypeDef USBPD_PWR_IF_SearchRequestedPDO(uint8_t PortNum, uint32_t Rd
   if((RdoPosition == 0) || (RdoPosition > *PWR_Port_PDO_Storage[PortNum].SourcePDO.NumberOfPDO))
   {
     /* Invalid PDO index */
-  return USBPD_FAIL;
+    return USBPD_FAIL;
   }
 
   *Pdo = PWR_Port_PDO_Storage[PortNum].SourcePDO.ListOfPDO[RdoPosition - 1];

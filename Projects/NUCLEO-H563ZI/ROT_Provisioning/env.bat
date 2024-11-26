@@ -20,7 +20,7 @@ set oemirot_boot_path_project=Applications/ROT/OEMiROT_Appli_TrustZone
 :: ==============================================================================
 set PROJECT_GENERATED_BY_CUBEMX=false
 set cube_fw_path="%~dp0..\..\..\"
-set oemirot_appli_secure=rot_tz_s_app_enc_sign.hex
-set oemirot_appli_non_secure=rot_tz_ns_app_enc_sign.hex
-set oemirot_appli_assembly_sign=rot_tz_app_enc_sign.hex
+set oemirot_appli_secure=rot_tz_s_app_init_sign.hex
+set oemirot_appli_non_secure=rot_tz_ns_app_init_sign.hex
+set oemirot_appli_assembly_sign=rot_tz_app_init_sign.hex
 set rot_provisioning_path="%~dp0"

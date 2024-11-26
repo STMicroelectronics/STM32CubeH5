@@ -55,10 +55,18 @@ extern ARM_DRIVER_FLASH FLASH_PRIMARY_NONSECURE_DEV_NAME;
 #define NS_DATA_IMAGE_DATA1_SIZE        32U
 #define BL2_DATA_HEADER_SIZE            0x20
 #endif
+
+/* Enable print of boot time (obtained through DWT).
+   DWT usage requires product state is not closed/locked.
+   OEMxRoT logs must be disabled for relevant boot time. */
+/* #define PRINT_BOOT_TIME */
+
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
 uint8_t *pUserAppId;
 const uint8_t UserAppId = 'A';
+uint64_t time;
+uint32_t end;
 
 /* Private function prototypes -----------------------------------------------*/
 #if (MCUBOOT_APP_IMAGE_NUMBER == 2)
@@ -174,6 +182,9 @@ size_t __write(int file, unsigned char const *ptr, size_t len)
 int main(int argc, char **argv)
 /*int main(void) */
 {
+  /* Get boot cycles */
+  end = DWT->CYCCNT;
+
   /*  set example to const : this const changes in binary without rebuild */
   pUserAppId = (uint8_t *)&UserAppId;
 
@@ -187,6 +198,9 @@ int main(int argc, char **argv)
   - Low Level Initialization
   */
   HAL_Init();
+
+  /* Get Boot Time */
+  time = ((uint64_t)(end) * 1000U / SystemCoreClock);
 
   /* DeInitialize RCC to allow PLL reconfiguration when configuring system clock */
   HAL_RCC_DeInit();
@@ -203,6 +217,10 @@ int main(int argc, char **argv)
   /* Register SecureError callback defined in non-secure and to be called by secure handler */
   SECURE_RegisterCallback(GTZC_ERROR_CB_ID, (void *)SecureError_Callback);
 
+#ifdef PRINT_BOOT_TIME
+  printf("\r\nBoot time : %u ms at %u MHz", (unsigned int)(time), (unsigned int)(SystemCoreClock/1000000U));
+  printf("\r\n");
+#endif
   printf("\r\n======================================================================");
   printf("\r\n=              (C) COPYRIGHT 2023 STMicroelectronics                 =");
   printf("\r\n=                                                                    =");

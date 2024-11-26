@@ -2,17 +2,14 @@
  * Test driver for signature functions.
  */
 /*  Copyright The Mbed TLS Contributors
+ *  Portions Copyright (C) STMicroelectronics, All Rights Reserved
  *  SPDX-License-Identifier: Apache-2.0
  */
 
 #ifndef PSA_CRYPTO_TEST_DRIVERS_SIGNATURE_H
 #define PSA_CRYPTO_TEST_DRIVERS_SIGNATURE_H
 
-#if !defined(MBEDTLS_CONFIG_FILE)
-#include "mbedtls/config.h"
-#else
-#include MBEDTLS_CONFIG_FILE
-#endif
+#include "mbedtls/build_info.h"
 
 #if defined(PSA_CRYPTO_DRIVER_TEST)
 #include <psa/crypto_driver_common.h>
@@ -111,6 +108,27 @@ psa_status_t mbedtls_test_opaque_signature_verify_hash(
     psa_algorithm_t alg,
     const uint8_t *hash, size_t hash_length,
     const uint8_t *signature, size_t signature_length);
+
+psa_status_t sign_hash(
+    const psa_key_attributes_t *attributes,
+    const uint8_t *key_buffer,
+    size_t key_buffer_size,
+    psa_algorithm_t alg,
+    const uint8_t *hash,
+    size_t hash_length,
+    uint8_t *signature,
+    size_t signature_size,
+    size_t *signature_length);
+
+psa_status_t verify_hash(
+    const psa_key_attributes_t *attributes,
+    const uint8_t *key_buffer,
+    size_t key_buffer_size,
+    psa_algorithm_t alg,
+    const uint8_t *hash,
+    size_t hash_length,
+    const uint8_t *signature,
+    size_t signature_length);
 
 #endif /* PSA_CRYPTO_DRIVER_TEST */
 #endif /* PSA_CRYPTO_TEST_DRIVERS_SIGNATURE_H */

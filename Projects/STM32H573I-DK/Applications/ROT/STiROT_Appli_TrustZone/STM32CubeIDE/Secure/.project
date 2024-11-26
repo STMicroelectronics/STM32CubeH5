@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>STM32H573I-DK_STiROT_Appli_TrustZone_S</name>
+	<name>STiROT_Appli_TrustZone_Secure</name>
 	<comment></comment>
 	<projects>
 	</projects>
@@ -22,7 +22,7 @@
 		<nature>com.st.stm32cube.ide.mcu.MCUProjectNature</nature>
 		<nature>org.eclipse.cdt.core.cnature</nature>
 		<nature>com.st.stm32cube.ide.mcu.MCUCubeIdeServicesRevAev2ProjectNature</nature>
-		<nature>com.st.stm32cube.ide.mcu.MCUManagedMakefileProjectNature</nature>
+		<nature>com.st.stm32cube.ide.mcu.MCUNonUnderRootProjectNature</nature>
 		<nature>com.st.stm32cube.ide.mcu.MCUSecureProjectNature</nature>
 		<nature>com.st.stm32cube.ide.mcu.MCUSingleCpuProjectNature</nature>
 		<nature>org.eclipse.cdt.managedbuilder.core.managedBuildNature</nature>
@@ -34,7 +34,7 @@
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/README.md</locationURI>
 		</link>
-        <link>
+		<link>
 			<name>Drivers/STM32H5xx_HAL_Driver/stm32h5xx_hal.c</name>
 			<type>1</type>
 			<locationURI>PARENT-7-PROJECT_LOC/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal.c</locationURI>

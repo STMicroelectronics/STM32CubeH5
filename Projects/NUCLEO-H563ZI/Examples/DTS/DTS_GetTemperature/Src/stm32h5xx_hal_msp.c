@@ -92,6 +92,7 @@ void HAL_DTS_MspInit(DTS_HandleTypeDef* hdts)
   /* USER CODE BEGIN DTS_MspInit 1 */
 
   /* USER CODE END DTS_MspInit 1 */
+
   }
 
 }

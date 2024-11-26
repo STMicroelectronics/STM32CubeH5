@@ -301,7 +301,6 @@ static void MX_UCPD1_Init(void)
   DMA_InitStruct.DestIncMode = LL_DMA_DEST_FIXED;
   DMA_InitStruct.Priority = LL_DMA_LOW_PRIORITY_LOW_WEIGHT;
   DMA_InitStruct.BlkDataLength = 0x00000000U;
-  DMA_InitStruct.Mode = LL_DMA_NORMAL;
   DMA_InitStruct.TriggerMode = LL_DMA_TRIGM_BLK_TRANSFER;
   DMA_InitStruct.TriggerPolarity = LL_DMA_TRIG_POLARITY_MASKED;
   DMA_InitStruct.TriggerSelection = 0x00000000U;
@@ -330,7 +329,6 @@ static void MX_UCPD1_Init(void)
   DMA_InitStruct.DestIncMode = LL_DMA_DEST_FIXED;
   DMA_InitStruct.Priority = LL_DMA_LOW_PRIORITY_LOW_WEIGHT;
   DMA_InitStruct.BlkDataLength = 0x00000000U;
-  DMA_InitStruct.Mode = LL_DMA_NORMAL;
   DMA_InitStruct.TriggerMode = LL_DMA_TRIGM_BLK_TRANSFER;
   DMA_InitStruct.TriggerPolarity = LL_DMA_TRIG_POLARITY_MASKED;
   DMA_InitStruct.TriggerSelection = 0x00000000U;
@@ -461,11 +459,11 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOD_CLK_ENABLE();
   __HAL_RCC_GPIOA_CLK_ENABLE();
 
-  /*Configure GPIO pin : PC13 */
-  GPIO_InitStruct.Pin = GPIO_PIN_13;
+  /*Configure GPIO pin : BUTTON_USER_Pin */
+  GPIO_InitStruct.Pin = BUTTON_USER_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+  HAL_GPIO_Init(BUTTON_USER_GPIO_Port, &GPIO_InitStruct);
 
   /* EXTI interrupt init*/
   HAL_NVIC_SetPriority(EXTI13_IRQn, 7, 0);
@@ -527,6 +525,10 @@ void assert_failed(uint8_t *file, uint32_t line)
   /* USER CODE BEGIN 6 */
   /* User can add his own implementation to report the file name and line number,
      ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
+  /* Infinite loop */
+  while (1)
+  {
+  }
   /* USER CODE END 6 */
 }
 #endif /* USE_FULL_ASSERT */

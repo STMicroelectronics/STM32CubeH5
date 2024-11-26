@@ -156,7 +156,7 @@ UINT MX_USBX_Host_Init(VOID *memory_ptr)
     return TX_THREAD_ERROR;
   }
 
-   /* Allocate Memory for the ux_app_Queue_UCPD  */
+  /* Allocate Memory for the ux_app_Queue_UCPD  */
   if (tx_byte_allocate(byte_pool, (VOID **) &pointer,
                        APP_QUEUE_SIZE * sizeof(ULONG), TX_NO_WAIT) != TX_SUCCESS)
   {

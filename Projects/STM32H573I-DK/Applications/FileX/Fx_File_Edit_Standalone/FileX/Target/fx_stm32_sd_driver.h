@@ -50,10 +50,10 @@ extern __IO UINT sd_tx_cplt;
  * For STM32H5 this flag should be always set to 0 unless external
  * memories are being used.
  */
-#define FX_STM32_SD_CACHE_MAINTENANCE                    	  0
+#define FX_STM32_SD_CACHE_MAINTENANCE                         0
 
 /* Use the SD DMA API */
-#define FX_STM32_SD_DMA_API                              	  1
+#define FX_STM32_SD_DMA_API                                   1
 
 /* SDIO instance to be used by FileX */
 #define FX_STM32_SD_INSTANCE                                  0

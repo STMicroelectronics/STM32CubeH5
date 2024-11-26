@@ -94,6 +94,7 @@ void HAL_TIM_PWM_MspInit(TIM_HandleTypeDef* htim_pwm)
   /* USER CODE BEGIN TIM1_MspInit 1 */
 
   /* USER CODE END TIM1_MspInit 1 */
+
   }
 
 }
@@ -133,6 +134,7 @@ void HAL_TIM_Base_MspInit(TIM_HandleTypeDef* htim_base)
     HAL_NVIC_EnableIRQ(TIM3_IRQn);
 
   /* USER CODE END TIM3_MspInit 1 */
+
   }
 
 }

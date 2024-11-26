@@ -112,6 +112,7 @@ void HAL_COMP_MspInit(COMP_HandleTypeDef* hcomp)
   /* USER CODE BEGIN COMP1_MspInit 1 */
 
   /* USER CODE END COMP1_MspInit 1 */
+
   }
 
 }
@@ -187,6 +188,7 @@ void HAL_DAC_MspInit(DAC_HandleTypeDef* hdac)
   /* USER CODE BEGIN DAC1_MspInit 1 */
 
   /* USER CODE END DAC1_MspInit 1 */
+
   }
 
 }
@@ -255,6 +257,7 @@ void HAL_OPAMP_MspInit(OPAMP_HandleTypeDef* hopamp)
   /* USER CODE BEGIN OPAMP1_MspInit 1 */
 
   /* USER CODE END OPAMP1_MspInit 1 */
+
   }
 
 }

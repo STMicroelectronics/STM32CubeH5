@@ -21,8 +21,8 @@ ns_data_image_number=0
 s_code_image=$oemirot_appli_secure
 ns_code_image=$oemirot_appli_non_secure
 one_code_image=$oemirot_appli_assembly_sign
-s_data_image="s_data_enc_sign.hex"
-ns_data_image="ns_data_enc_sign.hex"
+s_data_image="s_data_init_sign.hex"
+ns_data_image="ns_data_init_sign.hex"
 
 connect_no_reset="-c port=SWD speed=fast ap=1 mode=Hotplug"
 connect_reset="-c port=SWD speed=fast ap=1 mode=UR"

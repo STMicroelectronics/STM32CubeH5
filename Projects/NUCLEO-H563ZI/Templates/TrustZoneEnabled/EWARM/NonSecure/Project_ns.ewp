@@ -2,7 +2,7 @@
 <project>
     <fileVersion>3</fileVersion>
     <configuration>
-        <name>STM32H563xx_Templates_TrustZoneEnabled</name>
+        <name>STM32H563xx_Templates_TrustZoneEnabled_ns</name>
         <toolchain>
             <name>ARM</name>
         </toolchain>

@@ -12,8 +12,9 @@
 #ifndef TEST_MEMORY_H
 #define TEST_MEMORY_H
 
-#include "test/helpers.h"
+#include "mbedtls/build_info.h"
 #include "mbedtls/platform.h"
+#include "test/helpers.h"
 
 /** \def MBEDTLS_TEST_MEMORY_CAN_POISON
  *
@@ -21,9 +22,13 @@
  * memory as poisoned, which can be used to enforce some memory access
  * policies.
  *
+ * Support for the C11 thread_local keyword is also required.
+ *
  * Currently, only Asan (Address Sanitizer) is supported.
  */
-#if defined(MBEDTLS_TEST_HAVE_ASAN)
+#if defined(MBEDTLS_TEST_HAVE_ASAN) && \
+    (__STDC_VERSION__ >= 201112L) && \
+    !defined(PSA_CRYPTO_DRIVER_TEST)
 #  define MBEDTLS_TEST_MEMORY_CAN_POISON
 #endif
 
@@ -61,11 +66,11 @@
 
 #if defined(MBEDTLS_TEST_MEMORY_CAN_POISON)
 
-/** Variable used to enable memory poisoning. This is set and unset in the
- *  test wrappers so that calls to PSA functions from the library do not
- *  poison memory.
+/** Thread-local variable used to enable memory poisoning. This is set and
+ *  unset in the test wrappers so that calls to PSA functions from the library
+ *  do not poison memory.
  */
-extern unsigned int mbedtls_test_memory_poisoning_count;
+extern _Thread_local unsigned int mbedtls_test_memory_poisoning_count;
 
 /** Poison a memory area so that any attempt to read or write from it will
  * cause a runtime failure.

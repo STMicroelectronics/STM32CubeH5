@@ -129,10 +129,10 @@ UINT App_File_Write(FX_MEDIA *fx_media)
 }
 
 /**
-* @brief  Application Read File process.
-* @param  fx_media: media pointer
-* @retval status
-*/
+  * @brief  Application Read File process.
+  * @param  fx_media: media pointer
+  * @retval status
+  */
 UINT App_File_Read(FX_MEDIA *fx_media)
 {
   FX_FILE my_file;
@@ -179,10 +179,10 @@ UINT App_File_Read(FX_MEDIA *fx_media)
 }
 
 /**
-* @brief  Application Create File process.
-* @param  fx_media: media pointer
-* @retval status
-*/
+  * @brief  Application Create File process.
+  * @param  fx_media: media pointer
+  * @retval status
+  */
 UINT App_File_Create(FX_MEDIA *fx_media)
 {
   UINT status;

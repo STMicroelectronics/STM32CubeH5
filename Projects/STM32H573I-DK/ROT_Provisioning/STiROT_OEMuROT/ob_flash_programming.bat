@@ -25,9 +25,9 @@ set ns_data_image_number=0
 set s_code_image=%oemirot_appli_secure%
 set ns_code_image=%oemirot_appli_non_secure%
 set one_code_image=%oemirot_appli_assembly_sign%
-set s_data_image=s_data_enc_sign.hex
-set ns_data_image=ns_data_enc_sign.hex
-set oemurot_image=rot_enc_sign.hex
+set s_data_image=s_data_init_sign.hex
+set ns_data_image=ns_data_init_sign.hex
+set oemurot_image=rot_init_sign.hex
 
 set connect_no_reset=-c port=SWD speed=fast ap=1 mode=Hotplug
 set connect_reset=-c port=SWD speed=fast ap=1 mode=UR
@@ -135,7 +135,7 @@ IF !errorlevel! NEQ 0 goto :error
 
 set "action=Write OEMuROT_Boot"
 echo %action%
-%stm32programmercli% %connect_no_reset% -d %cube_fw_path%\Projects\STM32H573I-DK\Applications\ROT\OEMiROT_Boot\Binary\rot_enc_sign.hex -v
+%stm32programmercli% %connect_no_reset% -d %cube_fw_path%\Projects\STM32H573I-DK\Applications\ROT\OEMiROT_Boot\Binary\%oemurot_image% -v
 IF !errorlevel! NEQ 0 goto :error
 echo "OEMuROT_Boot Written"
 
@@ -148,7 +148,7 @@ IF !errorlevel! NEQ 0 goto :error
 set "action=Set SECBOOT_LOCK option byte"
 echo %action%
 :: SECBOOT_LOCK should be set to 0xB4 (locked) to be compliant with certification document
-%stm32programmercli% %connect_no_reset% -ob SECBOOT_LOCK=0xB4
+%stm32programmercli% %connect_reset% -ob SECBOOT_LOCK=0xB4
 IF !errorlevel! NEQ 0 goto :error
 
 echo Programming success

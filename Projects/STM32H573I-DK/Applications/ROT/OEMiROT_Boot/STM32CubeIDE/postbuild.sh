@@ -34,7 +34,6 @@ map_properties="$project_dir/../map.properties"
 preprocess_bl2_file="$project_dir/image_macros_preprocessed_bl2.c"
 appli_dir="../../../../$oemirot_boot_path_project"
 
-provisioning="$project_dir/../../../../ROT_Provisioning/img_config.sh"
 ns_main="$appli_dir/NonSecure/Inc/main.h"
 s_main="$appli_dir/Secure/Inc/main.h"
 appli_flash_layout="$appli_dir/Secure_nsclib/appli_flash_layout.h"
@@ -48,11 +47,16 @@ if [ $? != 0 ]; then error; fi
 
 source $auto_rot_update
 
+provisioning=$project_dir/../../../../ROT_Provisioning/$bootpath/"img_config.sh"
 update=$provisioningdir/$bootpath/"ob_flash_programming.sh"
 s_code_xml=$provisioningdir/$bootpath/Images/$project"_S_Code_Image.xml"
 ns_code_xml=$provisioningdir/$bootpath/Images/$project"_NS_Code_Image.xml"
 s_data_xml=$provisioningdir/$bootpath/Images/$project"_S_Data_Image.xml"
 ns_data_xml=$provisioningdir/$bootpath/Images/$project"_NS_Data_Image.xml"
+s_code_init_xml=$provisioningdir/$bootpath/Images/$project"_S_Code_Init_Image.xml"
+ns_code_init_xml=$provisioningdir/$bootpath/Images/$project"_NS_Code_Init_Image.xml"
+s_data_init_xml=$provisioningdir/$bootpath/Images/$project"_S_Data_Init_Image.xml"
+ns_data_init_xml=$provisioningdir/$bootpath/Images/$project"_NS_Data_Init_Image.xml"
 stirot_config_xml=$provisioningdir/$bootpath/Config/"STiRoT_Config.xml"
 auth_s="Authentication secure key"
 auth_ns="Authentication non secure key"
@@ -66,6 +70,8 @@ code_size="Firmware area size"
 data_size="Data download slot size"
 oemurot_firmware_size="Firmware area size"
 scratch_sector_number="Number of scratch sectors"
+oemurot_firmware_offset="Firmware download area offset"
+firmware_execution_offset="Firmware execution area offset"
 
 error()
 {
@@ -78,6 +84,9 @@ error()
 }
 if [ "$oemurot_enable" == "1" ]; then
     $python"$applicfg" definevalue -xml "$stirot_config_xml" -nxml "$oemurot_firmware_size" -n FLASH_AREA_BL2_SIZE --parenthesis "$flash_layout" --vb >> "$current_log_file"
+    if [ $? != 0 ]; then error; fi
+
+    $python"$applicfg" modifyfilevalue -xml "$stirot_config_xml" -nxml "$oemurot_firmware_offset" --delimiter = -var DOWNLOAD_ROT_REGION_START "$map_properties" --vb >> "$current_log_file"
     if [ $? != 0 ]; then error; fi
 fi
 
@@ -406,11 +415,77 @@ if [ -f $appli_flash_layout ]; then
   if [ $? != 0 ]; then error; fi
 fi
 
-cp -a $project_dir/$config/STM32H573I-DK_OEMiROT_Boot.bin $project_dir/../Binary/OEMiROT_Boot.bin >> $current_log_file
+cp -a $project_dir/$config/OEMiROT_Boot.bin $project_dir/../Binary/OEMiROT_Boot.bin >> $current_log_file
+if [ $? != 0 ]; then error; fi
+
+#xml for init image generation
+
+cp $s_code_xml $s_code_init_xml >> $current_log_file 2>&1
+if [ $? != 0 ]; then error; fi
+
+cp $ns_code_xml $ns_code_init_xml >> $current_log_file 2>&1
+if [ $? != 0 ]; then error; fi
+
+cp $s_data_xml $s_data_init_xml >> $current_log_file 2>&1
+if [ $? != 0 ]; then error; fi
+
+cp $ns_data_xml $ns_data_init_xml >> $current_log_file 2>&1
+if [ $? != 0 ]; then error; fi
+
+$python $applicfg xmlparam --option add -n "Clear" -t Data -c -c -h 1 -d "" $s_code_init_xml --vb >> $current_log_file
+if [ $? != 0 ]; then error; fi
+
+$python $applicfg xmlparam --option add -n "Confirm" -t Data -c --confirm -h 1 -d "" $s_code_init_xml --vb >> $current_log_file
+if [ $? != 0 ]; then error; fi
+
+$python$applicfg xmlname -n "$firmware_execution_offset" -c x $s_code_init_xml --vb >> $current_log_file
+if [ $? != 0 ]; then error; fi
+
+$python$applicfg xmlval --layout $preprocess_bl2_file -m RE_IMAGE_FLASH_ADDRESS_SECURE -c x $s_code_init_xml --vb >> $current_log_file
+if [ $? != 0 ]; then error; fi
+
+$python $applicfg xmlparam --option add -n "Clear" -t Data -c -c -h 1 -d "" $ns_code_init_xml --vb >> $current_log_file
+if [ $? != 0 ]; then error; fi
+
+$python $applicfg xmlparam --option add -n "Confirm" -t Data -c --confirm -h 1 -d "" $ns_code_init_xml --vb >> $current_log_file
+if [ $? != 0 ]; then error; fi
+
+$python$applicfg xmlname -n "$firmware_execution_offset" -c x $ns_code_init_xml --vb >> $current_log_file
+if [ $? != 0 ]; then error; fi
+
+$python$applicfg xmlval --layout $preprocess_bl2_file -m RE_IMAGE_FLASH_ADDRESS_NON_SECURE -sm RE_IMAGE_FLASH_ADDRESS_SECURE -v 0 -c x $ns_code_init_xml --vb >> $current_log_file
+if [ $? != 0 ]; then error; fi
+
+$python $applicfg xmlparam --option add -n "Clear" -t Data -c -c -h 1 -d "" $s_data_init_xml --vb >> $current_log_file
+if [ $? != 0 ]; then error; fi
+
+$python $applicfg xmlparam --option add -n "Confirm" -t Data -c --confirm -h 1 -d "" $s_data_init_xml --vb >> $current_log_file
+if [ $? != 0 ]; then error; fi
+
+$python$applicfg xmlname -n "$firmware_execution_offset" -c x $s_data_init_xml --vb >> $current_log_file
+if [ $? != 0 ]; then error; fi
+
+$python$applicfg xmlval --layout $preprocess_bl2_file -m RE_IMAGE_FLASH_ADDRESS_DATA_SECURE -c x $s_data_init_xml --vb >> $current_log_file
+if [ $? != 0 ]; then error; fi
+
+$python $applicfg xmlparam --option add -n "Clear" -t Data -c -c -h 1 -d "" $ns_data_init_xml --vb >> $current_log_file
+if [ $? != 0 ]; then error; fi
+
+$python $applicfg xmlparam --option add -n "Confirm" -t Data -c --confirm -h 1 -d "" $ns_data_init_xml --vb >> $current_log_file
+if [ $? != 0 ]; then error; fi
+
+$python$applicfg xmlname -n "$firmware_execution_offset" -c x $ns_data_init_xml --vb >> $current_log_file
+if [ $? != 0 ]; then error; fi
+
+$python$applicfg xmlval --layout $preprocess_bl2_file -m RE_IMAGE_FLASH_ADDRESS_DATA_NON_SECURE -c x $ns_data_init_xml --vb >> $current_log_file
 if [ $? != 0 ]; then error; fi
 
 if [ "$oemurot_enable" == "1" ]; then
-    "$stm32tpccli" -pb "$rot_provisioning_path/STiROT_OEMuROT/Images/STiRoT_Code_Image.xml"
+    "$stm32tpccli" -pb "$rot_provisioning_path/STiROT_OEMuROT/Images/STiRoT_Code_Image.xml" >> $current_log_file
+    if [ $? != 0 ]; then error; fi
+
+    "$stm32tpccli" -pb "$rot_provisioning_path/STiROT_OEMuROT/Images/STiRoT_Code_Init_Image.xml" >> $current_log_file
+    if [ $? != 0 ]; then error; fi
 fi
 
 exit 0

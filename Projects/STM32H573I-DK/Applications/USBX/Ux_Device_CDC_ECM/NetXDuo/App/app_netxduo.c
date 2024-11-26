@@ -171,7 +171,7 @@ UINT MX_NetXDuo_Init(VOID *memory_ptr)
     Error_Handler();
   }
 
-  /* Allocate stack for HTTP Server memory . */
+  /* Allocate stack for HTTP Server memory */
   if (tx_byte_allocate(byte_pool, (VOID **) &pointer, 4096, TX_NO_WAIT) != TX_SUCCESS)
   {
     Error_Handler();

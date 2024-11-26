@@ -17,7 +17,7 @@ set bootaddress=0x8004000
 set app_image_number=1
 set data_image_number=0
 set code_image=%oemirot_appli%
-set data_image=data_enc_sign.hex
+set data_image=data_init_sign.hex
 
 :: CubeProgammer connection
 set connect_no_reset=-c port=SWD speed=fast ap=1 mode=Hotplug

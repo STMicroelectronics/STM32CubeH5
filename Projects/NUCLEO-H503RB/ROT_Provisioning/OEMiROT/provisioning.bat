@@ -17,19 +17,6 @@ set password_programming_log="../DA/password_provisioning.log"
 set create_password_log="../DA/create_password.log"
 set state_change_log="provisioning.log"
 
-if "%isGeneratedByCubeMX%" == "true" (
-set appli_dir=%oemirot_boot_path_project%
-) else (
-set appli_dir=../../../%oemirot_boot_path_project%
-)
-
-:: Variables for image xml configuration
-set fw_in_bin="Firmware binary input file"
-set fw_out_bin="Image output file"
-set app_bin="%appli_dir%/Binary/rot_app.bin"
-set app_enc_sign_hex="%appli_dir%/Binary/rot_app_enc_sign.hex"
-set code_image_file="%projectdir%Images\OEMiROT_Code_Image.xml"
-
 :: Initial configuration
 set product_state=OPEN
 set connect_no_reset=-c port=SWD speed=fast ap=1 mode=Hotplug
@@ -80,6 +67,13 @@ if [%1] neq [AUTO] pause >nul
 
 :: ========================================================= Images generation steps ========================================================  
 :cubemx
+if "%isGeneratedByCubeMX%" == "true" (
+    echo Step 1 : Configuration management
+    echo    * OEM Keys were created during CubeMX code generation (Keys/*.pem and OEMiROT_Boot/Src/keys.c)
+    echo        Press any key to continue...
+    echo.
+    if [%1] neq [AUTO] pause >nul
+)
 echo Step 2 : Images generation
 echo    * Boot firmware image generation
 echo        Open the OEMiROT_Boot project with preferred toolchain and rebuild all files.
@@ -88,26 +82,27 @@ echo.
 if [%1] neq [AUTO] pause >nul
 ::update xml file
 if "%isGeneratedByCubeMX%" == "true" goto :cubemx1
-set "command=%python%%applicfg% xmlval -v %app_bin% --string -n %fw_in_bin% %code_image_file%"
-%command%
-IF !errorlevel! NEQ 0 goto :step_error
-set "command=%python%%applicfg% xmlval -v %app_enc_sign_hex% --string -n %fw_out_bin% %code_image_file%"
-%command%
-IF !errorlevel! NEQ 0 goto :step_error
 
+:cubemx1
 echo    * Code firmware image generation
-echo        Open the OEMiROT_Appli project with preferred toolchain.
-echo        Rebuild all files. The rot_app_enc_sign.hex file is generated with the postbuild command.
+if "%isGeneratedByCubeMX%" == "true" (
+    echo        If the configuration of OEMiROT_Boot project has been updated, reload and regenerate STM32CubeMX application project.
+    echo        Open the regenerated application project with preferred toolchain and rebuild all files.
+) else (
+    echo        Open the OEMiROT_Appli_TrustZone project with your preferred toolchain
+    echo        Rebuild all files. The appli_enc_sign.hex file is generated with the postbuild command
+)
 echo        Press any key to continue...
 echo.
 if [%1] neq [AUTO] pause >nul
+if "%isGeneratedByCubeMX%" == "true" goto :cubemx2
 echo    * Data generation (if Data image is enabled)
 echo        Select OEMiROT_Data_Image.xml(Default path is \ROT\Provisioning\OEMiROT\OEMiROT_Data_Image.xml)
 echo        Generate the data_enc_sign.hex image
 echo        Press any key to continue...
 echo.
 if [%1] neq [AUTO] pause >nul
-:cubemx1
+:cubemx2
 :: ========================================================= Board provisioning steps =======================================================  
 echo Step 3 : Provisioning password
 echo    * BOOT0 pin should be disconnected from VDD

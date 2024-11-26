@@ -94,7 +94,7 @@ None
 #### <b>ThreadX usage hints</b>
 
  - ThreadX uses the Systick as time base, thus it is mandatory that the HAL uses a separate time base through the TIM IPs.
- - ThreadX is configured with 100 ticks/sec by default, this should be taken into account when using delays or timeouts at application. It is always possible to reconfigure it in the "tx_user.h", the "TX_TIMER_TICKS_PER_SECOND" define,but this should be reflected in "tx_initialize_low_level.S" file too.
+ - ThreadX is configured with 100 ticks/sec by default, this should be taken into account when using delays or timeouts at application. It is always possible to reconfigure it, by updating the "TX_TIMER_TICKS_PER_SECOND" define in the "tx_user.h" file. The update should be reflected in "tx_initialize_low_level.S" file too.
  - ThreadX is disabling all interrupts during kernel start-up to avoid any unexpected behavior, therefore all system related calls (HAL, BSP) should be done either at the beginning of the application or inside the thread entry functions.
  - ThreadX offers the "tx_application_define()" function, that is automatically called by the tx_kernel_enter() API.
    It is highly recommended to use it to create all applications ThreadX related resources (threads, semaphores, memory pools...)  but it should not in any way contain a system API call (HAL or BSP).
@@ -104,16 +104,16 @@ None
    This require changes in the linker files to expose this memory location.
     + For EWARM add the following section into the .icf file:
      ```
-	 place in RAM_region    { last section FREE_MEM };
-	 ```
+     place in RAM_region    { last section FREE_MEM };
+     ```
     + For MDK-ARM:
-	```
+    ```
     either define the RW_IRAM1 region in the ".sct" file
     or modify the line below in "tx_initialize_low_level.S" to match the memory region being used
         LDR r1, =|Image$$RW_IRAM1$$ZI$$Limit|
-	```
+    ```
     + For STM32CubeIDE add the following section into the .ld file:
-	```
+    ```
     ._threadx_heap :
       {
          . = ALIGN(8);
@@ -121,7 +121,7 @@ None
          . = . + 64K;
          . = ALIGN(8);
        } >RAM_D1 AT> RAM_D1
-	```
+    ```
 
        The simplest way to provide memory for ThreadX is to define a new section, see ._threadx_heap above.
        In the example above the ThreadX heap size is set to 64KBytes.
@@ -142,7 +142,7 @@ RTOS, Network, ThreadX, NetXDuo, UDP, UART
 #### <b>Hardware and Software environment</b>
 
  - This application runs on STM32H563xx devices.
- - This application has been tested with STMicroelectronics NUCLEO-H563ZI boards Revision: MB1404-H563ZI-A01
+ - This application has been tested with STMicroelectronics NUCLEO-H563ZI boards Revision: MB1404-H563ZI-C01
     and can be easily tailored to any other supported device and development board.
 
   - This application uses USART3 to display logs, the hyperterminal configuration is as follows:

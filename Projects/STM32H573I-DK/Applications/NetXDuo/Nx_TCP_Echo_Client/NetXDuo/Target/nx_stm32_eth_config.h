@@ -14,7 +14,7 @@
 #define NX_STM32_ETH_CONFIG_H
 
 #ifdef __cplusplus
- extern "C" {
+extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/

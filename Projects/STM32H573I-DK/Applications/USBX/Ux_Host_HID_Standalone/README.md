@@ -56,7 +56,7 @@ Standalone, USBX Host, USB, HID, Mouse, Keyboard, UART, USART,
 ### <b>Hardware and Software environment</b>
 
   - This application runs on STM32H573I devices
-  - This application has been tested with STMicroelectronics STM32H573I-DK board.
+  - This application has been tested with STMicroelectronics STM32H573I-DK boards revision MB1677-C01
     and can be easily tailored to any other supported device and development board.
 
 - STM32H573I-DK Set-up

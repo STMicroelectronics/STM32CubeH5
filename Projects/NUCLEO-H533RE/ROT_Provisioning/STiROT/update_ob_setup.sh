@@ -5,6 +5,7 @@ script_error_file="error"
 
 #Path and input files
 ob_flash_programming_local="ob_flash_programming.sh"
+ob_obkey_provisioning_local="obkey_provisioning.sh"
 obk_cfg_file="./Config/STiRoT_Config.xml"
 
 SCRIPT=$(readlink -f $0)
@@ -59,7 +60,7 @@ $AppliCfg obscript --xml $obk_cfg_file -ob SRAM2_ECC -sp "$sram2_ecc" --vb $ob_f
 if [ $? -ne 0 ]; then error; return 1; fi
 
 action="Updating image number value"
-$AppliCfg flash -xml $obk_cfg_file --name "$data_image_en" -b image_number --decimal $ob_flash_programming_local --vb
+$AppliCfg flash -xml $obk_cfg_file --name "$data_image_en" -b image_number --decimal $ob_obkey_provisioning_local --vb
 if [ $? -ne 0 ]; then error; return 1; fi
 
 echo 'Script successfully updated according to STiRoT_Config.obk'

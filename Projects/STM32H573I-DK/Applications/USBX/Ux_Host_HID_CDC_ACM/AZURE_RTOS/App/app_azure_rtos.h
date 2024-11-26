@@ -30,9 +30,7 @@
 #include "app_threadx.h"
 #include "stm32h5xx_hal.h"
 #include "app_azure_rtos_config.h"
-
 #include "app_usbx_host.h"
-
 #include "usbpd.h"
 
 /* Private includes ----------------------------------------------------------*/

@@ -36,6 +36,10 @@ s_code_xml="$project_dir/../../../../ROT_Provisioning/OEMiROT/Images/OEMiROT_S_C
 ns_code_xml="$project_dir/../../../../ROT_Provisioning/OEMiROT/Images/OEMiROT_NS_Code_Image.xml"
 s_data_xml="$project_dir/../../../../ROT_Provisioning/OEMiROT/Images/OEMiROT_S_Data_Image.xml"
 ns_data_xml="$project_dir/../../../../ROT_Provisioning/OEMiROT/Images/OEMiROT_NS_Data_Image.xml"
+s_code_init_xml="$project_dir/../../../../ROT_Provisioning/OEMiROT/Images/OEMiROT_S_Code_Init_Image.xml"
+ns_code_init_xml="$project_dir/../../../../ROT_Provisioning/OEMiROT/Images/OEMiROT_NS_Code_Init_Image.xml"
+s_data_init_xml="$project_dir/../../../../ROT_Provisioning/OEMiROT/Images/OEMiROT_S_Data_Init_Image.xml"
+ns_data_init_xml="$project_dir/../../../../ROT_Provisioning/OEMiROT/Images/OEMiROT_NS_Data_Init_Image.xml"
 ns_main="$appli_dir/NonSecure/Inc/main.h"
 s_main="$appli_dir/Secure/Inc/main.h"
 appli_flash_layout="$appli_dir/Secure_nsclib/appli_flash_layout.h"
@@ -51,9 +55,10 @@ xml_enc_item_name="Encryption key"
 code_size="Firmware area size"
 data_size="Data download slot size"
 scratch_sector_number="Number of scratch sectors"
+firmware_execution_offset="Firmware execution area offset"
 
-s_code_bin="$appli_dir/STM32CubeIDE/Secure/$config/NUCLEO-H563ZI_OEMiROT_Appli_TrustZone_S.bin"
-ns_code_bin="$appli_dir/STM32CubeIDE/NonSecure/$config/NUCLEO-H563ZI_OEMiROT_Appli_TrustZone_NS.bin"
+s_code_bin="$appli_dir/STM32CubeIDE/Secure/$config/OEMiROT_Appli_TrustZone_S.bin"
+ns_code_bin="$appli_dir/STM32CubeIDE/NonSecure/$config/OEMiROT_Appli_TrustZone_NS.bin"
 one_code_bin="$appli_dir/Binary/rot_app.bin"
 
 s_data_bin="../Binary/s_data.bin"
@@ -374,7 +379,69 @@ if [ -f $appli_flash_layout ]; then
     if [ $? != 0 ]; then error; fi
 fi
 
-cp $project_dir/$config/NUCLEO-H563ZI_OEMiROT_Boot.bin $project_dir/../Binary/OEMiROT_Boot.bin >> $current_log_file 2>&1
+cp $project_dir/$config/OEMiROT_Boot.bin $project_dir/../Binary/OEMiROT_Boot.bin >> $current_log_file 2>&1
+if [ $? != 0 ]; then error; fi
+
+#xml for init image generation
+
+cp $s_code_xml $s_code_init_xml >> $current_log_file 2>&1
+if [ $? != 0 ]; then error; fi
+
+cp $ns_code_xml $ns_code_init_xml >> $current_log_file 2>&1
+if [ $? != 0 ]; then error; fi
+
+cp $s_data_xml $s_data_init_xml >> $current_log_file 2>&1
+if [ $? != 0 ]; then error; fi
+
+cp $ns_data_xml $ns_data_init_xml >> $current_log_file 2>&1
+if [ $? != 0 ]; then error; fi
+
+$python$applicfg xmlparam --option add -n "Clear" -t Data -c -c -h 1 -d "" $s_code_init_xml --vb >> $current_log_file 2>&1
+if [ $? != 0 ]; then error; fi
+
+$python$applicfg xmlparam --option add -n "Confirm" -t Data -c --confirm -h 1 -d "" $s_code_init_xml --vb >> $current_log_file 2>&1
+if [ $? != 0 ]; then error; fi
+
+$python$applicfg xmlname -n "$firmware_execution_offset" -c x $s_code_init_xml --vb >> $current_log_file 2>&1
+if [ $? != 0 ]; then error; fi
+
+$python$applicfg xmlval --layout $preprocess_bl2_file -m RE_IMAGE_FLASH_ADDRESS_SECURE -c x $s_code_init_xml --vb >> $current_log_file 2>&1
+if [ $? != 0 ]; then error; fi
+
+$python$applicfg xmlparam --option add -n "Clear" -t Data -c -c -h 1 -d "" $ns_code_init_xml --vb >> $current_log_file 2>&1
+if [ $? != 0 ]; then error; fi
+
+$python$applicfg xmlparam --option add -n "Confirm" -t Data -c --confirm -h 1 -d "" $ns_code_init_xml --vb >> $current_log_file 2>&1
+if [ $? != 0 ]; then error; fi
+
+$python$applicfg xmlname -n "$firmware_execution_offset" -c x $ns_code_init_xml --vb >> $current_log_file 2>&1
+if [ $? != 0 ]; then error; fi
+
+$python$applicfg xmlval --layout $preprocess_bl2_file -m RE_IMAGE_FLASH_ADDRESS_NON_SECURE -sm RE_IMAGE_FLASH_ADDRESS_SECURE -v 0 -c x $ns_code_init_xml --vb >> $current_log_file 2>&1
+if [ $? != 0 ]; then error; fi
+
+$python$applicfg xmlparam --option add -n "Clear" -t Data -c -c -h 1 -d "" $s_data_init_xml --vb >> $current_log_file 2>&1
+if [ $? != 0 ]; then error; fi
+
+$python$applicfg xmlparam --option add -n "Confirm" -t Data -c --confirm -h 1 -d "" $s_data_init_xml --vb >> $current_log_file 2>&1
+if [ $? != 0 ]; then error; fi
+
+$python$applicfg xmlname -n "$firmware_execution_offset" -c x $s_data_init_xml --vb >> $current_log_file 2>&1
+if [ $? != 0 ]; then error; fi
+
+$python$applicfg xmlval --layout $preprocess_bl2_file -m RE_IMAGE_FLASH_ADDRESS_DATA_SECURE -c x $s_data_init_xml --vb >> $current_log_file 2>&1
+if [ $? != 0 ]; then error; fi
+
+$python$applicfg xmlparam --option add -n "Clear" -t Data -c -c -h 1 -d "" $ns_data_init_xml --vb >> $current_log_file 2>&1
+if [ $? != 0 ]; then error; fi
+
+$python$applicfg xmlparam --option add -n "Confirm" -t Data -c --confirm -h 1 -d "" $ns_data_init_xml --vb >> $current_log_file 2>&1
+if [ $? != 0 ]; then error; fi
+
+$python$applicfg xmlname -n "$firmware_execution_offset" -c x $ns_data_init_xml --vb >> $current_log_file 2>&1
+if [ $? != 0 ]; then error; fi
+
+$python$applicfg xmlval --layout $preprocess_bl2_file -m RE_IMAGE_FLASH_ADDRESS_DATA_NON_SECURE -c x $ns_data_init_xml --vb >> $current_log_file 2>&1
 if [ $? != 0 ]; then error; fi
 
 exit 0

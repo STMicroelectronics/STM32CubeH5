@@ -45,17 +45,16 @@ FileX, File System, FAT32, SRAM
 ### <b>Hardware and Software environment</b>
 
   - This application runs on STM32H533RETx devices.
-  - This application has been tested with STMicroelectronics NUCLEO-H533RE board
+  - This application has been tested with STMicroelectronics NUCLEO-H533RE boards revision MB1814-C01
     and can be easily tailored to any other supported device and development board.
 
   - This application uses USART2 to display logs, the hyperterminal configuration is as follows:
 
-      - BaudRate = 115200 baud
-      - Word Length = 8 Bits
-      - Stop Bit = 1
-      - Parity = none
-      - Flow control = None
-
+    - BaudRate = 115200 baud
+    - Word Length = 8 Bits
+    - Stop Bit = 1
+    - Parity = none
+    - Flow control = None
 
 ### <b>How to use it ?</b>
 

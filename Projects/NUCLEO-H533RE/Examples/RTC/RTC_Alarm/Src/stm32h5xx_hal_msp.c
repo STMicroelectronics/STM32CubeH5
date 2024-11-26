@@ -106,6 +106,7 @@ void HAL_RTC_MspInit(RTC_HandleTypeDef* hrtc)
 
 
   /* USER CODE END RTC_MspInit 1 */
+
   }
 
 }

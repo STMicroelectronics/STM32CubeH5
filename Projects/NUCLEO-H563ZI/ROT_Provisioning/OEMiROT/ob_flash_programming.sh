@@ -22,8 +22,8 @@ ns_data_image_number=0
 s_code_image=$oemirot_appli_secure
 ns_code_image=$oemirot_appli_non_secure
 one_code_image=$oemirot_appli_assembly_sign
-s_data_image="s_data_enc_sign.hex"
-ns_data_image="ns_data_enc_sign.hex"
+s_data_image="s_data_init_sign.hex"
+ns_data_image="ns_data_init_sign.hex"
 
 connect_no_reset="-c port=SWD speed=fast ap=1 mode=Hotplug"
 connect_reset="-c port=SWD speed=fast ap=1 mode=UR"
@@ -35,7 +35,7 @@ else
 fi
 
 # =============================================== Remove protections and initialize Option Bytes ==========================================
-remove_protect_init="-ob SECWM1_STRT=1 SECWM1_END=0 WRPSGn1=0xffffffff WRPSGn2=0xffffffff SECWM2_STRT=1 SECWM2_END=0 HDP1_STRT=1 HDP1_END=0 HDP2_STRT=1 HDP2_END=0 SECBOOT_LOCK=0xC3 SECBOOTADD=$bootob SWAP_BANK=0 SRAM2_RST=0 SRAM2_ECC=0 BOOT_UBE=0xB4"
+remove_protect_init="-ob SECWM1_STRT=1 SECWM1_END=0 WRPSGn1=0xffffffff WRPSGn2=0xffffffff SECWM2_STRT=1 SECWM2_END=0 HDP1_STRT=1 HDP1_END=0 HDP2_STRT=1 HDP2_END=0 SECBOOT_LOCK=0xC3 SECBOOTADD=$bootob SWAP_BANK=0 SRAM2_RST=0 SRAM2_ECC=0 SRAM3_ECC=1 BOOT_UBE=0xB4"
 
 # =============================================== Erase the user flash =====================================================================
 erase_all="-e all"

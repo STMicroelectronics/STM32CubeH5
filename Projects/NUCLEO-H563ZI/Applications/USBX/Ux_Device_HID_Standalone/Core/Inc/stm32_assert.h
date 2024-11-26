@@ -22,7 +22,7 @@
 #define __STM32_ASSERT_H
 
 #ifdef __cplusplus
- extern "C" {
+extern "C" {
 #endif
 
 /* Exported types ------------------------------------------------------------*/

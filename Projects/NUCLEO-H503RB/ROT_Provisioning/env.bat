@@ -11,7 +11,7 @@ set stm32tpccli="C:\Program Files\STMicroelectronics\STM32Cube\STM32CubeProgramm
 ::                            OEMiROT boot path
 :: ==============================================================================
 :: Select application project below
-::set oemirot_boot_path_project=Templates/ROT/OEMiROT_Appli
+::set oemirot_boot_path_project=Templates_ROT/OEMiROT_Appli
 set oemirot_boot_path_project=Applications/ROT/OEMiROT_Appli
 :: ==============================================================================
 
@@ -20,5 +20,5 @@ set oemirot_boot_path_project=Applications/ROT/OEMiROT_Appli
 :: ==============================================================================
 set PROJECT_GENERATED_BY_CUBEMX=false
 set cube_fw_path="%~dp0..\..\..\"
-set oemirot_appli=rot_app_enc_sign.hex
+set oemirot_appli=rot_app_init_sign.hex
 set rot_provisioning_path="%~dp0"

@@ -5,7 +5,7 @@
   * @author  MCD Application Team
   * @brief   USBX host applicative file
   ******************************************************************************
-    * @attention
+  * @attention
   *
   * Copyright (c) 2023 STMicroelectronics.
   * All rights reserved.
@@ -186,7 +186,7 @@ UINT MX_USBX_Host_Init(VOID *memory_ptr)
     return TX_THREAD_ERROR;
   }
 
-/* Allocate Memory for the ux_app_Queue_UCPD  */
+  /* Allocate Memory for the ux_app_Queue_UCPD  */
   if (tx_byte_allocate(byte_pool, (VOID **) &pointer,
                        APP_QUEUE_SIZE * sizeof(ULONG), TX_NO_WAIT) != TX_SUCCESS)
   {
@@ -448,7 +448,6 @@ VOID ux_host_error_callback(UINT system_level, UINT system_context, UINT error_c
 /* USER CODE BEGIN 1 */
 
 /**
-
   * @brief  USBX_APP_Host_Init
   *         Initialization of USB host.
   * @param  none

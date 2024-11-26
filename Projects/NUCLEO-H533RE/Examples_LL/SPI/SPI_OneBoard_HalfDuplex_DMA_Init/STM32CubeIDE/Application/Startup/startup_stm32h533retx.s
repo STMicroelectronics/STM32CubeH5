@@ -644,4 +644,3 @@ g_pfnVectors:
 
 	.weak	I3C2_ER_IRQHandler
 	.thumb_set I3C2_ER_IRQHandler,Default_Handler
-	

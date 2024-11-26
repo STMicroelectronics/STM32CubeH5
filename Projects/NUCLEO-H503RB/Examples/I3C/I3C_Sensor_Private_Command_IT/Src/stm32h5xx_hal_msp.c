@@ -129,6 +129,7 @@ void HAL_I3C_MspInit(I3C_HandleTypeDef* hi3c)
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
   /* USER CODE END I3C1_MspInit 1 */
+
   }
 
 }

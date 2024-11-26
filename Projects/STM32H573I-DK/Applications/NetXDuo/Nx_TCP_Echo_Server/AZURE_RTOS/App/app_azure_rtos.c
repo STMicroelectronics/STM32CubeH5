@@ -5,7 +5,7 @@
   * @author  MCD Application Team
   * @brief   app_azure_rtos application implementation file
   ******************************************************************************
-    * @attention
+  * @attention
   *
   * Copyright (c) 2023 STMicroelectronics.
   * All rights reserved.
@@ -142,6 +142,7 @@ VOID tx_application_define(VOID *first_unused_memory)
     /* USER CODE END MX_NetXDuo_Init_Success */
 
   }
+
 #else
 /*
  * Using dynamic memory allocation requires to apply some changes to the linker file.

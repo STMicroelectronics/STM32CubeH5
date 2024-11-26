@@ -43,6 +43,5 @@ $AppliCfg hashcontent -i $user_password $board_password --password --da_bin_file
 if [ $? -ne 0 ]; then error; return 1; fi
 
 echo "Password script creation success"
-if [ "$script_mode" != "AUTO" ]; then $SHELL; fi
-return 0
+if [ "$script_mode" != "AUTO" ]; then $SHELL; return 0; fi
 

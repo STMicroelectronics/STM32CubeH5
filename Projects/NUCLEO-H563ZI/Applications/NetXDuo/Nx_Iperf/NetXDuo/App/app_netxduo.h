@@ -5,7 +5,7 @@
   * @author  MCD Application Team
   * @brief   NetXDuo applicative header file
   ******************************************************************************
-    * @attention
+  * @attention
   *
   * Copyright (c) 2023 STMicroelectronics.
   * All rights reserved.
@@ -107,7 +107,7 @@ UINT MX_NetXDuo_Init(VOID *memory_ptr);
 
 #define NX_APP_INSTANCE_PRIORITY                  1
 
-#define NX_APP_CABLE_CONNECTION_CHECK_PERIOD      (6 * NX_IP_PERIODIC_RATE)
+#define NX_APP_CABLE_CONNECTION_CHECK_PERIOD      (1 * NX_IP_PERIODIC_RATE)
 /* USER CODE END PD */
 
 #define NX_APP_DEFAULT_TIMEOUT               (10 * NX_IP_PERIODIC_RATE)

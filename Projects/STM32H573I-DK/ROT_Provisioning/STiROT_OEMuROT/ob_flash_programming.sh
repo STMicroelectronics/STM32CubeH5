@@ -21,9 +21,9 @@ ns_data_image_number=0
 s_code_image=$oemirot_appli_secure
 ns_code_image=$oemirot_appli_non_secure
 one_code_image=$oemirot_appli_assembly_sign
-s_data_image="s_data_enc_sign.hex"
-ns_data_image="ns_data_enc_sign.hex"
-oemurot_image="rot_enc_sign.hex"
+s_data_image="s_data_init_sign.hex"
+ns_data_image="ns_data_init_sign.hex"
+oemurot_image="rot_init_sign.hex"
 
 connect_no_reset="-c port=SWD speed=fast ap=1 mode=Hotplug"
 connect_reset="-c port=SWD speed=fast ap=1 mode=UR"
@@ -141,7 +141,7 @@ fi
 
 action="Write OEMuROT_Boot"
 echo "$action"
-"$stm32programmercli" $connect_no_reset -d "$cube_fw_path/Projects/STM32H573I-DK/Applications/ROT/OEMiROT_Boot/Binary/rot_enc_sign.hex" -v
+"$stm32programmercli" $connect_no_reset -d "$cube_fw_path/Projects/STM32H573I-DK/Applications/ROT/OEMiROT_Boot/Binary/$oemurot_image" -v
 if [ $? -ne 0 ]; then error; return 1; fi
 echo "OEMuROT_Boot Written"
 
@@ -155,7 +155,7 @@ echo "UBE set to ST-iRoT"
 action="Set SECBOOT_LOCK option byte"
 echo "$action"
 # SECBOOT_LOCK should be set to 0xB4 (locked) to be compliant with certification document
-"$stm32programmercli" $connect_no_reset -ob SECBOOT_LOCK=0xB4
+"$stm32programmercli" $connect_reset -ob SECBOOT_LOCK=0xB4
 if [ $? -ne 0 ]; then error; return 1; fi
 echo "SECBOOT_LOCK set"
 

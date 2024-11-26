@@ -115,6 +115,7 @@ void HAL_RTC_MspInit(RTC_HandleTypeDef* hrtc)
   __HAL_RCC_RTC_CLK_ENABLE();
 #endif /* (defined (SYSTEM_STOP_MODE)) */
   /* USER CODE END RTC_MspInit 1 */
+
   }
 
 }

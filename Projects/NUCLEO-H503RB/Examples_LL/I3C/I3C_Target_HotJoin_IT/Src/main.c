@@ -78,6 +78,7 @@ void Handle_HOTJOIN_Target(void);
   */
 int main(void)
 {
+
   /* USER CODE BEGIN 1 */
 
   /* USER CODE END 1 */

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>NUCLEO-H503RB_OEMiROT_Boot</name>
+	<name>OEMiROT_Boot</name>
 	<comment></comment>
 	<projects>
 	</projects>
@@ -22,7 +22,7 @@
 		<nature>com.st.stm32cube.ide.mcu.MCUProjectNature</nature>
 		<nature>org.eclipse.cdt.core.cnature</nature>
 		<nature>com.st.stm32cube.ide.mcu.MCUCubeIdeServicesRevAev2ProjectNature</nature>
-		<nature>com.st.stm32cube.ide.mcu.MCUManagedMakefileProjectNature</nature>
+		<nature>com.st.stm32cube.ide.mcu.MCUNonUnderRootProjectNature</nature>
 		<nature>com.st.stm32cube.ide.mcu.MCUSingleCpuProjectNature</nature>
 		<nature>com.st.stm32cube.ide.mcu.MCURootProjectNature</nature>
 		<nature>org.eclipse.cdt.managedbuilder.core.managedBuildNature</nature>
@@ -230,6 +230,11 @@
 			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/Third_Party/mbed-crypto/library/bignum.c</locationURI>
 		</link>
 		<link>
+			<name>Middlewares/mbed-crypto/bignum_core.c</name>
+			<type>1</type>
+			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/Third_Party/mbed-crypto/library/bignum_core.c</locationURI>
+		</link>
+		<link>
 			<name>Middlewares/mbed-crypto/cipher.c</name>
 			<type>1</type>
 			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/Third_Party/mbed-crypto/library/cipher.c</locationURI>
@@ -240,9 +245,9 @@
 			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/Third_Party/mbed-crypto/library/constant_time.c</locationURI>
 		</link>
 		<link>
-			<name>Middlewares/mbed-crypto/ctr_drbg.c</name>
+			<name>Middlewares/mbed-crypto/hmac_drbg.c</name>
 			<type>1</type>
-			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/Third_Party/mbed-crypto/library/ctr_drbg.c</locationURI>
+			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/Third_Party/mbed-crypto/library/hmac_drbg.c</locationURI>
 		</link>
 		<link>
 			<name>Middlewares/mbed-crypto/ecdh.c</name>
@@ -293,16 +298,6 @@
 			<name>Middlewares/mbed-crypto/platform_util.c</name>
 			<type>1</type>
 			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/Third_Party/mbed-crypto/library/platform_util.c</locationURI>
-		</link>
-		<link>
-			<name>Middlewares/mbed-crypto/rsa.c</name>
-			<type>1</type>
-			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/Third_Party/mbed-crypto/library/rsa.c</locationURI>
-		</link>
-		<link>
-			<name>Middlewares/mbed-crypto/rsa_internal.c</name>
-			<type>1</type>
-			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/Third_Party/mbed-crypto/library/rsa_internal.c</locationURI>
 		</link>
 		<link>
 			<name>Middlewares/mbed-crypto/sha256.c</name>
@@ -363,11 +358,6 @@
 			<name>Middlewares/mcuboot/image_ec256.c</name>
 			<type>1</type>
 			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/Third_Party/mcuboot/boot/bootutil/src/image_ec256.c</locationURI>
-		</link>
-		<link>
-			<name>Middlewares/mcuboot/image_rsa.c</name>
-			<type>1</type>
-			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/Third_Party/mcuboot/boot/bootutil/src/image_rsa.c</locationURI>
 		</link>
 		<link>
 			<name>Middlewares/mcuboot/image_validate.c</name>

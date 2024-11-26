@@ -46,6 +46,10 @@ set s_code_xml="%projectdir%\..\..\..\..\ROT_Provisioning\OEMiROT\Images\OEMiROT
 set ns_code_xml="%projectdir%\..\..\..\..\ROT_Provisioning\OEMiROT\Images\OEMiROT_NS_Code_Image.xml"
 set s_data_xml="%projectdir%\..\..\..\..\ROT_Provisioning\OEMiROT\Images\OEMiROT_S_Data_Image.xml"
 set ns_data_xml="%projectdir%\..\..\..\..\ROT_Provisioning\OEMiROT\Images\OEMiROT_NS_Data_Image.xml"
+set s_code_init_xml="%projectdir%\..\..\..\..\ROT_Provisioning\OEMiROT\Images\OEMiROT_S_Code_Init_Image.xml"
+set ns_code_init_xml="%projectdir%\..\..\..\..\ROT_Provisioning\OEMiROT\Images\OEMiROT_NS_Code_Init_Image.xml"
+set s_data_init_xml="%projectdir%\..\..\..\..\ROT_Provisioning\OEMiROT\Images\OEMiROT_S_Data_Init_Image.xml"
+set ns_data_init_xml="%projectdir%\..\..\..\..\ROT_Provisioning\OEMiROT\Images\OEMiROT_NS_Data_Init_Image.xml"
 set auth_s="Authentication secure key"
 set auth_ns="Authentication non secure key"
 set xml_fw_app_item_name="Firmware binary input file"
@@ -57,6 +61,7 @@ set ns_sct_file="%appli_dir%\MDK-ARM\NonSecure\stm32h563xx_ns.sct"
 set code_size="Firmware area size"
 set data_size="Data download slot size"
 set scratch_sector_number="Number of scratch sectors"
+set firmware_execution_offset="Firmware execution area offset"
 
 set "command=%python%%applicfg% flash --layout %preprocess_bl2_file% -b S_CODE_REGION_START -m  RE_ADDRESS_SECURE_START %map_properties% --vb >> %current_log_file% 2>&1"
 %command%
@@ -451,6 +456,86 @@ IF !errorlevel! NEQ 0 goto :error
 set "command=%python%%applicfg% xmlval -xml %ns_data_xml% -nxml %data_size% -nxml %scratch_sector_number% --decimal -e (((val1+1)/val2)+1) -cond val2 -c M %ns_data_xml% --vb >> %current_log_file% 2>&1"
 %command%
 IF !errorlevel! NEQ 0 goto :error
+
+::xml for init image generation
+
+copy %s_code_xml% %s_code_init_xml%
+IF !errorlevel! NEQ 0 goto :error
+
+copy %ns_code_xml% %ns_code_init_xml%
+IF !errorlevel! NEQ 0 goto :error
+
+copy %s_data_xml% %s_data_init_xml%
+IF !errorlevel! NEQ 0 goto :error
+
+copy %ns_data_xml% %ns_data_init_xml%
+IF !errorlevel! NEQ 0 goto :error
+
+set "command=%python%%applicfg% xmlparam --option add -n "Clear" -t Data -c -c -h 1 -d "" %s_code_init_xml% --vb >> %current_log_file% 2>&1"
+%command%
+IF !errorlevel! NEQ 0 goto :error
+
+set "command=%python%%applicfg% xmlparam --option add -n "Confirm" -t Data -c --confirm -h 1 -d "" %s_code_init_xml% --vb >> %current_log_file% 2>&1"
+%command%
+IF !errorlevel! NEQ 0 goto :error
+
+set "command=%python%%applicfg% xmlname -n %firmware_execution_offset%  -c x %s_code_init_xml% --vb >> %current_log_file% 2>&1"
+%command%
+IF !errorlevel! NEQ 0 goto :error
+
+set "command=%python%%applicfg% xmlval --layout %preprocess_bl2_file% -m RE_IMAGE_FLASH_ADDRESS_SECURE -c x %s_code_init_xml% --vb >> %current_log_file% 2>&1"
+%command%
+IF !errorlevel! NEQ 0 goto :error
+
+set "command=%python%%applicfg% xmlparam --option add -n "Clear" -t Data -c -c -h 1 -d "" %ns_code_init_xml% --vb >> %current_log_file% 2>&1"
+%command%
+IF !errorlevel! NEQ 0 goto :error
+
+set "command=%python%%applicfg% xmlparam --option add -n "Confirm" -t Data -c --confirm -h 1 -d "" %ns_code_init_xml% --vb >> %current_log_file% 2>&1"
+%command%
+IF !errorlevel! NEQ 0 goto :error
+
+set "command=%python%%applicfg% xmlname -n %firmware_execution_offset%  -c x %ns_code_init_xml% --vb >> %current_log_file% 2>&1"
+%command%
+IF !errorlevel! NEQ 0 goto :error
+
+set "command=%python%%applicfg% xmlval --layout %preprocess_bl2_file% -m RE_IMAGE_FLASH_ADDRESS_NON_SECURE -sm RE_IMAGE_FLASH_ADDRESS_SECURE -v 0 -c x %ns_code_init_xml% --vb >> %current_log_file% 2>&1"
+%command%
+IF !errorlevel! NEQ 0 goto :error
+
+set "command=%python%%applicfg% xmlparam --option add -n "Clear" -t Data -c -c -h 1 -d "" %s_data_init_xml% --vb >> %current_log_file% 2>&1"
+%command%
+IF !errorlevel! NEQ 0 goto :error
+
+set "command=%python%%applicfg% xmlparam --option add -n "Confirm" -t Data -c --confirm -h 1 -d "" %s_data_init_xml% --vb >> %current_log_file% 2>&1"
+%command%
+IF !errorlevel! NEQ 0 goto :error
+
+set "command=%python%%applicfg% xmlname -n %firmware_execution_offset%  -c x %s_data_init_xml% --vb >> %current_log_file% 2>&1"
+%command%
+IF !errorlevel! NEQ 0 goto :error
+
+set "command=%python%%applicfg% xmlval --layout %preprocess_bl2_file% -m RE_IMAGE_FLASH_ADDRESS_DATA_SECURE -c x %s_data_init_xml% --vb >> %current_log_file% 2>&1"
+%command%
+IF !errorlevel! NEQ 0 goto :error
+
+set "command=%python%%applicfg% xmlparam --option add -n "Clear" -t Data -c -c -h 1 -d "" %ns_data_init_xml% --vb >> %current_log_file% 2>&1"
+%command%
+IF !errorlevel! NEQ 0 goto :error
+
+set "command=%python%%applicfg% xmlparam --option add -n "Confirm" -t Data -c --confirm -h 1 -d "" %ns_data_init_xml% --vb >> %current_log_file% 2>&1"
+%command%
+IF !errorlevel! NEQ 0 goto :error
+
+set "command=%python%%applicfg% xmlname -n %firmware_execution_offset%  -c x %ns_data_init_xml% --vb >> %current_log_file% 2>&1"
+%command%
+IF !errorlevel! NEQ 0 goto :error
+
+set "command=%python%%applicfg% xmlval --layout %preprocess_bl2_file% -m RE_IMAGE_FLASH_ADDRESS_DATA_NON_SECURE -c x %ns_data_init_xml% --vb >> %current_log_file% 2>&1"
+%command%
+IF !errorlevel! NEQ 0 goto :error
+
+ECHO comd : %command%
 
 :end
 

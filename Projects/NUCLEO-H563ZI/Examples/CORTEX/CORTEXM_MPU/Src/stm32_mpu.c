@@ -62,7 +62,7 @@ void MPU_Config(void)
 
   /* Define cacheable memory via MPU */
   MPU_AttributesInit.Number             = EXAMPLE_RAM_ATTRIBUTE_NUMBER;
-  MPU_AttributesInit.Attributes         = MPU_NOT_CACHEABLE;
+  MPU_AttributesInit.Attributes         = INNER_OUTER(MPU_NOT_CACHEABLE);
   HAL_MPU_ConfigMemoryAttributes(&MPU_AttributesInit);
 
   /* Configure RAM region as Region Number 0, 256KB of size and R/W region */
@@ -80,7 +80,7 @@ void MPU_Config(void)
   /* Configure FLASH region as REGION Number 1, 2M of size and R/W region */
   /* Define cacheable memory via MPU */
   MPU_AttributesInit.Number             = EXAMPLE_FLASH_ATTRIBUTE_NUMBER;
-  MPU_AttributesInit.Attributes         = MPU_NOT_CACHEABLE;
+  MPU_AttributesInit.Attributes         = INNER_OUTER(MPU_NOT_CACHEABLE);
   HAL_MPU_ConfigMemoryAttributes(&MPU_AttributesInit);
 
   MPU_InitStruct.BaseAddress = EXAMPLE_FLASH_ADDRESS_START;
@@ -94,7 +94,7 @@ void MPU_Config(void)
   Never region */
   /* Define cacheable memory via MPU */
   MPU_AttributesInit.Number             = EXAMPLE_PERIPH_ATTRIBUTE_NUMBER;
-  MPU_AttributesInit.Attributes         = MPU_NOT_CACHEABLE;
+  MPU_AttributesInit.Attributes         = INNER_OUTER(MPU_NOT_CACHEABLE);
   HAL_MPU_ConfigMemoryAttributes(&MPU_AttributesInit);
 
   MPU_InitStruct.BaseAddress = EXAMPLE_PERIPH_ADDRESS_START;
@@ -126,7 +126,7 @@ void MPU_AccessPermConfig(void)
   HAL_MPU_Disable();
   /* Define cacheable memory via MPU */
   MPU_AttributesInit.Number             = ARRAY_ATTRIBUTE_NUMBER;
-  MPU_AttributesInit.Attributes         = MPU_NOT_CACHEABLE;
+  MPU_AttributesInit.Attributes         = INNER_OUTER(MPU_NOT_CACHEABLE);
   HAL_MPU_ConfigMemoryAttributes(&MPU_AttributesInit);
 
   MPU_InitStruct.Enable = MPU_REGION_ENABLE;

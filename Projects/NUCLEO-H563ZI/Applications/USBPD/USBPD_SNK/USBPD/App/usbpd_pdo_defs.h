@@ -58,7 +58,7 @@
 
 /* USER CODE BEGIN Exported_Define */
 
-#define USBPD_CORE_PDO_SRC_FIXED_MAX_CURRENT 3
+#define USBPD_CORE_PDO_SRC_FIXED_MAX_CURRENT 1500
 #define USBPD_CORE_PDO_SNK_FIXED_MAX_CURRENT 1500
 
 /* USER CODE END Exported_Define */
@@ -116,7 +116,7 @@ uint32_t PORT0_PDO_ListSNK[USBPD_MAX_NB_PDO] =
     USBPD_PDO_TYPE_FIXED                 | /* Fixed supply PDO            */
 
     USBPD_PDO_SNK_FIXED_SET_VOLTAGE(5000U)         | /* Voltage in mV               */
-    USBPD_PDO_SNK_FIXED_SET_OP_CURRENT(0U)     | /* Operating current in  mA            */
+    USBPD_PDO_SNK_FIXED_SET_OP_CURRENT(1500U)     | /* Operating current in  mA            */
 
     /* Common definitions applicable to all PDOs, defined only in PDO 1 */
     USBPD_PDO_SNK_FIXED_FRS_NOT_SUPPORTED          | /* Fast Role Swap				 */

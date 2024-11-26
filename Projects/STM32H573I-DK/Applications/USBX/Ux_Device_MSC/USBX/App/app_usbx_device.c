@@ -52,7 +52,10 @@ TX_EVENT_FLAGS_GROUP                EventFlag;
 TX_QUEUE                            ux_app_MsgQueue;
 extern BSP_SD_CardInfo              USBD_SD_CardInfo;
 extern PCD_HandleTypeDef            hpcd_USB_DRD_FS;
-__ALIGN_BEGIN USB_MODE_STATE                      USB_Device_State_Msg   __ALIGN_END;
+#if defined ( __ICCARM__ ) /* IAR Compiler */
+  #pragma data_alignment=4
+#endif /* defined ( __ICCARM__ ) */
+__ALIGN_BEGIN USB_MODE_STATE USB_Device_State_Msg __ALIGN_END;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/

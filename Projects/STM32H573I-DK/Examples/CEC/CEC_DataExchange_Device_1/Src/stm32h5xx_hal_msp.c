@@ -119,6 +119,7 @@ void HAL_CEC_MspInit(CEC_HandleTypeDef* hcec)
   /* USER CODE BEGIN CEC_MspInit 1 */
 
   /* USER CODE END CEC_MspInit 1 */
+
   }
 
 }

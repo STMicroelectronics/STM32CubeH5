@@ -1,8 +1,9 @@
 /* USER CODE BEGIN Header */
 /**
   ******************************************************************************
-  * @file           : main.c
-  * @brief          : Main program body
+  * @file    ThreadX/Tx_SecureLEDToggle_TrustZone/Secure/Src/main.c
+  * @author  MCD Application Team
+  * @brief   Main program body
   ******************************************************************************
   * @attention
   *
@@ -100,7 +101,10 @@ int main(void)
   MX_GPIO_Init();
   MX_ICACHE_Init();
   /* USER CODE BEGIN 2 */
-
+  /* Secure SysTick should rather be suspended before calling non-secure  */
+  /* in order to avoid wake-up from sleep mode entered by non-secure      */
+  /* The Secure SysTick shall be resumed on non-secure callable functions */
+  HAL_SuspendTick();
   /* USER CODE END 2 */
 
   /*************** Setup and jump to non-secure *******************************/

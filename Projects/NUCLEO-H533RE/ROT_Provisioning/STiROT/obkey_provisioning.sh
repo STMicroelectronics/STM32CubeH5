@@ -1,13 +1,16 @@
 #!/bin/bash -
 source ../env.sh
 
-# Getting the CubeProgammer_cli path 
+# Getting the CubeProgammer_cli path
 connect_no_reset="-c port=SWD speed=fast ap=1 mode=Hotplug"
 connect_reset="-c port=SWD speed=fast ap=1 mode=Hotplug -hardRst"
 
 # Local variable to manage alone script execution
 product_state="unknown"
 script_error_file="error"
+
+# Value updated automatically
+image_number=1
 
 # Update local variable thanks to argument use with the command script executed
 if [ $# -ge 1 ]; then
@@ -52,6 +55,13 @@ echo "$action"
 "$stm32programmercli" $connect_no_reset -sdp ./Binary/STiRoT_Data.obk
 if [ $? -ne 0 ]; then error; return 1; fi
 
+if [ $image_number -eq 2 ]; then
+    action="Configure OBKeys HDPL2-STiRoT data area"
+    echo "$action"
+    "$stm32programmercli" $connect_reset
+    "$stm32programmercli" $connect_no_reset -sdp ./Binary/data_sign.obk
+    if [ $? -ne 0 ]; then error; return 1; fi
+fi
 # =============================================== Boot on STiRoT ==========================================================================
 
 if [[ "$product_state" == "OPEN" ]]; then

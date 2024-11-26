@@ -43,7 +43,6 @@ set main_h="%appli_dir%\Inc\main.h"
 set s_main_h="%appli_dir%\Secure\Inc\main.h"
 
 set obk_cfg_file="%projectdir%Config\STiRoT_Config.xml"
-set code_image="%projectdir%Image\STiRoT_Code_Image.xml"
 
 :: Switch use case project Application TrustZone or Full secure
 set Full_secure=1
@@ -52,13 +51,7 @@ set Full_secure=1
 set code_size="Firmware area size"
 set code_offset="Firmware execution area offset"
 set data_image_en="Number of images managed"
-set fw_in_bin="Firmware binary input file"
-set fw_out_bin="Image output file"
 set secure_code_size="Size of the secure area"
-
-::Path adapted to IAR postbuild command
-set stirot_app_bin="../%appli_dir%/Binary/appli.bin"
-set stirot_app_hex="../%appli_dir%/Binary/appli_enc_sign.hex"
 
 :start
 goto exe:
@@ -82,14 +75,6 @@ set "AppliCfg=%python%%applicfg%"
 :: ================================================ Updating test Application files ========================================================
 
 if /i "%Full_secure%" == "1" (
-set "action=Update STiROT_Code_Image.xml input binary file"
-%AppliCfg% xmlval --name %fw_in_bin% --value %stirot_app_bin% --string --vb %code_image%
-if !errorlevel! neq 0 goto :error
-
-set "action=Update STiROT_Code_Image.xml output encrypted/signed hexadecimal file"
-%AppliCfg% xmlval --name %fw_out_bin% --value %stirot_app_hex% --string --vb %code_image%
-if !errorlevel! neq 0 goto :error
-
 set "action=Updating Linker .icf and .ld secure file"
 %AppliCfg% linker -xml %obk_cfg_file% -nxml %code_size% -n S_CODE_SIZE --vb %icf_file%
 if !errorlevel! neq 0 goto :error
@@ -125,14 +110,6 @@ exit 0
 )
 
 if /i "%Full_secure%" == "0" (
-
-set "action=Update STiROT_Code_Image.xml input binary file"
-%AppliCfg% xmlval --name %fw_in_bin% --value %stirot_app_bin% --string --vb %code_image%
-if !errorlevel! neq 0 goto :error
-
-set "action=Update STiROT_Code_Image.xml output encrypted/signed hexadecimal file"
-%AppliCfg% xmlval --name %fw_out_bin% --value %stirot_app_hex% --string --vb %code_image%
-if !errorlevel! neq 0 goto :error
 
 set "action=Update appli postbuild"
 %AppliCfg% flash -xml %obk_cfg_file% -nxml %secure_code_size% -b image_size %iar_appli_postbuild% --vb

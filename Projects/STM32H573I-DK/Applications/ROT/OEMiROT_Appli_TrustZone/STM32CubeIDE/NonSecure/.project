@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>STM32H573I-DK_OEMiROT_Appli_TrustZone_NS</name>
+	<name>OEMiROT_Appli_TrustZone_NonSecure</name>
 	<comment></comment>
 	<projects>
-		<project>STM32H573I-DK_OEMiROT_Appli_TrustZone_S</project>
+		<project>OEMiROT_Appli_TrustZone_Secure</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
@@ -23,7 +23,7 @@
 		<nature>com.st.stm32cube.ide.mcu.MCUProjectNature</nature>
 		<nature>org.eclipse.cdt.core.cnature</nature>
 		<nature>com.st.stm32cube.ide.mcu.MCUCubeIdeServicesRevAev2ProjectNature</nature>
-		<nature>com.st.stm32cube.ide.mcu.MCUManagedMakefileProjectNature</nature>
+		<nature>com.st.stm32cube.ide.mcu.MCUNonUnderRootProjectNature</nature>
 		<nature>com.st.stm32cube.ide.mcu.MCUNonSecureProjectNature</nature>
 		<nature>com.st.stm32cube.ide.mcu.MCUSingleCpuProjectNature</nature>
 		<nature>org.eclipse.cdt.managedbuilder.core.managedBuildNature</nature>
@@ -34,6 +34,16 @@
 			<name>Doc/README.md</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/README.md</locationURI>
+		</link>
+		<link>
+			<name>Application/User/com.c</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/NonSecure/Src/com.c</locationURI>
+		</link>
+		<link>
+			<name>Application/User/common.c</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/NonSecure/Src/common.c</locationURI>
 		</link>
 		<link>
 			<name>Drivers/CMSIS/system_stm32h5xx_ns.c</name>
@@ -134,16 +144,6 @@
 			<name>Example/User/stm32h5xx_it.c</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/NonSecure/Src/stm32h5xx_it.c</locationURI>
-		</link>
-		<link>
-			<name>Application/User/com.c</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/NonSecure/Src/com.c</locationURI>
-		</link>
-		<link>
-			<name>Application/User/common.c</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/NonSecure/Src/common.c</locationURI>
 		</link>
 	</linkedResources>
 </projectDescription>

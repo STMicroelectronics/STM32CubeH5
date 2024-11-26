@@ -116,7 +116,7 @@ extern TX_QUEUE     ux_app_MsgQueue;
 #if defined ( __ICCARM__ ) /* IAR Compiler */
   #pragma data_alignment=4
 #endif /* defined ( __ICCARM__ ) */
-__ALIGN_BEGIN USB_MODE_STATE                  USB_Device_EVENT  __ALIGN_END;
+__ALIGN_BEGIN USB_MODE_STATE USB_Device_EVENT __ALIGN_END;
 /* USER CODE END USB Private variables */
 
 /* Exported functions ---------------------------------------------------------*/
