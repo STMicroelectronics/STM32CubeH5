@@ -42,7 +42,7 @@ Board 2: receiving then transmitting board</code></pre>
 <li>Once the transmission/reception processes are completed LED1 is turned on.</li>
 <li>If there is an initialization or transfer error, LED3 is turned on.</li>
 </ul>
-<p>At the beginning of the main program the HAL_Init() function is called to reset all the peripherals, initialize the Flash interface and the systick. The SystemClock_Config() function is used to configure the system clock for STM32U575xx Devices : The CPU at 250 MHz. The HCLK for AHB peripherals to run at 250 MHz. The APB clock dividers APB1, APB2, APB3 peripherals to run at 250 MHz.</p>
+<p>At the beginning of the main program the HAL_Init() function is called to reset all the peripherals, initialize the Flash interface and the systick. The SystemClock_Config() function is used to configure the system clock for STM32H563xx Devices : The CPU at 250 MHz. The HCLK for AHB peripherals to run at 250 MHz. The APB clock dividers APB1, APB2, APB3 peripherals to run at 250 MHz.</p>
 <p>The UART is configured as follows:</p>
 <pre><code>- BaudRate = 9600 baud
 - Word Length = 8 bits (8 data bits, no parity bit)

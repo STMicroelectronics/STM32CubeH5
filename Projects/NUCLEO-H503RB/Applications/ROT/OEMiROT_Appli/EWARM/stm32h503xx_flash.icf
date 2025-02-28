@@ -2,9 +2,9 @@
 /*-Editor annotation file-*/
 /* IcfEditorFile="$TOOLKIT_DIR$\config\ide\IcfEditor\cortex_v1_0.xml" */
 /*-Specials-*/
-define exported symbol CODE_OFFSET = 0x12000; /* This define is updated automatically from OEMiROT_BOOT project */
-define exported symbol CODE_SIZE = 0xE000; /* This define is updated automatically from OEMiROT_BOOT project */
-define exported symbol IMAGE_HEADER_SIZE = 0x400; /* mcuboot headre size */
+define exported symbol CODE_OFFSET = 0x12000; /* This definition is updated automatically from OEMiROT_Boot postbuild */
+define exported symbol CODE_SIZE = 0xE000;    /* This definition is updated automatically from OEMiROT_Boot postbuild */
+define exported symbol IMAGE_HEADER_SIZE = 0x400; /* mcuboot header size */
 define exported symbol __ICFEDIT_intvec_start__ = 0x08000000 + CODE_OFFSET + IMAGE_HEADER_SIZE;
 /*-Memory Regions-*/
 define symbol __ICFEDIT_region_ROM_start__ = 0x08000000 + CODE_OFFSET + IMAGE_HEADER_SIZE;

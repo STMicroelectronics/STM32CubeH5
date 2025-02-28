@@ -76,7 +76,7 @@
    default value is 4096 for a 4096-bit modulus. Other values can be 3072,
    2048, or 1024 (not recommended). */
 /*
-#define NX_CRYPTO_MAX_RSA_MODULUS_SIZE      4096
+#define NX_CRYPTO_MAX_RSA_MODULUS_SIZE	    4096
 */
 
 /* Defined, this option enables extra security features required for
@@ -123,12 +123,12 @@
 
 /* This option define drbg use df.*/
 /*
-#define NX_CRYPTO_DRBG_USE_DF         1
+#define NX_CRYPTO_DRBG_USE_DF		  1
 */
 
 /* This option defines drbg prediction resistance.*/
 /*
-#define NX_CRYPTO_DRBG_PREDICTION_RESISTANCE         1
+#define NX_CRYPTO_DRBG_PREDICTION_RESISTANCE		  1
 */
 
 /* Defined, this option enables crypto hardware random initialize.*/
@@ -138,27 +138,27 @@
 
 /* This option defines crypto ecdsa scratch buffer size.*/
 /*
-#define NX_CRYPTO_ECDSA_SCRATCH_BUFFER_SIZE         3016
+#define NX_CRYPTO_ECDSA_SCRATCH_BUFFER_SIZE		    3016
 */
 
 /* This option defines ecdh scratch buffer size.*/
 /*
-#define NX_CRYPTO_ECDH_SCRATCH_BUFFER_SIZE         2464
+#define NX_CRYPTO_ECDH_SCRATCH_BUFFER_SIZE		   2464
 */
 
 /* This option defines the ecjpake scratch buffer size.*/
 /*
-#define NX_CRYPTO_ECJPAKE_SCRATCH_BUFFER_SIZE         4096
+#define NX_CRYPTO_ECJPAKE_SCRATCH_BUFFER_SIZE		    4096
 */
 
 /* This option defines the hmac max pad size.*/
 /*
-#define NX_CRYPTO_HMAC_MAX_PAD_SIZE         128
+#define NX_CRYPTO_HMAC_MAX_PAD_SIZE		    128
 */
 
 /* This option defines the huge number bits.*/
 /*
-#define NX_CRYPTO_HUGE_NUMBER_BITS         32
+#define NX_CRYPTO_HUGE_NUMBER_BITS		    32
 */
 
 /* Defined, this option allows TLS to accept self-signed certificates from
@@ -173,13 +173,6 @@
    Verification for TLS Servers4. */
 /*
 #define NX_SECURE_ENABLE_CLIENT_CERTIFICATE_VERIFY
-*/
-
-/* Defined, this option enables the legacy TLSv1.0 mode. TLSv1.0 is considered
-   obsolete so it should only be enabled for backward-compatibility with older
-   applications. */
-/*
-#define NX_SECURE_TLS_ENABLE_TLS_1_0
 */
 
 /* Defined, this option enables the legacy TLSv1.1 mode. TLSv1.1 is considered
@@ -216,27 +209,27 @@
 #define NX_SECURE_DTLS_COOKIE_LENGTH         32
 */
 
-/* This option defines the maximum re-transmit retries for
+/* This option defines the maximum retransmit retries for
    DTLS handshake packet. */
 /*
 #define NX_SECURE_DTLS_MAXIMUM_RETRANSMIT_RETRIES         10
 */
 
-/* This option defines the maximum DTLS re-transmit rate. The default value is
+/* This option defines the maximum DTLS retransmit rate. The default value is
    60 * NX_IP_PERIODIC_RATE. */
 /*
 #define NX_SECURE_DTLS_MAXIMUM_RETRANSMIT_TIMEOUT         (60 * NX_IP_PERIODIC_RATE)
 */
 
-/* This option defines how the re-transmit timeout period changes between
-   successive retries.   If this value is 0, the initial re-transmit timeout
-   is the same as subsequent re-transmit timeouts. If this value is 1,
-   each successive re-transmit is twice as long.  */
+/* This option defines how the retransmit timeout period changes between
+   successive retries.   If this value is 0, the initial retransmit timeout
+   is the same as subsequent retransmit timeouts. If this value is 1,
+   each successive retransmit is twice as long.  */
 /*
 #define NX_SECURE_DTLS_RETRANSMIT_RETRY_SHIFT         1
 */
 
-/* This option defines the initial DTLS re-transmit rate. */
+/* This option defines the initial DTLS retransmit rate. */
 /*
 #define NX_SECURE_DTLS_RETRANSMIT_TIMEOUT        NX_IP_PERIODIC_RATE
 */
@@ -329,18 +322,6 @@
 #define NX_SECURE_TLS_PREMASTER_SIZE         48
 */
 
-/* NX_SECURE_TLS_MASTER_SIZE defines the size of master secret.
-   The default value is 48. */
-/*
-   #define NX_SECURE_TLS_MASTER_SIZE 48
-*/
-
-/* NX_SECURE_TLS_KEY_MATERIAL_SIZE defines the size of key material.
-   The default value is (2 * (NX_SECURE_TLS_MAX_HASH_SIZE + NX_SECURE_TLS_MAX_KEY_SIZE + NX_SECURE_TLS_MAX_IV_SIZE)). */
-/*
-   #define NX_SECURE_TLS_KEY_MATERIAL_SIZE (2 * (NX_SECURE_TLS_MAX_HASH_SIZE + NX_SECURE_TLS_MAX_KEY_SIZE + NX_SECURE_TLS_MAX_IV_SIZE))
-*/
-
 /* This option disables Server Name Indication (SNI) extension. */
 /*
 #define NX_SECURE_TLS_SNI_EXTENSION_DISABLED
@@ -349,13 +330,6 @@
 /* This option enables SCSV ciphersuite in ClientHello message. */
 /*
 #define NX_SECURE_TLS_USE_SCSV_CIPHPERSUITE
-*/
-
-/* NX_SECURE_CUSTOM_SECRET_GENERATION enables the user to pass pointers of customized secret generation functions to
-   TLS in the user defined nx_secure_custom_secret_generation_init function. This will allow TLS to use customized
-   secret generation functions. */
-/*
-#define NX_SECURE_CUSTOM_SECRET_GENERATION
 */
 
 /* This option disables X509 Certificate Revocation List check. */
@@ -415,11 +389,6 @@
 #define NX_SECURE_TLS_MAX_PSK_NONCE_SIZE         255
 */
 
-/* Defined, this option enables secure renegotiation.*/
-/*
-#define NX_SECURE_TLS_ENABLE_SECURE_RENEGOTIATION
-*/
-
 /* Defined, this option enables certificate verify extension.*/
 /*
 #define NX_SECURE_X509_CERTIFICATE_VERIFY_EXTENSION
@@ -446,36 +415,46 @@
 #define NX_SECURE_TLS_SERVER_DISABLED
 */
 
-/* Defines whether or not the connection should be terminated
-immediately upon failure to receive the secure renegotiation
-extension during the initial handshake. By default,
-the connection is not terminated.*/
+/* NX_SECURE_TLS_MASTER_SIZE defines the size of master secret.
+   The default value is 48. */
+/*
+   #define NX_SECURE_TLS_MASTER_SIZE 48
+*/
+
+/* NX_SECURE_TLS_KEY_MATERIAL_SIZE defines the size of key material.
+   The default value is (2 * (NX_SECURE_TLS_MAX_HASH_SIZE + NX_SECURE_TLS_MAX_KEY_SIZE + NX_SECURE_TLS_MAX_IV_SIZE)). */
+/*
+    #define NX_SECURE_TLS_KEY_MATERIAL_SIZE (2 * (NX_SECURE_TLS_MAX_HASH_SIZE + NX_SECURE_TLS_MAX_KEY_SIZE + NX_SECURE_TLS_MAX_IV_SIZE))
+*/
+
+/* NX_SECURE_CUSTOM_SECRET_GENERATION enables the user to pass pointers of customized secret generation functions to
+   TLS in the user defined nx_secure_custom_secret_generation_init function. This will allow TLS to use customized
+   secret generation functions. */
+/*
+#define NX_SECURE_CUSTOM_SECRET_GENERATION
+*/
+
+/* When defined the AES Tabled are  moved to RAM. */
+/*
+#define NX_CRYPTO_AES_USE_RAM_TABLES
+*/
+
+/* Defines whether or not the connection should be terminated immediately upon failure to receive the secure renegotiation extension during the initial handshake.
+   By default, the connection is not terminated.*/
 /*
 #define NX_SECURE_TLS_REQUIRE_RENEGOTIATION_EXT
 */
 
 /* Disables client-initiated renegotiation for TLS servers.
-In some instances, client-initiated renegotiation can become
-a possible denial-of-service vulnerability.*/
+   In some instances, client-initiated renegotiation can become a possible denial-of-service vulnerability. */
 /*
 #define NX_SECURE_TLS_DISABLE_CLIENT_INITIATED_RENEGOTIATION
 */
 
-/* Disable secure session renegotiation extension.*/
+/* Disable secure session renegotiation extension. */
 /*
 #define NX_SECURE_TLS_DISABLE_SECURE_RENEGOTIATION
 */
-
-/* When defined the AES tables are  moved to RAM.*/
-/*
-#define NX_CRYPTO_AES_USE_RAM_TABLES
-*/
-
-#ifdef NX_SECURE_TLS_SERVER_DISABLED
-#ifdef NX_SECURE_TLS_CLIENT_DISABLED
-#error "Must enable either TLS Client or TLS Server!"
-#endif
-#endif
 
 /* USER CODE BEGIN 2 */
 

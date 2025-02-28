@@ -6,7 +6,7 @@
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2021 STMicroelectronics.
+  * Copyright (c) 2024 STMicroelectronics.
   * All rights reserved.
   *
   * This software is licensed under terms that can be found in the LICENSE file
@@ -24,14 +24,11 @@ extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
-#include "stm32u5xx_ll_bus.h"
-#include "stm32u5xx_ll_dma.h"
-#include "stm32u5xx_ll_gpio.h"
-#include "stm32u5xx_ll_rcc.h"
-#include "stm32u5xx_ll_usart.h"
-#if defined(LPUART1)
-#include "stm32u5xx_ll_lpuart.h"
-#endif /* LPUART1 */
+#include "stm32h5xx_ll_bus.h"
+#include "stm32h5xx_ll_dma.h"
+#include "stm32h5xx_ll_gpio.h"
+#include "stm32h5xx_ll_rcc.h"
+#include "stm32h5xx_ll_usart.h"
 
 /* Private typedef -----------------------------------------------------------*/
 /* Private function prototypes -----------------------------------------------*/

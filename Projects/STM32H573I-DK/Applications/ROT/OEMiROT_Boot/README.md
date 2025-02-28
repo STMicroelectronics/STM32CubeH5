@@ -87,3 +87,18 @@ In order to build the OEMiROT_Boot project, you must do the following:
 
 Then refer to OEMiROT_Appli readme for example of application booted through OEMiROT boot path.
 
+### <b>Notes</b>
+
+By default the anti-tamper is enabled for internal tamper events only. It is possible to change this configuration with
+OEMIROT_TAMPER_ENABLE define in Inc\\boot_hal_cfg.h.
+
+```
+#define NO_TAMPER            (0)                   /*!< No tamper activated */
+#define INTERNAL_TAMPER_ONLY (1)                   /*!< Only Internal tamper activated */
+#define ALL_TAMPER           (2)                   /*!< Internal and External tamper activated */
+#define OEMIROT_TAMPER_ENABLE INTERNAL_TAMPER_ONLY /*!< TAMPER configuration flag  */
+```
+
+If OEMIROT_TAMPER_ENABLE is changed to ALL_TAMPER, the anti-tamper protection is enabled with active tamper pins usage.
+It is needed to connect TAMP_IN8 (PE5 on CN18 pin 18) and TAMP_OUT8 (PE4 on CN2 pin 5) on the STM32H573I-DK board,
+to allow the application to run. In case the tamper pins are opened or shorted, then the application is reset and blocked.

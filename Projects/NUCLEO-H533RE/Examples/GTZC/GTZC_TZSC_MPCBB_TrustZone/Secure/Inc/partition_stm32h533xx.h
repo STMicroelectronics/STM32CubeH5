@@ -35,6 +35,7 @@
 
 #ifndef PARTITION_STM32H533XX_H
 #define PARTITION_STM32H533XX_H
+
 /*
 //-------- <<< Use Configuration Wizard in Context Menu >>> -----------------
 */
@@ -310,7 +311,7 @@
 //     <1=> Lowered to 0x04-0x07
 //   <i> Value for SCB->AIRCR register bit PRIS
 */
-#define SCB_AIRCR_PRIS_VAL      0
+#define SCB_AIRCR_PRIS_VAL          0
 
 /*
 //   <o>BusFault, HardFault, and NMI target
@@ -318,7 +319,7 @@
 //     <1=> Non-Secure state
 //   <i> Value for SCB->AIRCR register bit BFHFNMINS
 */
-#define SCB_AIRCR_BFHFNMINS_VAL    0
+#define SCB_AIRCR_BFHFNMINS_VAL     0
 
 /*
 // </e>
@@ -373,6 +374,7 @@
 //   <e>Initialize ITNS 0 (Interrupts 0..31)
 */
 #define NVIC_INIT_ITNS0    1
+
 /*
 // Interrupts 0..31
 //   <o.0>  WWDG_IRQn             <0=> Secure state
@@ -409,6 +411,7 @@
 //   <o.31> GPDMA1_Channel4_IRQn  <0=> Secure state
 */
 #define NVIC_INIT_ITNS0_VAL      0x01000000
+
 /*
 //   </e>
 */
@@ -453,7 +456,6 @@
 //   <o.30> UART5_IRQn            <0=> Secure state
 //   <o.31> LPUART1_IRQn          <0=> Secure state
 */
-
 #define NVIC_INIT_ITNS1_VAL      0x00000000
 
 /*
@@ -492,7 +494,6 @@
 //   <o.30> GPDMA2_Channel4_IRQn  <0=> Secure state
 //   <o.31> GPDMA2_Channel5_IRQn  <0=> Secure state
 */
-
 #define NVIC_INIT_ITNS2_VAL      0x00000000
 
 /*
@@ -525,7 +526,6 @@
 //   <o.27> I3C1_EV_IRQn          <0=> Secure state
 //   <o.28> I3C1_ER_IRQn          <0=> Secure state
 */
-
 #define NVIC_INIT_ITNS3_VAL      0x00000000
 
 /*
@@ -543,7 +543,6 @@
 //   <o.4> I3C2_ER_IRQn          <0=> Secure state
 
 */
-
 #define NVIC_INIT_ITNS4_VAL      0x00000000
 
 /*

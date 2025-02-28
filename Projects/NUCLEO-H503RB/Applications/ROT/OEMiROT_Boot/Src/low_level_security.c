@@ -286,6 +286,22 @@ static const uint32_t ProductStatePrioList[] = {
    ================= */
 static const struct mpu_armv8m_region_cfg_t region_cfg_loader[] =
 {
+  /* Region 3: Allow read access to flash size and package code for BootLoader/CubeProg  */
+  {
+    3,
+    0x08FFF800U,
+    0x08FFFFFFU,
+    MPU_ARMV8M_MAIR_ATTR_DATA_IDX,
+    MPU_ARMV8M_XN_EXEC_NEVER,
+    MPU_ARMV8M_AP_RO_PRIV_ONLY,
+    MPU_ARMV8M_SH_NONE,
+#ifdef FLOW_CONTROL
+    FLOW_STEP_MPU_L_EN_R3,
+    FLOW_CTRL_MPU_L_EN_R3,
+    FLOW_STEP_MPU_L_CH_R3,
+    FLOW_CTRL_MPU_L_CH_R3,
+#endif /* FLOW_CONTROL */
+  },
   /* Region 7: Extend read access to STM32 descriptors and bootloader vector table */
   {
     7,
@@ -395,9 +411,6 @@ void LL_SECU_CheckStaticProtections(void)
   static FLASH_OBProgramInitTypeDef flash_option_bytes_bank1 = {0};
   static FLASH_OBProgramInitTypeDef flash_option_bytes_bank2 = {0};
   static FLASH_OBProgramInitTypeDef flash_option_bytes_nsboot = {0};
-#ifdef OEMIROT_ENABLE_SET_OB
-  HAL_StatusTypeDef ret = HAL_ERROR;
-#endif  /* OEMIROT_ENABLE_SET_OB  */
   uint32_t start;
   uint32_t end;
   uint32_t i;
@@ -416,14 +429,6 @@ void LL_SECU_CheckStaticProtections(void)
   /* Get bank2 OB  */
   flash_option_bytes_bank2.Banks = FLASH_BANK_2;
   HAL_FLASHEx_OBGetConfig(&flash_option_bytes_bank2);
-
-#ifdef OEMIROT_ENABLE_SET_OB
-  /* Clean the option configuration */
-  flash_option_bytes_bank1.OptionType = 0;
-  flash_option_bytes_bank2.OptionType = 0;
-#endif /*   OEMIROT_ENABLE_SET_OB */
-
-
 
   /* Check if swap bank is reset */
   if ((flash_option_bytes_bank1.USERConfig & FLASH_OPTSR_SWAP_BANK) != 0)
@@ -462,16 +467,9 @@ void LL_SECU_CheckStaticProtections(void)
   {
     BOOT_LOG_INF("BANK 1 flash write protection group 0x%x: OB 0x%x",
                  (int)val, (int)flash_option_bytes_bank1.WRPSector);
-#ifndef OEMIROT_ENABLE_SET_OB
     BOOT_LOG_ERR("Unexpected value for write protection ");
     Error_Handler();
-#else
-    flash_option_bytes_bank1.WRPState = OB_WRPSTATE_ENABLE;
-    flash_option_bytes_bank1.WRPSector = val;
 
-    BOOT_LOG_ERR("Unexpected value for write protection : set wrp1");
-    flash_option_bytes_bank1.OptionType |= OPTIONBYTE_WRP;
-#endif /* OEMIROT_ENABLE_SET_OB */
   }
   if (val_bank2){
     if ((flash_option_bytes_bank2.WRPState != OB_WRPSTATE_ENABLE)
@@ -479,16 +477,8 @@ void LL_SECU_CheckStaticProtections(void)
     {
       BOOT_LOG_INF("BANK 2 flash write protection group 0x%x: OB 0x%x",
                    (int)val_bank2, (int)flash_option_bytes_bank2.WRPSector);
-#ifndef OEMIROT_ENABLE_SET_OB
       BOOT_LOG_ERR("Unexpected value for write protection ");
       Error_Handler();
-#else
-      flash_option_bytes_bank2.WRPState = OB_WRPSTATE_ENABLE;
-      flash_option_bytes_bank2.WRPSector = val_bank2;
-
-      BOOT_LOG_ERR("Unexpected value for write protection : set wrp2");
-      flash_option_bytes_bank2.OptionType |= OPTIONBYTE_WRP;
-#endif /* OEMIROT_ENABLE_SET_OB */
     }
   }
 
@@ -516,15 +506,8 @@ void LL_SECU_CheckStaticProtections(void)
                  (int)end,
                  (int)flash_option_bytes_bank1.HDPStartSector,
                  (int)flash_option_bytes_bank1.HDPEndSector);
-#ifndef OEMIROT_ENABLE_SET_OB
     BOOT_LOG_ERR("Unexpected value for hide protection");
     Error_Handler();
-#else
-    BOOT_LOG_ERR("Unexpected value for hide protection : set hdp1");
-    flash_option_bytes_bank1.HDPStartSector = start;
-    flash_option_bytes_bank1.HDPEndSector = end;
-    flash_option_bytes_bank1.OptionType |= OPTIONBYTE_HDP;
-#endif  /*  OEMIROT_ENABLE_SET_OB */
   }
 
   if (end_bank2 != (~PAGE_MAX_NUMBER_IN_BANK))
@@ -537,15 +520,8 @@ void LL_SECU_CheckStaticProtections(void)
                    (int)end_bank2,
                    (int)flash_option_bytes_bank2.HDPStartSector,
                    (int)flash_option_bytes_bank2.HDPEndSector);
-#ifndef OEMIROT_ENABLE_SET_OB
       BOOT_LOG_ERR("Unexpected value for hide protection");
       Error_Handler();
-#else
-      BOOT_LOG_ERR("Unexpected value for hide protection : set hdp2");
-      flash_option_bytes_bank2.HDPStartSector = start_bank2;
-      flash_option_bytes_bank2.HDPEndSector = end_bank2;
-      flash_option_bytes_bank2.OptionType |= OPTIONBYTE_HDP;
-#endif  /*  OEMIROT_ENABLE_SET_OB */
     }
   }
 
@@ -587,51 +563,6 @@ void LL_SECU_CheckStaticProtections(void)
     Error_Handler();
   }
 #endif /* OEMIROT_SECURE_USER_SRAM1_ECC */
-#ifdef OEMIROT_ENABLE_SET_OB
-
-  /* Configure Options Bytes */
-  if ((flash_option_bytes_bank1.OptionType != 0) || (flash_option_bytes_bank2.OptionType != 0))
-  {
-    /* Unlock the Flash to enable the flash control register access */
-    HAL_FLASH_Unlock();
-
-    /* Unlock the Options Bytes */
-    HAL_FLASH_OB_Unlock();
-
-    if ((flash_option_bytes_bank1.OptionType) != 0)
-    {
-      /* Program the Options Bytes */
-      ret = HAL_FLASHEx_OBProgram(&flash_option_bytes_bank1);
-      if (ret != HAL_OK)
-      {
-        BOOT_LOG_ERR("Error while setting OB Bank1 config");
-        Error_Handler();
-      }
-    }
-    if ((flash_option_bytes_bank2.OptionType) != 0)
-    {
-      /* Program the Options Bytes */
-      ret = HAL_FLASHEx_OBProgram(&flash_option_bytes_bank2);
-      if (ret != HAL_OK)
-      {
-        BOOT_LOG_ERR("Error while setting OB Bank1 config");
-        Error_Handler();
-      }
-    }
-
-    /* Launch the Options Bytes (reset the board, should not return) */
-    ret = HAL_FLASH_OB_Launch();
-    if (ret != HAL_OK)
-    {
-      BOOT_LOG_ERR("Error while execution OB_Launch");
-      Error_Handler();
-    }
-
-    /* Code should not be reached, reset the board */
-    HAL_NVIC_SystemReset();
-  }
-#endif /* OEMIROT_ENABLE_SET_OB */
-
 #ifdef OEMIROT_OB_BOOT_LOCK
   /* Check Boot lock protection */
   if (flash_option_bytes_nsboot.BootLock != OEMIROT_OB_BOOT_LOCK)
@@ -1043,13 +974,6 @@ RTC_HandleTypeDef RTCHandle;
 
 static void active_tamper(void)
 {
-#if (OEMIROT_TAMPER_ENABLE == ALL_TAMPER)
-    RTC_ActiveTampersTypeDef sAllTamper;
-    /*  use random generator to feed  */
-    uint32_t Seed[4]={0,0,0,0};
-    uint32_t len=0;
-    uint32_t j;
-#endif /* (OEMIROT_TAMPER_ENABLE == ALL_TAMPER) */
 #if (OEMIROT_TAMPER_ENABLE != NO_TAMPER)
     RTC_PrivilegeStateTypeDef TamperPrivConfGet;
     fih_int fih_rc = FIH_FAILURE;
@@ -1060,11 +984,6 @@ static void active_tamper(void)
 #if defined(OEMIROT_DEV_MODE) && (OEMIROT_TAMPER_ENABLE != NO_TAMPER)
         if (TamperEventCleared) {
             BOOT_LOG_INF("Boot with TAMPER Event Active");
-#if (OEMIROT_TAMPER_ENABLE == ALL_TAMPER)
-            /* avoid several re-boot in DEV_MODE with Tamper active */
-            BOOT_LOG_INF("Plug the tamper cable, and reboot");
-            BOOT_LOG_INF("Or");
-#endif
             BOOT_LOG_INF("Build and Flash with flag #define OEMIROT_TAMPER_ENABLE NO_TAMPER\n");
             Error_Handler();
         }
@@ -1085,44 +1004,9 @@ static void active_tamper(void)
         {
             Error_Handler();
         }
-#if (OEMIROT_TAMPER_ENABLE == ALL_TAMPER)
-        /* generate random seed */
-        mbedtls_hardware_poll(NULL, (unsigned char *)Seed, sizeof(Seed),(size_t *)&len);
-        if (len == 0)
-        {
-            Error_Handler();
-        }
-        BOOT_LOG_INF("TAMPER SEED [0x%lx,0x%lx,0x%lx,0x%lx]", Seed[0], Seed[1], Seed[2], Seed[3]);
-        /* Configure active tamper common parameters  */
-        sAllTamper.ActiveFilter = RTC_ATAMP_FILTER_ENABLE;
-        sAllTamper.ActiveAsyncPrescaler = RTC_ATAMP_ASYNCPRES_RTCCLK_32;
-        sAllTamper.TimeStampOnTamperDetection = RTC_TIMESTAMPONTAMPERDETECTION_ENABLE;
-        sAllTamper.ActiveOutputChangePeriod = 4;
-        sAllTamper.Seed[0] = Seed[0];
-        sAllTamper.Seed[1] = Seed[1];
-        sAllTamper.Seed[2] = Seed[2];
-        sAllTamper.Seed[3] = Seed[3];
 
-        /* Disable all Active Tampers */
-        /* No active tamper */
-        for (j = 0; j < RTC_TAMP_NB; j++)
-        {
-            sAllTamper.TampInput[j].Enable = RTC_ATAMP_DISABLE;
-        }
-        sAllTamper.TampInput[1].Enable = RTC_ATAMP_ENABLE;
-        sAllTamper.TampInput[1].Output = 1;
-        sAllTamper.TampInput[1].NoErase =  RTC_TAMPER_ERASE_BACKUP_ENABLE;
-        sAllTamper.TampInput[1].MaskFlag = RTC_TAMPERMASK_FLAG_DISABLE;
-        sAllTamper.TampInput[1].Interrupt = RTC_ATAMP_INTERRUPT_ENABLE;
-        /* Set active tampers */
-        if (HAL_RTCEx_SetActiveTampers(&RTCHandle, &sAllTamper) != HAL_OK)
-        {
-            Error_Handler();
-        }
-        FLOW_CONTROL_STEP(uFlowProtectValue, FLOW_STEP_TAMP_ACT_EN, FLOW_CTRL_TAMP_ACT_EN);
-#else
-        HAL_RTCEx_DeactivateTamper(&RTCHandle, RTC_TAMPER_ALL);
-#endif  /* (OEMIROT_TAMPER_ENABLE == ALL_TAMPER) */
+HAL_RTCEx_DeactivateTamper(&RTCHandle, RTC_TAMPER_ALL);
+
 #if (OEMIROT_TAMPER_ENABLE != NO_TAMPER)
         /*  Internal Tamper activation  */
         /*  Enable Cryptographic IPs fault (tamp_itamp9), Backup domain voltage threshold monitoring (tamp_itamp1)*/
@@ -1152,26 +1036,9 @@ static void active_tamper(void)
     /* verification stage */
     else
     {
-#if (OEMIROT_TAMPER_ENABLE == ALL_TAMPER)
-        /* Check active tampers */
-        if ((READ_BIT(TAMP->ATOR, TAMP_ATOR_INITS) == 0U) ||
-            (READ_REG(TAMP->IER) != (TAMP_IER_TAMP1IE<<1)) ||
-            (READ_REG(TAMP->ATCR1) != 0x84050402U) ||
-            (READ_REG(TAMP->ATCR2) != TAMP_ATCR2_ATOSEL2_0) ||
-            (READ_REG(TAMP->CR1) != (0x41000000U | (TAMP_CR1_TAMP1E<<1))) ||
-            (READ_REG(TAMP->CR2) != 0x00000000U))
-        {
-            Error_Handler();
-        }
-        FLOW_CONTROL_STEP(uFlowProtectValue, FLOW_STEP_TAMP_ACT_CH, FLOW_CTRL_TAMP_ACT_CH);
-#endif  /* (OEMIROT_TAMPER_ENABLE == ALL_TAMPER) */
         /*  Check Internal Tamper activation */
         if ((READ_BIT(RTC->CR, RTC_CR_TAMPTS) != InternalTamperConf.TimeStampOnTamperDetection) ||
-#if (OEMIROT_TAMPER_ENABLE == ALL_TAMPER)
-            (READ_REG(TAMP->CR1) != (0x41000000U | (TAMP_CR1_TAMP1E<<1))) ||
-#else
             (READ_REG(TAMP->CR1) != 0x41000000U) ||
-#endif /* (OEMIROT_TAMPER_ENABLE == ALL_TAMPER) */
             (READ_REG(TAMP->CR3) != 0x00000000U))
         {
             Error_Handler();

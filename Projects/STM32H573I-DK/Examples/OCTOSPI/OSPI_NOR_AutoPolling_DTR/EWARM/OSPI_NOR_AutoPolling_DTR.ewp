@@ -362,7 +362,7 @@
                 <option>
                     <name>CCOptStrategy</name>
                     <version>0</version>
-                    <state>2</state>
+                    <state>1</state>
                 </option>
                 <option>
                     <name>CCOptLevelSlave</name>
@@ -419,7 +419,7 @@
                 <option>
                     <name>CCOptStrategySlave</name>
                     <version>0</version>
-                    <state>2</state>
+                    <state>1</state>
                 </option>
                 <option>
                     <name>CCGuardCalls</name>

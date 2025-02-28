@@ -1,7 +1,7 @@
 /* USER CODE BEGIN Header */
 /**
   ******************************************************************************
-  * @file    stm32u5xx_hal_timebase_tim.c
+  * @file    stm32h5xx_hal_timebase_tim.c
   * @brief   HAL time base based on the hardware TIM.
   ******************************************************************************
   * @attention
@@ -70,12 +70,11 @@ HAL_StatusTypeDef HAL_InitTick(uint32_t TickPriority)
   htim6.Instance = TIM6;
 
   /* Initialize TIMx peripheral as follow:
-
-  + Period = [(TIM6CLK/1000) - 1]. to have a (1/1000) s time base.
-  + Prescaler = (uwTimclock/100000 - 1) to have a 100KHz counter clock.
-  + ClockDivision = 0
-  + Counter direction = Up
-  */
+   * Period = [(TIM6CLK/1000) - 1]. to have a (1/1000) s time base.
+   * Prescaler = (uwTimclock/100000 - 1) to have a 100KHz counter clock.
+   * ClockDivision = 0
+   * Counter direction = Up
+   */
   htim6.Init.Period = (100000U / 1000U) - 1U;
   htim6.Init.Prescaler = uwPrescalerValue;
   htim6.Init.ClockDivision = 0;

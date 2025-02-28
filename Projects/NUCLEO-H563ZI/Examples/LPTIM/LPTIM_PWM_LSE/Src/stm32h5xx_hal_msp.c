@@ -78,20 +78,20 @@ void HAL_MspInit(void)
 }
 
 /**
-* @brief LPTIM MSP Initialization
-* This function configures the hardware resources used in this example
-* @param hlptim: LPTIM handle pointer
-* @retval None
-*/
+  * @brief LPTIM MSP Initialization
+  * This function configures the hardware resources used in this example
+  * @param hlptim: LPTIM handle pointer
+  * @retval None
+  */
 void HAL_LPTIM_MspInit(LPTIM_HandleTypeDef* hlptim)
 {
   RCC_PeriphCLKInitTypeDef PeriphClkInitStruct = {0};
   if(hlptim->Instance==LPTIM1)
   {
-  /* USER CODE BEGIN LPTIM1_MspInit 0 */
+    /* USER CODE BEGIN LPTIM1_MspInit 0 */
 
 
-  /* USER CODE END LPTIM1_MspInit 0 */
+    /* USER CODE END LPTIM1_MspInit 0 */
 
   /** Initializes the peripherals clock
   */
@@ -104,9 +104,9 @@ void HAL_LPTIM_MspInit(LPTIM_HandleTypeDef* hlptim)
 
     /* Peripheral clock enable */
     __HAL_RCC_LPTIM1_CLK_ENABLE();
-  /* USER CODE BEGIN LPTIM1_MspInit 1 */
+    /* USER CODE BEGIN LPTIM1_MspInit 1 */
 
-  /* USER CODE END LPTIM1_MspInit 1 */
+    /* USER CODE END LPTIM1_MspInit 1 */
 
   }
 
@@ -117,9 +117,9 @@ void HAL_LPTIM_MspPostInit(LPTIM_HandleTypeDef* hlptim)
   GPIO_InitTypeDef GPIO_InitStruct = {0};
   if(hlptim->Instance==LPTIM1)
   {
-  /* USER CODE BEGIN LPTIM1_MspPostInit 0 */
+    /* USER CODE BEGIN LPTIM1_MspPostInit 0 */
 
-  /* USER CODE END LPTIM1_MspPostInit 0 */
+    /* USER CODE END LPTIM1_MspPostInit 0 */
 
     __HAL_RCC_GPIOB_CLK_ENABLE();
     /**LPTIM1 GPIO Configuration
@@ -132,30 +132,30 @@ void HAL_LPTIM_MspPostInit(LPTIM_HandleTypeDef* hlptim)
     GPIO_InitStruct.Alternate = GPIO_AF5_LPTIM1;
     HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
-  /* USER CODE BEGIN LPTIM1_MspPostInit 1 */
+    /* USER CODE BEGIN LPTIM1_MspPostInit 1 */
 
-  /* USER CODE END LPTIM1_MspPostInit 1 */
+    /* USER CODE END LPTIM1_MspPostInit 1 */
   }
 
 }
 /**
-* @brief LPTIM MSP De-Initialization
-* This function freeze the hardware resources used in this example
-* @param hlptim: LPTIM handle pointer
-* @retval None
-*/
+  * @brief LPTIM MSP De-Initialization
+  * This function freeze the hardware resources used in this example
+  * @param hlptim: LPTIM handle pointer
+  * @retval None
+  */
 void HAL_LPTIM_MspDeInit(LPTIM_HandleTypeDef* hlptim)
 {
   if(hlptim->Instance==LPTIM1)
   {
-  /* USER CODE BEGIN LPTIM1_MspDeInit 0 */
+    /* USER CODE BEGIN LPTIM1_MspDeInit 0 */
 
-  /* USER CODE END LPTIM1_MspDeInit 0 */
+    /* USER CODE END LPTIM1_MspDeInit 0 */
     /* Peripheral clock disable */
     __HAL_RCC_LPTIM1_CLK_DISABLE();
-  /* USER CODE BEGIN LPTIM1_MspDeInit 1 */
+    /* USER CODE BEGIN LPTIM1_MspDeInit 1 */
 
-  /* USER CODE END LPTIM1_MspDeInit 1 */
+    /* USER CODE END LPTIM1_MspDeInit 1 */
   }
 
 }

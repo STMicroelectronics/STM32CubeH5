@@ -151,7 +151,10 @@ call %tmp_file%
 
 echo    * Code firmware image generation
 echo        Open the OEMiROT_Appli_TrustZone project with preferred toolchain.
-echo        Rebuild all files. The appli_enc_sign.hex file is generated with the postbuild command.
+echo        Rebuild the Secure project. The rot_tz_s_app_init_sign.hex and rot_tz_s_app_enc_sign.hex files are
+echo        generated with the postbuild command.
+echo        Rebuild the NonSecure project. The rot_tz_ns_app_init_sign.hex and rot_tz_ns_app_enc_sign.hex files are
+echo        generated with the postbuild command.
 echo        Press any key to continue...
 if [%1] neq [AUTO] pause >nul
 echo.

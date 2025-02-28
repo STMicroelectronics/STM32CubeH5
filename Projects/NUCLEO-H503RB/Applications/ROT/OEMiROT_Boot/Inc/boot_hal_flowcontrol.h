@@ -83,12 +83,8 @@ extern "C" {
 #define FLOW_STEP_SAU_I_EN_R4       0x00000000U        /*!< No effect on control flow */
 #define FLOW_STEP_SAU_I_EN_R5       0x00000000U        /*!< No effect on control flow */
 #define FLOW_STEP_SAU_I_EN          0x00000000U        /*!< No effect on control flow */
-
-#if  (OEMIROT_TAMPER_ENABLE == ALL_TAMPER)
-#define FLOW_STEP_TAMP_ACT_EN       0x000673eaU        /*!< Step Tamper active enable value */
-#else
 #define FLOW_STEP_TAMP_ACT_EN       0x00000000U        /*!< No effect on control flow */
-#endif /* (OEMIROT_TAMPER_ENABLE == ALL_TAMPER) */
+
 #if (OEMIROT_TAMPER_ENABLE != NO_TAMPER)
 #define FLOW_STEP_TAMP_INT_EN       0x00067f4dU        /*!< Step Tamper internal enable value */
 #define FLOW_STEP_TAMP_SEC_EN       0x00000000U        /*!< No effect on control flow */
@@ -151,12 +147,8 @@ extern "C" {
 #define FLOW_STEP_SAU_I_CH_R4       0x00000000U        /*!< No effect on control flow */
 #define FLOW_STEP_SAU_I_CH_R5       0x00000000U        /*!< No effect on control flow */
 #define FLOW_STEP_SAU_I_CH          0x00000000U        /*!< No effect on control flow */
-
-#if  (OEMIROT_TAMPER_ENABLE == ALL_TAMPER)
-#define FLOW_STEP_TAMP_ACT_CH       0x0006ca19U        /*!< Step Tamper active check value */
-#else
 #define FLOW_STEP_TAMP_ACT_CH       0x00000000U        /*!< No effect on control flow */
-#endif /*(OEMIROT_TAMPER_ENABLE == ALL_TAMPER) */
+
 #if  (OEMIROT_TAMPER_ENABLE != NO_TAMPER)
 #define FLOW_STEP_TAMP_INT_CH       0x0006d407U        /*!< Step Tamper internal check value */
 #define FLOW_STEP_TAMP_SEC_CH       0x00000000U        /*!< No effect on control flow */
@@ -218,8 +210,10 @@ extern "C" {
 #define FLOW_STEP_GPIO_L_CH         0x00000000U        /*!< No effect on control flow */
 
 #if defined(MCUBOOT_EXT_LOADER) && defined(OEMIROT_MPU_PROTECTION)
-#define FLOW_STEP_MPU_L_EN_R7       0x000c12a7U        /*!< Step Loader Region 7 enable value */
-#define FLOW_STEP_MPU_L_CH_R7       0x000c64e2U        /*!< Step Loader Region 7 check value */
+#define FLOW_STEP_MPU_L_EN_R3       0x000c12a7U        /*!< Step Loader Region 3 enable value */
+#define FLOW_STEP_MPU_L_CH_R3       0x000c7b02U        /*!< Step Loader Region 3 check value */
+#define FLOW_STEP_MPU_L_EN_R7       0x000c64e2U        /*!< Step Loader Region 7 enable value */
+#define FLOW_STEP_MPU_L_CH_R7       0x000ca9d0U        /*!< Step Loader Region 7 check value */
 #define FLOW_STEP_MPU_L_LCK         0x000a624fU        /*!< Step GTZC Lock Configuration enable */
 #define FLOW_STEP_MPU_L_LCK_CH      0x000aae83U        /*!< Step GTZC Lock Configuration Init check value */
 #else
@@ -349,7 +343,8 @@ extern "C" {
 
 #define FLOW_CTRL_GPIO_L_EN         (FLOW_CTRL_GTZC_L_EN_TZSC ^  FLOW_STEP_GPIO_L_EN)
 
-#define FLOW_CTRL_MPU_L_EN_R7       (FLOW_CTRL_GPIO_L_EN ^       FLOW_STEP_MPU_L_EN_R7)
+#define FLOW_CTRL_MPU_L_EN_R3       (FLOW_CTRL_GPIO_L_EN ^       FLOW_STEP_MPU_L_EN_R3)
+#define FLOW_CTRL_MPU_L_EN_R7       (FLOW_CTRL_MPU_L_EN_R3 ^     FLOW_STEP_MPU_L_EN_R7)
 
 #define FLOW_CTRL_SAU_L_EN_R0       (FLOW_CTRL_MPU_L_EN_R7  ^    FLOW_STEP_SAU_L_EN_R0)
 #define FLOW_CTRL_SAU_L_EN_R1       (FLOW_CTRL_SAU_L_EN_R0 ^     FLOW_STEP_SAU_L_EN_R1)
@@ -372,7 +367,8 @@ extern "C" {
 
 #define FLOW_CTRL_GPIO_L_CH         (FLOW_CTRL_GTZC_L_CH_TZSC ^  FLOW_STEP_GPIO_L_CH)
 
-#define FLOW_CTRL_MPU_L_CH_R7       (FLOW_CTRL_GPIO_L_CH ^       FLOW_STEP_MPU_L_CH_R7)
+#define FLOW_CTRL_MPU_L_CH_R3       (FLOW_CTRL_GPIO_L_CH ^       FLOW_STEP_MPU_L_CH_R3)
+#define FLOW_CTRL_MPU_L_CH_R7       (FLOW_CTRL_MPU_L_CH_R3 ^     FLOW_STEP_MPU_L_CH_R7)
 #define FLOW_CTRL_MPU_L_LCK         (FLOW_CTRL_MPU_L_CH_R7 ^     FLOW_STEP_MPU_L_LCK)
 #define FLOW_CTRL_MPU_L_LCK_CH      (FLOW_CTRL_MPU_L_LCK ^       FLOW_STEP_MPU_L_LCK_CH)
 

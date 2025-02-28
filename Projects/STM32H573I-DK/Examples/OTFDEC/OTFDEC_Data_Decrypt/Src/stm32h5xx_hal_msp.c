@@ -75,110 +75,110 @@ void HAL_MspInit(void)
 }
 
 /**
-* @brief CRYP MSP Initialization
-* This function configures the hardware resources used in this example
-* @param hcryp: CRYP handle pointer
-* @retval None
-*/
+  * @brief CRYP MSP Initialization
+  * This function configures the hardware resources used in this example
+  * @param hcryp: CRYP handle pointer
+  * @retval None
+  */
 void HAL_CRYP_MspInit(CRYP_HandleTypeDef* hcryp)
 {
   if(hcryp->Instance==AES)
   {
-  /* USER CODE BEGIN AES_MspInit 0 */
+    /* USER CODE BEGIN AES_MspInit 0 */
 
-  /* USER CODE END AES_MspInit 0 */
+    /* USER CODE END AES_MspInit 0 */
     /* Peripheral clock enable */
     __HAL_RCC_AES_CLK_ENABLE();
-  /* USER CODE BEGIN AES_MspInit 1 */
+    /* USER CODE BEGIN AES_MspInit 1 */
 
-  /* USER CODE END AES_MspInit 1 */
+    /* USER CODE END AES_MspInit 1 */
 
   }
 
 }
 
 /**
-* @brief CRYP MSP De-Initialization
-* This function freeze the hardware resources used in this example
-* @param hcryp: CRYP handle pointer
-* @retval None
-*/
+  * @brief CRYP MSP De-Initialization
+  * This function freeze the hardware resources used in this example
+  * @param hcryp: CRYP handle pointer
+  * @retval None
+  */
 void HAL_CRYP_MspDeInit(CRYP_HandleTypeDef* hcryp)
 {
   if(hcryp->Instance==AES)
   {
-  /* USER CODE BEGIN AES_MspDeInit 0 */
+    /* USER CODE BEGIN AES_MspDeInit 0 */
 
-  /* USER CODE END AES_MspDeInit 0 */
+    /* USER CODE END AES_MspDeInit 0 */
     /* Peripheral clock disable */
     __HAL_RCC_AES_CLK_DISABLE();
-  /* USER CODE BEGIN AES_MspDeInit 1 */
+    /* USER CODE BEGIN AES_MspDeInit 1 */
 
-  /* USER CODE END AES_MspDeInit 1 */
+    /* USER CODE END AES_MspDeInit 1 */
   }
 
 }
 
 /**
-* @brief DCACHE MSP Initialization
-* This function configures the hardware resources used in this example
-* @param hdcache: DCACHE handle pointer
-* @retval None
-*/
+  * @brief DCACHE MSP Initialization
+  * This function configures the hardware resources used in this example
+  * @param hdcache: DCACHE handle pointer
+  * @retval None
+  */
 void HAL_DCACHE_MspInit(DCACHE_HandleTypeDef* hdcache)
 {
   if(hdcache->Instance==DCACHE1)
   {
-  /* USER CODE BEGIN DCACHE1_MspInit 0 */
+    /* USER CODE BEGIN DCACHE1_MspInit 0 */
 
-  /* USER CODE END DCACHE1_MspInit 0 */
+    /* USER CODE END DCACHE1_MspInit 0 */
     /* Peripheral clock enable */
     __HAL_RCC_DCACHE1_CLK_ENABLE();
-  /* USER CODE BEGIN DCACHE1_MspInit 1 */
+    /* USER CODE BEGIN DCACHE1_MspInit 1 */
 
-  /* USER CODE END DCACHE1_MspInit 1 */
+    /* USER CODE END DCACHE1_MspInit 1 */
 
   }
 
 }
 
 /**
-* @brief DCACHE MSP De-Initialization
-* This function freeze the hardware resources used in this example
-* @param hdcache: DCACHE handle pointer
-* @retval None
-*/
+  * @brief DCACHE MSP De-Initialization
+  * This function freeze the hardware resources used in this example
+  * @param hdcache: DCACHE handle pointer
+  * @retval None
+  */
 void HAL_DCACHE_MspDeInit(DCACHE_HandleTypeDef* hdcache)
 {
   if(hdcache->Instance==DCACHE1)
   {
-  /* USER CODE BEGIN DCACHE1_MspDeInit 0 */
+    /* USER CODE BEGIN DCACHE1_MspDeInit 0 */
 
-  /* USER CODE END DCACHE1_MspDeInit 0 */
+    /* USER CODE END DCACHE1_MspDeInit 0 */
     /* Peripheral clock disable */
     __HAL_RCC_DCACHE1_CLK_DISABLE();
-  /* USER CODE BEGIN DCACHE1_MspDeInit 1 */
+    /* USER CODE BEGIN DCACHE1_MspDeInit 1 */
 
-  /* USER CODE END DCACHE1_MspDeInit 1 */
+    /* USER CODE END DCACHE1_MspDeInit 1 */
   }
 
 }
 
 /**
-* @brief XSPI MSP Initialization
-* This function configures the hardware resources used in this example
-* @param hxspi: XSPI handle pointer
-* @retval None
-*/
+  * @brief XSPI MSP Initialization
+  * This function configures the hardware resources used in this example
+  * @param hxspi: XSPI handle pointer
+  * @retval None
+  */
 void HAL_XSPI_MspInit(XSPI_HandleTypeDef* hxspi)
 {
   GPIO_InitTypeDef GPIO_InitStruct = {0};
   RCC_PeriphCLKInitTypeDef PeriphClkInitStruct = {0};
   if(hxspi->Instance==OCTOSPI1)
   {
-  /* USER CODE BEGIN OCTOSPI1_MspInit 0 */
+    /* USER CODE BEGIN OCTOSPI1_MspInit 0 */
 
-  /* USER CODE END OCTOSPI1_MspInit 0 */
+    /* USER CODE END OCTOSPI1_MspInit 0 */
 
   /** Initializes the peripherals clock
   */
@@ -277,27 +277,27 @@ void HAL_XSPI_MspInit(XSPI_HandleTypeDef* hxspi)
     /* OCTOSPI1 interrupt Init */
     HAL_NVIC_SetPriority(OCTOSPI1_IRQn, 0, 0);
     HAL_NVIC_EnableIRQ(OCTOSPI1_IRQn);
-  /* USER CODE BEGIN OCTOSPI1_MspInit 1 */
+    /* USER CODE BEGIN OCTOSPI1_MspInit 1 */
 
-  /* USER CODE END OCTOSPI1_MspInit 1 */
+    /* USER CODE END OCTOSPI1_MspInit 1 */
 
   }
 
 }
 
 /**
-* @brief XSPI MSP De-Initialization
-* This function freeze the hardware resources used in this example
-* @param hxspi: XSPI handle pointer
-* @retval None
-*/
+  * @brief XSPI MSP De-Initialization
+  * This function freeze the hardware resources used in this example
+  * @param hxspi: XSPI handle pointer
+  * @retval None
+  */
 void HAL_XSPI_MspDeInit(XSPI_HandleTypeDef* hxspi)
 {
   if(hxspi->Instance==OCTOSPI1)
   {
-  /* USER CODE BEGIN OCTOSPI1_MspDeInit 0 */
+    /* USER CODE BEGIN OCTOSPI1_MspDeInit 0 */
 
-  /* USER CODE END OCTOSPI1_MspDeInit 0 */
+    /* USER CODE END OCTOSPI1_MspDeInit 0 */
     /* Peripheral clock disable */
     __HAL_RCC_OSPI1_CLK_DISABLE();
 
@@ -328,60 +328,60 @@ void HAL_XSPI_MspDeInit(XSPI_HandleTypeDef* hxspi)
 
     /* OCTOSPI1 interrupt DeInit */
     HAL_NVIC_DisableIRQ(OCTOSPI1_IRQn);
-  /* USER CODE BEGIN OCTOSPI1_MspDeInit 1 */
+    /* USER CODE BEGIN OCTOSPI1_MspDeInit 1 */
 
-  /* USER CODE END OCTOSPI1_MspDeInit 1 */
+    /* USER CODE END OCTOSPI1_MspDeInit 1 */
   }
 
 }
 
 /**
-* @brief OTFDEC MSP Initialization
-* This function configures the hardware resources used in this example
-* @param hotfdec: OTFDEC handle pointer
-* @retval None
-*/
+  * @brief OTFDEC MSP Initialization
+  * This function configures the hardware resources used in this example
+  * @param hotfdec: OTFDEC handle pointer
+  * @retval None
+  */
 void HAL_OTFDEC_MspInit(OTFDEC_HandleTypeDef* hotfdec)
 {
   if(hotfdec->Instance==OTFDEC1)
   {
-  /* USER CODE BEGIN OTFDEC1_MspInit 0 */
+    /* USER CODE BEGIN OTFDEC1_MspInit 0 */
 
-  /* USER CODE END OTFDEC1_MspInit 0 */
+    /* USER CODE END OTFDEC1_MspInit 0 */
     /* Peripheral clock enable */
     __HAL_RCC_OTFDEC1_CLK_ENABLE();
     /* OTFDEC1 interrupt Init */
     HAL_NVIC_SetPriority(OTFDEC1_IRQn, 0, 0);
     HAL_NVIC_EnableIRQ(OTFDEC1_IRQn);
-  /* USER CODE BEGIN OTFDEC1_MspInit 1 */
+    /* USER CODE BEGIN OTFDEC1_MspInit 1 */
 
-  /* USER CODE END OTFDEC1_MspInit 1 */
+    /* USER CODE END OTFDEC1_MspInit 1 */
 
   }
 
 }
 
 /**
-* @brief OTFDEC MSP De-Initialization
-* This function freeze the hardware resources used in this example
-* @param hotfdec: OTFDEC handle pointer
-* @retval None
-*/
+  * @brief OTFDEC MSP De-Initialization
+  * This function freeze the hardware resources used in this example
+  * @param hotfdec: OTFDEC handle pointer
+  * @retval None
+  */
 void HAL_OTFDEC_MspDeInit(OTFDEC_HandleTypeDef* hotfdec)
 {
   if(hotfdec->Instance==OTFDEC1)
   {
-  /* USER CODE BEGIN OTFDEC1_MspDeInit 0 */
+    /* USER CODE BEGIN OTFDEC1_MspDeInit 0 */
 
-  /* USER CODE END OTFDEC1_MspDeInit 0 */
+    /* USER CODE END OTFDEC1_MspDeInit 0 */
     /* Peripheral clock disable */
     __HAL_RCC_OTFDEC1_CLK_DISABLE();
 
     /* OTFDEC1 interrupt DeInit */
     HAL_NVIC_DisableIRQ(OTFDEC1_IRQn);
-  /* USER CODE BEGIN OTFDEC1_MspDeInit 1 */
+    /* USER CODE BEGIN OTFDEC1_MspDeInit 1 */
 
-  /* USER CODE END OTFDEC1_MspDeInit 1 */
+    /* USER CODE END OTFDEC1_MspDeInit 1 */
   }
 
 }

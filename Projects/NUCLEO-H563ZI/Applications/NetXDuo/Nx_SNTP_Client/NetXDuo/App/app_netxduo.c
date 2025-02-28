@@ -224,7 +224,7 @@ UINT MX_NetXDuo_Init(VOID *memory_ptr)
     return NX_DHCP_ERROR;
   }
 
-  /* Set DHCP notification callback */
+  /* set DHCP notification callback */
   tx_semaphore_create(&DHCPSemaphore, "DHCP Semaphore", 0);
 
   /* USER CODE BEGIN MX_NetXDuo_Init */
@@ -281,9 +281,9 @@ static VOID ip_address_change_notify_callback(NX_IP *ip_instance, VOID *ptr)
   /* USER CODE BEGIN ip_address_change_notify_callback */
   if (nx_ip_address_get(&NetXDuoEthIpInstance, &IpAddress, &NetMask) != NX_SUCCESS)
   {
-    /* USER CODE BEGIN IP address change callback error */
+    /* USER CODE BEGIN ip address change callback error */
     Error_Handler();
-    /* USER CODE END IP address change callback error */
+    /* USER CODE END ip address change callback error */
   }
   if(IpAddress != NULL_ADDRESS)
   {
@@ -309,19 +309,18 @@ static VOID App_Main_Thread_Entry (ULONG thread_input)
 
   /* USER CODE END Nx_App_Thread_Entry 1 */
 
-  /* Register the IP address change callback */
+  /* register the IP address change callback */
   ret = nx_ip_address_change_notify(&NetXDuoEthIpInstance, ip_address_change_notify_callback, NULL);
   if (ret != NX_SUCCESS)
   {
     /* USER CODE BEGIN IP address change callback error */
 
-    /* Error, call error handler. */
     Error_Handler();
 
     /* USER CODE END IP address change callback error */
   }
 
-  /* Start the DHCP client */
+  /* start the DHCP client */
   ret = nx_dhcp_start(&DHCPClient);
   if (ret != NX_SUCCESS)
   {
@@ -332,7 +331,7 @@ static VOID App_Main_Thread_Entry (ULONG thread_input)
 
     /* USER CODE END DHCP client start error */
   }
-  printf("Looking for DHCP server ..\n");
+
   /* wait until an IP address is ready */
   if(tx_semaphore_get(&DHCPSemaphore, TX_WAIT_FOREVER) != TX_SUCCESS)
   {

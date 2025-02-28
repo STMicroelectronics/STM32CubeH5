@@ -36,6 +36,7 @@
 
 #ifndef PARTITION_STM32H563XX_H
 #define PARTITION_STM32H563XX_H
+
 /*
 //-------- <<< Use Configuration Wizard in Context Menu >>> -----------------
 */
@@ -410,6 +411,7 @@
 //   <o.31> GPDMA1_Channel4_IRQn  <0=> Secure state
 */
 #define NVIC_INIT_ITNS0_VAL      0x00000004
+
 /*
 //   </e>
 */
@@ -453,7 +455,6 @@
 //   <o.30> UART5_IRQn            <0=> Secure state
 //   <o.31> LPUART1_IRQn          <0=> Secure state
 */
-
 #define NVIC_INIT_ITNS1_VAL      0x00000000
 
 /*
@@ -500,7 +501,6 @@
 //   <o.30> GPDMA2_Channel4_IRQn  <0=> Secure state
 //   <o.31> GPDMA2_Channel5_IRQn  <0=> Secure state
 */
-
 #define NVIC_INIT_ITNS2_VAL      0x00000000
 
 /*
@@ -544,7 +544,6 @@
 //   <o.30> I2C4_ER_IRQn          <0=> Secure state
 //   <o.31> LPTIM3_IRQn           <0=> Secure state
 */
-
 #define NVIC_INIT_ITNS3_VAL      0x00000000
 
 /*
@@ -558,11 +557,10 @@
 
 /*
 // Interrupts 128..130
-//   <o.0> LPTIM4_IRQn           <0=> Secure state
-//   <o.1> LPTIM5_IRQn           <0=> Secure state
-//   <o.2> LPTIM6_IRQn           <0=> Secure state
+//   <o.0>  LPTIM4_IRQn          <0=> Secure state
+//   <o.1>  LPTIM5_IRQn          <0=> Secure state
+//   <o.2>  LPTIM6_IRQn          <0=> Secure state
 */
-
 #define NVIC_INIT_ITNS4_VAL      0x00000000
 
 /*

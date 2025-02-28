@@ -35,8 +35,8 @@
 /* Entry Point */
 ENTRY(Reset_Handler)
 
-CODE_OFFSET = 0x12000;           /* This define is updated automatically by OEMiROT_Boot postbuild */
-CODE_SIZE = 0xC000;              /* This define is updated automatically by OEMiROT_Boot postbuild */
+CODE_OFFSET = 0x12000;           /* This definition is updated automatically from OEMiROT_Boot postbuild */
+CODE_SIZE = 0xC000;              /* This definition is updated automatically from OEMiROT_Boot postbuild */
 IMAGE_HEADER_SIZE = 0x400;       /* mcuboot header size */
 
 /* Highest address of the user mode stack */

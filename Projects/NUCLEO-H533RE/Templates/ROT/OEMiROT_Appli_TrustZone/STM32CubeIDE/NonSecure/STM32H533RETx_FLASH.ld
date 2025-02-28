@@ -32,10 +32,10 @@
 ******************************************************************************
 */
 
-S_CODE_OFFSET = 0x18000;                        /* This define is updated automatically by OEMiROT_Boot postbuild */
-S_CODE_SIZE = 0x6000;                           /* This define is updated automatically by OEMiROT_Boot postbuild */
-NS_CODE_SIZE = 0x10000;                          /* This define is updated automatically by OEMiROT_Boot postbuild */
-NS_CODE_OFFSET = (S_CODE_OFFSET + S_CODE_SIZE);
+S_CODE_OFFSET = 0x18000;                        /* This definition is updated automatically from OEMiROT_Boot postbuild */
+S_CODE_SIZE = 0x6000;                           /* This definition is updated automatically from OEMiROT_Boot postbuild */
+NS_CODE_SIZE = 0x10000;                         /* This definition is updated automatically from OEMiROT_Boot postbuild */
+NS_CODE_OFFSET = (S_CODE_OFFSET + S_CODE_SIZE); /* Non secure code Offset */
 IMAGE_HEADER_SIZE = 0x400;                      /* mcuboot header size */
 
 /* Entry Point */

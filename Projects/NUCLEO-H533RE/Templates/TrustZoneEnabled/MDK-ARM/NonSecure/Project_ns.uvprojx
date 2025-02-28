@@ -665,6 +665,11 @@
               <FilePath>../../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_sd_ex.c</FilePath>
             </File>
             <File>
+              <FileName>stm32h5xx_hal_sdio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_hal_sdio.c</FilePath>
+            </File>
+            <File>
               <FileName>stm32h5xx_hal_sdram.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_sdram.c</FilePath>

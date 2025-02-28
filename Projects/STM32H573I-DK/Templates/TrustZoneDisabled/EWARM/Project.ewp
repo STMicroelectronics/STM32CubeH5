@@ -74,7 +74,7 @@
                 </option>
                 <option>
                     <name>OGLastSavedByProductVersion</name>
-                    <state>9.20.1.43525</state>
+                    <state>9.20.4.46976</state>
                 </option>
                 <option>
                     <name>OGChipSelectEditMenu</name>
@@ -1268,6 +1268,9 @@
                 <name>$PROJ_DIR$\..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_hal_sd_ex.c</name>
             </file>
             <file>
+                <name>$PROJ_DIR$\..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_hal_sdio.c</name>
+            </file>
+            <file>
                 <name>$PROJ_DIR$\..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_hal_sdram.c</name>
             </file>
             <file>
@@ -1314,9 +1317,6 @@
             </file>
             <file>
                 <name>$PROJ_DIR$\..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_hal_xspi.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_ll_adc.c</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_ll_dlyb.c</name>

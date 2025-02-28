@@ -2171,11 +2171,6 @@ context_boot_go(struct boot_loader_state *state, struct boot_rsp *rsp)
     BOOT_CURR_IMG(state) = 0;
 #endif
 
-    rsp->br_flash_dev_id = BOOT_IMG_AREA(state, BOOT_PRIMARY_SLOT)->fa_device_id;
-    rsp->br_image_off = boot_img_slot_off(state, BOOT_PRIMARY_SLOT);
-    rsp->br_hdr = boot_img_hdr(state, BOOT_PRIMARY_SLOT);
-
-
     /*
      * Since the boot_status struct stores plaintext encryption keys, reset
      * them here to avoid the possibility of jumping into an image that could
@@ -2188,7 +2183,7 @@ context_boot_go(struct boot_loader_state *state, struct boot_rsp *rsp)
     rsp->br_hdr = boot_img_hdr(state, BOOT_PRIMARY_SLOT);
 
     fih_rc = FIH_SUCCESS;
-
+out:
     IMAGES_ITER(BOOT_CURR_IMG(state)) {
 #if MCUBOOT_SWAP_USING_SCRATCH
         flash_area_close(BOOT_SCRATCH_AREA(state));
@@ -2197,7 +2192,7 @@ context_boot_go(struct boot_loader_state *state, struct boot_rsp *rsp)
             flash_area_close(BOOT_IMG_AREA(state, BOOT_NUM_SLOTS - 1 - slot));
         }
     }
-out:
+
     if (rc) {
         fih_rc = fih_int_encode(rc);
     }

@@ -10,13 +10,13 @@
       <TargetName>NUCLEO-H533RE_OEMiROT_Boot</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>6190000::V6.19::ARMCLANG</pCCUsed>
+      <pCCUsed>6210000::V6.21::ARMCLANG</pCCUsed>
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
           <Device>STM32H533RETx</Device>
           <Vendor>STMicroelectronics</Vendor>
-          <PackID>Keil.STM32H5xx_DFP.1.3.0</PackID>
+          <PackID>Keil.STM32H5xx_DFP.1.3.2</PackID>
           <PackURL>https://www.keil.com/pack/</PackURL>
           <Cpu>CLOCK(8000000) FPU3(SFPU) CPUTYPE("Cortex-M33") ELITTLE TZ</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -789,6 +789,11 @@
               <FileName>mpu_armv8m_drv.c</FileName>
               <FileType>1</FileType>
               <FilePath>../Src/mpu_armv8m_drv.c</FilePath>
+            </File>
+            <File>
+              <FileName>sha256_alt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../Src/sha256_alt.c</FilePath>
             </File>
             <File>
               <FileName>bl2_nv_services.c</FileName>

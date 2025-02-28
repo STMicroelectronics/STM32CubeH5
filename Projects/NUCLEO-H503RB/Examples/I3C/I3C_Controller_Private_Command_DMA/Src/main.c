@@ -59,7 +59,7 @@ I3C_XferTypeDef aContextBuffers[2];
 __IO uint32_t uwTargetCount = 0;
 
 /* Buffer used for transmission */
-uint8_t aTxBuffer[] = " ****I3C_TwoBoards communication based on IT****  ****I3C_TwoBoards communication based on IT****  ****I3C_TwoBoards communication based on IT**** ";
+uint8_t aTxBuffer[] = " ****I3C_TwoBoards communication based on DMA****  ****I3C_TwoBoards communication based on DMA****  ****I3C_TwoBoards communication based on DMA**** ";
 
 /* Buffer used for reception */
 uint8_t aRxBuffer[RXBUFFERSIZE];

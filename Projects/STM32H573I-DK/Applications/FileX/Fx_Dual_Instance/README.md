@@ -40,7 +40,7 @@ Upon successful opening of the flash media, FileX continue with creating a file 
 
 Through all the steps, FileX/LevelX services are called to print (using USRAT1) the flash size available before and after the example file is written into the flash. The number of occupied sectors is also shown.
 
-It is possible to unplug/plug or replace the SD card without any need to reset the STM32U575I-EV.
+It is possible to unplug/plug or replace the SD card without any need to reset the STM32H573I-DK.
 That is why MX_SDMMC1_SD_Init() should be public to initialize the newly plugged SD card.
 
 #### <b>Expected success behavior</b>

@@ -75,46 +75,46 @@ void HAL_MspInit(void)
 }
 
 /**
-* @brief HASH MSP Initialization
-* This function configures the hardware resources used in this example
-* @param hhash: HASH handle pointer
-* @retval None
-*/
+  * @brief HASH MSP Initialization
+  * This function configures the hardware resources used in this example
+  * @param hhash: HASH handle pointer
+  * @retval None
+  */
 void HAL_HASH_MspInit(HASH_HandleTypeDef* hhash)
 {
-  /* USER CODE BEGIN HASH_MspInit 0 */
+    /* USER CODE BEGIN HASH_MspInit 0 */
 
-  /* USER CODE END HASH_MspInit 0 */
+    /* USER CODE END HASH_MspInit 0 */
     /* Peripheral clock enable */
     __HAL_RCC_HASH_CLK_ENABLE();
     /* HASH interrupt Init */
     HAL_NVIC_SetPriority(HASH_IRQn, 0, 0);
     HAL_NVIC_EnableIRQ(HASH_IRQn);
-  /* USER CODE BEGIN HASH_MspInit 1 */
+    /* USER CODE BEGIN HASH_MspInit 1 */
 
-  /* USER CODE END HASH_MspInit 1 */
+    /* USER CODE END HASH_MspInit 1 */
 
 }
 
 /**
-* @brief HASH MSP De-Initialization
-* This function freeze the hardware resources used in this example
-* @param hhash: HASH handle pointer
-* @retval None
-*/
+  * @brief HASH MSP De-Initialization
+  * This function freeze the hardware resources used in this example
+  * @param hhash: HASH handle pointer
+  * @retval None
+  */
 void HAL_HASH_MspDeInit(HASH_HandleTypeDef* hhash)
 {
-  /* USER CODE BEGIN HASH_MspDeInit 0 */
+    /* USER CODE BEGIN HASH_MspDeInit 0 */
 
-  /* USER CODE END HASH_MspDeInit 0 */
+    /* USER CODE END HASH_MspDeInit 0 */
     /* Peripheral clock disable */
     __HAL_RCC_HASH_CLK_DISABLE();
 
     /* HASH interrupt DeInit */
     HAL_NVIC_DisableIRQ(HASH_IRQn);
-  /* USER CODE BEGIN HASH_MspDeInit 1 */
+    /* USER CODE BEGIN HASH_MspDeInit 1 */
 
-  /* USER CODE END HASH_MspDeInit 1 */
+    /* USER CODE END HASH_MspDeInit 1 */
 
 }
 

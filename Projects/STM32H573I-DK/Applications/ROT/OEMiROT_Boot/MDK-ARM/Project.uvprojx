@@ -791,6 +791,11 @@
               <FilePath>../Src/mpu_armv8m_drv.c</FilePath>
             </File>
             <File>
+              <FileName>sha256_alt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../Src/sha256_alt.c</FilePath>
+            </File>
+            <File>
               <FileName>bl2_nv_services.c</FileName>
               <FileType>1</FileType>
               <FilePath>../Src/bl2_nv_services.c</FilePath>

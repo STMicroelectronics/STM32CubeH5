@@ -116,7 +116,7 @@ int main(void)
 {
 
   /* USER CODE BEGIN 1 */
-  /* STM32U5xx HAL library initialization:
+  /* STM32H5xx HAL library initialization:
        - Configure the Flash prefetch
        - Configure the Systick to generate an interrupt each 1 msec
        - Set NVIC Group Priority to 4

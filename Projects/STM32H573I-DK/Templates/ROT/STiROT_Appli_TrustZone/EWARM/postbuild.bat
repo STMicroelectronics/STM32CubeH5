@@ -16,25 +16,37 @@ setlocal EnableDelayedExpansion
 set current_log_file="%projectdir%\postbuild.log"
 echo. > %current_log_file%
 
+::=============================================================================
+::image binary files
+::=============================================================================
+set s_code_bin="%projectdir%\..\Binary\appli_s.bin"
+set ns_code_bin="%projectdir%\..\Binary\appli_ns.bin"
+set s_ns_code_bin="%projectdir%\..\Binary\appli.bin"
+
+::=================================================================================
+::image xml configuration files
+::=================================================================================
 set code_xml="%provisioningdir%\STiROT\Image\STiRoT_Code_Image.xml"
 set data_xml="%provisioningdir%\STiROT\Image\STiRoT_Data_Image.xml"
 set code_init_xml="%provisioningdir%\STiROT\Image\STiRoT_Code_Init_Image.xml"
 set data_init_xml="%provisioningdir%\STiROT\Image\STiRoT_Data_Init_Image.xml"
-set s_code_bin="%projectdir%\Secure\STM32H573I-DK_S\Exe\Project.bin"
-set ns_code_bin="%projectdir%\NonSecure\STM32H573I-DK_NS\Exe\Project.bin"
-set s_ns_code_bin="%projectdir%\..\Binary\appli.bin"
 
-:: Variables for image xml configuration
-set appli_dir="..\..\..\Templates\ROT\STiROT_Appli_TrustZone"
-set fw_in_bin="Firmware binary input file"
-set fw_out_bin="Image output file"
-set stirot_app_bin="%appli_dir%\Binary\appli.bin"
-set stirot_app_hex="%appli_dir%\Binary\appli_enc_sign.hex"
-set stirot_app_init_hex="%appli_dir%\Binary\appli_init_sign.hex"
-set stirot_data_hex="%provisioningdir%\STiROT\Binary\data_enc_sign.hex"
-set stirot_data_init_bin="%provisioningdir%\STiROT\Binary\data_init_sign.bin"
+::======================================================================================================
+:: Variables for image xml configuration(ROT_Provisioning\STiROT_Appli_TrustZone\Images)
+:: relative path from ROT_Provisioning\STiROT_Appli_TrustZone\Images directory to retrieve binary files
+::======================================================================================================
+set bin_path_xml_field="..\..\..\Templates\ROT\STiROT_Appli_TrustZone\Binary"
+set fw_in_bin_xml_field="Firmware binary input file"
+set fw_out_bin_xml_field="Image output file"
+set stirot_app_bin_xml_field="%bin_path_xml_field%\appli.bin"
+set stirot_app_hex_xml_field="%bin_path_xml_field%\appli_enc_sign.hex"
+set stirot_app_init_hex_xml_field="%bin_path_xml_field%\appli_init_sign.hex"
+set stirot_data_hex_xml_field="%provisioningdir%\STiROT\Binary\data_enc_sign.hex"
+set stirot_data_init_bin_xml_field="%provisioningdir%\STiROT\Binary\data_init_sign.bin"
 
+::============================================
 ::Variables updated by update_appli_setup
+::============================================
 set image_size=0x00006000
 
 :start
@@ -54,6 +66,7 @@ set "python=python "
 
 :postbuild
 echo Postbuild STiROT image >> %current_log_file% 2>>&1
+
 IF %signing% == "nonsecure" (
 :: Create one image (assembly secure and non secure binaries)
 echo Creating only one image >> %current_log_file% 2>>&1
@@ -64,34 +77,34 @@ if !errorlevel! neq 0 goto :error
 echo Creating STiROT image  >> %current_log_file% 2>>&1
 
 ::update xml file : input file
-%python%%applicfg% xmlval -v %stirot_app_bin% --string -n %fw_in_bin% %code_xml% --vb >> %current_log_file% 2>>&1
+%python%%applicfg% xmlval -v %stirot_app_bin_xml_field% --string -n %fw_in_bin_xml_field% %code_xml% --vb >> %current_log_file% 2>>&1
 if !errorlevel! neq 0 goto :error
 
 ::update xml file : output file
-%python%%applicfg% xmlval -v %stirot_app_hex% --string -n %fw_out_bin% %code_xml% --vb >> %current_log_file% 2>>&1
+%python%%applicfg% xmlval -v %stirot_app_hex_xml_field% --string -n %fw_out_bin_xml_field% %code_xml% --vb >> %current_log_file% 2>>&1
 if !errorlevel! neq 0 goto :error
 
 %stm32tpccli% -pb %code_xml% >> %current_log_file% 2>>&1
 if !errorlevel! neq 0 goto :error
 
 ::update xml file : input file
-%python%%applicfg% xmlval -v %stirot_app_bin% --string -n %fw_in_bin% %code_init_xml% --vb >> %current_log_file% 2>>&1
+%python%%applicfg% xmlval -v %stirot_app_bin_xml_field% --string -n %fw_in_bin_xml_field% %code_init_xml% --vb >> %current_log_file% 2>>&1
 if !errorlevel! neq 0 goto :error
 
 ::update xml file : output file
-%python%%applicfg% xmlval -v %stirot_app_init_hex% --string -n %fw_out_bin% %code_init_xml% --vb >> %current_log_file% 2>>&1
+%python%%applicfg% xmlval -v %stirot_app_init_hex_xml_field% --string -n %fw_out_bin_xml_field% %code_init_xml% --vb >> %current_log_file% 2>>&1
 if !errorlevel! neq 0 goto :error
 
 %stm32tpccli% -pb %code_init_xml% >> %current_log_file% 2>>&1
 if !errorlevel! neq 0 goto :error
 
-echo Creating STiROT data  >> %current_log_file% 2>>&1
+echo Creating STiROT data image  >> %current_log_file% 2>>&1
 
 ::update data xml file : output file
-%python%%applicfg% xmlval -v %stirot_data_hex% --string -n %fw_out_bin% %data_xml% --vb >> %current_log_file% 2>>&1
+%python%%applicfg% xmlval -v %stirot_data_hex_xml_field% --string -n %fw_out_bin_xml_field% %data_xml% --vb >> %current_log_file% 2>>&1
 if !errorlevel! neq 0 goto :error
 
-%python%%applicfg% xmlval -v %stirot_data_init_bin% --string -n %fw_out_bin% %data_init_xml% --vb >> %current_log_file% 2>>&1
+%python%%applicfg% xmlval -v %stirot_data_init_bin_xml_field% --string -n %fw_out_bin_xml_field% %data_init_xml% --vb >> %current_log_file% 2>>&1
 if !errorlevel! neq 0 goto :error
 )
 exit 0

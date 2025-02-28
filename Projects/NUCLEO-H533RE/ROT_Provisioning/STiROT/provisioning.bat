@@ -183,13 +183,14 @@ echo Step 2 : Images generation
 if "%isGeneratedByCubeMX%" == "true" goto :cubemx1
 echo    * Code firmware image generation:
 if /i "%full_secure%" == "1" (
-echo        Open the STiROT_Appli project with your preferred toolchain
+echo        Open the STiROT_Appli project with your preferred toolchain and rebuild all files.
 )
 
 if /i "%full_secure%" == "0" (
 echo        Open the STiROT_Appli_TrustZone project with your preferred toolchain
+echo        Rebuild the Secure project and then rebuild the NonSecure project.
 )
-echo        Rebuild all files. The appli_enc_sign.hex file is generated with the postbuild command
+echo        The appli_init_sign.hex and appli_enc_sign.hex files are generated with the postbuild command.
 echo        Press any key to continue...
 if [%1] neq [AUTO] pause >nul
 echo;

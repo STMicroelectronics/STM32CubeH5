@@ -316,12 +316,13 @@ if [ "$isGeneratedByCubeMX" == "false" ]; then
   echo "   * Code firmware image generation:"
 
   if [ "$full_secure" == "1" ]; then
-    echo "       Open the STiROT_Appli project with your preferred toolchain"
+    echo "       Open the STiROT_Appli project with your preferred toolchain and rebuild all files."
   fi
   if [ "$full_secure" == "0" ]; then
     echo "        Open the STiROT_Appli_TrustZone project with your preferred toolchain"
+    echo "        Rebuild the Secure project and then rebuild the NonSecure project."
   fi
-  echo "       Rebuild all files. The appli_enc_sign.hex file is generated with the postbuild command"
+  echo "       The appli_init_sign.hex and appli_enc_sign.hex files are generated with the postbuild command"
   echo "       Press any key to continue.."
   if [ "$mode" != "AUTO" ]; then read -p "" -n1 -s; fi
   echo

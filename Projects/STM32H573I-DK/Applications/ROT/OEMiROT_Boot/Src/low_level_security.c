@@ -432,7 +432,7 @@ static const struct sau_cfg_t region_sau_load_cfg[] =
   {
     0,
     (uint32_t)SRAM1_BASE_NS,
-    ((uint32_t)SRAM1_BASE_NS + _SRAM1_SIZE_MAX - 1U),
+    ((uint32_t)SRAM1_BASE_NS + SRAM1_SIZE - 1U),
     OEMIROT_FALSE,
 #ifdef FLOW_CONTROL
     FLOW_STEP_SAU_L_EN_R0,
@@ -457,8 +457,8 @@ static const struct sau_cfg_t region_sau_load_cfg[] =
   /* allow non secure access to all user flash except secure part and area covered by HDP extension */
   {
     2,
-    (uint32_t)_FLASH_BASE_NS,
-    (uint32_t)(_FLASH_BASE_NS + FLASH_SIZE_DEFAULT - 1U),
+    (uint32_t)FLASH_BASE_NS,
+    (uint32_t)(FLASH_BASE_NS + FLASH_SIZE_DEFAULT - 1U),
     OEMIROT_FALSE,
 #ifdef FLOW_CONTROL
     FLOW_STEP_SAU_L_EN_R2,
@@ -497,7 +497,7 @@ static const struct sau_cfg_t region_sau_load_cfg[] =
   {
     5,
     (uint32_t)SRAM3_BASE_NS,
-    ((uint32_t)SRAM3_BASE_NS + _SRAM3_SIZE_MAX - 1U),
+    ((uint32_t)SRAM3_BASE_NS + SRAM3_SIZE - 1U),
     OEMIROT_FALSE,
 #ifdef FLOW_CONTROL
     FLOW_STEP_SAU_L_EN_R5,
@@ -680,9 +680,6 @@ void LL_SECU_CheckStaticProtections(void)
 {
   static FLASH_OBProgramInitTypeDef flash_option_bytes_bank1 = {0};
   static FLASH_OBProgramInitTypeDef flash_option_bytes_bank2 = {0};
-#ifdef OEMIROT_ENABLE_SET_OB
-  HAL_StatusTypeDef ret = HAL_ERROR;
-#endif  /* OEMIROT_ENABLE_SET_OB  */
   uint32_t start;
   uint32_t end;
   uint32_t i;
@@ -696,12 +693,6 @@ void LL_SECU_CheckStaticProtections(void)
   /* Get bank2 OB  */
   flash_option_bytes_bank2.Banks = FLASH_BANK_2;
   HAL_FLASHEx_OBGetConfig(&flash_option_bytes_bank2);
-
-#ifdef OEMIROT_ENABLE_SET_OB
-  /* Clean the option configuration */
-  flash_option_bytes_bank1.OptionType = 0;
-  flash_option_bytes_bank2.OptionType = 0;
-#endif /*   OEMIROT_ENABLE_SET_OB */
 
   /* Check TZEN = 1 , we are in secure */
   if ((flash_option_bytes_bank1.USERConfig2 & FLASH_OPTSR2_TZEN) != OB_TZEN_ENABLE)
@@ -751,15 +742,8 @@ void LL_SECU_CheckStaticProtections(void)
   {
     BOOT_LOG_INF("BANK 1 secure flash [%d, %d] : OB [%d, %d]",
                  (int)start, (int)end, (int)flash_option_bytes_bank1.WMSecStartSector, (int)flash_option_bytes_bank1.WMSecEndSector);
-#ifndef OEMIROT_ENABLE_SET_OB
     BOOT_LOG_ERR("Unexpected value for secure flash protection");
     Error_Handler();
-#else
-    BOOT_LOG_ERR("Unexpected value for secure flash protection: set wmsec1");
-    flash_option_bytes_bank1.WMSecStartSector = start;
-    flash_option_bytes_bank1.WMSecEndSector = end;
-    flash_option_bytes_bank1.OptionType |= OPTIONBYTE_WMSEC;
-#endif /* OEMIROT_ENABLE_SET_OB */
   }
 
   /* Check bank2 secure flash protection */
@@ -773,15 +757,8 @@ void LL_SECU_CheckStaticProtections(void)
     {
       BOOT_LOG_INF("BANK 2 secure flash [%d, %d] : OB [%d, %d]", (int)start, (int)end, (int)flash_option_bytes_bank2.WMSecStartSector,
                    (int)flash_option_bytes_bank2.WMSecEndSector);
-#ifndef OEMIROT_ENABLE_SET_OB
       BOOT_LOG_ERR("Unexpected value for secure flash protection");
       Error_Handler();
-#else
-      BOOT_LOG_ERR("Unexpected value for secure flash protection : set wmsec2");
-      flash_option_bytes_bank2.WMSecStartSector = start;
-      flash_option_bytes_bank2.WMSecEndSector = end;
-      flash_option_bytes_bank2.OptionType = OPTIONBYTE_WMSEC;
-#endif /* OEMIROT_ENABLE_SET_OB  */
     }
   }
   /* the bank 2 must be fully unsecure */
@@ -789,15 +766,8 @@ void LL_SECU_CheckStaticProtections(void)
   {
     BOOT_LOG_INF("BANK 2 secure flash [%d, %d] : OB [%d, %d]", PAGE_MAX_NUMBER_IN_BANK, 0, (int)flash_option_bytes_bank2.WMSecStartSector,
                  (int)flash_option_bytes_bank2.WMSecEndSector);
-#ifndef OEMIROT_ENABLE_SET_OB
     BOOT_LOG_ERR("Unexpected value for secure flash protection");
     Error_Handler();
-#else
-    /* bank is not unsecured , modify option bytes */
-    flash_option_bytes_bank2.WMSecStartSector = PAGE_MAX_NUMBER_IN_BANK;
-    flash_option_bytes_bank2.WMSecEndSector = 0;
-    flash_option_bytes_bank2.OptionType = OPTIONBYTE_WMSEC;
-#endif /* OEMIROT_ENABLE_SET_OB */
   }
 
 #ifdef  OEMIROT_WRP_PROTECT_ENABLE
@@ -815,16 +785,8 @@ void LL_SECU_CheckStaticProtections(void)
   {
     BOOT_LOG_INF("BANK 1 flash write protection group 0x%x: OB 0x%x",
                  (int)val, (int)flash_option_bytes_bank1.WRPSector);
-#ifndef OEMIROT_ENABLE_SET_OB
     BOOT_LOG_ERR("Unexpected value for write protection ");
     Error_Handler();
-#else
-    flash_option_bytes_bank1.WRPState = OB_WRPSTATE_ENABLE;
-    flash_option_bytes_bank1.WRPSector = val;
-
-    BOOT_LOG_ERR("Unexpected value for write protection : set wrp1");
-    flash_option_bytes_bank1.OptionType |= OPTIONBYTE_WRP;
-#endif /* OEMIROT_ENABLE_SET_OB */
   }
 
 #endif /* OEMIROT_WRP_PROTECT_ENABLE */
@@ -842,15 +804,8 @@ void LL_SECU_CheckStaticProtections(void)
                  (int)end,
                  (int)flash_option_bytes_bank1.HDPStartSector,
                  (int)flash_option_bytes_bank1.HDPEndSector);
-#ifndef OEMIROT_ENABLE_SET_OB
     BOOT_LOG_ERR("Unexpected value for hide protection");
     Error_Handler();
-#else
-    BOOT_LOG_ERR("Unexpected value for hide protection : set hdp1");
-    flash_option_bytes_bank1.HDPStartSector = start;
-    flash_option_bytes_bank1.HDPEndSector = end;
-    flash_option_bytes_bank1.OptionType |= OPTIONBYTE_HDP;
-#endif  /*  OEMIROT_ENABLE_SET_OB */
   }
 
 
@@ -874,50 +829,6 @@ void LL_SECU_CheckStaticProtections(void)
     Error_Handler();
   }
 #endif /* OEMIROT_SECURE_USER_SRAM2_ECC */
-#ifdef OEMIROT_ENABLE_SET_OB
-
-  /* Configure Options Bytes */
-  if ((flash_option_bytes_bank1.OptionType != 0) || (flash_option_bytes_bank2.OptionType != 0))
-  {
-    /* Unlock the Flash to enable the flash control register access */
-    HAL_FLASH_Unlock();
-
-    /* Unlock the Options Bytes */
-    HAL_FLASH_OB_Unlock();
-
-    if ((flash_option_bytes_bank1.OptionType) != 0)
-    {
-      /* Program the Options Bytes */
-      ret = HAL_FLASHEx_OBProgram(&flash_option_bytes_bank1);
-      if (ret != HAL_OK)
-      {
-        BOOT_LOG_ERR("Error while setting OB Bank1 config");
-        Error_Handler();
-      }
-    }
-    if ((flash_option_bytes_bank2.OptionType) != 0)
-    {
-      /* Program the Options Bytes */
-      ret = HAL_FLASHEx_OBProgram(&flash_option_bytes_bank2);
-      if (ret != HAL_OK)
-      {
-        BOOT_LOG_ERR("Error while setting OB Bank1 config");
-        Error_Handler();
-      }
-    }
-
-    /* Launch the Options Bytes (reset the board, should not return) */
-    ret = HAL_FLASH_OB_Launch();
-    if (ret != HAL_OK)
-    {
-      BOOT_LOG_ERR("Error while execution OB_Launch");
-      Error_Handler();
-    }
-
-    /* Code should not be reached, reset the board */
-    HAL_NVIC_SystemReset();
-  }
-#endif /* OEMIROT_ENABLE_SET_OB */
 
 #ifdef OEMIROT_OB_BOOT_LOCK
   /* Check Boot lock protection */
@@ -1893,8 +1804,8 @@ static void active_tamper(void)
         }
 #if (OEMIROT_TAMPER_ENABLE == ALL_TAMPER)
         /* generate random seed */
-        mbedtls_hardware_poll(NULL, (unsigned char *)Seed, sizeof(Seed),(size_t *)&len);
-        if (len == 0)
+        RNG_GetBytes((unsigned char *)Seed, sizeof(Seed), (size_t *)&len);
+        if ((len != sizeof(Seed)) || (len == 0))
         {
             Error_Handler();
         }

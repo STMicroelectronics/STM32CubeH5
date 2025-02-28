@@ -31,9 +31,9 @@
 **
 ******************************************************************************
 */
-S_CODE_OFFSET = 0x00000000;       /* This define is updated automatically by SMAK provisioning script */
-S_CODE_SIZE = 0x00006000;         /* This define is updated automatically by SMAK provisioning script */
-IMAGE_HEADER_SIZE = 0x400;       /* mcuboot header size */
+S_CODE_OFFSET = 0x00000000;       /* Firmware execution area offset from STiROT_Config.xml */
+S_CODE_SIZE = 0x00006000;         /* Firmware area size from STiROT_Config.xml */
+IMAGE_HEADER_SIZE = 0x400;        /* mcuboot header size */
 CMSE_VENEER_REGION_SIZE = 0x400;  /* Include TLVs and trailer. User configurable */
 
 /* Entry Point */

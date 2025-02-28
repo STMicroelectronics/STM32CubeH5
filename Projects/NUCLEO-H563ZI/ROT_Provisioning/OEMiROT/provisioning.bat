@@ -111,7 +111,10 @@ if "%isGeneratedByCubeMX%" == "true" (
     echo        Open the regenerated application project with preferred toolchain and rebuild all files.
 ) else (
     echo        Open the OEMiROT_Appli_TrustZone project with your preferred toolchain
-    echo        Rebuild all files. The appli_enc_sign.hex file is generated with the postbuild command
+    echo        Rebuild the Secure project. The rot_tz_s_app_init_sign.hex and rot_tz_s_app_enc_sign.hex files are
+    echo        generated with the postbuild command.
+    echo        Rebuild the NonSecure project. The rot_tz_ns_app_init_sign.hex and rot_tz_ns_app_enc_sign.hex files are
+    echo        generated with the postbuild command.
 )
 echo        Press any key to continue...
 echo.
@@ -119,7 +122,10 @@ if [%1] neq [AUTO] pause >nul
 if "%isGeneratedByCubeMX%" == "true" goto :cubemx2
 echo    * Code firmware image generation
 echo        Open the OEMiROT_Appli_TrustZone project with preferred toolchain.
-echo        Rebuild all files. The appli_enc_sign.hex file is generated with the postbuild command.
+echo        Rebuild the Secure project. The rot_tz_s_app_init_sign.hex and rot_tz_s_app_enc_sign.hex files are
+echo        generated with the postbuild command.
+echo        Rebuild the NonSecure project. The rot_tz_ns_app_init_sign.hex and rot_tz_ns_app_enc_sign.hex files are
+echo        generated with the postbuild command.
 echo        Press any key to continue...
 echo.
 if [%1] neq [AUTO] pause >nul
@@ -153,7 +159,7 @@ if !errorlevel! neq 0 goto :step_error
 :cubemx2
 echo Step 3 : Provisioning
 echo    * BOOT0 pin should be disconnected from VDD
-echo        (NUCLEO-H563ZI: disconnect CN4/pin5 from CN4/pin7)
+echo        (NUCLEO-H563ZI: disconnect CN11/pin5 from CN11/pin7)
 echo        Press any key to continue...
 echo.
 if [%1] neq [AUTO] pause >nul
@@ -227,7 +233,7 @@ goto product_state_choice
 :: Connect BOOT0 pin to VDD
 :connect_boot0
 echo    * BOOT0 pin should be connected to VDD
-echo        (NUCLEO-H563ZI: connect CN4/pin5 with CN4/pin7)
+echo        (NUCLEO-H563ZI: connect CN11/pin5 with CN11/pin7)
 echo        Press any key to continue...
 echo.
 if [%1] neq [AUTO] pause >nul
@@ -274,7 +280,7 @@ echo.
 if /i "%product_state%" NEQ "OPEN" goto :set_final_ps
 
 echo    * BOOT0 pin should be disconnected from VDD
-echo        (NUCLEO-H563ZI: disconnect CN4/pin5 from CN4/pin7)
+echo        (NUCLEO-H563ZI: disconnect CN11/pin5 from CN11/pin7)
 echo        Press any key to continue...
 echo.
 if [%1] neq [AUTO] pause >nul

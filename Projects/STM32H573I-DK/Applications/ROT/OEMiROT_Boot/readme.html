@@ -96,6 +96,20 @@ Speed: 115200, Data: 8bits, Parity: None, stop bits: 1, Flow control: none.</li>
 </ul>
 <p>Then refer to OEMiROT_Appli readme for example of application booted through OEMiROT boot path.</p>
 </ul>
+<h4 id="notes"><b>Notes:</b></h4>
+<p>By default the anti-tamper is enabled for internal tamper events
+only. It is possible to change this configuration with
+OEMIROT_TAMPER_ENABLE define in Inc\boot_hal_cfg.h.</p>
+<pre><code>#define NO_TAMPER            (0)                   /*!&lt; No tamper activated */
+#define INTERNAL_TAMPER_ONLY (1)                   /*!&lt; Only Internal tamper activated */
+#define ALL_TAMPER           (2)                   /*!&lt; Internal and External tamper activated */
+#define OEMIROT_TAMPER_ENABLE INTERNAL_TAMPER_ONLY /*!&lt; TAMPER configuration flag  */</code></pre>
+<p>If OEMIROT_TAMPER_ENABLE is changed to ALL_TAMPER, the anti-tamper
+protection is enabled with active tamper pins usage. It is needed to
+connect TAMP_IN2 (PE5 on CN18 pin 18) and TAMP_OUT8 (PE4 on CN2 pin 5)
+on the STM32H573I-DK board, to allow the application to run. In case the
+tamper pins are opened or shorted, then the application is reset and
+blocked.</p>
 </li>
 </ol>
 </div>

@@ -207,7 +207,7 @@
    0 - The default, endpoint buffer is managed by core stack. Each endpoint takes UX_SLAVE_REQUEST_DATA_MAX_LENGTH bytes.
    1 - Endpoint buffer managed by classes. In this case not all endpoints consume UX_SLAVE_REQUEST_DATA_MAX_LENGTH bytes.  */
 
-#define UX_DEVICE_ENDPOINT_BUFFER_OWNER              0
+/* #define UX_DEVICE_ENDPOINT_BUFFER_OWNER      0 */
 
 /* Defined, it enables device CDC ACM zero copy for bulk in/out endpoints (write/read).
    Enabled, the endpoint buffer is not allocated in class, application must provide the buffer for read/write,
@@ -254,9 +254,9 @@
    is 2048 bytes but can be reduced in memory constrained environments. For cd-rom support in the storage
    class, this value cannot be less than 2048.  */
 
-#define UX_SLAVE_REQUEST_DATA_MAX_LENGTH                    2048
+/* #define UX_SLAVE_REQUEST_DATA_MAX_LENGTH                 2048 */
 
-/* Defined, this enables processing of Get String Descriptor requests with zero Language ID.  
+/* Defined, this enables processing of Get String Descriptor requests with zero Language ID.
    The first language ID in the language ID framework will be used if the request has a zero
    Language ID.  */
 
@@ -429,12 +429,11 @@
 
 /* #define UX_DEVICE_CLASS_CDC_ACM_TRANSMISSION_DISABLE */
 
-/* defined, this macro enables device audio feedback endpoint support.  */
+/* Defined, this macro enables device audio feedback endpoint support.  */
 
 /* #define UX_DEVICE_CLASS_AUDIO_FEEDBACK_SUPPORT  */
 
-/* defined, this macro enables device audio interrupt endpoint support.  */
-
+/* Defined, this macro enables device audio interrupt endpoint support.  */
 /* #define UX_DEVICE_CLASS_AUDIO_INTERRUPT_SUPPORT  */
 
 /* Defined, class _write is pending ZLP automatically (complete transfer) after buffer is sent.  */

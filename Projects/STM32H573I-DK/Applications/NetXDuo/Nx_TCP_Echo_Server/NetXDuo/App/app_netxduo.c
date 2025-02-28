@@ -46,9 +46,9 @@ TX_THREAD      NxAppThread;
 NX_PACKET_POOL NxAppPool;
 NX_IP          NetXDuoEthIpInstance;
 TX_SEMAPHORE   DHCPSemaphore;
-TX_SEMAPHORE   TCPSemaphore;
 NX_DHCP        DHCPClient;
 /* USER CODE BEGIN PV */
+TX_SEMAPHORE   TCPSemaphore;
 TX_THREAD AppTCPThread;
 TX_THREAD AppLinkThread;
 ULONG IpAddress;
@@ -220,9 +220,11 @@ UINT MX_NetXDuo_Init(VOID *memory_ptr)
 
   /* set DHCP notification callback  */
   tx_semaphore_create(&DHCPSemaphore, "DHCP Semaphore", 0);
+
+  /* USER CODE BEGIN MX_NetXDuo_Init */
   /* set DHCP notification callback  */
   tx_semaphore_create(&TCPSemaphore, "TCP Semaphore", 0);
-  /* USER CODE BEGIN MX_NetXDuo_Init */
+
   /* Allocate the memory for Link thread   */
   if (tx_byte_allocate(byte_pool, (VOID **) &pointer,NX_APP_THREAD_STACK_SIZE, TX_NO_WAIT) != TX_SUCCESS)
   {
@@ -254,9 +256,9 @@ static VOID ip_address_change_notify_callback(NX_IP *ip_instance, VOID *ptr)
 
   if (nx_ip_address_get(&NetXDuoEthIpInstance, &IpAddress, &NetMask) != NX_SUCCESS)
   {
-    /* USER CODE BEGIN IP address change callback error */
+    /* USER CODE BEGIN ip address change callback error */
     Error_Handler();
-    /* USER CODE END IP address change callback error */
+    /* USER CODE END ip address change callback error */
   }
   if(IpAddress != NULL_ADDRESS)
   {
@@ -301,20 +303,25 @@ static VOID App_Main_Thread_Entry (ULONG thread_input)
 
     /* USER CODE END DHCP client start error */
   }
-  printf("Looking for DHCP server ..\n");
+
   /* wait until an IP address is ready */
-  if(tx_semaphore_get(&DHCPSemaphore, NX_APP_DEFAULT_TIMEOUT) != TX_SUCCESS)
+  if(tx_semaphore_get(&DHCPSemaphore, TX_WAIT_FOREVER) != TX_SUCCESS)
   {
     /* USER CODE BEGIN DHCPSemaphore get error */
     Error_Handler();
 
     /* USER CODE END DHCPSemaphore get error */
   }
+
+  /* USER CODE BEGIN Nx_App_Thread_Entry 2 */
   PRINT_IP_ADDRESS(IpAddress);
+
   /* the network is correctly initialized, start the TCP server thread */
   tx_thread_resume(&AppTCPThread);
+
   /* if this thread is not needed any more, we relinquish it */
   tx_thread_relinquish();
+
   return;
   /* USER CODE END Nx_App_Thread_Entry 2 */
 

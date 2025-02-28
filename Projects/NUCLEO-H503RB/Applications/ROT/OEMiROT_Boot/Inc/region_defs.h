@@ -21,9 +21,6 @@
 #define BL2_HEAP_SIZE           0x0000000
 #define BL2_MSP_STACK_SIZE      0x0001100
 
-#define NS_HEAP_SIZE            0x0001000
-#define NS_MSP_STACK_SIZE       0x0000C00
-#define NS_PSP_STACK_SIZE       0x0000C00
 
 /* GTZC specific Alignment */
 #define GTZC_RAM_ALIGN 512
@@ -57,20 +54,15 @@
 #define BL2_HEADER_SIZE                     (0x400) /*!< Appli image header size */
 #define BL2_DATA_HEADER_SIZE                (0x20)  /*!< Data image header size */
 #define BL2_TRAILER_SIZE                    (0x2000)
+
 #ifdef BL2
 #define IMAGE_PRIMARY_PARTITION_OFFSET      (FLASH_AREA_0_OFFSET)
-#define NS_IMAGE_SECONDARY_PARTITION_OFFSET (FLASH_AREA_2_OFFSET)
 #if (MCUBOOT_DATA_IMAGE_NUMBER == 1)
 #define DATA_IMAGE_PRIMARY_PARTITION_OFFSET (FLASH_AREA_5_OFFSET)
-#define NS_DATA_IMAGE_SECONDARY_PARTITION_OFFSET (FLASH_AREA_7_OFFSET)
 #endif /* MCUBOOT_DATA_IMAGE_NUMBER == 1 */
 #else
 #error "Config without BL2 not supported"
 #endif /* BL2 */
-
-
-#define IMAGE_CODE_SIZE \
-    (FLASH_PARTITION_SIZE - BL2_HEADER_SIZE - BL2_TRAILER_SIZE)
 
 
 #define NS_ROM_ALIAS_BASE                   (_FLASH_BASE_NS)
@@ -87,20 +79,6 @@
 /* Non-secure regions */
 #define NS_IMAGE_PRIMARY_AREA_OFFSET        (IMAGE_PRIMARY_PARTITION_OFFSET + BL2_HEADER_SIZE)
 #define CODE_START                          (NS_ROM_ALIAS(NS_IMAGE_PRIMARY_AREA_OFFSET))
-#define CODE_SIZE                           (IMAGE_CODE_SIZE)
-#define NS_CODE_LIMIT                       (NS_CODE_START + NS_CODE_SIZE - 1)
-#define DATA_START                          (_SRAM1_BASE_NS)
-#define NS_NO_INIT_DATA_SIZE                (0x100)
-#define DATA_SIZE                           (_SRAM1_SIZE_MAX + _SRAM2_SIZE_MAX)
-#define NS_DATA_LIMIT                       (NS_DATA_START + NS_DATA_SIZE - 1)
-
-/* NS partition information is used for MPU and SAU configuration */
-#define NS_PARTITION_START                  (NS_CODE_START)
-#define NS_PARTITION_SIZE                   (NS_CODE_SIZE)
-
-/* Secondary partition for new images/ in case of firmware upgrade */
-#define SECONDARY_PARTITION_START           (NS_ROM_ALIAS(NS_IMAGE_SECONDARY_PARTITION_OFFSET))
-#define SECONDARY_PARTITION_SIZE            (FLASH_AREA_2_SIZE)
 
 #ifdef BL2
 /* Personalized region */
@@ -135,11 +113,5 @@
 #if FLASH_AREA_END_OFFSET > FLASH_AREA_END_OFFSET_MAX
 #error "Flash memory overflow"
 #endif /* FLASH_AREA_END_OFFSET > FLASH_AREA_END_OFFSET_MAX */
-
-#if (MCUBOOT_DATA_IMAGE_NUMBER == 1)
-/* NS DATA image layout */
-#define NS_DATA_IMAGE_DATA1_OFFSET          (BL2_DATA_HEADER_SIZE)
-#define NS_DATA_IMAGE_DATA1_SIZE            (32U)
-#endif /* (MCUBOOT_DATA_IMAGE_NUMBER == 1) */
 
 #endif /* __REGION_DEFS_H__ */

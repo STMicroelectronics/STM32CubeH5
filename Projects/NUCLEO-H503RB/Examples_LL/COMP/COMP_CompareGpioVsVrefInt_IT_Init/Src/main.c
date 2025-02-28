@@ -243,6 +243,7 @@ static void MX_COMP1_Init(void)
   }
   LL_EXTI_DisableEvent_0_31(LL_EXTI_LINE_29);
   LL_EXTI_DisableIT_0_31(LL_EXTI_LINE_29);
+
   /* Caution: On STM32H5, comparator interruption must be enabled
   through direct line to NVIC (featuring low latency interrupt).
   Moreover, 2 constraints must be taken into account,
@@ -298,8 +299,8 @@ static void MX_ICACHE_Init(void)
 static void MX_GPIO_Init(void)
 {
   LL_GPIO_InitTypeDef GPIO_InitStruct = {0};
-/* USER CODE BEGIN MX_GPIO_Init_1 */
-/* USER CODE END MX_GPIO_Init_1 */
+  /* USER CODE BEGIN MX_GPIO_Init_1 */
+  /* USER CODE END MX_GPIO_Init_1 */
 
   /* GPIO Ports Clock Enable */
   LL_AHB2_GRP1_EnableClock(LL_AHB2_GRP1_PERIPH_GPIOH);
@@ -316,8 +317,8 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
   LL_GPIO_Init(LED2_GPIO_Port, &GPIO_InitStruct);
 
-/* USER CODE BEGIN MX_GPIO_Init_2 */
-/* USER CODE END MX_GPIO_Init_2 */
+  /* USER CODE BEGIN MX_GPIO_Init_2 */
+  /* USER CODE END MX_GPIO_Init_2 */
 }
 
 /* USER CODE BEGIN 4 */

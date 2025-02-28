@@ -75,20 +75,20 @@ void HAL_MspInit(void)
 }
 
 /**
-* @brief I3C MSP Initialization
-* This function configures the hardware resources used in this example
-* @param hi3c: I3C handle pointer
-* @retval None
-*/
+  * @brief I3C MSP Initialization
+  * This function configures the hardware resources used in this example
+  * @param hi3c: I3C handle pointer
+  * @retval None
+  */
 void HAL_I3C_MspInit(I3C_HandleTypeDef* hi3c)
 {
   GPIO_InitTypeDef GPIO_InitStruct = {0};
   RCC_PeriphCLKInitTypeDef PeriphClkInitStruct = {0};
   if(hi3c->Instance==I3C1)
   {
-  /* USER CODE BEGIN I3C1_MspInit 0 */
+    /* USER CODE BEGIN I3C1_MspInit 0 */
 
-  /* USER CODE END I3C1_MspInit 0 */
+    /* USER CODE END I3C1_MspInit 0 */
 
   /** Initializes the peripherals clock
   */
@@ -114,31 +114,31 @@ void HAL_I3C_MspInit(I3C_HandleTypeDef* hi3c)
     GPIO_InitStruct.Alternate = GPIO_AF3_I3C1;
     HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
-  /* USER CODE BEGIN I3C1_MspInit 1 */
+    /* USER CODE BEGIN I3C1_MspInit 1 */
     /* I3C1 interrupt Init */
     HAL_NVIC_SetPriority(I3C1_EV_IRQn, 0, 0);
     HAL_NVIC_EnableIRQ(I3C1_EV_IRQn);
     HAL_NVIC_SetPriority(I3C1_ER_IRQn, 0, 0);
     HAL_NVIC_EnableIRQ(I3C1_ER_IRQn);
-  /* USER CODE END I3C1_MspInit 1 */
+    /* USER CODE END I3C1_MspInit 1 */
 
   }
 
 }
 
 /**
-* @brief I3C MSP De-Initialization
-* This function freeze the hardware resources used in this example
-* @param hi3c: I3C handle pointer
-* @retval None
-*/
+  * @brief I3C MSP De-Initialization
+  * This function freeze the hardware resources used in this example
+  * @param hi3c: I3C handle pointer
+  * @retval None
+  */
 void HAL_I3C_MspDeInit(I3C_HandleTypeDef* hi3c)
 {
   if(hi3c->Instance==I3C1)
   {
-  /* USER CODE BEGIN I3C1_MspDeInit 0 */
+    /* USER CODE BEGIN I3C1_MspDeInit 0 */
 
-  /* USER CODE END I3C1_MspDeInit 0 */
+    /* USER CODE END I3C1_MspDeInit 0 */
     /* Peripheral clock disable */
     __HAL_RCC_I3C1_CLK_DISABLE();
 
@@ -148,11 +148,11 @@ void HAL_I3C_MspDeInit(I3C_HandleTypeDef* hi3c)
     */
     HAL_GPIO_DeInit(GPIOB, GPIO_PIN_8|GPIO_PIN_9);
 
-  /* USER CODE BEGIN I3C1_MspDeInit 1 */
+    /* USER CODE BEGIN I3C1_MspDeInit 1 */
     /* I3C1 interrupt DeInit */
     HAL_NVIC_DisableIRQ(I3C1_EV_IRQn);
     HAL_NVIC_DisableIRQ(I3C1_ER_IRQn);
-  /* USER CODE END I3C1_MspDeInit 1 */
+    /* USER CODE END I3C1_MspDeInit 1 */
   }
 
 }

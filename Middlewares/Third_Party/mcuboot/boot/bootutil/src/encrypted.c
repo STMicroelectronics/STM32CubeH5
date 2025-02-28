@@ -161,8 +161,11 @@ parse_rsa_enckey(bootutil_rsa_context *ctx, uint8_t **p, uint8_t *end)
 #endif
 
 #if defined(MCUBOOT_ENCRYPT_EC256)
+
+#ifndef MCUBOOT_RAW_ENC_KEY
 static const uint8_t ec_pubkey_oid[] = MBEDTLS_OID_EC_ALG_UNRESTRICTED;
 static const uint8_t ec_secp256r1_oid[] = MBEDTLS_OID_EC_GRP_SECP256R1;
+#endif
 
 #define SHARED_KEY_LEN NUM_ECC_BYTES
 #define PRIV_KEY_LEN   NUM_ECC_BYTES
@@ -174,11 +177,11 @@ static const uint8_t ec_secp256r1_oid[] = MBEDTLS_OID_EC_GRP_SECP256R1;
 static int
 parse_ec256_enckey(uint8_t **p, uint8_t *end, uint8_t *private_key)
 {
+#ifndef MCUBOOT_RAW_ENC_KEY
     size_t len;
     int version;
     mbedtls_asn1_buf alg;
     mbedtls_asn1_buf param;
-
     if (mbedtls_asn1_get_tag(p, end, &len,
                     MBEDTLS_ASN1_CONSTRUCTED | MBEDTLS_ASN1_SEQUENCE) != 0) {
         return -1;
@@ -231,9 +234,10 @@ parse_ec256_enckey(uint8_t **p, uint8_t *end, uint8_t *private_key)
     if (len != NUM_ECC_BYTES) {
         return -12;
     }
-
     memcpy(private_key, *p, len);
-
+#else
+    memcpy(private_key, *p, 32);
+#endif
     /* publicKey usually follows but is not parsed here */
 
     return 0;

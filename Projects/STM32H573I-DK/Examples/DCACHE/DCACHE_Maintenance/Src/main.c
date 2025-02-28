@@ -204,6 +204,12 @@ int main(void)
   /*## -2- DMA Transfer 2: aSRC_Buffer2 (external FLASH) --> aDST_NonCacheable_Buffer2 (Internal SRAM) */
   /*#################################################################################################*/
 
+ /* In memory-mapped mode, not possible to check if the memory is ready
+   after the programming. So a delay corresponding to max page programming
+   time is added
+  */
+  HAL_Delay(MEMORY_PAGE_PROG_DELAY);
+
   /* Send an Erase command to Allow a re-write on the second memory sector on the external Flash memory.*/
   if (MemoryErase(MEMORY_SECTOR_2_OFFSET) != 0)
   {
@@ -215,12 +221,6 @@ int main(void)
   {
     aSRC_Buffer2[i] = i+1;
   }
-
-  /* In memory-mapped mode, not possible to check if the memory is ready
-   after the programming. So a delay corresponding to max page programming
-   time is added
-  */
-  HAL_Delay(MEMORY_PAGE_PROG_DELAY);
 
   /* Start the DMA transfer, and compare source and destination buffers */
   if (DMA_StartAndCompare(aSRC_Buffer2, aDST_NonCacheable_Buffer2, BUFFER_SIZE * 4) != 0)

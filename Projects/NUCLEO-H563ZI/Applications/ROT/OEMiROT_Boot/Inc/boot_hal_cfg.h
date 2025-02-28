@@ -57,7 +57,6 @@
 
 #ifdef OEMIROT_DEV_MODE
 #define OEMIROT_OB_BOOT_LOCK OB_BOOT_LOCK_ENABLE /*!< BOOT Lock expected value  */
-/*#define OEMIROT_ENABLE_SET_OB*/ /*!< Option bytes are set by OEMiROT_Boot when not correctly set  */
 #define OEMIROT_ERROR_HANDLER_STOP_EXEC /*!< Error handler stops execution (else it resets) */
 #else
 #define OEMIROT_OB_BOOT_LOCK OB_BOOT_LOCK_ENABLE /*!< FIXME BOOT Lock expected value  */

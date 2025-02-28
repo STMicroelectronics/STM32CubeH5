@@ -185,8 +185,8 @@ uint32_t MemoryErase(uint32_t memory_offset)
   */
 void OSPI_WriteEnable(XSPI_HandleTypeDef *hospi)
 {
-  XSPI_RegularCmdTypeDef  sCommand;
-  XSPI_AutoPollingTypeDef sConfig;
+  XSPI_RegularCmdTypeDef  sCommand = {0};
+  XSPI_AutoPollingTypeDef sConfig = {0};
 
   /* Enable write operations ------------------------------------------ */
   sCommand.OperationType      = HAL_XSPI_OPTYPE_COMMON_CFG;
@@ -241,8 +241,8 @@ void OSPI_WriteEnable(XSPI_HandleTypeDef *hospi)
   */
 void OSPI_AutoPollingMemReady(XSPI_HandleTypeDef *hospi)
 {
-  XSPI_RegularCmdTypeDef  sCommand;
-  XSPI_AutoPollingTypeDef sConfig;
+  XSPI_RegularCmdTypeDef  sCommand = {0};
+  XSPI_AutoPollingTypeDef sConfig = {0};
 
 
   /* Configure automatic polling mode to wait for memory ready ------ */

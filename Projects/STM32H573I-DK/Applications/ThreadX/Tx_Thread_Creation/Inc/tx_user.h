@@ -168,7 +168,7 @@
    processing when not needed. The user will also have to comment out the call to
    tx_timer_interrupt, which is typically made from assembly language in
    tx_initialize_low_level. Note: if TX_NO_TIMER is used, the define TX_TIMER_PROCESS_IN_ISR
-   must also be used and tx_timer_initialize must be removed from ThreadX library.  */
+   must also be used.  */
 
 /*
 #define TX_NO_TIMER
@@ -182,6 +182,10 @@
    code size and improve performance.  */
 
 #define TX_DISABLE_NOTIFY_CALLBACKS
+
+/* Defined, the basic parameter error checking is disabled.*/
+
+/*#define TX_DISABLE_ERROR_CHECKING*/
 
 /* Determine if the tx_thread_resume and tx_thread_suspend services should have their internal
    code in-line. This results in a larger image, but improves the performance of the thread
@@ -243,10 +247,6 @@
 /* Define the common timer tick reference for use by other middleware components. */
 
 /*#define TX_TIMER_TICKS_PER_SECOND                100*/
-
-/* Defined, the basic parameter error checking is disabled. */
-
-/*#define TX_DISABLE_ERROR_CHECKING*/
 
 /* Determine if there is a FileX pointer in the thread control block.
    By default, the pointer is there for legacy/backwards compatibility.

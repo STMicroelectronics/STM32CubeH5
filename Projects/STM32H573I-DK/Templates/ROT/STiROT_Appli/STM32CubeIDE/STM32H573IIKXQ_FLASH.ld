@@ -31,8 +31,8 @@
 **
 ******************************************************************************
 */
-S_CODE_OFFSET = 0x00000000;       /* This define is updated automatically by SMAK provisioning script */
-S_CODE_SIZE = 0x00020000;         /* This define is updated automatically by SMAK provisioning script */
+S_CODE_OFFSET = 0x00000000;       /* Firmware execution area offset from STiROT_Config.xml */
+S_CODE_SIZE = 0x00020000;         /* Firmware area size from STiROT_Config.xml */
 IMAGE_HEADER_SIZE = 0x400;       /* mcuboot header size */
 
 /* Entry Point */

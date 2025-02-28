@@ -24,7 +24,7 @@
 /*  PORT SPECIFIC C INFORMATION                            RELEASE        */
 /*                                                                        */
 /*    nx_user.h                                           PORTABLE C      */
-/*                                                           6.1.11       */
+/*                                                           6.3.0        */
 /*                                                                        */
 /*  AUTHOR                                                                */
 /*                                                                        */
@@ -50,6 +50,9 @@
 /*                                            resulting in version 6.1.8  */
 /*  04-25-2022     Yuxin Zhou               Modified comment(s),          */
 /*                                            resulting in version 6.1.11 */
+/*  10-31-2023      Tiejun Zhou              Modified comment(s),          */
+/*                                            supported random IP id,      */
+/*                                            resulting in version 6.3.0   */
 /*                                                                        */
 /**************************************************************************/
 
@@ -181,11 +184,6 @@
 /* Defined, packet debug information is enabled.  */
 /*
 #define NX_ENABLE_PACKET_DEBUG_INFO
-*/
-
-/* If defined, the packet chain feature is removed. */
-/*
-#define NX_DISABLE_PACKET_CHAIN
 */
 
 /* Defined, disables packet pool information gathering. */
@@ -320,6 +318,12 @@
    routing feature is not compiled in. */
 /*
 #define NX_ENABLE_IP_STATIC_ROUTING
+*/
+
+/* Defined, this option enables random IP id. By default IP id is increased by one for each packet.
+*/
+/*
+#define NX_ENABLE_IP_ID_RANDOMIZATION
 */
 
 /* This define specifies the maximum time of IP reassembly.  The default value
@@ -1274,13 +1278,6 @@
    The default value is 1 second (1 * NX_IP_PERIODIC_RATE). */
 /*
 #define NX_DHCPV6_PACKET_WAIT_OPTION            NX_IP_PERIODIC_RATE
-*/
-
-/* This defines the Server DUID type which the Server includes in all messages
-   to Clients. The default value is link layer plus time
-   (NX_DHCPV6_SERVER_DUID_TYPE_LINK_TIME). */
-/*
-#define NX_DHCPV6_SERVER_DUID_TYPE            	NX_DHCPV6_DUID_TYPE_LINK_TIME
 */
 
 /* This defines the preference option value between 0 and 255, where the higher
@@ -2410,6 +2407,14 @@
 /* Size of the NAK list. */
 /*
 #define NX_PPP_OPTION_MESSAGE_LENGTH            64
+*/
+
+/* Defined, the VLAN feature is enabled.
+   Note: Require driver support to use APIs from this file.
+         A quick check in driver is to search for
+         NX_LINK_RAW_PACKET_SEND. VLAN APIs are not supported if not found. */
+/*
+#define NX_ENABLE_VLAN
 */
 
 #ifdef NX_DISABLE_IPV6

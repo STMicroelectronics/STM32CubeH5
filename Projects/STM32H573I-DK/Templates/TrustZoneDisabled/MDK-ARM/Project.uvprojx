@@ -16,8 +16,8 @@
         <TargetCommonOption>
           <Device>STM32H573IIKx</Device>
           <Vendor>STMicroelectronics</Vendor>
-          <PackID>Keil.STM32H5xx_DFP.0.0.5</PackID>
-          <PackURL>http://www.keil.com/pack</PackURL>
+          <PackID>Keil.STM32H5xx_DFP.1.3.2</PackID>
+          <PackURL>https://www.keil.com/pack/</PackURL>
           <Cpu>IRAM(0x20000000,0x040000) IRAM2(0x30000000,0x040000) IROM(0x08000000,0x00200000) IROM2(0x0C000000,0x00200000) XRAM(0x20040000,0x00010000) XRAM2(0x20050000,0x00050000) CPUTYPE("Cortex-M33") FPU3(SFPU) DSP TZ CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
           <StartupFile></StartupFile>
@@ -281,8 +281,8 @@
               </OCR_RVCT4>
               <OCR_RVCT5>
                 <Type>1</Type>
-                <StartAddress>0x0</StartAddress>
-                <Size>0x0</Size>
+                <StartAddress>0xc000000</StartAddress>
+                <Size>0x200000</Size>
               </OCR_RVCT5>
               <OCR_RVCT6>
                 <Type>0</Type>
@@ -306,8 +306,8 @@
               </OCR_RVCT9>
               <OCR_RVCT10>
                 <Type>0</Type>
-                <StartAddress>0x0</StartAddress>
-                <Size>0x0</Size>
+                <StartAddress>0x30000000</StartAddress>
+                <Size>0x40000</Size>
               </OCR_RVCT10>
             </OnChipMemories>
             <RvctStartVector></RvctStartVector>
@@ -710,6 +710,11 @@
               <FilePath>../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_sd_ex.c</FilePath>
             </File>
             <File>
+              <FileName>stm32h5xx_hal_sdio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_hal_sdio.c</FilePath>
+            </File>
+            <File>
               <FileName>stm32h5xx_hal_sdram.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_sdram.c</FilePath>
@@ -788,11 +793,6 @@
               <FileName>stm32h5xx_hal_xspi.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_xspi.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32h5xx_ll_adc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_ll_adc.c</FilePath>
             </File>
             <File>
               <FileName>stm32h5xx_ll_dlyb.c</FileName>

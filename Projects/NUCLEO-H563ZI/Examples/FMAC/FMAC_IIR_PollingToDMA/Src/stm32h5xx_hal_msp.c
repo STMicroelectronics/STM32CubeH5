@@ -76,18 +76,18 @@ void HAL_MspInit(void)
 }
 
 /**
-* @brief FMAC MSP Initialization
-* This function configures the hardware resources used in this example
-* @param hfmac: FMAC handle pointer
-* @retval None
-*/
+  * @brief FMAC MSP Initialization
+  * This function configures the hardware resources used in this example
+  * @param hfmac: FMAC handle pointer
+  * @retval None
+  */
 void HAL_FMAC_MspInit(FMAC_HandleTypeDef* hfmac)
 {
   if(hfmac->Instance==FMAC)
   {
-  /* USER CODE BEGIN FMAC_MspInit 0 */
+    /* USER CODE BEGIN FMAC_MspInit 0 */
 
-  /* USER CODE END FMAC_MspInit 0 */
+    /* USER CODE END FMAC_MspInit 0 */
     /* Peripheral clock enable */
     __HAL_RCC_FMAC_CLK_ENABLE();
 
@@ -119,35 +119,35 @@ void HAL_FMAC_MspInit(FMAC_HandleTypeDef* hfmac)
       Error_Handler();
     }
 
-  /* USER CODE BEGIN FMAC_MspInit 1 */
+    /* USER CODE BEGIN FMAC_MspInit 1 */
 
-  /* USER CODE END FMAC_MspInit 1 */
+    /* USER CODE END FMAC_MspInit 1 */
 
   }
 
 }
 
 /**
-* @brief FMAC MSP De-Initialization
-* This function freeze the hardware resources used in this example
-* @param hfmac: FMAC handle pointer
-* @retval None
-*/
+  * @brief FMAC MSP De-Initialization
+  * This function freeze the hardware resources used in this example
+  * @param hfmac: FMAC handle pointer
+  * @retval None
+  */
 void HAL_FMAC_MspDeInit(FMAC_HandleTypeDef* hfmac)
 {
   if(hfmac->Instance==FMAC)
   {
-  /* USER CODE BEGIN FMAC_MspDeInit 0 */
+    /* USER CODE BEGIN FMAC_MspDeInit 0 */
 
-  /* USER CODE END FMAC_MspDeInit 0 */
+    /* USER CODE END FMAC_MspDeInit 0 */
     /* Peripheral clock disable */
     __HAL_RCC_FMAC_CLK_DISABLE();
 
     /* FMAC DMA DeInit */
     HAL_DMA_DeInit(hfmac->hdmaOut);
-  /* USER CODE BEGIN FMAC_MspDeInit 1 */
+    /* USER CODE BEGIN FMAC_MspDeInit 1 */
 
-  /* USER CODE END FMAC_MspDeInit 1 */
+    /* USER CODE END FMAC_MspDeInit 1 */
   }
 
 }

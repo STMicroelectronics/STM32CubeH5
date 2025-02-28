@@ -222,7 +222,7 @@ static uint32_t page_number(struct arm_flash_dev_t *flash_dev,
   uint32_t sector_bank = (flash_dev->data->sector_count) / 2;
   page = ((page >= sector_bank)) ? page - (sector_bank) : page;
 #ifdef DEBUG_FLASH_ACCESS
-  printf("page = %x \r\n", page);
+  BOOT_LOG_INF("page = %x \r\n", page);
 #endif /* DEBUG_FLASH_ACCESS */
   return page;
 }
@@ -314,7 +314,7 @@ static int32_t Flash_ReadData(uint32_t addr, void *data, uint32_t cnt)
   /*  ECC to implement with NMI */
   /*  do a memcpy */
 #ifdef DEBUG_FLASH_ACCESS
-  printf("read %lx n=%x \r\n", (addr + FLASH_BASE), cnt);
+  BOOT_LOG_INF("read %lx n=%x \r\n", (addr + FLASH_BASE), cnt);
 #endif /*  DEBUG_FLASH_ACCESS */
   DoubleECC_Error_Counter = 0U;
 
@@ -350,7 +350,7 @@ static int32_t Flash_ProgramData(uint32_t addr,
   dest = (void *)(flash_base + addr);
 #endif
 #ifdef DEBUG_FLASH_ACCESS
-  printf("write %x n=%x \r\n", (uint32_t) dest, cnt);
+  BOOT_LOG_INF("write %x n=%x \r\n", (uint32_t) dest, cnt);
 #endif /* DEBUG_FLASH_ACCESS */
   /* Check Flash memory boundaries and alignment with minimum write size
     * (program_unit), data size also needs to be a multiple of program_unit.
@@ -388,14 +388,14 @@ static int32_t Flash_ProgramData(uint32_t addr,
   {
     err = HAL_ERROR;
 #ifdef DEBUG_FLASH_ACCESS
-    printf("write %x n=%x (cmp failed)\r\n", (uint32_t)(dest), cnt);
+    BOOT_LOG_INF("write %x n=%x (cmp failed)\r\n", (uint32_t)(dest), cnt);
 #endif /* DEBUG_FLASH_ACCESS */
   }
 #endif /* CHECK_WRITE */
 #ifdef DEBUG_FLASH_ACCESS
   if (err != HAL_OK)
   {
-    printf("failed write %x n=%x \r\n", (uint32_t)(dest), cnt);
+    BOOT_LOG_INF("failed write %x n=%x \r\n", (uint32_t)(dest), cnt);
   }
 #endif /* DEBUG_FLASH_ACCESS */
   return (err == HAL_OK) ? ARM_DRIVER_OK : ARM_DRIVER_ERROR;
@@ -411,7 +411,7 @@ static int32_t Flash_EraseSector(uint32_t addr)
   uint32_t *pt;
 #endif /* CHECK_ERASE */
 #ifdef DEBUG_FLASH_ACCESS
-  printf("erase %x\r\n", addr);
+  BOOT_LOG_INF("erase %x\r\n", addr);
 #endif /* DEBUG_FLASH_ACCESS */
   if (!(is_range_valid(&ARM_FLASH0_DEV, addr)) ||
       !(is_erase_aligned(&ARM_FLASH0_DEV, addr)) ||
@@ -420,9 +420,9 @@ static int32_t Flash_EraseSector(uint32_t addr)
     ARM_FLASH0_STATUS.error = DRIVER_STATUS_ERROR;
 #ifdef DEBUG_FLASH_ACCESS
 #if defined(__ARMCC_VERSION)
-    printf("failed erase %x\r\n", addr);
+    BOOT_LOG_INF("failed erase %x\r\n", addr);
 #else
-    printf("failed erase %lx\r\n", addr);
+    BOOT_LOG_INF("failed erase %lx\r\n", addr);
 #endif /* __ARMCC_VERSION */
 #endif /* DEBUG_FLASH_ACCESS */
     return ARM_DRIVER_ERROR_PARAMETER;
@@ -444,17 +444,17 @@ static int32_t Flash_EraseSector(uint32_t addr)
 #ifdef DEBUG_FLASH_ACCESS
   if (err != HAL_OK)
   {
-    printf("erase failed \r\n");
+    BOOT_LOG_INF("erase failed \r\n");
   }
 #endif /* DEBUG_FLASH_ACCESS */
 #ifdef CHECK_ERASE
   pt = (uint32_t *)((uint32_t)FLASH_BASE + addr);
-  for (i = 0; i > 0x400; i++)
+  for (i = 0; i < (FLASH0_SECTOR_SIZE/4); i++)
   {
     if (pt[i] != 0xffffffff)
     {
 #ifdef DEBUG_FLASH_ACCESS
-      printf("erase failed off %x %x %x\r\n", addr, &pt[i], pt[i]);
+      BOOT_LOG_INF("erase failed off %x %x %x\r\n", addr, &pt[i], pt[i]);
 #endif /* DEBUG_FLASH_ACCESS */
       err = HAL_ERROR;
       break;

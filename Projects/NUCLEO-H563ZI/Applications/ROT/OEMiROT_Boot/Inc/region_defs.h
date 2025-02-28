@@ -21,15 +21,6 @@
 #define BL2_HEAP_SIZE           0x0000000
 #define BL2_MSP_STACK_SIZE      0x0002000
 
-#define S_HEAP_SIZE             0x0001000
-#define S_MSP_STACK_SIZE_INIT   0x0000400
-#define S_MSP_STACK_SIZE        0x0000800
-#define S_PSP_STACK_SIZE        0x0000800
-
-#define NS_HEAP_SIZE            0x0001000
-#define NS_MSP_STACK_SIZE       0x0000C00
-#define NS_PSP_STACK_SIZE       0x0000C00
-
 /* GTZC specific Alignment */
 #define GTZC_RAM_ALIGN 512
 #define GTZC_FLASH_ALIGN 8192
@@ -70,28 +61,20 @@
 #define BL2_HEADER_SIZE                     (0x400) /*!< Appli image header size */
 #define BL2_DATA_HEADER_SIZE                (0x20)  /*!< Data image header size */
 #define BL2_TRAILER_SIZE                    (0x2000)
+
 #ifdef BL2
 #define S_IMAGE_PRIMARY_PARTITION_OFFSET    (FLASH_AREA_0_OFFSET)
 #define S_IMAGE_SECONDARY_PARTITION_OFFSET  (FLASH_AREA_2_OFFSET)
 #define NS_IMAGE_PRIMARY_PARTITION_OFFSET   (FLASH_AREA_0_OFFSET + FLASH_S_PARTITION_SIZE)
-#define NS_IMAGE_SECONDARY_PARTITION_OFFSET (FLASH_AREA_2_OFFSET + FLASH_S_PARTITION_SIZE)
 #if (MCUBOOT_S_DATA_IMAGE_NUMBER == 1)
 #define S_DATA_IMAGE_PRIMARY_PARTITION_OFFSET    (FLASH_AREA_4_OFFSET)
-#define S_DATA_IMAGE_SECONDARY_PARTITION_OFFSET  (FLASH_AREA_6_OFFSET)
 #endif /* MCUBOOT_S_DATA_IMAGE_NUMBER == 1 */
 #if (MCUBOOT_NS_DATA_IMAGE_NUMBER == 1)
 #define NS_DATA_IMAGE_PRIMARY_PARTITION_OFFSET   (FLASH_AREA_5_OFFSET)
-#define NS_DATA_IMAGE_SECONDARY_PARTITION_OFFSET (FLASH_AREA_7_OFFSET)
 #endif /* MCUBOOT_NS_DATA_IMAGE_NUMBER == 1 */
 #else
 #error "Config without BL2 not supported"
 #endif /* BL2 */
-
-
-#define IMAGE_S_CODE_SIZE \
-    (FLASH_S_PARTITION_SIZE - BL2_HEADER_SIZE - BL2_TRAILER_SIZE)
-#define IMAGE_NS_CODE_SIZE \
-    (FLASH_NS_PARTITION_SIZE - BL2_HEADER_SIZE - BL2_TRAILER_SIZE)
 
 
 #define S_ROM_ALIAS_BASE                    (_FLASH_BASE_S)
@@ -111,11 +94,6 @@
 /* Secure regions */
 #define S_IMAGE_PRIMARY_AREA_OFFSET         (S_IMAGE_PRIMARY_PARTITION_OFFSET + BL2_HEADER_SIZE)
 #define S_CODE_START                        (S_ROM_ALIAS(S_IMAGE_PRIMARY_AREA_OFFSET))
-#define S_CODE_SIZE                         (IMAGE_S_CODE_SIZE)
-#define S_CODE_LIMIT                        (S_CODE_START + S_CODE_SIZE - 1)
-#define S_DATA_START                        (_SRAM2_BASE_S)
-#define S_DATA_SIZE                         (S_TOTAL_RAM_SIZE)
-#define S_DATA_LIMIT                        (S_DATA_START + S_DATA_SIZE - 1)
 
 #if (MCUBOOT_S_DATA_IMAGE_NUMBER == 1)
 #define S_DATA_IMAGE_PRIMARY_AREA_OFFSET    (S_DATA_IMAGE_PRIMARY_PARTITION_OFFSET + BL2_DATA_HEADER_SIZE)
@@ -124,23 +102,6 @@
 /* Non-secure regions */
 #define NS_IMAGE_PRIMARY_AREA_OFFSET        (NS_IMAGE_PRIMARY_PARTITION_OFFSET + BL2_HEADER_SIZE)
 #define NS_CODE_START                       (NS_ROM_ALIAS(NS_IMAGE_PRIMARY_AREA_OFFSET))
-#define NS_CODE_SIZE                        (IMAGE_NS_CODE_SIZE)
-#define NS_CODE_LIMIT                       (NS_CODE_START + NS_CODE_SIZE - 1)
-#define NS_DATA_START                       (_SRAM1_BASE_NS)
-#define NS_DATA_START_2                     (_SRAM3_BASE_NS)
-#define NS_NO_INIT_DATA_SIZE                (0x100)
-#define NS_DATA_SIZE                        (_SRAM1_SIZE_MAX)
-#define NS_DATA_SIZE_2                      (_SRAM3_SIZE_MAX)
-#define NS_DATA_LIMIT                       (NS_DATA_START + NS_DATA_SIZE - 1)
-#define NS_DATA_LIMIT_2                     (NS_DATA_START_2 + NS_DATA_SIZE_2 - 1)
-
-/* NS partition information is used for MPU and SAU configuration */
-#define NS_PARTITION_START                  (NS_CODE_START)
-#define NS_PARTITION_SIZE                   (NS_CODE_SIZE)
-
-/* Secondary partition for new images/ in case of firmware upgrade */
-#define SECONDARY_PARTITION_START           (NS_ROM_ALIAS(S_IMAGE_SECONDARY_PARTITION_OFFSET))
-#define SECONDARY_PARTITION_SIZE            (FLASH_AREA_2_SIZE)
 
 #ifdef BL2
 /* Bootloader region protected by hdp */
@@ -170,11 +131,5 @@
 #if FLASH_AREA_END_OFFSET > FLASH_AREA_END_OFFSET_MAX
 #error "Flash memory overflow"
 #endif /* FLASH_AREA_END_OFFSET > FLASH_AREA_END_OFFSET_MAX */
-
-#if (MCUBOOT_NS_DATA_IMAGE_NUMBER == 1)
-/* NS DATA image layout */
-#define NS_DATA_IMAGE_DATA1_OFFSET          (BL2_DATA_HEADER_SIZE)
-#define NS_DATA_IMAGE_DATA1_SIZE            (32U)
-#endif /* (MCUBOOT_NS_DATA_IMAGE_NUMBER == 1) */
 
 #endif /* __REGION_DEFS_H__ */

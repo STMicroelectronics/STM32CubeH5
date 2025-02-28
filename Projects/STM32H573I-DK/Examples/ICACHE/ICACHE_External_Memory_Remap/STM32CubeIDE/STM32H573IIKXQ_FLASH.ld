@@ -5,9 +5,9 @@
 **
 **  Author      : STM32CubeIDE
 **
-**  Abstract    : Linker script for STM32U575xI Device from STM32U5 series
+**  Abstract    : Linker script for STM32H573IIKxQ Device from STM32H5 series
 **                      2048Kbytes FLASH
-**                      768Kbytes RAM
+**                      640Kbytes RAM
 **
 **                Set heap size, stack size and stack location according
 **                to application requirements.

@@ -69,52 +69,55 @@ void HAL_MspInit(void)
 
   /* System interrupt init*/
 
+  /* Disable the internal Pull-Up in Dead Battery pins of UCPD peripheral */
+  HAL_PWREx_DisableUCPDDeadBattery();
+
   /* USER CODE BEGIN MspInit 1 */
 
   /* USER CODE END MspInit 1 */
 }
 
 /**
-* @brief CRYP MSP Initialization
-* This function configures the hardware resources used in this example
-* @param hcryp: CRYP handle pointer
-* @retval None
-*/
+  * @brief CRYP MSP Initialization
+  * This function configures the hardware resources used in this example
+  * @param hcryp: CRYP handle pointer
+  * @retval None
+  */
 void HAL_CRYP_MspInit(CRYP_HandleTypeDef* hcryp)
 {
   if(hcryp->Instance==AES)
   {
-  /* USER CODE BEGIN AES_MspInit 0 */
+    /* USER CODE BEGIN AES_MspInit 0 */
 
-  /* USER CODE END AES_MspInit 0 */
+    /* USER CODE END AES_MspInit 0 */
     /* Peripheral clock enable */
     __HAL_RCC_AES_CLK_ENABLE();
-  /* USER CODE BEGIN AES_MspInit 1 */
+    /* USER CODE BEGIN AES_MspInit 1 */
 
-  /* USER CODE END AES_MspInit 1 */
+    /* USER CODE END AES_MspInit 1 */
 
   }
 
 }
 
 /**
-* @brief CRYP MSP De-Initialization
-* This function freeze the hardware resources used in this example
-* @param hcryp: CRYP handle pointer
-* @retval None
-*/
+  * @brief CRYP MSP De-Initialization
+  * This function freeze the hardware resources used in this example
+  * @param hcryp: CRYP handle pointer
+  * @retval None
+  */
 void HAL_CRYP_MspDeInit(CRYP_HandleTypeDef* hcryp)
 {
   if(hcryp->Instance==AES)
   {
-  /* USER CODE BEGIN AES_MspDeInit 0 */
+    /* USER CODE BEGIN AES_MspDeInit 0 */
 
-  /* USER CODE END AES_MspDeInit 0 */
+    /* USER CODE END AES_MspDeInit 0 */
     /* Peripheral clock disable */
     __HAL_RCC_AES_CLK_DISABLE();
-  /* USER CODE BEGIN AES_MspDeInit 1 */
+    /* USER CODE BEGIN AES_MspDeInit 1 */
 
-  /* USER CODE END AES_MspDeInit 1 */
+    /* USER CODE END AES_MspDeInit 1 */
   }
 
 }

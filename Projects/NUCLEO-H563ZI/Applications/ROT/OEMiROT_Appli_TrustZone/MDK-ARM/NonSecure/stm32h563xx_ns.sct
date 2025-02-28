@@ -16,11 +16,11 @@
  * limitations under the License.
  */
 
-#define S_CODE_OFFSET 0x18000                          /* This define is updated automatically from OEMiROT_BOOT project */
-#define S_CODE_SIZE 0x6000                             /* This define is updated automatically from OEMiROT_BOOT project */
+#define S_CODE_OFFSET 0x18000                          /* This definition is updated automatically from OEMiROT_Boot postbuild */
+#define S_CODE_SIZE 0x6000                             /* This definition is updated automatically from OEMiROT_Boot postbuild */
 
-#define NS_CODE_OFFSET (S_CODE_OFFSET + S_CODE_SIZE)
-#define NS_CODE_SIZE 0xA0000
+#define NS_CODE_OFFSET (S_CODE_OFFSET + S_CODE_SIZE)   /* Non secure code Offset */
+#define NS_CODE_SIZE 0xA0000                           /* This definition is updated automatically from OEMiROT_Boot postbuild */
 
 #define IMAGE_HEADER_SIZE 0x400                        /* mcuboot header size */
 

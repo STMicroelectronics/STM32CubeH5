@@ -91,6 +91,11 @@
 			<locationURI>PARENT-1-PROJECT_LOC/Src/mpu_armv8m_drv.c</locationURI>
 		</link>
 		<link>
+			<name>Application/User/sha256_alt.c</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/Src/sha256_alt.c</locationURI>
+		</link>
+		<link>
 			<name>Application/User/startup_stm32h5xx.c</name>
 			<type>1</type>
 			<locationURI>PARENT-1-PROJECT_LOC/Src/startup_stm32h5xx.c</locationURI>

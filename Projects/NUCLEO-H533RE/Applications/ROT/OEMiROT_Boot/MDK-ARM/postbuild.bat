@@ -17,6 +17,7 @@ goto exe:
 goto py:
 :exe
 ::line for window executable
+
 set "applicfg=%cube_fw_path%\Utilities\PC_Software\ROT_AppliConfig\dist\AppliCfg.exe"
 set "python="
 if exist %applicfg% (
@@ -30,23 +31,28 @@ set "applicfg=%cube_fw_path%\Utilities\PC_Software\ROT_AppliConfig\AppliCfg.py"
 set "python= "
 
 :postbuild
-set "auto_rot_update=%projectdir%\..\auto_rot_update.bat"
-set "map_properties=%projectdir%\..\map.properties"
 set "preprocess_bl2_file=%projectdir%\image_macros_preprocessed_bl2.c"
 set "appli_dir=../../../../%oemirot_boot_path_project%"
+set "auto_rot_update=%projectdir%\..\auto_rot_update.bat"
+set "map_properties=%projectdir%\..\map.properties"
 set "update=%projectdir%\..\..\..\..\ROT_Provisioning\OEMiROT\ob_flash_programming.bat"
 
-set "flash_layout=%projectdir%\..\Inc\flash_layout.h"
 set "provisioning=%projectdir%\..\..\..\..\ROT_Provisioning\img_config.bat"
+set "flash_layout=%projectdir%\..\Inc\flash_layout.h"
 set ns_main="%appli_dir%\NonSecure\Inc\main.h"
 set s_main="%appli_dir%\Secure\Inc\main.h"
 set appli_flash_layout="%appli_dir%\Secure_nsclib\appli_flash_layout.h"
 set appli_postbuild="%appli_dir%\MDK-ARM\postbuild.bat"
+
 set "command=%python%%applicfg% flash --layout %preprocess_bl2_file% -b oemurot_enable -m  RE_OEMUROT_ENABLE --decimal %auto_rot_update% --vb >> %current_log_file% 2>&1"
 %command%
 IF !errorlevel! NEQ 0 goto :error
+
 call %auto_rot_update%
-set "update=%provisioningdir%\%bootpath%\ob_flash_programming.bat"
+
+::======================================================================================
+::image xml configuration files
+::======================================================================================
 set s_code_xml="%provisioningdir%\%bootpath%\Images\%project%_S_Code_Image.xml"
 set ns_code_xml="%provisioningdir%\%bootpath%\Images\%project%_NS_Code_Image.xml"
 set s_data_xml="%provisioningdir%\%bootpath%\Images\%project%_S_Data_Image.xml"
@@ -89,19 +95,19 @@ set "command=%python%%applicfg% flash --layout %preprocess_bl2_file% -b FLASH_SI
 %command%
 IF !errorlevel! NEQ 0 goto :error
 
-set "command=%python%%applicfg% flash --layout %preprocess_bl2_file% -b S_CODE_REGION_START -m  RE_ADDRESS_SECURE_START %map_properties% --vb >> %current_log_file% 2>&1"
+set "command=%python%%applicfg% flash --layout %preprocess_bl2_file% -b S_CODE_REGION_START -m RE_ADDRESS_SECURE_START %map_properties% --vb >> %current_log_file% 2>&1"
 %command%
 IF !errorlevel! NEQ 0 goto :error
 
-set "command=%python%%applicfg% flash --layout %preprocess_bl2_file% -b S_CODE_REGION_SIZE -m  RE_IMAGE_FLASH_SECURE_IMAGE_SIZE %map_properties% --vb >> %current_log_file% 2>&1"
+set "command=%python%%applicfg% flash --layout %preprocess_bl2_file% -b S_CODE_REGION_SIZE -m RE_IMAGE_FLASH_SECURE_IMAGE_SIZE %map_properties% --vb >> %current_log_file% 2>&1"
 %command%
 IF !errorlevel! NEQ 0 goto :error
 
-set "command=%python%%applicfg% flash --layout %preprocess_bl2_file% -b NS_CODE_REGION_START -m  RE_ADDRESS_NON_SECURE_START %map_properties% --vb >> %current_log_file% 2>&1"
+set "command=%python%%applicfg% flash --layout %preprocess_bl2_file% -b NS_CODE_REGION_START -m RE_ADDRESS_NON_SECURE_START %map_properties% --vb >> %current_log_file% 2>&1"
 %command%
 IF !errorlevel! NEQ 0 goto :error
 
-set "command=%python%%applicfg% flash --layout %preprocess_bl2_file% -b NS_CODE_REGION_SIZE -m  RE_IMAGE_NON_SECURE_IMAGE_SIZE %map_properties% --vb >> %current_log_file% 2>&1"
+set "command=%python%%applicfg% flash --layout %preprocess_bl2_file% -b NS_CODE_REGION_SIZE -m RE_IMAGE_NON_SECURE_IMAGE_SIZE %map_properties% --vb >> %current_log_file% 2>&1"
 %command%
 IF !errorlevel! NEQ 0 goto :error
 
@@ -129,71 +135,71 @@ set "command=%python%%applicfg% flash --layout %preprocess_bl2_file% -b CMSE_VEN
 %command%
 IF !errorlevel! NEQ 0 goto :error
 
-set "command=%python%%applicfg% flash --layout %preprocess_bl2_file% -b S_DATA_REGION_START -m  RE_AREA_4_OFFSET %map_properties% --vb >> %current_log_file% 2>&1"
+set "command=%python%%applicfg% flash --layout %preprocess_bl2_file% -b S_DATA_REGION_START -m RE_AREA_4_OFFSET %map_properties% --vb >> %current_log_file% 2>&1"
 %command%
 IF !errorlevel! NEQ 0 goto :error
 
-set "command=%python%%applicfg% flash --layout %preprocess_bl2_file% -b S_DATA_REGION_SIZE -m  RE_AREA_4_SIZE %map_properties% --vb >> %current_log_file% 2>&1"
+set "command=%python%%applicfg% flash --layout %preprocess_bl2_file% -b S_DATA_REGION_SIZE -m RE_AREA_4_SIZE %map_properties% --vb >> %current_log_file% 2>&1"
 %command%
 IF !errorlevel! NEQ 0 goto :error
 
-set "command=%python%%applicfg% flash --layout %preprocess_bl2_file% -b NS_DATA_REGION_START -m  RE_AREA_5_OFFSET %map_properties% --vb >> %current_log_file% 2>&1"
+set "command=%python%%applicfg% flash --layout %preprocess_bl2_file% -b NS_DATA_REGION_START -m RE_AREA_5_OFFSET %map_properties% --vb >> %current_log_file% 2>&1"
 %command%
 IF !errorlevel! NEQ 0 goto :error
 
-set "command=%python%%applicfg% flash --layout %preprocess_bl2_file% -b NS_DATA_REGION_SIZE -m  RE_AREA_5_SIZE %map_properties% --vb >> %current_log_file% 2>&1"
+set "command=%python%%applicfg% flash --layout %preprocess_bl2_file% -b NS_DATA_REGION_SIZE -m RE_AREA_5_SIZE %map_properties% --vb >> %current_log_file% 2>&1"
 %command%
 IF !errorlevel! NEQ 0 goto :error
 
-set "command=%python%%applicfg% flash --layout %preprocess_bl2_file% -b ROT_REGION_START -m  RE_FLASH_AREA_BL2_OFFSET %map_properties% --vb >> %current_log_file% 2>&1"
+set "command=%python%%applicfg% flash --layout %preprocess_bl2_file% -b ROT_REGION_START -m RE_FLASH_AREA_BL2_OFFSET %map_properties% --vb >> %current_log_file% 2>&1"
 %command%
 IF !errorlevel! NEQ 0 goto :error
 
-set "command=%python%%applicfg% flash --layout %preprocess_bl2_file% -b ROT_REGION_SIZE -m  RE_FLASH_AREA_BL2_SIZE %map_properties% --vb >> %current_log_file% 2>&1"
+set "command=%python%%applicfg% flash --layout %preprocess_bl2_file% -b ROT_REGION_SIZE -m RE_FLASH_AREA_BL2_SIZE %map_properties% --vb >> %current_log_file% 2>&1"
 %command%
 IF !errorlevel! NEQ 0 goto :error
 
-set "command=%python%%applicfg% flash --layout %preprocess_bl2_file% -b SCRATCH_REGION_START -m  RE_FLASH_AREA_SCRATCH_OFFSET %map_properties% --vb >> %current_log_file% 2>&1"
+set "command=%python%%applicfg% flash --layout %preprocess_bl2_file% -b SCRATCH_REGION_START -m RE_FLASH_AREA_SCRATCH_OFFSET %map_properties% --vb >> %current_log_file% 2>&1"
 %command%
 IF !errorlevel! NEQ 0 goto :error
 
-set "command=%python%%applicfg% flash --layout %preprocess_bl2_file% -b SCRATCH_REGION_SIZE -m  RE_FLASH_AREA_SCRATCH_SIZE %map_properties% --vb >> %current_log_file% 2>&1"
+set "command=%python%%applicfg% flash --layout %preprocess_bl2_file% -b SCRATCH_REGION_SIZE -m RE_FLASH_AREA_SCRATCH_SIZE %map_properties% --vb >> %current_log_file% 2>&1"
 %command%
 IF !errorlevel! NEQ 0 goto :error
 
-set "command=%python%%applicfg% flash --layout %preprocess_bl2_file% -b DOWNLOAD_S_CODE_REGION_START -m  RE_AREA_2_OFFSET %map_properties% --vb >> %current_log_file% 2>&1"
+set "command=%python%%applicfg% flash --layout %preprocess_bl2_file% -b DOWNLOAD_S_CODE_REGION_START -m RE_AREA_2_OFFSET %map_properties% --vb >> %current_log_file% 2>&1"
 %command%
 IF !errorlevel! NEQ 0 goto :error
 
-set "command=%python%%applicfg% flash --layout %preprocess_bl2_file% -b DOWNLOAD_NS_CODE_REGION_START -m  RE_AREA_3_OFFSET %map_properties% --vb >> %current_log_file% 2>&1"
+set "command=%python%%applicfg% flash --layout %preprocess_bl2_file% -b DOWNLOAD_NS_CODE_REGION_START -m RE_AREA_3_OFFSET %map_properties% --vb >> %current_log_file% 2>&1"
 %command%
 IF !errorlevel! NEQ 0 goto :error
 
-set "command=%python%%applicfg% flash --layout %preprocess_bl2_file% -b DOWNLOAD_S_DATA_REGION_START -m  RE_AREA_6_OFFSET %map_properties% --vb >> %current_log_file% 2>&1"
+set "command=%python%%applicfg% flash --layout %preprocess_bl2_file% -b DOWNLOAD_S_DATA_REGION_START -m RE_AREA_6_OFFSET %map_properties% --vb >> %current_log_file% 2>&1"
 %command%
 IF !errorlevel! NEQ 0 goto :error
 
-set "command=%python%%applicfg% flash --layout %preprocess_bl2_file% -b DOWNLOAD_NS_DATA_REGION_START -m  RE_AREA_7_OFFSET %map_properties% --vb >> %current_log_file% 2>&1"
+set "command=%python%%applicfg% flash --layout %preprocess_bl2_file% -b DOWNLOAD_NS_DATA_REGION_START -m RE_AREA_7_OFFSET %map_properties% --vb >> %current_log_file% 2>&1"
 %command%
 IF !errorlevel! NEQ 0 goto :error
 
-set "command=%python%%applicfg% flash --layout %preprocess_bl2_file% -b bootob -m  RE_BL2_BOOT_ADDRESS  -d 0x100 %update% --vb >> %current_log_file% 2>&1"
+set "command=%python%%applicfg% flash --layout %preprocess_bl2_file% -b bootob -m RE_BL2_BOOT_ADDRESS -d 0x100 %update% --vb >> %current_log_file% 2>&1"
 %command%
 IF !errorlevel! NEQ 0 goto :error
 
-set "command=%python%%applicfg% flash --layout %preprocess_bl2_file%  -b bootaddress -m  RE_BL2_BOOT_ADDRESS %update% --vb >> %current_log_file% 2>&1"
+set "command=%python%%applicfg% flash --layout %preprocess_bl2_file%  -b bootaddress -m RE_BL2_BOOT_ADDRESS %update% --vb >> %current_log_file% 2>&1"
 %command%
 IF !errorlevel! NEQ 0 goto :error
 
-set "command=%python%%applicfg% flash --layout %preprocess_bl2_file% -b sec1_end -m  RE_BL2_SEC1_END -d 0x2000 %update% --vb >> %current_log_file% 2>&1"
+set "command=%python%%applicfg% flash --layout %preprocess_bl2_file% -b sec1_end -m RE_BL2_SEC1_END -d 0x2000 %update% --vb >> %current_log_file% 2>&1"
 %command%
 IF !errorlevel! NEQ 0 goto :error
 
-set "command=%python%%applicfg% flash --layout %preprocess_bl2_file% -b sec2_start -m  RE_BL2_SEC2_START -d 0x2000 %update% --vb >> %current_log_file% 2>&1"
+set "command=%python%%applicfg% flash --layout %preprocess_bl2_file% -b sec2_start -m RE_BL2_SEC2_START -d 0x2000 %update% --vb >> %current_log_file% 2>&1"
 %command%
 IF !errorlevel! NEQ 0 goto :error
 
-set "command=%python%%applicfg% flash --layout %preprocess_bl2_file% -b sec2_end -m  RE_BL2_SEC2_END -d 0x2000 %update% --vb >> %current_log_file% 2>&1"
+set "command=%python%%applicfg% flash --layout %preprocess_bl2_file% -b sec2_end -m RE_BL2_SEC2_END -d 0x2000 %update% --vb >> %current_log_file% 2>&1"
 %command%
 IF !errorlevel! NEQ 0 goto :error
 
@@ -217,35 +223,39 @@ set "command=%python%%applicfg% setob --layout %preprocess_bl2_file% -b hdp2_end
 %command%
 IF !errorlevel! NEQ 0 goto :error
 
-set "command=%python%%applicfg% flash --layout %preprocess_bl2_file% -b s_data_image_number -m  RE_S_DATA_IMAGE_NUMBER --decimal %update% --vb >> %current_log_file% 2>&1"
+set "command=%python%%applicfg% flash --layout %preprocess_bl2_file% -b s_data_image_number -m RE_S_DATA_IMAGE_NUMBER --decimal %update% --vb >> %current_log_file% 2>&1"
 %command%
 IF !errorlevel! NEQ 0 goto :error
 
-set "command=%python%%applicfg% flash --layout %preprocess_bl2_file% -b ns_data_image_number -m  RE_NS_DATA_IMAGE_NUMBER --decimal %update% --vb >> %current_log_file% 2>&1"
+set "command=%python%%applicfg% flash --layout %preprocess_bl2_file% -b ns_data_image_number -m RE_NS_DATA_IMAGE_NUMBER --decimal %update% --vb >> %current_log_file% 2>&1"
 %command%
 IF !errorlevel! NEQ 0 goto :error
 
-set "command=%python%%applicfg% flash --layout %preprocess_bl2_file% -b app_image_number -m  RE_APP_IMAGE_NUMBER --decimal %appli_postbuild% --vb >> %current_log_file% 2>&1"
+set "command=%python%%applicfg% flash --layout %preprocess_bl2_file% -b app_image_number -m RE_APP_IMAGE_NUMBER --decimal %appli_postbuild% --vb >> %current_log_file% 2>&1"
 %command%
 IF !errorlevel! NEQ 0 goto :error
 
-set "command=%python%%applicfg% flash --layout %preprocess_bl2_file% -b app_image_number -m  RE_APP_IMAGE_NUMBER --decimal %update% --vb >> %current_log_file% 2>&1"
+set "command=%python%%applicfg% flash --layout %preprocess_bl2_file% -b app_image_number -m RE_APP_IMAGE_NUMBER --decimal %update% --vb >> %current_log_file% 2>&1"
 %command%
 IF !errorlevel! NEQ 0 goto :error
 
-set "command=%python%%applicfg% flash --layout %preprocess_bl2_file% -b app_image_number -m  RE_APP_IMAGE_NUMBER --decimal %provisioning% --vb >> %current_log_file% 2>&1"
+set "command=%python%%applicfg% flash --layout %preprocess_bl2_file% -b app_image_number -m RE_APP_IMAGE_NUMBER --decimal %provisioning% --vb >> %current_log_file% 2>&1"
 %command%
 IF !errorlevel! NEQ 0 goto :error
 
-set "command=%python%%applicfg% flash --layout %preprocess_bl2_file% -b s_data_image_number -m  RE_S_DATA_IMAGE_NUMBER --decimal %provisioning% --vb >> %current_log_file% 2>&1"
+set "command=%python%%applicfg% flash --layout %preprocess_bl2_file% -b s_data_image_number -m RE_S_DATA_IMAGE_NUMBER --decimal %provisioning% --vb >> %current_log_file% 2>&1"
 %command%
 IF !errorlevel! NEQ 0 goto :error
 
-set "command=%python%%applicfg% flash --layout %preprocess_bl2_file% -b ns_data_image_number -m  RE_NS_DATA_IMAGE_NUMBER --decimal %provisioning% --vb >> %current_log_file% 2>&1"
+set "command=%python%%applicfg% flash --layout %preprocess_bl2_file% -b ns_data_image_number -m RE_NS_DATA_IMAGE_NUMBER --decimal %provisioning% --vb >> %current_log_file% 2>&1"
 %command%
 IF !errorlevel! NEQ 0 goto :error
 
-set "command=%python%%applicfg% flash --layout %preprocess_bl2_file% -b image_s_size -m  RE_IMAGE_FLASH_SECURE_IMAGE_SIZE %appli_postbuild% --vb >> %current_log_file% 2>&1"
+set "command=%python%%applicfg% flash --layout %preprocess_bl2_file% -b image_s_size -m RE_IMAGE_FLASH_SECURE_IMAGE_SIZE %appli_postbuild% --vb >> %current_log_file% 2>&1"
+%command%
+IF !errorlevel! NEQ 0 goto :error
+
+set "command=%python%%applicfg% flash --layout %preprocess_bl2_file% -b oemurot_enable -m RE_OEMUROT_ENABLE --decimal %appli_postbuild% --vb >> %current_log_file% 2>&1"
 %command%
 IF !errorlevel! NEQ 0 goto :error
 
@@ -353,7 +363,9 @@ set "command=%python%%applicfg% definevalue --layout %preprocess_bl2_file% -m RE
 %command%
 IF !errorlevel! NEQ 0 goto :error
 
+:: Bypass configuration of appli_flash_layout file if not present
 if /i %oemirot_boot_path_project% == %oemirot_boot_path_project:Applications=% (goto :end)
+
 set "command=%python%%applicfg% setdefine --layout %preprocess_bl2_file% -m RE_NS_DATA_IMAGE_NUMBER -n NS_DATA_IMAGE_EN -v 1 %ns_main% --vb >> %current_log_file% 2>&1"
 %command%
 IF !errorlevel! NEQ 0 goto :error
@@ -395,6 +407,14 @@ set "command=%python%%applicfg% definevalue --layout %preprocess_bl2_file% -m RE
 IF !errorlevel! NEQ 0 goto :error
 
 set "command=%python%%applicfg% definevalue --layout %preprocess_bl2_file% -m RE_AREA_2_SIZE -n FLASH_AREA_2_SIZE %appli_flash_layout% --vb >> %current_log_file% 2>&1"
+%command%
+IF !errorlevel! NEQ 0 goto :error
+
+set "command=%python%%applicfg% definevalue --layout %preprocess_bl2_file% -m RE_AREA_3_OFFSET -n FLASH_AREA_3_OFFSET %appli_flash_layout% --vb >> %current_log_file% 2>&1"
+%command%
+IF !errorlevel! NEQ 0 goto :error
+
+set "command=%python%%applicfg% definevalue --layout %preprocess_bl2_file% -m RE_AREA_3_SIZE -n FLASH_AREA_3_SIZE %appli_flash_layout% --vb >> %current_log_file% 2>&1"
 %command%
 IF !errorlevel! NEQ 0 goto :error
 
@@ -486,18 +506,19 @@ set "command=%python%%applicfg% xmlval -xml %ns_data_xml% -nxml %data_size% -nxm
 %command%
 IF !errorlevel! NEQ 0 goto :error
 
+:end
 ::xml for init image generation
 
-copy %s_code_xml% %s_code_init_xml%
+copy %s_code_xml% %s_code_init_xml% 2>&1
 IF !errorlevel! NEQ 0 goto :error
 
-copy %ns_code_xml% %ns_code_init_xml%
+copy %ns_code_xml% %ns_code_init_xml% 2>&1
 IF !errorlevel! NEQ 0 goto :error
 
-copy %s_data_xml% %s_data_init_xml%
+copy %s_data_xml% %s_data_init_xml% 2>&1
 IF !errorlevel! NEQ 0 goto :error
 
-copy %ns_data_xml% %ns_data_init_xml%
+copy %ns_data_xml% %ns_data_init_xml% 2>&1
 IF !errorlevel! NEQ 0 goto :error
 
 set "command=%python%%applicfg% xmlparam --option add -n "Clear" -t Data -c -c -h 1 -d "" %s_code_init_xml% --vb >> %current_log_file% 2>&1"
@@ -508,7 +529,7 @@ set "command=%python%%applicfg% xmlparam --option add -n "Confirm" -t Data -c --
 %command%
 IF !errorlevel! NEQ 0 goto :error
 
-set "command=%python%%applicfg% xmlname -n %firmware_execution_offset%  -c x %s_code_init_xml% --vb >> %current_log_file% 2>&1"
+set "command=%python%%applicfg% xmlname -n %firmware_execution_offset% -c x %s_code_init_xml% --vb >> %current_log_file% 2>&1"
 %command%
 IF !errorlevel! NEQ 0 goto :error
 
@@ -524,7 +545,7 @@ set "command=%python%%applicfg% xmlparam --option add -n "Confirm" -t Data -c --
 %command%
 IF !errorlevel! NEQ 0 goto :error
 
-set "command=%python%%applicfg% xmlname -n %firmware_execution_offset%  -c x %ns_code_init_xml% --vb >> %current_log_file% 2>&1"
+set "command=%python%%applicfg% xmlname -n %firmware_execution_offset% -c x %ns_code_init_xml% --vb >> %current_log_file% 2>&1"
 %command%
 IF !errorlevel! NEQ 0 goto :error
 
@@ -540,7 +561,7 @@ set "command=%python%%applicfg% xmlparam --option add -n "Confirm" -t Data -c --
 %command%
 IF !errorlevel! NEQ 0 goto :error
 
-set "command=%python%%applicfg% xmlname -n %firmware_execution_offset%  -c x %s_data_init_xml% --vb >> %current_log_file% 2>&1"
+set "command=%python%%applicfg% xmlname -n %firmware_execution_offset% -c x %s_data_init_xml% --vb >> %current_log_file% 2>&1"
 %command%
 IF !errorlevel! NEQ 0 goto :error
 
@@ -556,15 +577,13 @@ set "command=%python%%applicfg% xmlparam --option add -n "Confirm" -t Data -c --
 %command%
 IF !errorlevel! NEQ 0 goto :error
 
-set "command=%python%%applicfg% xmlname -n %firmware_execution_offset%  -c x %ns_data_init_xml% --vb >> %current_log_file% 2>&1"
+set "command=%python%%applicfg% xmlname -n %firmware_execution_offset% -c x %ns_data_init_xml% --vb >> %current_log_file% 2>&1"
 %command%
 IF !errorlevel! NEQ 0 goto :error
 
 set "command=%python%%applicfg% xmlval --layout %preprocess_bl2_file% -m RE_IMAGE_FLASH_ADDRESS_DATA_NON_SECURE -c x %ns_data_init_xml% --vb >> %current_log_file% 2>&1"
 %command%
 IF !errorlevel! NEQ 0 goto :error
-
-:end
 
 if %oemurot_enable% == 1 (
     %stm32tpccli% -pb %rot_provisioning_path%\STiROT_OEMuROT\Images\STiRoT_Code_Image.xml >> %current_log_file% 2>>&1
@@ -573,7 +592,6 @@ if %oemurot_enable% == 1 (
     %stm32tpccli% -pb %rot_provisioning_path%\STiROT_OEMuROT\Images\STiRoT_Code_Init_Image.xml >> %current_log_file% 2>>&1
     IF !errorlevel! NEQ 0 goto :error
 )
-
 
 exit 0
 
@@ -584,4 +602,3 @@ echo ===== Error occurred.
 echo ===== See %current_log_file% for details. Then try again.
 echo =====
 exit 1
-

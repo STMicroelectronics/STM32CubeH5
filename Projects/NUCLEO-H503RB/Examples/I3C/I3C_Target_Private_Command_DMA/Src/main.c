@@ -56,7 +56,7 @@ I3C_XferTypeDef aContextBuffers;
 __IO uint8_t ubDynamicAddressCplt = 0;
 
 /* Buffer used for transmission */
-uint8_t aTxBuffer[] = " ****I3C_TwoBoards communication based on IT****  ****I3C_TwoBoards communication based on IT****  ****I3C_TwoBoards communication based on IT**** ";
+uint8_t aTxBuffer[] = " ****I3C_TwoBoards communication based on DMA****  ****I3C_TwoBoards communication based on DMA****  ****I3C_TwoBoards communication based on DMA**** ";
 
 /* Buffer used for reception */
 uint8_t aRxBuffer[RXBUFFERSIZE];

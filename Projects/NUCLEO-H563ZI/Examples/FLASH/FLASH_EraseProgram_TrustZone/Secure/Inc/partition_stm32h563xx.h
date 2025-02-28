@@ -36,6 +36,7 @@
 
 #ifndef PARTITION_STM32H563XX_H
 #define PARTITION_STM32H563XX_H
+
 /*
 //-------- <<< Use Configuration Wizard in Context Menu >>> -----------------
 */
@@ -373,6 +374,7 @@
 //   <e>Initialize ITNS 0 (Interrupts 0..31)
 */
 #define NVIC_INIT_ITNS0    1
+
 /*
 // Interrupts 0..31
 //   <o.0>  WWDG_IRQn             <0=> Secure state
@@ -409,6 +411,7 @@
 //   <o.31> GPDMA1_Channel4_IRQn  <0=> Secure state
 */
 #define NVIC_INIT_ITNS0_VAL      0x00000000
+
 /*
 //   </e>
 */

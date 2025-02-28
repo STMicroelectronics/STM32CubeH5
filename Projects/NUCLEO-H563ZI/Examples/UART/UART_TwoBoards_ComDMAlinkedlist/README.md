@@ -36,7 +36,7 @@ NUCLEO-H563ZI board LEDs are used to monitor the transfer status:
 
 At the beginning of the main program the HAL_Init() function is called to reset
 all the peripherals, initialize the Flash interface and the systick.
-The SystemClock_Config() function is used to configure the system clock for STM32U575xx Devices :
+The SystemClock_Config() function is used to configure the system clock for STM32H563xx Devices :
 The CPU at 250 MHz.
 The HCLK for AHB peripherals to run at 250 MHz.
 The APB clock dividers APB1, APB2, APB3 peripherals to run at 250 MHz.

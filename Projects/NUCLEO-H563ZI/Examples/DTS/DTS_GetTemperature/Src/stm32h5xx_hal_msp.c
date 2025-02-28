@@ -75,46 +75,46 @@ void HAL_MspInit(void)
 }
 
 /**
-* @brief DTS MSP Initialization
-* This function configures the hardware resources used in this example
-* @param hdts: DTS handle pointer
-* @retval None
-*/
+  * @brief DTS MSP Initialization
+  * This function configures the hardware resources used in this example
+  * @param hdts: DTS handle pointer
+  * @retval None
+  */
 void HAL_DTS_MspInit(DTS_HandleTypeDef* hdts)
 {
   if(hdts->Instance==DTS)
   {
-  /* USER CODE BEGIN DTS_MspInit 0 */
+    /* USER CODE BEGIN DTS_MspInit 0 */
 
-  /* USER CODE END DTS_MspInit 0 */
+    /* USER CODE END DTS_MspInit 0 */
     /* Peripheral clock enable */
     __HAL_RCC_DTS_CLK_ENABLE();
-  /* USER CODE BEGIN DTS_MspInit 1 */
+    /* USER CODE BEGIN DTS_MspInit 1 */
 
-  /* USER CODE END DTS_MspInit 1 */
+    /* USER CODE END DTS_MspInit 1 */
 
   }
 
 }
 
 /**
-* @brief DTS MSP De-Initialization
-* This function freeze the hardware resources used in this example
-* @param hdts: DTS handle pointer
-* @retval None
-*/
+  * @brief DTS MSP De-Initialization
+  * This function freeze the hardware resources used in this example
+  * @param hdts: DTS handle pointer
+  * @retval None
+  */
 void HAL_DTS_MspDeInit(DTS_HandleTypeDef* hdts)
 {
   if(hdts->Instance==DTS)
   {
-  /* USER CODE BEGIN DTS_MspDeInit 0 */
+    /* USER CODE BEGIN DTS_MspDeInit 0 */
 
-  /* USER CODE END DTS_MspDeInit 0 */
+    /* USER CODE END DTS_MspDeInit 0 */
     /* Peripheral clock disable */
     __HAL_RCC_DTS_CLK_DISABLE();
-  /* USER CODE BEGIN DTS_MspDeInit 1 */
+    /* USER CODE BEGIN DTS_MspDeInit 1 */
 
-  /* USER CODE END DTS_MspDeInit 1 */
+    /* USER CODE END DTS_MspDeInit 1 */
   }
 
 }

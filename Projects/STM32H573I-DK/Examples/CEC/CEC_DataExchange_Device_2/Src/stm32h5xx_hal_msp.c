@@ -75,20 +75,20 @@ void HAL_MspInit(void)
 }
 
 /**
-* @brief CEC MSP Initialization
-* This function configures the hardware resources used in this example
-* @param hcec: CEC handle pointer
-* @retval None
-*/
+  * @brief CEC MSP Initialization
+  * This function configures the hardware resources used in this example
+  * @param hcec: CEC handle pointer
+  * @retval None
+  */
 void HAL_CEC_MspInit(CEC_HandleTypeDef* hcec)
 {
   GPIO_InitTypeDef GPIO_InitStruct = {0};
   RCC_PeriphCLKInitTypeDef PeriphClkInitStruct = {0};
   if(hcec->Instance==CEC)
   {
-  /* USER CODE BEGIN CEC_MspInit 0 */
+    /* USER CODE BEGIN CEC_MspInit 0 */
 
-  /* USER CODE END CEC_MspInit 0 */
+    /* USER CODE END CEC_MspInit 0 */
 
   /** Initializes the peripherals clock
   */
@@ -116,27 +116,27 @@ void HAL_CEC_MspInit(CEC_HandleTypeDef* hcec)
     /* CEC interrupt Init */
     HAL_NVIC_SetPriority(CEC_IRQn, 0, 0);
     HAL_NVIC_EnableIRQ(CEC_IRQn);
-  /* USER CODE BEGIN CEC_MspInit 1 */
+    /* USER CODE BEGIN CEC_MspInit 1 */
 
-  /* USER CODE END CEC_MspInit 1 */
+    /* USER CODE END CEC_MspInit 1 */
 
   }
 
 }
 
 /**
-* @brief CEC MSP De-Initialization
-* This function freeze the hardware resources used in this example
-* @param hcec: CEC handle pointer
-* @retval None
-*/
+  * @brief CEC MSP De-Initialization
+  * This function freeze the hardware resources used in this example
+  * @param hcec: CEC handle pointer
+  * @retval None
+  */
 void HAL_CEC_MspDeInit(CEC_HandleTypeDef* hcec)
 {
   if(hcec->Instance==CEC)
   {
-  /* USER CODE BEGIN CEC_MspDeInit 0 */
+    /* USER CODE BEGIN CEC_MspDeInit 0 */
 
-  /* USER CODE END CEC_MspDeInit 0 */
+    /* USER CODE END CEC_MspDeInit 0 */
     /* Peripheral clock disable */
     __HAL_RCC_CEC_CLK_DISABLE();
 
@@ -147,9 +147,9 @@ void HAL_CEC_MspDeInit(CEC_HandleTypeDef* hcec)
 
     /* CEC interrupt DeInit */
     HAL_NVIC_DisableIRQ(CEC_IRQn);
-  /* USER CODE BEGIN CEC_MspDeInit 1 */
+    /* USER CODE BEGIN CEC_MspDeInit 1 */
 
-  /* USER CODE END CEC_MspDeInit 1 */
+    /* USER CODE END CEC_MspDeInit 1 */
   }
 
 }

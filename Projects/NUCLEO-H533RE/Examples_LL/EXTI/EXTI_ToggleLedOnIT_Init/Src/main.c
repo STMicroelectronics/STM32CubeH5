@@ -78,8 +78,7 @@ int main(void)
   /* System interrupt init*/
   NVIC_SetPriorityGrouping(NVIC_PRIORITYGROUP_4);
 
-  /** Disable the internal Pull-Up in Dead Battery pins of UCPD peripheral
-  */
+  /* Disable the internal Pull-Up in Dead Battery pins of UCPD peripheral */
   LL_PWR_DisableUCPDDeadBattery();
 
   /* USER CODE BEGIN Init */
@@ -200,8 +199,8 @@ static void MX_GPIO_Init(void)
 {
   LL_EXTI_InitTypeDef EXTI_InitStruct = {0};
   LL_GPIO_InitTypeDef GPIO_InitStruct = {0};
-/* USER CODE BEGIN MX_GPIO_Init_1 */
-/* USER CODE END MX_GPIO_Init_1 */
+  /* USER CODE BEGIN MX_GPIO_Init_1 */
+  /* USER CODE END MX_GPIO_Init_1 */
 
   /* GPIO Ports Clock Enable */
   LL_AHB2_GRP1_EnableClock(LL_AHB2_GRP1_PERIPH_GPIOC);
@@ -240,8 +239,8 @@ static void MX_GPIO_Init(void)
   NVIC_SetPriority(EXTI13_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(),0, 0));
   NVIC_EnableIRQ(EXTI13_IRQn);
 
-/* USER CODE BEGIN MX_GPIO_Init_2 */
-/* USER CODE END MX_GPIO_Init_2 */
+  /* USER CODE BEGIN MX_GPIO_Init_2 */
+  /* USER CODE END MX_GPIO_Init_2 */
 }
 
 /* USER CODE BEGIN 4 */

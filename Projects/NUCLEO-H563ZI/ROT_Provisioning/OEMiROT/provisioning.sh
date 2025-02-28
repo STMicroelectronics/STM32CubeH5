@@ -101,7 +101,7 @@ product_state_choice()
 connect_boot0()
 {
   echo "   * BOOT0 pin should be connected to VDD"
-  echo "       (NUCLEO-H563ZI: connect CN4/pin5 with CN4/pin7)"
+  echo "       (NUCLEO-H563ZI: connect CN11/pin5 with CN11/pin7)"
   echo "       Press any key to continue..."
   echo
   if [ "$mode" != "AUTO" ]; then read -p "" -n1 -s; fi
@@ -111,7 +111,7 @@ connect_boot0()
 disconnect_boot0()
 {
   echo "   * BOOT0 pin should be disconnected from VDD"
-  echo "       (NUCLEO-H563ZI: disconnect CN4/pin5 from CN4/pin7)"
+  echo "       (NUCLEO-H563ZI: disconnect CN11/pin5 from CN11/pin7)"
   echo "       Press any key to continue..."
   echo
   if [ "$mode" != "AUTO" ]; then read -p "" -n1 -s; fi
@@ -257,7 +257,10 @@ if [ $isGeneratedByCubeMX != "true" ]; then
 
     echo "   * Code firmware image generation"
     echo "       Open the OEMiROT_Appli_TrustZone project with preferred toolchain."
-    echo "       Rebuild all files. The appli_enc_sign.hex file is generated with the postbuild command."
+    echo "       Rebuild the Secure project. The rot_tz_s_app_init_sign.hex and rot_tz_s_app_enc_sign.hex files are"
+    echo "       generated with the postbuild command."
+    echo "       Rebuild the NonSecure project. The rot_tz_ns_app_init_sign.hex and rot_tz_ns_app_enc_sign.hex files are"
+    echo "       generated with the postbuild command."
     echo "       Press any key to continue..."
     echo
     if [ "$mode" != "AUTO" ]; then read -p "" -n1 -s; fi
@@ -299,7 +302,7 @@ fi
 # ========================================================= Board provisioning steps =======================================================
 echo "Step 3 : Provisioning"
 echo "   * BOOT0 pin should be disconnected from VDD"
-echo "       (NUCLEO-H563ZI: disconnect CN4/pin5 from CN4/pin7)"
+echo "       (NUCLEO-H563ZI: disconnect CN11/pin5 from CN11/pin7)"
 echo "       Press any key to continue..."
 echo
 if [ "$mode" != "AUTO" ]; then read -p "" -n1 -s; fi

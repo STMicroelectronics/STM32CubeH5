@@ -75,15 +75,6 @@
 		<Default></Default>
 	</Param>
 	<Param>
-		<Name>Dependency with other image</Name>
-		<Value>1,1.0.0</Value>
-		<Type>Dependency</Type>
-		<Command>-d</Command>
-		<Enable>0</Enable>
-		<Tooltip>To be enabled when a compatibility with a specific firmware image version is required. Firmware image version format is x.y.z</Tooltip>
-		<Default>1,1.0.0</Default>
-	</Param>
-	<Param>
 		<Name>Version</Name>
 		<Value>1.0.0</Value>
 		<Type>Data</Type>

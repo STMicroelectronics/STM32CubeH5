@@ -75,24 +75,42 @@ set "AppliCfg=%python%%applicfg%"
 :: ================================================ Updating test Application files ========================================================
 
 if /i "%Full_secure%" == "1" (
-set "action=Updating Linker .icf and .ld secure file"
-%AppliCfg% linker -xml %obk_cfg_file% -nxml %code_size% -n S_CODE_SIZE --vb %icf_file%
-if !errorlevel! neq 0 goto :error
 
-%AppliCfg% linker -xml %obk_cfg_file% -nxml %code_offset% -n S_CODE_OFFSET --vb %icf_file%
-if !errorlevel! neq 0 goto :error
+if exist "%icf_file%" (
+    set "action=Updating Linker .icf file"
+    echo !action!
+    echo ICF %icf_file%
 
-%AppliCfg% linker -xml %obk_cfg_file% -nxml %code_size% -n S_CODE_SIZE --vb %ld_file%
-if !errorlevel! neq 0 goto :error
+    %AppliCfg% linker -xml %obk_cfg_file% -nxml %code_size% -n S_CODE_SIZE --vb %icf_file%
+    if !errorlevel! neq 0 goto :error
 
-%AppliCfg% linker -xml %obk_cfg_file% -nxml %code_offset% -n S_CODE_OFFSET --vb %ld_file%
-if !errorlevel! neq 0 goto :error
+    %AppliCfg% linker -xml %obk_cfg_file% -nxml %code_offset% -n S_CODE_OFFSET --vb %icf_file%
+    if !errorlevel! neq 0 goto :error
+)
 
-%AppliCfg% definevalue -xml %obk_cfg_file% -nxml %code_size% -n S_CODE_SIZE --vb %sct_file%
-if !errorlevel! neq 0 goto :error
+if exist "%ld_file%" (
+    set "action=Updating Linker .ld file"
+    echo !action!
+    echo LD %ld_file%
 
-%AppliCfg% definevalue -xml %obk_cfg_file% -nxml %code_offset% -n S_CODE_OFFSET --vb %sct_file%
-if !errorlevel! neq 0 goto :error
+    %AppliCfg% linker -xml %obk_cfg_file% -nxml %code_size% -n S_CODE_SIZE --vb %ld_file%
+    if !errorlevel! neq 0 goto :error
+
+    %AppliCfg% linker -xml %obk_cfg_file% -nxml %code_offset% -n S_CODE_OFFSET --vb %ld_file%
+    if !errorlevel! neq 0 goto :error
+)
+
+if exist "%sct_file%" (
+    set "action=Updating Linker .sct file"
+    echo !action!
+    echo SCT %sct_file%
+
+    %AppliCfg% definevalue -xml %obk_cfg_file% -nxml %code_size% -n S_CODE_SIZE --vb %sct_file%
+    if !errorlevel! neq 0 goto :error
+
+    %AppliCfg% definevalue -xml %obk_cfg_file% -nxml %code_offset% -n S_CODE_OFFSET --vb %sct_file%
+    if !errorlevel! neq 0 goto :error
+)
 
 set "action=Updating Data Image Define Flag"
 %AppliCfg% setdefine -xml %obk_cfg_file% -nxml %data_image_en% -n DATA_IMAGE_EN -v 0x02 --vb %main_h%
@@ -121,52 +139,86 @@ if !errorlevel! neq 0 goto :error
 %AppliCfg% flash -xml %obk_cfg_file% -nxml %secure_code_size% -b image_size %keil_appli_postbuild% --vb
 if !errorlevel! neq 0 goto :error
 
-set "action=Updating Linker .icf, .ld and .sct secure file"
-%AppliCfg% linker -xml %obk_cfg_file% -nxml %secure_code_size% -n S_CODE_SIZE --vb %icf_tz_s_file%
-if !errorlevel! neq 0 goto :error
+if exist "%icf_tz_s_file%" (
+    set "action=Updating Linker .icf secure file"
+    echo !action!
+    echo ICF %icf_tz_s_file%
 
-%AppliCfg% linker -xml %obk_cfg_file% -nxml %code_offset% -n S_CODE_OFFSET --vb %icf_tz_s_file%
-if !errorlevel! neq 0 goto :error
+    %AppliCfg% linker -xml %obk_cfg_file% -nxml %secure_code_size% -n S_CODE_SIZE --vb %icf_tz_s_file%
+    if !errorlevel! neq 0 goto :error
 
-%AppliCfg% linker -xml %obk_cfg_file% -nxml %secure_code_size% -n S_CODE_SIZE --vb %ld_tz_s_file%
-if !errorlevel! neq 0 goto :error
+    %AppliCfg% linker -xml %obk_cfg_file% -nxml %code_offset% -n S_CODE_OFFSET --vb %icf_tz_s_file%
+    if !errorlevel! neq 0 goto :error
+)
 
-%AppliCfg% linker -xml %obk_cfg_file% -nxml %code_offset% -n S_CODE_OFFSET --vb %ld_tz_s_file%
-if !errorlevel! neq 0 goto :error
+if exist "%ld_tz_s_file%" (
+    set "action=Updating Linker .ld secure file"
+    echo !action!
+    echo LD %ld_tz_s_file%
 
-%AppliCfg% definevalue -xml %obk_cfg_file% -nxml %secure_code_size% -n S_CODE_SIZE --vb %sct_tz_s_file%
-if !errorlevel! neq 0 goto :error
+    %AppliCfg% linker -xml %obk_cfg_file% -nxml %secure_code_size% -n S_CODE_SIZE --vb %ld_tz_s_file%
+    if !errorlevel! neq 0 goto :error
 
-%AppliCfg% definevalue -xml %obk_cfg_file% -nxml %code_offset% -n S_CODE_OFFSET --vb %sct_tz_s_file%
-if !errorlevel! neq 0 goto :error
+    %AppliCfg% linker -xml %obk_cfg_file% -nxml %code_offset% -n S_CODE_OFFSET --vb %ld_tz_s_file%
+    if !errorlevel! neq 0 goto :error
+)
 
-set "action=Updating Linker .icf, .ld and .sct non secure file"
-%AppliCfg% linker -xml %obk_cfg_file% -nxml %secure_code_size% -n S_CODE_SIZE --vb %icf_tz_ns_file%
-if !errorlevel! neq 0 goto :error
+if exist "%sct_tz_s_file%" (
+    set "action=Updating Linker .sct secure file"
+    echo !action!
+    echo SCT %sct_tz_s_file%
 
-%AppliCfg% linker -xml %obk_cfg_file% -nxml %code_offset% -n S_CODE_OFFSET --vb %icf_tz_ns_file%
-if !errorlevel! neq 0 goto :error
+    %AppliCfg% definevalue -xml %obk_cfg_file% -nxml %secure_code_size% -n S_CODE_SIZE --vb %sct_tz_s_file%
+    if !errorlevel! neq 0 goto :error
 
-%AppliCfg% linker -xml %obk_cfg_file% -nxml %secure_code_size% -n NS_CODE_SIZE -e "(cons1 - val1)" -cons "0x00020000" --vb %icf_tz_ns_file%
-if !errorlevel! neq 0 goto :error
+    %AppliCfg% definevalue -xml %obk_cfg_file% -nxml %code_offset% -n S_CODE_OFFSET --vb %sct_tz_s_file%
+    if !errorlevel! neq 0 goto :error
+)
 
-%AppliCfg% linker -xml %obk_cfg_file% -nxml %secure_code_size% -n S_CODE_SIZE --vb %ld_tz_ns_file%
-if !errorlevel! neq 0 goto :error
+if exist "%icf_tz_ns_file%" (
+    set "action=Updating Linker .icf non secure file"
+    echo !action!
+    echo ICF %icf_tz_ns_file%
 
-%AppliCfg% linker -xml %obk_cfg_file% -nxml %code_offset% -n S_CODE_OFFSET --vb %ld_tz_ns_file%
-if !errorlevel! neq 0 goto :error
+    %AppliCfg% linker -xml %obk_cfg_file% -nxml %secure_code_size% -n S_CODE_SIZE --vb %icf_tz_ns_file%
+    if !errorlevel! neq 0 goto :error
 
-%AppliCfg% linker -xml %obk_cfg_file% -nxml %secure_code_size% -n NS_CODE_SIZE -e "(cons1 - val1)" -cons "0x00020000" --vb %ld_tz_ns_file%
-if !errorlevel! neq 0 goto :error
+    %AppliCfg% linker -xml %obk_cfg_file% -nxml %code_offset% -n S_CODE_OFFSET --vb %icf_tz_ns_file%
+    if !errorlevel! neq 0 goto :error
 
-%AppliCfg% definevalue -xml %obk_cfg_file% -nxml %secure_code_size% -n S_CODE_SIZE --vb %sct_tz_ns_file%
-if !errorlevel! neq 0 goto :error
+    %AppliCfg% linker -xml %obk_cfg_file% -nxml %secure_code_size% -n NS_CODE_SIZE -e "(cons1 - val1)" -cons "0x00020000" --vb %icf_tz_ns_file%
+    if !errorlevel! neq 0 goto :error
+)
 
-%AppliCfg% definevalue -xml %obk_cfg_file% -nxml %code_offset% -n S_CODE_OFFSET --vb %sct_tz_ns_file%
-if !errorlevel! neq 0 goto :error
+if exist "%ld_tz_ns_file%" (
+    set "action=Updating Linker .ld non secure file"
+    echo !action!
+    echo LD %ld_tz_ns_file%
 
-%AppliCfg% definevalue -xml %obk_cfg_file% -nxml %secure_code_size% -n NS_CODE_SIZE -e "(cons1 - val1)" -cons "0x00020000" --vb %sct_tz_ns_file%
-if !errorlevel! neq 0 goto :error
+    %AppliCfg% linker -xml %obk_cfg_file% -nxml %secure_code_size% -n S_CODE_SIZE --vb %ld_tz_ns_file%
+    if !errorlevel! neq 0 goto :error
+
+    %AppliCfg% linker -xml %obk_cfg_file% -nxml %code_offset% -n S_CODE_OFFSET --vb %ld_tz_ns_file%
+    if !errorlevel! neq 0 goto :error
+
+    %AppliCfg% linker -xml %obk_cfg_file% -nxml %secure_code_size% -n NS_CODE_SIZE -e "(cons1 - val1)" -cons "0x00020000" --vb %ld_tz_ns_file%
+    if !errorlevel! neq 0 goto :error
+)
+
+if exist "%sct_tz_ns_file%" (
+    set "action=Updating Linker .sct non secure file"
+    echo !action!
+    echo SCT %sct_tz_ns_file%
+
+    %AppliCfg% definevalue -xml %obk_cfg_file% -nxml %secure_code_size% -n S_CODE_SIZE --vb %sct_tz_ns_file%
+    if !errorlevel! neq 0 goto :error
+
+    %AppliCfg% definevalue -xml %obk_cfg_file% -nxml %code_offset% -n S_CODE_OFFSET --vb %sct_tz_ns_file%
+    if !errorlevel! neq 0 goto :error
+
+    %AppliCfg% definevalue -xml %obk_cfg_file% -nxml %secure_code_size% -n NS_CODE_SIZE -e "(cons1 - val1)" -cons "0x00020000" --vb %sct_tz_ns_file%
+    if !errorlevel! neq 0 goto :error
+)
 
 %AppliCfg% definevalue -xml %obk_cfg_file% -nxml %secure_code_size% -n S_CODE_SIZE %s_main_h% --vb
 if !errorlevel! neq 0 goto :error

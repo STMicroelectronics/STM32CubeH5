@@ -643,7 +643,7 @@
                 </option>
                 <option>
                     <name>OOCOutputFile</name>
-                    <state>Project.bin</state>
+                    <state>$PROJ_DIR$\..\..\Binary\appli_s.bin</state>
                 </option>
                 <option>
                     <name>OOCCommandLineProducer</name>

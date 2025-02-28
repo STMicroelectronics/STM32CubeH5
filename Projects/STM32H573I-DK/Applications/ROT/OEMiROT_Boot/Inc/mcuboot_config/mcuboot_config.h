@@ -76,7 +76,7 @@ extern "C" {
  * Logging
  */
 #ifdef OEMIROT_DEV_MODE
-#define MCUBOOT_HAVE_LOGGING    1
+#define MCUBOOT_HAVE_LOGGING
 #endif
 
 #endif /* !__BOOTSIM__ */

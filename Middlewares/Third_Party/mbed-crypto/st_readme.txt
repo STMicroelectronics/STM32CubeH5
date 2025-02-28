@@ -20,6 +20,12 @@
   @Note Mbed-TLS release
    For additional information on the Mbed-TLS release, consult the changelog file.
 
+### 25-November-2024 ###
+========================
+    + Move to Mbed-TLS V3.6.2 to get fix for CVE-2024-49195
+    + Keep ST patchs from Mbed TLS V3.6.1
+    + Update st_readme.txt
+
 ### 10-september-2024 ###
 ========================
     + Move to Mbed-TLS V3.6.1

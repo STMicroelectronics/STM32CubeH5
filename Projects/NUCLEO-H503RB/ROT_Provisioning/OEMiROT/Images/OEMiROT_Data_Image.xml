@@ -57,7 +57,7 @@
 	</Param>
 	<Param>
 		<Name>Dependency with firmware image</Name>
-		<Value>1,1.0.0</Value>
+		<Value>0,1.0.0</Value>
 		<Type>Dependency</Type>
 		<Command>-d</Command>
 		<Enable>0</Enable>

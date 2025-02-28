@@ -32,11 +32,11 @@
 ******************************************************************************
 */
 
-S_CODE_OFFSET = 0x00000000;                        /* This define is updated automatically by OEMiROT_Boot postbuild */
-S_CODE_SIZE = 0x00006000;                           /* This define is updated automatically by OEMiROT_Boot postbuild */
-NS_CODE_SIZE = 0x1A000;                          /* This define is updated automatically by OEMiROT_Boot postbuild */
-NS_CODE_OFFSET = (S_CODE_OFFSET + S_CODE_SIZE);
-IMAGE_HEADER_SIZE = 0x400;                      /* mcuboot header size */
+S_CODE_OFFSET = 0x00000000;                        /* Firmware execution area offset from STiROT_Config.xml */
+S_CODE_SIZE = 0x00006000;                          /* Firmware area size from STiROT_Config.xml */
+NS_CODE_SIZE = 0x1A000;                            /* Firmware area size from STiROT_Config.xml */
+NS_CODE_OFFSET = (S_CODE_OFFSET + S_CODE_SIZE);    /* Non secure code Offset */
+IMAGE_HEADER_SIZE = 0x400;                         /* mcuboot header size */
 
 /* Entry Point */
 ENTRY(Reset_Handler)

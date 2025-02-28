@@ -69,26 +69,29 @@ void HAL_MspInit(void)
 
   /* System interrupt init*/
 
+  /* Disable the internal Pull-Up in Dead Battery pins of UCPD peripheral */
+  HAL_PWREx_DisableUCPDDeadBattery();
+
   /* USER CODE BEGIN MspInit 1 */
 
   /* USER CODE END MspInit 1 */
 }
 
 /**
-* @brief SPI MSP Initialization
-* This function configures the hardware resources used in this example
-* @param hspi: SPI handle pointer
-* @retval None
-*/
+  * @brief SPI MSP Initialization
+  * This function configures the hardware resources used in this example
+  * @param hspi: SPI handle pointer
+  * @retval None
+  */
 void HAL_SPI_MspInit(SPI_HandleTypeDef* hspi)
 {
   GPIO_InitTypeDef GPIO_InitStruct = {0};
   RCC_PeriphCLKInitTypeDef PeriphClkInitStruct = {0};
   if(hspi->Instance==SPI3)
   {
-  /* USER CODE BEGIN SPI3_MspInit 0 */
+    /* USER CODE BEGIN SPI3_MspInit 0 */
 
-  /* USER CODE END SPI3_MspInit 0 */
+    /* USER CODE END SPI3_MspInit 0 */
 
   /** Initializes the peripherals clock
   */
@@ -132,27 +135,27 @@ void HAL_SPI_MspInit(SPI_HandleTypeDef* hspi)
     /* SPI3 interrupt Init */
     HAL_NVIC_SetPriority(SPI3_IRQn, 0, 0);
     HAL_NVIC_EnableIRQ(SPI3_IRQn);
-  /* USER CODE BEGIN SPI3_MspInit 1 */
+    /* USER CODE BEGIN SPI3_MspInit 1 */
 
-  /* USER CODE END SPI3_MspInit 1 */
+    /* USER CODE END SPI3_MspInit 1 */
 
   }
 
 }
 
 /**
-* @brief SPI MSP De-Initialization
-* This function freeze the hardware resources used in this example
-* @param hspi: SPI handle pointer
-* @retval None
-*/
+  * @brief SPI MSP De-Initialization
+  * This function freeze the hardware resources used in this example
+  * @param hspi: SPI handle pointer
+  * @retval None
+  */
 void HAL_SPI_MspDeInit(SPI_HandleTypeDef* hspi)
 {
   if(hspi->Instance==SPI3)
   {
-  /* USER CODE BEGIN SPI3_MspDeInit 0 */
+    /* USER CODE BEGIN SPI3_MspDeInit 0 */
 
-  /* USER CODE END SPI3_MspDeInit 0 */
+    /* USER CODE END SPI3_MspDeInit 0 */
     /* Peripheral clock disable */
     __HAL_RCC_SPI3_CLK_DISABLE();
 
@@ -165,9 +168,9 @@ void HAL_SPI_MspDeInit(SPI_HandleTypeDef* hspi)
 
     /* SPI3 interrupt DeInit */
     HAL_NVIC_DisableIRQ(SPI3_IRQn);
-  /* USER CODE BEGIN SPI3_MspDeInit 1 */
+    /* USER CODE BEGIN SPI3_MspDeInit 1 */
 
-  /* USER CODE END SPI3_MspDeInit 1 */
+    /* USER CODE END SPI3_MspDeInit 1 */
   }
 
 }

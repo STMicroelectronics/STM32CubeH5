@@ -4,8 +4,5 @@ In this repository, some middleware libraries **along with** the projects (demos
 
 ## List of unavailable projects
 
-* `./Projects/STM32H573I-DK/Applications/ROT/SMAK_Appli`
 * `./Projects/STM32H573I-DK/Demonstration`
 * `./Projects/STM32H573I-DK/Examples/BSP`
-* `./Projects/STM32H573I-DK/ROT_Provisioning/SM`
-* `./Projects/STM32H573I-DK/Templates/ROT/SMAK_Appli`

@@ -60,13 +60,22 @@
 		<Default></Default>
 	</Param>
 	<Param>
-		<Name>Dependency with other image</Name>
-		<Value>1,1.0.0</Value>
+		<Name>Dependency with S code image</Name>
+		<Value>0,1.0.0</Value>
 		<Type>Dependency</Type>
 		<Command>-d</Command>
 		<Enable>0</Enable>
-		<Tooltip>To be enabled when a compatibility with a specific firmware image version is required. Firmware image version format is x.y.z</Tooltip>
-		<Default>1,1.0.0</Default>
+		<Tooltip>To be enabled when a compatibility with a specific S code image version is required. S code image version format is x.y.z</Tooltip>
+		<Default>0,1.0.0</Default>
+	</Param>
+	<Param>
+		<Name>Dependency with NS data image</Name>
+		<Value>3,1.0.0</Value>
+		<Type>Dependency</Type>
+		<Command>-d</Command>
+		<Enable>0</Enable>
+		<Tooltip>To be enabled when a compatibility with a specific NS data image version is required. NS data image version format is x.y.z</Tooltip>
+		<Default>3,1.0.0</Default>
 	</Param>
 	<Param>
 		<Name>Write Option</Name>

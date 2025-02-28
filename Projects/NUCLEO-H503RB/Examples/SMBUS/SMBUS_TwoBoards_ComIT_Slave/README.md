@@ -9,7 +9,7 @@ in interrupt mode.
 
 At the beginning of the main program the HAL_Init() function is called to reset
 all the peripherals, initialize the Flash interface and the systick.
-The SystemClock_Config() function is used to configure the system clock for STM32U575 Devices :
+The SystemClock_Config() function is used to configure the system clock for STM32H503 Devices :
 
    - The CPU at 250 MHz.
 

@@ -103,14 +103,14 @@
 #endif /* HSI_VALUE */
 
 /**
-  * @brief Internal High Speed oscillator (HSI48) value for USB FS, SDMMC and RNG.
+  * @brief Internal High Speed oscillator (HSI48) value for USB FS and RNG.
   *        This internal oscillator is mainly dedicated to provide a high precision clock to
   *        the USB peripheral by means of a special Clock Recovery System (CRS) circuitry.
   *        When the CRS is not used, the HSI48 RC oscillator runs on it default frequency
   *        which is subject to manufacturing process variations.
   */
 #if !defined  (HSI48_VALUE)
-#define HSI48_VALUE             48000000UL /*!< Value of the Internal High Speed oscillator for USB FS/SDMMC/RNG in Hz.
+#define HSI48_VALUE             48000000UL /*!< Value of the Internal High Speed oscillator for USB FS/RNG in Hz.
                                                The real value my vary depending on manufacturing process variations.*/
 #endif /* HSI48_VALUE */
 

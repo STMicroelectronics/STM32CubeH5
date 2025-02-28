@@ -74,20 +74,20 @@ void HAL_MspInit(void)
 }
 
 /**
-* @brief ADC MSP Initialization
-* This function configures the hardware resources used in this example
-* @param hadc: ADC handle pointer
-* @retval None
-*/
+  * @brief ADC MSP Initialization
+  * This function configures the hardware resources used in this example
+  * @param hadc: ADC handle pointer
+  * @retval None
+  */
 void HAL_ADC_MspInit(ADC_HandleTypeDef* hadc)
 {
   GPIO_InitTypeDef GPIO_InitStruct = {0};
   RCC_PeriphCLKInitTypeDef PeriphClkInitStruct = {0};
   if(hadc->Instance==ADC1)
   {
-  /* USER CODE BEGIN ADC1_MspInit 0 */
+    /* USER CODE BEGIN ADC1_MspInit 0 */
 
-  /* USER CODE END ADC1_MspInit 0 */
+    /* USER CODE END ADC1_MspInit 0 */
 
   /** Initializes the peripherals clock
   */
@@ -113,26 +113,27 @@ void HAL_ADC_MspInit(ADC_HandleTypeDef* hadc)
     /* ADC1 interrupt Init */
     HAL_NVIC_SetPriority(ADC1_IRQn, 0, 0);
     HAL_NVIC_EnableIRQ(ADC1_IRQn);
-  /* USER CODE BEGIN ADC1_MspInit 1 */
+    /* USER CODE BEGIN ADC1_MspInit 1 */
 
-  /* USER CODE END ADC1_MspInit 1 */
+    /* USER CODE END ADC1_MspInit 1 */
+
   }
 
 }
 
 /**
-* @brief ADC MSP De-Initialization
-* This function freeze the hardware resources used in this example
-* @param hadc: ADC handle pointer
-* @retval None
-*/
+  * @brief ADC MSP De-Initialization
+  * This function freeze the hardware resources used in this example
+  * @param hadc: ADC handle pointer
+  * @retval None
+  */
 void HAL_ADC_MspDeInit(ADC_HandleTypeDef* hadc)
 {
   if(hadc->Instance==ADC1)
   {
-  /* USER CODE BEGIN ADC1_MspDeInit 0 */
+    /* USER CODE BEGIN ADC1_MspDeInit 0 */
 
-  /* USER CODE END ADC1_MspDeInit 0 */
+    /* USER CODE END ADC1_MspDeInit 0 */
     /* Peripheral clock disable */
     __HAL_RCC_ADC_CLK_DISABLE();
 
@@ -143,9 +144,9 @@ void HAL_ADC_MspDeInit(ADC_HandleTypeDef* hadc)
 
     /* ADC1 interrupt DeInit */
     HAL_NVIC_DisableIRQ(ADC1_IRQn);
-  /* USER CODE BEGIN ADC1_MspDeInit 1 */
+    /* USER CODE BEGIN ADC1_MspDeInit 1 */
 
-  /* USER CODE END ADC1_MspDeInit 1 */
+    /* USER CODE END ADC1_MspDeInit 1 */
   }
 
 }

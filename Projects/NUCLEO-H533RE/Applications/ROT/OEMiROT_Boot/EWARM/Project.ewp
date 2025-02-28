@@ -1120,6 +1120,9 @@
                 <name>$PROJ_DIR$\..\Src\mpu_armv8m_drv.c</name>
             </file>
             <file>
+                <name>$PROJ_DIR$\..\Src\sha256_alt.c</name>
+            </file>
+            <file>
                 <name>$PROJ_DIR$\..\Src\startup_stm32h5xx.c</name>
             </file>
             <file>

@@ -243,11 +243,11 @@ UINT MX_NetXDuo_Init(VOID *memory_ptr)
   {
     return TX_POOL_ERROR;
   }
-  
+
   /* create the LED control thread */
   ret = tx_thread_create(&LedThread, "LED control Thread", LedThread_Entry, 0, pointer, DEFAULT_MEMORY_SIZE,
                          TOGGLE_LED_PRIORITY, TOGGLE_LED_PRIORITY, TX_NO_TIME_SLICE, TX_DONT_START);
-  
+
   if (ret != TX_SUCCESS)
   {
     return TX_THREAD_ERROR;
@@ -289,7 +289,7 @@ UINT MX_NetXDuo_Init(VOID *memory_ptr)
   /* Create the HTTP Server. */
   ret = nx_web_http_server_create(&HTTPServer, "WEB HTTP Server", &NetXDuoEthIpInstance, CONNECTION_PORT,&SDMedia, pointer,
                                   SERVER_STACK, &WebServerPool, NX_NULL, webserver_request_notify_callback);
- 
+
   if (ret != NX_SUCCESS)
   {
     return NX_NOT_SUCCESSFUL;
@@ -323,12 +323,12 @@ static VOID ip_address_change_notify_callback(NX_IP *ip_instance, VOID *ptr)
   /* USER CODE BEGIN ip_address_change_notify_callback */
   if (nx_ip_address_get(&NetXDuoEthIpInstance, &IpAddress, &NetMask) != NX_SUCCESS)
   {
-    /* USER CODE BEGIN IP address change callback error */
+    /* USER CODE BEGIN ip address change callback error */
 
     /* Error, call error handler. */
     Error_Handler();
 
-    /* USER CODE END IP address change callback error */
+    /* USER CODE END ip address change callback error */
   }
   if(IpAddress != NULL_IP_ADDRESS)
   {
@@ -377,7 +377,7 @@ static VOID App_Main_Thread_Entry (ULONG thread_input)
 
     /* USER CODE END DHCP client start error */
   }
-  printf("Looking for DHCP server ..\n");
+
   /* wait until an IP address is ready */
   if(tx_semaphore_get(&DHCPSemaphore, TX_WAIT_FOREVER) != TX_SUCCESS)
   {
@@ -455,7 +455,7 @@ UINT webserver_request_notify_callback(NX_WEB_HTTP_SERVER *server_ptr, UINT requ
   {
     tx_thread_info_get(&NxAppThread, &main_thread_name, NULL, &main_thread_count, NULL, NULL, NULL, NULL, NULL);
     tx_thread_info_get(&AppServerThread, &server_thread_name, NULL, &server_thread_count, NULL, NULL, NULL, NULL, NULL);
-    tx_thread_info_get(&LedThread, &led_thread_name, NULL, &led_thread_count, NULL, NULL, NULL, NULL, NULL);  
+    tx_thread_info_get(&LedThread, &led_thread_name, NULL, &led_thread_count, NULL, NULL, NULL, NULL, NULL);
     sprintf (data, "%s,%lu ,%s,%lu,%s,%lu", main_thread_name, main_thread_count, server_thread_name, server_thread_count,led_thread_name, led_thread_count);
 
   }
@@ -539,8 +539,8 @@ void nx_server_thread_entry(ULONG thread_input)
   {
     /* Print Media Opening Success. */
     printf("Fx media successfully opened.\n");
-   
-    fx_media_space_available(&SDMedia, &free_bytes); 
+
+    fx_media_space_available(&SDMedia, &free_bytes);
   }
 
   status = nx_web_http_server_mime_maps_additional_set(&HTTPServer,&app_mime_maps[0], 4);
