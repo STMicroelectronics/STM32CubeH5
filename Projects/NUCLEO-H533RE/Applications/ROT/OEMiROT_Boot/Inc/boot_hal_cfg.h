@@ -58,11 +58,10 @@
 #define ALL_TAMPER           (2)                /*!< Internal and External tamper activated */
 #define OEMIROT_TAMPER_ENABLE INTERNAL_TAMPER_ONLY            /*!< TAMPER configuration flag  */
 
-#ifdef OEMIROT_DEV_MODE
 #define OEMIROT_OB_BOOT_LOCK OB_BOOT_LOCK_ENABLE /*!< BOOT Lock expected value  */
+
+#ifdef OEMIROT_DEV_MODE
 #define OEMIROT_ERROR_HANDLER_STOP_EXEC /*!< Error handler stops execution (else it resets) */
-#else
-#define OEMIROT_OB_BOOT_LOCK OB_BOOT_LOCK_ENABLE /*!< FIXME BOOT Lock expected value  */
 #endif /* OEMIROT_DEV_MODE */
 
 /* Run time protections */
