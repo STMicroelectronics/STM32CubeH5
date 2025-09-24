@@ -1,0 +1,26 @@
+# IDE
+.vscode/
+*.launch
+**/.settings/
+**/.cproject
+**/.project
+
+# STM32CubeIDE build output
+**/STM32CubeIDE/Debug/
+**/STM32CubeIDE/Release/
+
+# General build clutter
+**/build/
+**/out/
+*.map
+*.elf
+*.bin
+*.hex
+*.list
+*.lss
+*.o
+*.d
+
+# OS junk
+.DS_Store
+Thumbs.db

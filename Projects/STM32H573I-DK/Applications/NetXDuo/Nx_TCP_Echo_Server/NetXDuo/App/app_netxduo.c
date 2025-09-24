@@ -25,6 +25,7 @@
 #include "nxd_dhcp_client.h"
 /* USER CODE BEGIN Includes */
 #include "nx_stm32_eth_config.h"
+#include "nxd_bsd.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -197,7 +198,7 @@ UINT MX_NetXDuo_Init(VOID *memory_ptr)
   }
 
   /* Create the main thread */
-  ret = tx_thread_create(&NxAppThread, "NetXDuo App thread", App_Main_Thread_Entry , 0, pointer, NX_APP_THREAD_STACK_SIZE,
+  ret = tx_thread_create(&NxAppThread, "NetXDuo App thread", App_Main_Thread_Entry , memory_ptr, pointer, NX_APP_THREAD_STACK_SIZE,
                          NX_APP_THREAD_PRIORITY, NX_APP_THREAD_PRIORITY, TX_NO_TIME_SLICE, TX_AUTO_START);
 
   if (ret != TX_SUCCESS)
@@ -278,6 +279,7 @@ static VOID App_Main_Thread_Entry (ULONG thread_input)
   /* USER CODE BEGIN Nx_App_Thread_Entry 0 */
 
   /* USER CODE END Nx_App_Thread_Entry 0 */
+  TX_BYTE_POOL *byte_pool = (TX_BYTE_POOL*)thread_input;
 
   UINT ret = NX_SUCCESS;
 
@@ -316,6 +318,18 @@ static VOID App_Main_Thread_Entry (ULONG thread_input)
   /* USER CODE BEGIN Nx_App_Thread_Entry 2 */
   PRINT_IP_ADDRESS(IpAddress);
 
+  /* NvR */
+  VOID * pointer;
+  if (tx_byte_allocate(byte_pool, (VOID **) &pointer,2048, TX_NO_WAIT) != TX_SUCCESS)
+  {
+    return TX_POOL_ERROR;
+  }
+
+  UINT s = nx_bsd_initialize(&NetXDuoEthIpInstance, &NxAppPool, pointer,
+                             2048 /* BSD thread stack */, 10);
+  if (s != NX_SUCCESS) { Error_Handler(); }
+
+
   /* the network is correctly initialized, start the TCP server thread */
   tx_thread_resume(&AppTCPThread);
 
@@ -345,107 +359,37 @@ static VOID tcp_listen_callback(NX_TCP_SOCKET *socket_ptr, UINT port)
 */
 static VOID App_TCP_Thread_Entry(ULONG thread_input)
 {
-  UINT ret;
-  UCHAR data_buffer[512];
+    int srv = socket(AF_INET, SOCK_STREAM, 0);
+    if (srv < 0) { Error_Handler(); }
 
-  ULONG source_ip_address;
-  NX_PACKET *data_packet;
+    int one = 1;
+    setsockopt(srv, SOL_SOCKET, SO_REUSEADDR, &one, sizeof(one));
 
-  UINT source_port;
-  ULONG bytes_read;
+    struct sockaddr_in addr = {0};
+    addr.sin_family = AF_INET;
+    addr.sin_port   = htons(DEFAULT_PORT);
+    addr.sin_addr.s_addr = htonl(INADDR_ANY);
 
-  /* create the TCP socket */
-  ret = nx_tcp_socket_create(&NetXDuoEthIpInstance, &TCPSocket, "TCP Server Socket", NX_IP_NORMAL, NX_FRAGMENT_OKAY,
-                             NX_IP_TIME_TO_LIVE, WINDOW_SIZE, NX_NULL, NX_NULL);
-  if (ret)
-  {
-    Error_Handler();
-  }
+    if (bind(srv, (struct sockaddr *)&addr, sizeof(addr)) < 0) { Error_Handler(); }
+    if (listen(srv, 5) < 0) { Error_Handler(); }
 
-  /*
-  * listen to new client connections.
-  * the TCP_listen_callback will release the 'Semaphore' when a new connection is available
-  */
-  ret = nx_tcp_server_socket_listen(&NetXDuoEthIpInstance, DEFAULT_PORT, &TCPSocket, MAX_TCP_CLIENTS, tcp_listen_callback);
+    printf("BSD server listening on %u\n", DEFAULT_PORT);
 
-  if (ret)
-  {
-    Error_Handler();
-  }
-  else
-  {
-    printf("TCP Server listening on PORT %d ..\n", DEFAULT_PORT);
-  }
-
-  if(tx_semaphore_get(&TCPSemaphore, TX_WAIT_FOREVER) != TX_SUCCESS)
-  {
-    Error_Handler();
-  }
-  else
-  {
-    /* accept the new client connection before starting data exchange */
-    ret = nx_tcp_server_socket_accept(&TCPSocket, TX_WAIT_FOREVER);
-
-    if (ret)
+    for (;;)
     {
-      Error_Handler();
-    }
-  }
+        int client = accept(srv, NULL, NULL);
+        if (client < 0) continue;
 
-  while(1)
-  {
-    ULONG socket_state;
-
-    TX_MEMSET(data_buffer, '\0', sizeof(data_buffer));
-
-    /* get the socket state */
-    nx_tcp_socket_info_get(&TCPSocket, NULL, NULL, NULL, NULL, NULL, NULL, NULL, &socket_state, NULL, NULL, NULL);
-
-    /* if the connections is not established then accept new ones, otherwise start receiving data */
-    if(socket_state != NX_TCP_ESTABLISHED)
-    {
-      ret = nx_tcp_server_socket_accept(&TCPSocket, NX_IP_PERIODIC_RATE);
-    }
-
-    if(ret == NX_SUCCESS)
-    {
-      /* receive the TCP packet send by the client */
-      ret = nx_tcp_socket_receive(&TCPSocket, &data_packet, NX_WAIT_FOREVER);
-
-      if (ret == NX_SUCCESS)
-      {
-        HAL_GPIO_TogglePin(GPIOI, GPIO_PIN_9);
-
-        /* get the client IP address and  port */
-        nx_udp_source_extract(data_packet, &source_ip_address, &source_port);
-
-        /* retrieve the data sent by the client */
-        nx_packet_data_retrieve(data_packet, data_buffer, &bytes_read);
-
-        /* print the received data */
-        PRINT_DATA(source_ip_address, source_port, data_buffer);
-
-        /* immediately resend the same packet */
-        ret =  nx_tcp_socket_send(&TCPSocket, data_packet, NX_IP_PERIODIC_RATE);
-
-        if (ret == NX_SUCCESS)
-        {
-          HAL_GPIO_TogglePin(GPIOI, GPIO_PIN_9);
+        char buf[512];
+        int n = recv(client, buf, sizeof(buf), 0);
+        if (n > 0) {
+            /* optional: toggle LED */
+            HAL_GPIO_TogglePin(GPIOI, GPIO_PIN_9);
+            send(client, buf, n, 0);  /* echo */
         }
-      }
-      else
-      {
-        nx_tcp_socket_disconnect(&TCPSocket, NX_WAIT_FOREVER);
-        nx_tcp_server_socket_unaccept(&TCPSocket);
-        nx_tcp_server_socket_relisten(&NetXDuoEthIpInstance, DEFAULT_PORT, &TCPSocket);
-      }
+        soc_close(client);
     }
-    else
-    {
-      /*toggle the green led to indicate the idle state */
-      HAL_GPIO_TogglePin(GPIOI, GPIO_PIN_9);
-    }
-  }
+
 }
 
 /**

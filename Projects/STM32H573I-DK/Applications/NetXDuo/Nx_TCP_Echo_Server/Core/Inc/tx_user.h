@@ -269,7 +269,7 @@
 
 /* Define the user extension field of the thread control block.*/
 /*#define TX_THREAD_USER_EXTENSION                ????*/
-
+#define TX_THREAD_USER_EXTENSION                int bsd_errno;
 /* USER CODE END 2 */
 
 #endif

@@ -75,7 +75,7 @@ extern   "C" {
 #endif
 
 #ifndef __CCRX__
-#include "time.h"
+//#include "time.h"
 #endif /* __CCRX__ */
 
 /* Bring in the necessary NetX include file.  */
@@ -205,7 +205,7 @@ extern   "C" {
 
 /* Overriding struct names.  */
 
-#define nx_bsd_time_t           time_t
+#define nx_bsd_time_t           ULONG
 #define nx_bsd_suseconds_t      suseconds_t
 
 #define nx_bsd_timeval          timeval

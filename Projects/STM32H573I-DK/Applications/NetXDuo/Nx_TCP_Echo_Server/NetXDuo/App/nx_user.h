@@ -154,9 +154,9 @@
    socket events, such as TCP connection and disconnect completion.
    These extended notify functions are mainly used by the BSD wrapper.
    The default is this feature is disabled.  */
-/*
+/**/
 #define NX_ENABLE_EXTENDED_NOTIFY_SUPPORT
-*/
+
 
 /* Defined, NetX Duo is built with NAT process. By default this option is not
    defined. This option can be defined only when NX_DISABLE_IPV4 is not selected. */
@@ -2420,7 +2420,6 @@
 #endif
 
 /* USER CODE BEGIN 2 */
-
 /* USER CODE END 2 */
 
 #endif /* NX_USER_H */
