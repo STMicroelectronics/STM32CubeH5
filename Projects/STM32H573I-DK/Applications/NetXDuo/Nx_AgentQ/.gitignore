@@ -1,0 +1,25 @@
+/.metadata/
+
+# Build dirs
+Debug*/
+Release*/
+build/
+
+# Compiled/temporary files
+*.o
+*.d
+*.elf
+*.hex
+*.bin
+*.map
+*.list
+*.out
+*.axf
+*.su
+*.a
+*.lib
+
+# IDE clutter
+.vscode/
+.settings/
+.ipch/

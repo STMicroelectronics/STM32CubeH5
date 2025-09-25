@@ -1,0 +1,6 @@
+[
+    { "name": "PARM",   "bits": 16, "type": 6, "attr": "parameter"  },
+    { "name": "ACTION ID",   "bits": 12, "attr": "identifier", "type": 7  },
+    { "name": "RES",    "bits": 2 },
+    { "name": "TYP",    "bits": 2 }
+]

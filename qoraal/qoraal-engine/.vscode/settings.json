@@ -1,0 +1,24 @@
+{
+    "files.associations": {
+        "starter.h": "c",
+        "parts_events.h": "c",
+        "stdio.h": "c",
+        "engine.h": "c",
+        "config.h": "c",
+        "parts.h": "c",
+        "stdint.h": "c",
+        "stdarg.h": "c",
+        "collection.h": "c",
+        "port.h": "c",
+        "machine.h": "c",
+        "parse.h": "c",
+        "errno.h": "c",
+        "stdlib.h": "c",
+        "string.h": "c",
+        "os.h": "c",
+        "qoraal.h": "c",
+        "svc_services.h": "c",
+        "strsub.h": "c",
+        "registry.h": "c"
+    }
+}

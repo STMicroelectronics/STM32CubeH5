@@ -1,0 +1,5 @@
+
+/.vscode
+/build
+output.map
+echo.sh
