@@ -1,0 +1,5 @@
+[
+    { 					"bits": 16, "attr": "reserved", "type": 5  },
+    { "name": "EVENT ID",   "bits": 11, "attr": "identifier", "type": 7 },
+    {                    "bits": 5,  "type": 5 }
+]

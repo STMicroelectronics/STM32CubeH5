@@ -1,0 +1,8 @@
+[
+    { "name": "COMP",   "bits": 16, "type": 6, "attr": "parameter"  },
+    { "name": "EVENT ID",  "bits": 11, "attr": "identifier", "type": 7  },
+    { "name": "TERM",    "bits": 1 },
+    { "name": "COND",   "bits": 3  },
+    { "name": "TYP",   "bits": 1 }
+]
+
