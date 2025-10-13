@@ -27,7 +27,7 @@ The **STM32CubeH5 MCU Package** projects are directly running on the STM32H5 ser
 > In this repository, the middleware libraries listed below **along with** [this](Projects/README.md#list-of-unavailable-projects) list of projects (demos, applications, and examples) using them, are **not available** as they (the middleware libraries) are subject to some restrictive license terms requiring the user's approval via a "click thru" procedure.
 > * `./Middlewares/ST/STM32_Audio`
 > 
-> If needed, they can be found inside the full firmware package available on our website `st.com` and downloadable from [here](https://www.st.com/content/st_com/en/products/embedded-software/mcu-mpu-embedded-software/stm32-embedded-software/stm32cube-mcu-mpu-packages/stm32cubeh5.html#get-software). You will be prompted to login or to register in case you have no account.
+> If needed, they can be found inside the full firmware package available on our website `st.com` and downloadable from [here](https://www.st.com/en/embedded-software/stm32cubeh5.html#get-software). You will be prompted to login or to register in case you have no account.
 
 ## Release note
 
