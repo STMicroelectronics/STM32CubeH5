@@ -90,3 +90,15 @@
 	path = Middlewares/ST/netxduo
 	url = https://github.com/STMicroelectronics/stm32-mw-netxduo
 	branch = main
+[submodule "Drivers/BSP/STM32H5F5J-DK"]
+	path = Drivers/BSP/STM32H5F5J-DK
+	url = https://github.com/STMicroelectronics/stm32h5f5j-discovery-bsp
+	branch = main
+[submodule "Drivers/BSP/Components/ism330dhcx"]
+	path = Drivers/BSP/Components/ism330dhcx
+	url = https://github.com/STMicroelectronics/stm32-ism330dhcx.git
+	branch = main
+[submodule "Drivers/BSP/Components/aps6408"]
+	path = Drivers/BSP/Components/aps6408
+	url = https://github.com/STMicroelectronics/stm32-aps6408
+	branch = main
