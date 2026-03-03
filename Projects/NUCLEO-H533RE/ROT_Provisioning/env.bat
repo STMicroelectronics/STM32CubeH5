@@ -16,10 +16,16 @@ set stirot_boot_path_project=Templates\ROT\STiROT_Appli
 :: ==============================================================================
 
 :: ==============================================================================
+::                            OEMiROT Appli boot path
+:: Select application project below
+set oemirot_appli_path_project=Templates/ROT/OEMiROT_Appli_TrustZone
+
+:: ==============================================================================
 ::                            OEMiROT boot path
 :: ==============================================================================
-:: Select application project below
-set oemirot_boot_path_project=Templates\ROT\OEMiROT_Appli_TrustZone
+:: Select OEMiROT Boot project below
+set oemirot_boot_path_project=Applications/ROT/OEMiROT_Boot
+
 :: ==============================================================================
 
 :: ==============================================================================
@@ -31,7 +37,7 @@ set oemirot_boot_path_project=Templates\ROT\OEMiROT_Appli_TrustZone
 ::               !!!! DOT NOT EDIT --- UPDATED AUTOMATICALLY !!!!
 :: ==============================================================================
 set PROJECT_GENERATED_BY_CUBEMX=false
-set cube_fw_path="%~dp0..\..\..\"
+set cube_fw_path=%~dp0..\..\..\
 set stirot_appli=appli_init_sign.hex
 set oemirot_appli_secure=rot_tz_s_app_init_sign.hex
 set oemirot_appli_non_secure=rot_tz_ns_app_init_sign.hex

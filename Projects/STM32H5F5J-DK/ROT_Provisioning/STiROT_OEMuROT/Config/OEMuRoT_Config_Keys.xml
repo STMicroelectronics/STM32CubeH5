@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Root xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="SCHVerif.xsd">
+<Obdata>
+	<Info>
+		<Title>OEMuRoT configuration</Title>
+		<GlobalAlign>1</GlobalAlign>
+	</Info>
+	<File>
+		<Name>Authentication secure key</Name>
+		<Value>./../Keys/OEMuRoT_Authentication_S.pem</Value>
+		<Align>1</Align>
+		<KeyType>ecdsa-p256</KeyType>
+		<Type>Public</Type>
+		<Default>./../Keys/OEMuRoT_Authentication_S.pem</Default>
+		<Tooltip>Select the key used to authenticate secure firmware and data. When this key is regenerated, both firmware and data images must be processed with Imgtool</Tooltip>
+	</File>
+	<File>
+		<Name>Authentication non secure key</Name>
+		<Value>./../Keys/OEMuRoT_Authentication_NS.pem</Value>
+		<Align>1</Align>
+		<KeyType>ecdsa-p256</KeyType>
+		<Type>Public</Type>
+		<Default>./../Keys/OEMuRoT_Authentication_NS.pem</Default>
+		<Tooltip>Select the key used to authenticate non secure firmware and data. When this key is regenerated, both firmware and data images must be processed with Imgtool</Tooltip>
+	</File>
+	<File>
+		<Name>Encryption key</Name>
+		<Value>./../Keys/OEMuRoT_Encryption.pem</Value>
+		<Align>1</Align>
+		<KeyType>ecdsa-p256</KeyType>
+		<Type></Type>
+		<Default>./../Keys/OEMuRoT_Encryption.pem</Default>
+		<Tooltip>Select the key used to encrypt firmware and data images</Tooltip>
+	</File>
+	<Output>
+		<Name>Output File</Name>
+		<Value>./../Binary/OEMuRoT_Config_intermediate.bin</Value>
+		<Default>OEMuRoT_Config_intermediate.bin</Default>
+		<Tooltip>Select the output file containing the image</Tooltip>
+	</Output>	
+</Obdata>
+</Root>

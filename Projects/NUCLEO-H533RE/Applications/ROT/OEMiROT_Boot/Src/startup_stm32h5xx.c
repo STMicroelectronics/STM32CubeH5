@@ -44,6 +44,8 @@ extern void Error_Handler(void);
  *----------------------------------------------------------------------------*/
 void Reset_Handler  (void) __NO_RETURN;
 
+#define TAMP_SR_NO_EVENT          (0U)
+
 /*----------------------------------------------------------------------------
   Exception / Interrupt Handler
  *----------------------------------------------------------------------------*/
@@ -344,12 +346,77 @@ __no_init volatile uint32_t TamperEventCleared;
 #else
   volatile uint32_t TamperEventCleared  __attribute__((section(".bss.NoInit")));
 #endif /* __ICCARM__ */
+extern RTC_HandleTypeDef RTCHandle;
 #endif /* OEMIROT_DEV_MODE */
 /*----------------------------------------------------------------------------
   Reset Handler called on controller reset
  *----------------------------------------------------------------------------*/
 void Reset_Handler(void)
 {
+  /** Register access to avoid stack usage */
+  /* Enable RAMCFG Clock */
+  SET_BIT(RCC->AHB1ENR, RCC_AHB1ENR_RAMCFGEN);
+  (void)READ_BIT(RCC->AHB1ENR, RCC_AHB1ENR_RAMCFGEN); /* Dummy read to ensure clocking */
+
+  /* Wait for SRAM2 availability */
+  while (READ_BIT(RAMCFG_SRAM2->ISR, (RAMCFG_FLAG_SRAMBUSY)) != 0U)
+  {
+    __NOP();
+  }
+
+#ifdef OEMIROT_DEV_MODE
+  /* Reset the tamper event status */
+  TamperEventCleared = 0;
+#endif /* OEMIROT_DEV_MODE */
+
+  /* enable write access to backup domain */
+  SET_BIT(PWR->DBPCR, PWR_DBPCR_DBP);
+  (void)READ_REG(PWR->DBPCR); /* Dummy read to wait for write effectiveness */
+  /* Enable clock for Tamper register access */
+  SET_BIT(RCC->APB3ENR, RCC_APB3ENR_RTCAPBEN);
+  (void)READ_REG(RCC->APB3ENR); /* Dummy read to wait for write effectiveness */
+
+  /* Release reset of back-up domain in case it is set, to avoid
+  blocking the device (system reset does not release it) */
+  CLEAR_BIT(RCC->BDCR, RCC_BDCR_VSWRST);
+  (void)READ_REG(RCC->BDCR); /* Dummy read to wait for write effectiveness */
+
+  /* Check if a tamper has occurred */
+  if (TAMP->SR != TAMP_SR_NO_EVENT)
+  {
+    /* reset Tamper status */
+    TAMP->SCR = 0xFFFFFFFFU;
+
+    /* Clear the pending IRQ which has already been handled */
+    NVIC_ClearPendingIRQ(TAMP_IRQn);
+#ifdef OEMIROT_DEV_MODE
+    /* Deactivation of tampers to reach a predictable log to help the developer */
+    HAL_RTCEx_DeactivateTamper(&RTCHandle, RTC_TAMPER_ALL);
+
+    /* memorize for log that event has been cleared */
+    TamperEventCleared = 1U;
+#else
+    /* System Reset request */
+    NVIC_SystemReset();
+#endif /* OEMIROT_DEV_MODE */
+  }
+  else
+  {
+    /**  Enable TAMP IRQ , to catch tamper interrupt in TAMP_IRQHandler */
+    /*  else a stack in SRAM2 is cleaned a HardFault can occur, at every pop of
+    *  function */
+#ifndef OEMIROT_DEV_MODE
+    __enable_irq();
+    NVIC_EnableIRQ(TAMP_IRQn);
+#endif /* !OEMIROT_DEV_MODE */
+  }
+
+  /** After this point, the stack may be used */
+
+  /* disable write access to backup domain */
+  __DMB(); /* To wait for TAMP reg write complete before cutting access */
+  CLEAR_BIT(PWR->DBPCR, PWR_DBPCR_DBP);
+
   /* Configure DWT to enable cycles counter */
   CoreDebug->DEMCR |= CoreDebug_DEMCR_TRCENA_Msk | CoreDebug_DEMCR_MON_EN_Msk;
   DWT->CYCCNT = 0;
@@ -374,36 +441,5 @@ void Reset_Handler(void)
     (void) HAL_FLASH_OB_Lock();
     (void) HAL_FLASH_Lock();
   }
-  /* enable access to tamper register */
-  HAL_PWR_EnableBkUpAccess();
-  __HAL_RCC_RTC_ENABLE();
-  __HAL_RCC_RTC_CLK_ENABLE();
-   /* Get tamper status */
-  if (READ_REG(TAMP->SR))
-  {
-#ifdef OEMIROT_DEV_MODE
-#if 1
-    /* avoid several re-boot in DEV_MODE with Tamper active, clean tamper configuration */
-    __HAL_RCC_BACKUPRESET_FORCE();
-    __HAL_RCC_BACKUPRESET_RELEASE();
-    /* wait for event being cleared */
-    while(READ_REG(TAMP->SR));
-#else
-    /* clear tamper event */
-    WRITE_REG(TAMP->SCR, READ_REG(TAMP->SR));
-#endif
-    /* memorize for log that event has been cleared */
-    TamperEventCleared = 1;
-#else
-    /* VBAT and VDD must be set to zero to allow board to restart */
-    Error_Handler();
-#endif /* OEMIROT_DEV_MODE */
-  }
-  /*  Enable TAMP IRQ , to catch tamper interrupt in TAMP_IRQHandler
-   *  else a stack in SRAM2 is cleaned a HardFault can occur, at every pop of
-   *  function */
-#ifndef OEMIROT_DEV_MODE
-  HAL_NVIC_EnableIRQ(TAMP_IRQn);
-#endif
   __PROGRAM_START();                        /* Enter PreMain (C library entry point) */
 }

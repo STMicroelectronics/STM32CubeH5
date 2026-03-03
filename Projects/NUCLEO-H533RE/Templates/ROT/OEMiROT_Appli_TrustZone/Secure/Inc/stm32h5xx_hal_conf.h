@@ -32,6 +32,7 @@
   * @brief This is the list of modules to be used in the HAL driver
   */
 #define HAL_MODULE_ENABLED
+/*#define HAL_CCB_MODULE_ENABLED */
 #define HAL_ADC_MODULE_ENABLED
 #define HAL_CEC_MODULE_ENABLED
 #define HAL_CORTEX_MODULE_ENABLED
@@ -188,6 +189,7 @@
   *        for each PPP peripheral).
   */
 #define  USE_HAL_ADC_REGISTER_CALLBACKS       0U    /* ADC register callback disabled       */
+#define  USE_HAL_CCB_REGISTER_CALLBACKS       0U    /* CCB register callback disabled       */
 #define  USE_HAL_CEC_REGISTER_CALLBACKS       0U    /* CEC register callback disabled       */
 #define  USE_HAL_CRYP_REGISTER_CALLBACKS      0U    /* CRYP register callback disabled      */
 #define  USE_HAL_DAC_REGISTER_CALLBACKS       0U    /* DAC register callback disabled       */
@@ -382,6 +384,10 @@
 #ifdef HAL_PCD_MODULE_ENABLED
  #include "stm32h5xx_hal_pcd.h"
 #endif /* HAL_PCD_MODULE_ENABLED */
+
+#ifdef HAL_CCB_MODULE_ENABLED
+ #include "stm32h5xx_hal_ccb.h"
+#endif /* HAL_CCB_MODULE_ENABLED */
 
 #ifdef HAL_HCD_MODULE_ENABLED
  #include "stm32h5xx_hal_hcd.h"

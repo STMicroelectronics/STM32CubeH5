@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Root xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="SCHVerif.xsd">
+<Obdata>
+	<Info>
+		<Title>OEMiRoT configuration</Title>
+		<ObDestAddress>0x0FFD0160</ObDestAddress>
+		<DoEncryption>1</DoEncryption>
+		<GlobalAlign>16</GlobalAlign>
+		<FlashStart>0x0C000000</FlashStart>
+		<FlashSize>0x200000</FlashSize>
+		<FlashSectorSize>0x2000</FlashSectorSize>
+		<OBKStart>0xFFD0900</OBKStart>
+		<OBKSize>0x2F0</OBKSize>
+		<OBKSectorSize>0x10</OBKSectorSize>
+		<AuthOBKStart>0xFFD0900</AuthOBKStart>
+		<AuthOBKSize>0x2F0</AuthOBKSize>
+	</Info>
+	<Hash>
+	</Hash>
+	<File>
+		<Name>Authentication secure key</Name>
+		<Value>./../Keys/OEMiRoT_Authentication_S.pem</Value>
+		<Align>4</Align>
+		<KeyType>ecdsa-p256</KeyType>
+		<Type>Public</Type>
+		<Default>./../Keys/OEMiRoT_Authentication_S.pem</Default>
+		<Tooltip>Select the key used to authenticate secure firmware and data. When this key is regenerated, both firmware and data images must be processed with Imgtool</Tooltip>
+	</File>
+	<File>
+		<Name>Authentication non secure key</Name>
+		<Value>./../Keys/OEMiRoT_Authentication_NS.pem</Value>
+		<Align>4</Align>
+		<KeyType>ecdsa-p256</KeyType>
+		<Type>Public</Type>
+		<Default>./../Keys/OEMiRoT_Authentication_NS.pem</Default>
+		<Tooltip>Select the key used to authenticate non secure firmware and data. When this key is regenerated, both firmware and data images must be processed with Imgtool</Tooltip>
+	</File>
+	<File>
+		<Name>Encryption key</Name>
+		<Value>./../Keys/OEMiRoT_Encryption.pem</Value>
+		<Align>4</Align>
+		<KeyType>ecdsa-p256</KeyType>
+		<Type></Type>
+		<Default>./../Keys/OEMiRoT_Encryption.pem</Default>
+		<Tooltip>Select the key used to encrypt firmware and data images</Tooltip>
+	</File>
+	<Output>
+		<Name>Output File</Name>
+		<Value>./../Binary/OEMiRoT_Config.obk</Value>
+		<Default>./../Binary/OEMiRoT_Config.obk</Default>
+		<Tooltip>Select the output file .obk including OEMiROT configuration</Tooltip>
+	</Output>
+</Obdata>
+</Root>

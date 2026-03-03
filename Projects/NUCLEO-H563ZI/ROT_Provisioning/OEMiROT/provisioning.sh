@@ -29,19 +29,21 @@ ns_data_init_xml=$projectdir"/Images/OEMiROT_NS_Data_Init_Image.xml"
 product_state=OPEN
 connect_no_reset="-c port=SWD speed=fast ap=1 mode=Hotplug"
 
-applicfg="$cube_fw_path/Utilities/PC_Software/ROT_AppliConfig/dist/AppliCfg.exe"
-uname | grep -i -e windows -e mingw
-if [ $? == 0 ] && [ -e "$applicfg" ]; then
-  #line for window executable
-  echo "AppliCfg with windows executable"
-  python=""
+# Check if Python is installed
+python3 --version >/dev/null 2>&1
+if [ $? -ne 0 ]; then
+  python --version >/dev/null 2>&1
+  if [ $? -ne 0 ]; then
+  echo "Python installation missing. Refer to Utilities/PC_Software/ROT_AppliConfig/README.md"
+  exit 1
+  fi
+  python="python "
 else
-  #line for python
-  echo "AppliCfg with python script"
-  applicfg="$cube_fw_path/Utilities/PC_Software/ROT_AppliConfig/AppliCfg.py"
-  #determine/check python version command
   python="python3 "
 fi
+
+# Environment variable for AppliCfg
+applicfg="$cube_fw_path/Utilities/PC_Software/ROT_AppliConfig/AppliCfg.py"
 
 
 # ========================================================= Script functions ===============================================================
@@ -194,7 +196,7 @@ step_error()
 # ========================================================== Initial instructions ==========================================================
 echo "====="
 echo "===== Provisioning of OEMiRoT boot path"
-echo "===== Application selected through env.sh: $oemirot_boot_path_project"
+echo "===== Application selected through env.sh: $oemirot_appli_path_project"
 echo "===== Product state must be Open. Execute  /ROT_Provisioning/DA/regression.sh if not the case."
 echo "====="
 echo
@@ -202,9 +204,9 @@ echo
 # Path validation
 action="Validating OEMiROT boot path project"
 
-if [[ ! $oemirot_boot_path_project =~ "OEMiROT_Appli_TrustZone" ]]; then
+if [[ ! $oemirot_appli_path_project =~ "OEMiROT_Appli_TrustZone" ]]; then
   echo "====="
-  echo "===== Wrong Boot path: $oemirot_boot_path_project"
+  echo "===== Wrong Boot path: $oemirot_appli_path_project"
   echo "===== please modify the env.sh to the right path"
   step_error
 fi

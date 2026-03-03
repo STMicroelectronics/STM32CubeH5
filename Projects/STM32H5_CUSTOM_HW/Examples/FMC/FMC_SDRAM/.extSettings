@@ -1,0 +1,7 @@
+[ProjectFiles]
+[Others]
+Define=
+HALModule=EXTI
+[Groups]
+Doc=../README.md;
+Drivers/STM32H5xx_HAL_Driver=../../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_exti.c;

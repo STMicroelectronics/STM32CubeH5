@@ -56,7 +56,7 @@ static UCHAR Write_buffer[] = "USBX_STM32_Host_Mass_Storage";
 
 /**
   * @brief  Application FileX Initialization.
-  * @param memory_ptr: memory pointer
+  * @param  memory_ptr: memory pointer
   * @retval int
 */
 UINT MX_FileX_Init(VOID *memory_ptr)
@@ -87,7 +87,7 @@ UINT MX_FileX_Init(VOID *memory_ptr)
 /**
   * @brief  Application Write File process.
   * @param  fx_media: media pointer
-  * @retval status
+  * @retval Status
   */
 UINT App_File_Write(FX_MEDIA *fx_media)
 {
@@ -131,7 +131,7 @@ UINT App_File_Write(FX_MEDIA *fx_media)
 /**
   * @brief  Application Read File process.
   * @param  fx_media: media pointer
-  * @retval status
+  * @retval Status
   */
 UINT App_File_Read(FX_MEDIA *fx_media)
 {
@@ -181,7 +181,7 @@ UINT App_File_Read(FX_MEDIA *fx_media)
 /**
   * @brief  Application Create File process.
   * @param  fx_media: media pointer
-  * @retval status
+  * @retval Status
   */
 UINT App_File_Create(FX_MEDIA *fx_media)
 {

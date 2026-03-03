@@ -15,14 +15,6 @@
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
-          <name>BrowseInfoPath</name>
-          <state>Ux_Host_HID_Standalone\BrowseInfo</state>
-        </option>
-        <option>
-          <name>BuildFilesPath</name>
-          <state>Ux_Host_HID_Standalone\</state>
-        </option>
-        <option>
           <name>ExePath</name>
           <state>Ux_Host_HID_Standalone/Exe</state>
         </option>
@@ -213,11 +205,16 @@
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
+          <name>CCOptimizationNoSizeConstraints</name>
+          <state>0</state>
+        </option>
+        <option>
           <name>CCDefines</name>
           <state>TCPP0203_SUPPORT</state>
           <state>UX_INCLUDE_USER_DEFINE_FILE</state>
           <state>USE_HAL_DRIVER</state>
           <state>STM32H573xx</state>
+          <state></state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -674,6 +671,11 @@
       </data>
     </settings>
     <settings>
+      <name>BICOMP</name>
+      <archiveVersion>0</archiveVersion>
+      <data></data>
+    </settings>
+    <settings>
       <name>BUILDACTION</name>
       <archiveVersion>1</archiveVersion>
       <data>
@@ -1069,6 +1071,11 @@
       </data>
     </settings>
     <settings>
+      <name>BILINK</name>
+      <archiveVersion>0</archiveVersion>
+      <data></data>
+    </settings>
+    <settings>
       <name>Coder</name>
       <archiveVersion>0</archiveVersion>
       <data></data>
@@ -1079,7 +1086,7 @@
     <group>
       <name>EWARM</name>
       <file>
-        <name>$PROJ_DIR$\startup_stm32h573xx.s</name>
+        <name>$PROJ_DIR$/startup_stm32h573xx.s</name>
       </file>
     </group>
     <group>
@@ -1087,13 +1094,13 @@
       <group>
         <name>Core</name>
         <file>
-          <name>$PROJ_DIR$\..\Core\Src\main.c</name>
+          <name>$PROJ_DIR$/../Core/Src/main.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\Core\Src\stm32h5xx_it.c</name>
+          <name>$PROJ_DIR$/../Core/Src/stm32h5xx_it.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\Core\Src\stm32h5xx_hal_msp.c</name>
+          <name>$PROJ_DIR$/../Core/Src/stm32h5xx_hal_msp.c</name>
         </file>
       </group>
       <group>
@@ -1101,13 +1108,16 @@
         <group>
           <name>App</name>
           <file>
-            <name>$PROJ_DIR$\..\USBX\App\app_usbx_host.c</name>
+            <name>$PROJ_DIR$/../USBX/App/app_usbx_host.c</name>
           </file>
           <file>
-            <name>$PROJ_DIR$\..\USBX\App\ux_host_keyboard.c</name>
+            <name>$PROJ_DIR$/../USBX/App/app_usbx.c</name>
           </file>
           <file>
-            <name>$PROJ_DIR$\..\USBX\App\ux_host_mouse.c</name>
+            <name>$PROJ_DIR$/../USBX/App/ux_host_keyboard.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../USBX/App/ux_host_mouse.c</name>
           </file>
         </group>
       </group>
@@ -1116,7 +1126,7 @@
   <group>
     <name>Doc</name>
     <file>
-      <name>$PROJ_DIR$\..\README.md</name>
+      <name>$PROJ_DIR$/../README.md</name>
     </file>
   </group>
   <group>
@@ -1124,100 +1134,94 @@
     <group>
       <name>BSP</name>
       <group>
-        <name>Components</name>
+        <name>STM32H573I-DK</name>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\BSP\Components\tcpp0203\tcpp0203.c</name>
+          <name>$PROJ_DIR$/../../../../../../Drivers/BSP/STM32H573I-DK/stm32h573i_discovery_bus.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\BSP\Components\tcpp0203\tcpp0203_reg.c</name>
+          <name>$PROJ_DIR$/../../../../../../Drivers/BSP/STM32H573I-DK/stm32h573i_discovery_usbpd_pwr.c</name>
         </file>
       </group>
       <group>
-        <name>STM32H573I-DK</name>
+        <name>Components</name>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\BSP\STM32H573I-DK\stm32h573i_discovery_bus.c</name>
+          <name>$PROJ_DIR$/../../../../../../Drivers/BSP/Components/tcpp0203/tcpp0203.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\BSP\STM32H573I-DK\stm32h573i_discovery_usbpd_pwr.c</name>
+          <name>$PROJ_DIR$/../../../../../../Drivers/BSP/Components/tcpp0203/tcpp0203_reg.c</name>
         </file>
       </group>
-    </group>
-    <group>
-      <name>CMSIS</name>
-      <file>
-        <name>$PROJ_DIR$\..\Core\Src\system_stm32h5xx.c</name>
-      </file>
     </group>
     <group>
       <name>STM32H5xx_HAL_Driver</name>
       <file>
-        <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_hal_adc.c</name>
+        <name>$PROJ_DIR$/../../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_adc.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_hal_adc_ex.c</name>
+        <name>$PROJ_DIR$/../../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_adc_ex.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_hal_dma.c</name>
+        <name>$PROJ_DIR$/../../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_dma.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_hal_dma_ex.c</name>
+        <name>$PROJ_DIR$/../../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_dma_ex.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_hal_rcc.c</name>
+        <name>$PROJ_DIR$/../../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rcc.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_hal_rcc_ex.c</name>
+        <name>$PROJ_DIR$/../../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rcc_ex.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_hal_flash.c</name>
+        <name>$PROJ_DIR$/../../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_flash.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_hal_flash_ex.c</name>
+        <name>$PROJ_DIR$/../../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_flash_ex.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_hal_gpio.c</name>
+        <name>$PROJ_DIR$/../../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_gpio.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_hal_pwr.c</name>
+        <name>$PROJ_DIR$/../../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pwr.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_hal_pwr_ex.c</name>
+        <name>$PROJ_DIR$/../../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pwr_ex.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_hal_cortex.c</name>
+        <name>$PROJ_DIR$/../../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_cortex.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_hal.c</name>
+        <name>$PROJ_DIR$/../../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_hal_exti.c</name>
+        <name>$PROJ_DIR$/../../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_exti.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_hal_i2c.c</name>
+        <name>$PROJ_DIR$/../../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_i2c.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_hal_i2c_ex.c</name>
+        <name>$PROJ_DIR$/../../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_i2c_ex.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_hal_icache.c</name>
+        <name>$PROJ_DIR$/../../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_icache.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_tim.c</name>
+        <name>$PROJ_DIR$/../../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_uart.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_tim_ex.c</name>
+        <name>$PROJ_DIR$/../../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_uart_ex.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_hal_uart.c</name>
+        <name>$PROJ_DIR$/../../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_hcd.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_hal_uart_ex.c</name>
+        <name>$PROJ_DIR$/../../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_ll_usb.c</name>
       </file>
+    </group>
+    <group>
+      <name>CMSIS</name>
       <file>
-        <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_hal_hcd.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_ll_usb.c</name>
+        <name>$PROJ_DIR$/../Core/Src/system_stm32h5xx.c</name>
       </file>
     </group>
   </group>
@@ -1226,549 +1230,546 @@
     <group>
       <name>USBX</name>
       <group>
-        <name>Core System</name>
+        <name>UX Host CoreStack</name>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_system_tasks_run.c</name>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/core/src/ux_host_stack_tasks_run.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_utility_debug_callback_register.c</name>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/core/src/ux_host_stack_transfer_run.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_utility_debug_log.c</name>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/core/src/ux_host_stack_bandwidth_check.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_utility_delay_ms.c</name>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/core/src/ux_host_stack_bandwidth_claim.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_utility_descriptor_pack.c</name>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/core/src/ux_host_stack_bandwidth_release.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_utility_descriptor_parse.c</name>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/core/src/ux_host_stack_class_call.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_utility_error_callback_register.c</name>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/core/src/ux_host_stack_class_device_scan.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_utility_long_get.c</name>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/core/src/ux_host_stack_class_get.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_utility_long_get_big_endian.c</name>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/core/src/ux_host_stack_class_instance_create.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_utility_long_put.c</name>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/core/src/ux_host_stack_class_instance_destroy.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_utility_long_put_big_endian.c</name>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/core/src/ux_host_stack_class_instance_get.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_utility_memory_allocate.c</name>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/core/src/ux_host_stack_class_instance_verify.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_utility_memory_allocate_add_safe.c</name>
-        </file>
-		<file>
-			<name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_utility_memory_byte_pool_create.c</name>
-		</file>
-		<file>
-			<name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_utility_memory_byte_pool_search.c</name>
-		</file>
-        <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_utility_memory_allocate_mulc_safe.c</name>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/core/src/ux_host_stack_class_interface_scan.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_utility_memory_allocate_mulv_safe.c</name>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/core/src/ux_host_stack_class_register.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_utility_memory_compare.c</name>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/core/src/ux_host_stack_class_unregister.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_utility_memory_copy.c</name>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/core/src/ux_host_stack_configuration_descriptor_parse.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_utility_memory_free.c</name>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/core/src/ux_host_stack_configuration_enumerate.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_utility_memory_free_block_best_get.c</name>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/core/src/ux_host_stack_configuration_instance_create.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_utility_memory_set.c</name>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/core/src/ux_host_stack_configuration_instance_delete.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_utility_pci_class_scan.c</name>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/core/src/ux_host_stack_configuration_interface_get.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_utility_pci_read.c</name>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/core/src/ux_host_stack_configuration_interface_scan.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_utility_pci_write.c</name>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/core/src/ux_host_stack_configuration_set.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_utility_physical_address.c</name>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/core/src/ux_host_stack_delay_ms.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_utility_set_interrupt_handler.c</name>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/core/src/ux_host_stack_device_address_set.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_utility_short_get.c</name>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/core/src/ux_host_stack_device_configuration_activate.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_utility_short_get_big_endian.c</name>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/core/src/ux_host_stack_device_configuration_deactivate.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_utility_short_put.c</name>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/core/src/ux_host_stack_device_configuration_get.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_utility_short_put_big_endian.c</name>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/core/src/ux_host_stack_device_configuration_reset.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_utility_string_length_check.c</name>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/core/src/ux_host_stack_device_configuration_select.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_utility_string_length_get.c</name>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/core/src/ux_host_stack_device_descriptor_read.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_utility_string_to_unicode.c</name>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/core/src/ux_host_stack_device_get.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_utility_unicode_to_string.c</name>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/core/src/ux_host_stack_device_remove.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_utility_virtual_address.c</name>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/core/src/ux_host_stack_device_resources_free.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_system_error_handler.c</name>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/core/src/ux_host_stack_device_string_get.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_system_initialize.c</name>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/core/src/ux_host_stack_endpoint_instance_create.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_system_uninitialize.c</name>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/core/src/ux_host_stack_endpoint_instance_delete.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/core/src/ux_host_stack_endpoint_reset.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/core/src/ux_host_stack_endpoint_transfer_abort.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/core/src/ux_host_stack_enum_thread_entry.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/core/src/ux_host_stack_hcd_register.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/core/src/ux_host_stack_hcd_thread_entry.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/core/src/ux_host_stack_hcd_transfer_request.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/core/src/ux_host_stack_hcd_unregister.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/core/src/ux_host_stack_hnp_polling_thread_entry.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/core/src/ux_host_stack_initialize.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/core/src/ux_host_stack_interface_endpoint_get.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/core/src/ux_host_stack_interface_instance_create.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/core/src/ux_host_stack_interface_instance_delete.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/core/src/ux_host_stack_interface_set.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/core/src/ux_host_stack_interface_setting_select.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/core/src/ux_host_stack_interfaces_scan.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/core/src/ux_host_stack_new_configuration_create.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/core/src/ux_host_stack_new_device_create.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/core/src/ux_host_stack_new_device_get.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/core/src/ux_host_stack_new_endpoint_create.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/core/src/ux_host_stack_new_interface_create.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/core/src/ux_host_stack_rh_change_process.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/core/src/ux_host_stack_rh_device_extraction.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/core/src/ux_host_stack_rh_device_insertion.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/core/src/ux_host_stack_role_swap.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/core/src/ux_host_stack_transfer_request.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/core/src/ux_host_stack_transfer_request_abort.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/core/src/ux_host_stack_uninitialize.c</name>
         </file>
       </group>
       <group>
-        <name>UX Host Class HID Core</name>
+        <name>Core System</name>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\usbx_host_classes\src\ux_host_class_hid_activate.c</name>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/core/src/ux_system_tasks_run.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\usbx_host_classes\src\ux_host_class_hid_client_register.c</name>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/core/src/ux_utility_debug_callback_register.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\usbx_host_classes\src\ux_host_class_hid_client_search.c</name>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/core/src/ux_utility_debug_log.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\usbx_host_classes\src\ux_host_class_hid_configure.c</name>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/core/src/ux_utility_delay_ms.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\usbx_host_classes\src\ux_host_class_hid_deactivate.c</name>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/core/src/ux_utility_descriptor_pack.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\usbx_host_classes\src\ux_host_class_hid_descriptor_parse.c</name>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/core/src/ux_utility_descriptor_parse.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\usbx_host_classes\src\ux_host_class_hid_entry.c</name>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/core/src/ux_utility_error_callback_register.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\usbx_host_classes\src\ux_host_class_hid_field_decompress.c</name>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/core/src/ux_utility_long_get.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\usbx_host_classes\src\ux_host_class_hid_global_item_parse.c</name>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/core/src/ux_utility_long_get_big_endian.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\usbx_host_classes\src\ux_host_class_hid_idle_get.c</name>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/core/src/ux_utility_long_put.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\usbx_host_classes\src\ux_host_class_hid_idle_set.c</name>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/core/src/ux_utility_long_put_big_endian.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\usbx_host_classes\src\ux_host_class_hid_instance_clean.c</name>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/core/src/ux_utility_memory_allocate.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\usbx_host_classes\src\ux_host_class_hid_interrupt_endpoint_search.c</name>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/core/src/ux_utility_memory_allocate_add_safe.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\usbx_host_classes\src\ux_host_class_hid_item_data_get.c</name>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/core/src/ux_utility_memory_allocate_mulc_safe.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\usbx_host_classes\src\ux_host_class_hid_local_item_parse.c</name>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/core/src/ux_utility_memory_allocate_mulv_safe.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\usbx_host_classes\src\ux_host_class_hid_main_item_parse.c</name>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/core/src/ux_utility_memory_compare.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\usbx_host_classes\src\ux_host_class_hid_periodic_report_start.c</name>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/core/src/ux_utility_memory_copy.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\usbx_host_classes\src\ux_host_class_hid_periodic_report_stop.c</name>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/core/src/ux_utility_memory_free.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\usbx_host_classes\src\ux_host_class_hid_report_add.c</name>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/core/src/ux_utility_memory_byte_pool_create.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\usbx_host_classes\src\ux_host_class_hid_report_callback_register.c</name>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/core/src/ux_utility_memory_byte_pool_search.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\usbx_host_classes\src\ux_host_class_hid_report_compress.c</name>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/core/src/ux_utility_memory_set.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\usbx_host_classes\src\ux_host_class_hid_report_decompress.c</name>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/core/src/ux_utility_pci_class_scan.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\usbx_host_classes\src\ux_host_class_hid_report_descriptor_get.c</name>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/core/src/ux_utility_pci_read.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\usbx_host_classes\src\ux_host_class_hid_report_get.c</name>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/core/src/ux_utility_pci_write.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\usbx_host_classes\src\ux_host_class_hid_report_id_get.c</name>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/core/src/ux_utility_physical_address.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\usbx_host_classes\src\ux_host_class_hid_report_item_analyse.c</name>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/core/src/ux_utility_set_interrupt_handler.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\usbx_host_classes\src\ux_host_class_hid_report_set.c</name>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/core/src/ux_utility_short_get.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\usbx_host_classes\src\ux_host_class_hid_resources_free.c</name>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/core/src/ux_utility_short_get_big_endian.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\usbx_host_classes\src\ux_host_class_hid_transfer_request_completed.c</name>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/core/src/ux_utility_short_put.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\usbx_host_classes\src\ux_host_class_hid_tasks_run.c</name>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/core/src/ux_utility_short_put_big_endian.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\usbx_host_classes\src\ux_host_class_hid_report_set_run.c</name>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/core/src/ux_utility_string_length_check.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\usbx_host_classes\src\ux_host_class_hid_idle_set_run.c</name>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/core/src/ux_utility_string_length_get.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/core/src/ux_utility_string_to_unicode.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/core/src/ux_utility_unicode_to_string.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/core/src/ux_utility_virtual_address.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/core/src/ux_system_error_handler.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/core/src/ux_system_initialize.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/core/src/ux_system_uninitialize.c</name>
         </file>
       </group>
       <group>
         <name>UX Host Class HID Keyboard</name>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\usbx_host_classes\src\ux_host_class_hid_keyboard_activate.c</name>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/usbx_host_classes/src/ux_host_class_hid_keyboard_activate.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\usbx_host_classes\src\ux_host_class_hid_keyboard_callback.c</name>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/usbx_host_classes/src/ux_host_class_hid_keyboard_callback.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\usbx_host_classes\src\ux_host_class_hid_keyboard_deactivate.c</name>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/usbx_host_classes/src/ux_host_class_hid_keyboard_deactivate.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\usbx_host_classes\src\ux_host_class_hid_keyboard_entry.c</name>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/usbx_host_classes/src/ux_host_class_hid_keyboard_entry.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\usbx_host_classes\src\ux_host_class_hid_keyboard_ioctl.c</name>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/usbx_host_classes/src/ux_host_class_hid_keyboard_ioctl.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\usbx_host_classes\src\ux_host_class_hid_keyboard_key_get.c</name>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/usbx_host_classes/src/ux_host_class_hid_keyboard_key_get.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\usbx_host_classes\src\ux_host_class_hid_keyboard_thread.c</name>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/usbx_host_classes/src/ux_host_class_hid_keyboard_thread.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\usbx_host_classes\src\ux_host_class_hid_keyboard_tasks_run.c</name>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/usbx_host_classes/src/ux_host_class_hid_keyboard_tasks_run.c</name>
         </file>
       </group>
       <group>
         <name>UX Host Class HID Mouse</name>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\usbx_host_classes\src\ux_host_class_hid_mouse_activate.c</name>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/usbx_host_classes/src/ux_host_class_hid_mouse_activate.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\usbx_host_classes\src\ux_host_class_hid_mouse_buttons_get.c</name>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/usbx_host_classes/src/ux_host_class_hid_mouse_buttons_get.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\usbx_host_classes\src\ux_host_class_hid_mouse_callback.c</name>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/usbx_host_classes/src/ux_host_class_hid_mouse_callback.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\usbx_host_classes\src\ux_host_class_hid_mouse_deactivate.c</name>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/usbx_host_classes/src/ux_host_class_hid_mouse_deactivate.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\usbx_host_classes\src\ux_host_class_hid_mouse_entry.c</name>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/usbx_host_classes/src/ux_host_class_hid_mouse_entry.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\usbx_host_classes\src\ux_host_class_hid_mouse_position_get.c</name>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/usbx_host_classes/src/ux_host_class_hid_mouse_position_get.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\usbx_host_classes\src\ux_host_class_hid_mouse_wheel_get.c</name>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/usbx_host_classes/src/ux_host_class_hid_mouse_wheel_get.c</name>
+        </file>
+      </group>
+      <group>
+        <name>UX Host Class HID Core</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/usbx_host_classes/src/ux_host_class_hid_activate.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/usbx_host_classes/src/ux_host_class_hid_client_register.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/usbx_host_classes/src/ux_host_class_hid_client_search.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/usbx_host_classes/src/ux_host_class_hid_configure.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/usbx_host_classes/src/ux_host_class_hid_deactivate.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/usbx_host_classes/src/ux_host_class_hid_descriptor_parse.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/usbx_host_classes/src/ux_host_class_hid_entry.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/usbx_host_classes/src/ux_host_class_hid_field_decompress.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/usbx_host_classes/src/ux_host_class_hid_global_item_parse.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/usbx_host_classes/src/ux_host_class_hid_idle_get.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/usbx_host_classes/src/ux_host_class_hid_idle_set.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/usbx_host_classes/src/ux_host_class_hid_instance_clean.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/usbx_host_classes/src/ux_host_class_hid_interrupt_endpoint_search.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/usbx_host_classes/src/ux_host_class_hid_item_data_get.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/usbx_host_classes/src/ux_host_class_hid_local_item_parse.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/usbx_host_classes/src/ux_host_class_hid_main_item_parse.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/usbx_host_classes/src/ux_host_class_hid_periodic_report_start.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/usbx_host_classes/src/ux_host_class_hid_periodic_report_stop.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/usbx_host_classes/src/ux_host_class_hid_report_add.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/usbx_host_classes/src/ux_host_class_hid_report_callback_register.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/usbx_host_classes/src/ux_host_class_hid_report_compress.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/usbx_host_classes/src/ux_host_class_hid_report_decompress.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/usbx_host_classes/src/ux_host_class_hid_report_descriptor_get.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/usbx_host_classes/src/ux_host_class_hid_report_get.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/usbx_host_classes/src/ux_host_class_hid_report_id_get.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/usbx_host_classes/src/ux_host_class_hid_report_item_analyse.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/usbx_host_classes/src/ux_host_class_hid_report_set.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/usbx_host_classes/src/ux_host_class_hid_resources_free.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/usbx_host_classes/src/ux_host_class_hid_transfer_request_completed.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/usbx_host_classes/src/ux_host_class_hid_tasks_run.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/usbx_host_classes/src/ux_host_class_hid_report_set_run.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/usbx_host_classes/src/ux_host_class_hid_idle_set_run.c</name>
         </file>
       </group>
       <group>
         <name>UX Host Controllers</name>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\usbx_stm32_host_controllers\ux_hcd_stm32_callback.c</name>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/usbx_stm32_host_controllers/ux_hcd_stm32_callback.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\usbx_stm32_host_controllers\ux_hcd_stm32_controller_disable.c</name>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/usbx_stm32_host_controllers/ux_hcd_stm32_controller_disable.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\usbx_stm32_host_controllers\ux_hcd_stm32_ed_obtain.c</name>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/usbx_stm32_host_controllers/ux_hcd_stm32_ed_obtain.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\usbx_stm32_host_controllers\ux_hcd_stm32_endpoint_create.c</name>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/usbx_stm32_host_controllers/ux_hcd_stm32_endpoint_create.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\usbx_stm32_host_controllers\ux_hcd_stm32_endpoint_destroy.c</name>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/usbx_stm32_host_controllers/ux_hcd_stm32_endpoint_destroy.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\usbx_stm32_host_controllers\ux_hcd_stm32_endpoint_reset.c</name>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/usbx_stm32_host_controllers/ux_hcd_stm32_endpoint_reset.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\usbx_stm32_host_controllers\ux_hcd_stm32_entry.c</name>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/usbx_stm32_host_controllers/ux_hcd_stm32_entry.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\usbx_stm32_host_controllers\ux_hcd_stm32_frame_number_get.c</name>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/usbx_stm32_host_controllers/ux_hcd_stm32_frame_number_get.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\usbx_stm32_host_controllers\ux_hcd_stm32_initialize.c</name>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/usbx_stm32_host_controllers/ux_hcd_stm32_initialize.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\usbx_stm32_host_controllers\ux_hcd_stm32_interrupt_handler.c</name>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/usbx_stm32_host_controllers/ux_hcd_stm32_interrupt_handler.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\usbx_stm32_host_controllers\ux_hcd_stm32_least_traffic_list_get.c</name>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/usbx_stm32_host_controllers/ux_hcd_stm32_least_traffic_list_get.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\usbx_stm32_host_controllers\ux_hcd_stm32_periodic_schedule.c</name>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/usbx_stm32_host_controllers/ux_hcd_stm32_periodic_schedule.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\usbx_stm32_host_controllers\ux_hcd_stm32_port_disable.c</name>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/usbx_stm32_host_controllers/ux_hcd_stm32_port_disable.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\usbx_stm32_host_controllers\ux_hcd_stm32_port_enable.c</name>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/usbx_stm32_host_controllers/ux_hcd_stm32_port_enable.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\usbx_stm32_host_controllers\ux_hcd_stm32_port_reset.c</name>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/usbx_stm32_host_controllers/ux_hcd_stm32_port_reset.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\usbx_stm32_host_controllers\ux_hcd_stm32_port_resume.c</name>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/usbx_stm32_host_controllers/ux_hcd_stm32_port_resume.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\usbx_stm32_host_controllers\ux_hcd_stm32_port_status_get.c</name>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/usbx_stm32_host_controllers/ux_hcd_stm32_port_status_get.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\usbx_stm32_host_controllers\ux_hcd_stm32_port_suspend.c</name>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/usbx_stm32_host_controllers/ux_hcd_stm32_port_suspend.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\usbx_stm32_host_controllers\ux_hcd_stm32_power_down_port.c</name>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/usbx_stm32_host_controllers/ux_hcd_stm32_power_down_port.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\usbx_stm32_host_controllers\ux_hcd_stm32_power_on_port.c</name>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/usbx_stm32_host_controllers/ux_hcd_stm32_power_on_port.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\usbx_stm32_host_controllers\ux_hcd_stm32_request_bulk_transfer.c</name>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/usbx_stm32_host_controllers/ux_hcd_stm32_request_bulk_transfer.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\usbx_stm32_host_controllers\ux_hcd_stm32_request_control_transfer.c</name>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/usbx_stm32_host_controllers/ux_hcd_stm32_request_control_transfer.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\usbx_stm32_host_controllers\ux_hcd_stm32_request_transfer.c</name>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/usbx_stm32_host_controllers/ux_hcd_stm32_request_transfer.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\usbx_stm32_host_controllers\ux_hcd_stm32_request_trans_finish.c</name>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/usbx_stm32_host_controllers/ux_hcd_stm32_request_trans_finish.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\usbx_stm32_host_controllers\ux_hcd_stm32_request_trans_prepare.c</name>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/usbx_stm32_host_controllers/ux_hcd_stm32_request_trans_prepare.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\usbx_stm32_host_controllers\ux_hcd_stm32_transfer_abort.c</name>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/usbx_stm32_host_controllers/ux_hcd_stm32_transfer_abort.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\usbx_stm32_host_controllers\ux_hcd_stm32_request_periodic_transfer.c</name>
-        </file>
-      </group>
-      <group>
-        <name>UX Host CoreStack</name>
-        <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_host_stack_tasks_run.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_host_stack_transfer_run.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_host_stack_bandwidth_check.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_host_stack_bandwidth_claim.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_host_stack_bandwidth_release.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_host_stack_class_call.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_host_stack_class_device_scan.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_host_stack_class_get.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_host_stack_class_instance_create.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_host_stack_class_instance_destroy.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_host_stack_class_instance_get.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_host_stack_class_instance_verify.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_host_stack_class_interface_scan.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_host_stack_class_register.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_host_stack_class_unregister.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_host_stack_configuration_descriptor_parse.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_host_stack_configuration_enumerate.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_host_stack_configuration_instance_create.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_host_stack_configuration_instance_delete.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_host_stack_configuration_interface_get.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_host_stack_configuration_interface_scan.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_host_stack_configuration_set.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_host_stack_delay_ms.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_host_stack_device_address_set.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_host_stack_device_configuration_activate.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_host_stack_device_configuration_deactivate.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_host_stack_device_configuration_get.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_host_stack_device_configuration_reset.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_host_stack_device_configuration_select.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_host_stack_device_descriptor_read.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_host_stack_device_get.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_host_stack_device_remove.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_host_stack_device_resources_free.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_host_stack_device_string_get.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_host_stack_endpoint_instance_create.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_host_stack_endpoint_instance_delete.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_host_stack_endpoint_reset.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_host_stack_endpoint_transfer_abort.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_host_stack_enum_thread_entry.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_host_stack_hcd_register.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_host_stack_hcd_thread_entry.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_host_stack_hcd_transfer_request.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_host_stack_hcd_unregister.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_host_stack_hnp_polling_thread_entry.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_host_stack_initialize.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_host_stack_interface_endpoint_get.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_host_stack_interface_instance_create.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_host_stack_interface_instance_delete.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_host_stack_interface_set.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_host_stack_interface_setting_select.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_host_stack_interfaces_scan.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_host_stack_new_configuration_create.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_host_stack_new_device_create.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_host_stack_new_device_get.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_host_stack_new_endpoint_create.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_host_stack_new_interface_create.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_host_stack_rh_change_process.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_host_stack_rh_device_extraction.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_host_stack_rh_device_insertion.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_host_stack_role_swap.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_host_stack_transfer_request.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_host_stack_transfer_request_abort.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_host_stack_uninitialize.c</name>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/usbx_stm32_host_controllers/ux_hcd_stm32_request_periodic_transfer.c</name>
         </file>
       </group>
     </group>

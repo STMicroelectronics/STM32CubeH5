@@ -132,7 +132,7 @@ extern "C" {
 #define FLOW_STEP_MPU_I_CH_R7       0x0001fe01U        /*!< Step MPU  Region 7 Init check value */
 #define FLOW_STEP_MPU_I_CH_R8       0x0052a4e2U        /*!< Step MPU  Region 8 Init check value */
 #define FLOW_STEP_MPU_I_CH_R9       0x0052fd77U        /*!< Step MPU  Region 9 Init check value */
-#define FLOW_STEP_MPU_I_CH_R10      0x00023bd7U        /*!< Step MPU Region 10 Init enable value */
+#define FLOW_STEP_MPU_I_CH_R10      0x00539246U        /*!< Step MPU Region 10 Init enable value */
 #define FLOW_STEP_MPU_I_CH          0x0002e8fbU        /*!< Step MPU  Init check value */
 #define FLOW_STEP_MPU_NS_I_CH_R0    0x00000000U        /*!< No effect on control flow */
 #define FLOW_STEP_MPU_NS_I_CH       0x00000000U        /*!< No effect on control flow */

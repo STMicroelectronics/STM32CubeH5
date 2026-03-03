@@ -81,8 +81,9 @@ UINT MX_NetXDuo_Init(VOID *memory_ptr)
 {
   UINT ret = NX_SUCCESS;
   TX_BYTE_POOL *byte_pool = (TX_BYTE_POOL*)memory_ptr;
+  CHAR *pointer;
 
-   /* USER CODE BEGIN App_NetXDuo_MEM_POOL */
+  /* USER CODE BEGIN App_NetXDuo_MEM_POOL */
 
   /* USER CODE END App_NetXDuo_MEM_POOL */
   /* USER CODE BEGIN 0 */
@@ -91,7 +92,6 @@ UINT MX_NetXDuo_Init(VOID *memory_ptr)
   /* USER CODE END 0 */
 
   /* Initialize the NetXDuo system. */
-  CHAR *pointer;
   nx_system_initialize();
 
     /* Allocate the memory for packet_pool.  */

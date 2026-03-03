@@ -20,7 +20,6 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "app_usbx_device.h"
-
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
@@ -43,16 +42,10 @@
 
 /* Private variables ---------------------------------------------------------*/
 
-/* USER CODE BEGIN UX_Device_Memory_Buffer */
-
-/* USER CODE END UX_Device_Memory_Buffer */
-#if defined ( __ICCARM__ )
-#pragma data_alignment=4
-#endif
-__ALIGN_BEGIN static UCHAR ux_device_byte_pool_buffer[UX_DEVICE_APP_MEM_POOL_SIZE] __ALIGN_END;
 static ULONG hid_mouse_interface_number;
 static ULONG hid_mouse_configuration_number;
 static UX_SLAVE_CLASS_HID_PARAMETER hid_mouse_parameter;
+extern PCD_HandleTypeDef hpcd_USB_DRD_FS;
 
 /* USER CODE BEGIN PV */
 extern uint8_t User_Button_State;
@@ -68,7 +61,44 @@ extern uint8_t User_Button_State;
   * @param  none
   * @retval status
   */
+
 UINT MX_USBX_Device_Init(VOID)
+{
+  UINT ret = UX_SUCCESS;
+  /* USER CODE BEGIN MX_USBX_Device_Init 0 */
+  /* USB_DRD_FS init function */
+  MX_USB_PCD_Init();
+  /* USER CODE END MX_USBX_Device_Init 0 */
+
+  /* Initialize the Stack USB Device*/
+  if (MX_USBX_Device_Stack_Init() != UX_SUCCESS)
+  {
+    /* USER CODE BEGIN MAIN_INITIALIZE_STACK_ERROR */
+    return UX_ERROR;
+    /* USER CODE END MAIN_INITIALIZE_STACK_ERROR */
+  }
+
+  /* USER CODE BEGIN MX_USBX_Device_Init 1 */
+
+  /* Start the USB device */
+  HAL_PCD_Start(&hpcd_USB_DRD_FS);
+  /* USER CODE END MX_USBX_Device_Init 1 */
+
+  /* USER CODE BEGIN MX_USBX_Device_Init 2 */
+  /* USER CODE END MX_USBX_Device_Init 2 */
+
+  return ret;
+}
+
+/**
+  * @brief  MX_USBX_Device_Stack_Init
+  *         Intialization of USB Device.
+  *         Initialize the device stack, register of device class stack
+  *         Register of the usb device controller
+  * @param  None
+  * @retval ret
+  */
+UINT MX_USBX_Device_Stack_Init(void)
 {
   UINT ret = UX_SUCCESS;
   UCHAR *device_framework_high_speed;
@@ -79,21 +109,10 @@ UINT MX_USBX_Device_Init(VOID)
   ULONG language_id_framework_length;
   UCHAR *string_framework;
   UCHAR *language_id_framework;
-  UCHAR *pointer;
 
-  /* USER CODE BEGIN MX_USBX_Device_Init0 */
+  /* USER CODE BEGIN MX_USBX_Device_Stack_Init 0 */
 
-  /* USER CODE END MX_USBX_Device_Init0 */
-  pointer = ux_device_byte_pool_buffer;
-
-  /* Initialize USBX Memory */
-  if (ux_system_initialize(pointer, USBX_DEVICE_MEMORY_STACK_SIZE, UX_NULL, 0) != UX_SUCCESS)
-  {
-    /* USER CODE BEGIN USBX_SYSTEM_INITIALIZE_ERROR */
-    return UX_ERROR;
-    /* USER CODE END USBX_SYSTEM_INITIALIZE_ERROR */
-  }
-
+  /* USER CODE END MX_USBX_Device_Stack_Init 0 */
   /* Get Device Framework High Speed and get the length */
   device_framework_high_speed = USBD_Get_Device_Framework_Speed(USBD_HIGH_SPEED,
                                                                 &device_framework_hs_length);
@@ -155,62 +174,58 @@ UINT MX_USBX_Device_Init(VOID)
     /* USER CODE END USBX_DEVICE_HID_MOUSE_REGISTER_ERROR */
   }
 
-  /* USER CODE BEGIN MX_USBX_Device_Init1 */
+  /* Initialize and link controller HAL driver */
+  ux_dcd_stm32_initialize((ULONG)USB_DRD_FS, (ULONG)&hpcd_USB_DRD_FS);
+  /* USER CODE BEGIN MX_USBX_Device_Stack_Init_PostTreatment */
+  /* USER CODE END MX_USBX_Device_Stack_Init_PostTreatment */
 
-  /* Initialization of USB device */
-  USBX_APP_Device_Init();
+  /* USER CODE BEGIN MX_USBX_Device_Stack_Init 1 */
 
-  /* USER CODE END MX_USBX_Device_Init1 */
+  /* USER CODE END MX_USBX_Device_Stack_Init 1 */
 
   return ret;
 }
 
 /**
-  * @brief  _ux_utility_interrupt_disable
-  *         USB utility interrupt disable.
-  * @param  none
-  * @retval none
+  * @brief  MX_USBX_Device_Stack_DeInit
+  *         Unitialization of USB Device.
+  *         uninitialize the device stack, unregister of device class stack
+  *         unregister of the usb device controller
+  * @retval ret
   */
-ALIGN_TYPE _ux_utility_interrupt_disable(VOID)
+UINT MX_USBX_Device_Stack_DeInit(void)
 {
-  UINT interrupt_save;
+  UINT ret = UX_SUCCESS;
 
-  /* USER CODE BEGIN _ux_utility_interrupt_disable */
-  interrupt_save = __get_PRIMASK();
-  __disable_irq();
-  /* USER CODE END _ux_utility_interrupt_disable */
+  /* USER CODE BEGIN MX_USBX_Device_Stack_DeInit_PreTreatment_0 */
+  /* USER CODE END MX_USBX_Device_Stack_DeInit_PreTreatment_0 */
 
-  return interrupt_save;
-}
+  /* Unregister USB device controller. */
+  if (ux_dcd_stm32_uninitialize((ULONG)USB_DRD_FS, (ULONG)&hpcd_USB_DRD_FS) != UX_SUCCESS)
+  {
+    return UX_ERROR;
+  }
 
-/**
-  * @brief  _ux_utility_interrupt_restore
-  *         USB utility interrupt restore.
-  * @param  flags
-  * @retval none
-  */
-VOID _ux_utility_interrupt_restore(ALIGN_TYPE flags)
-{
-  /* USER CODE BEGIN _ux_utility_interrupt_restore */
-  __set_PRIMASK(flags);
-  /* USER CODE END _ux_utility_interrupt_restore */
-}
+  /* Unregister hid class. */
+  if (ux_device_stack_class_unregister(_ux_system_slave_class_hid_name,
+                                       ux_device_class_hid_entry) != UX_SUCCESS)
+  {
+    return UX_ERROR;
+  }
 
-/**
-  * @brief  _ux_utility_time_get
-  *         Get Time Tick for host timing.
-  * @param  none
-  * @retval time tick
-  */
-ULONG _ux_utility_time_get(VOID)
-{
-  ULONG time_tick = 0U;
+  /* The code below is required for uninstalling the device portion of USBX.  */
+  if (ux_device_stack_uninitialize() != UX_SUCCESS)
+  {
+    return UX_ERROR;
+  }
 
-  /* USER CODE BEGIN _ux_utility_time_get */
-  time_tick = HAL_GetTick();
-  /* USER CODE END _ux_utility_time_get */
+  /* USER CODE BEGIN MX_USBX_Device_Stack_DeInit_PreTreatment_1 */
+  /* USER CODE END MX_USBX_Device_Stack_DeInit_PreTreatment_1 */
 
-  return time_tick;
+  /* USER CODE BEGIN MX_USBX_Device_Stack_DeInit_PostTreatment */
+  /* USER CODE END MX_USBX_Device_Stack_DeInit_PostTreatment */
+
+  return ret;
 }
 
 /* USER CODE BEGIN 1 */
@@ -224,39 +239,6 @@ VOID USBX_Device_Process(VOID *arg)
 {
   ux_device_stack_tasks_run();
   USBX_DEVICE_HID_MOUSE_Task();
-}
-
-
-/**
-  * @brief  USBX_APP_Device_Init
-  *         Initialization of USB device.
-  * @param  none
-  * @retval none
-  */
-VOID USBX_APP_Device_Init(VOID)
-{
-  /* USER CODE BEGIN USB_Device_Init_PreTreatment_0 */
-  /* USER CODE END USB_Device_Init_PreTreatment_0 */
-
-  /* USB_DRD_FS init function */
-
-  /* USB_DRD_FS init function */
-  MX_USB_PCD_Init();
-
-  /* USER CODE BEGIN USB_Device_Init_PreTreatment_1 */
-  HAL_PCDEx_PMAConfig(&hpcd_USB_DRD_FS, 0x00, PCD_SNG_BUF, 0x0C);
-  HAL_PCDEx_PMAConfig(&hpcd_USB_DRD_FS, 0x80, PCD_SNG_BUF, 0x4C);
-  HAL_PCDEx_PMAConfig(&hpcd_USB_DRD_FS, 0x81, PCD_SNG_BUF, 0x8C);
-  /* USER CODE END USB_Device_Init_PreTreatment_1 */
-
-  /* initialize the device controller driver*/
-  ux_dcd_stm32_initialize((ULONG)USB_DRD_FS, (ULONG)&hpcd_USB_DRD_FS);
-  /* Start the USB device */
-  HAL_PCD_Start(&hpcd_USB_DRD_FS);
-
-  /* USER CODE BEGIN USB_Device_Init_PostTreatment */
-
-  /* USER CODE END USB_Device_Init_PostTreatment */
 }
 
 /**

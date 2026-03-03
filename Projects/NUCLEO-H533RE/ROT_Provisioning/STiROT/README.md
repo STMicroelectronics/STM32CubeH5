@@ -1,112 +1,64 @@
 ## <b>ROT_Provisioning STiROT Description</b>
 
-This section provides an overview of the available scripts for STiROT.
+This section provides an overview of the available scripts for STiROT boot path.
 
-STiROT stands for "ST Immutable Root of Trust" and it provides two services :
-  - Secure Boot : Verification of the integrity, and authenticity of the application code before any execution.
-  - Secure Firmware Update : If a new firmware image is available on detection, the SFU checks its authenticity.
-                             Once the firmware is decrypted, the SFU checks and confirms the integrity of the code before installing it.
+STiROT stands for "ST Immutable Root of Trust" and it provides two services:
 
+  - Secure Boot: Verification of the integrity, and authenticity of the application code before any execution.
+  - Secure Firmware Update: If a new firmware image is available on detection, check of its authenticity.
+                            Once the firmware is decrypted, check of the integrity of the code before installing it.
 
 ### <b>Keywords</b>
 
-STiROT, TrustZone, boot path, Root Of Trust
-
+STiROT, boot path, Root Of Trust, Security
 
 ### <b>Directory contents</b>
 
-- STiROT/provisioning.bat/.sh                 Target provisioning.
-- STiROT/update_appli_setup.bat/.sh           It updates test Application files.
-- STiROT/update_ob_setup.bat/.sh              It updates the Option bytes setup on the device.
-- STiROT/ob_flash_programming.bat/.sh         Option bytes Initialization and Image download.
-- STiROT/obkey_provisioning.bat/.sh           It configures Option byte keys(OBKeys).
-- STiROT/Image/STiRoT_Code_Image.xml          Configuration file for Firmware image generation.
-- STiROT/Image/STiRoT_Data_Image.xml          Configuration file for Data image generation.
-- STiROT/Keys/STiRoT_Authentication.pem       Private key for authentication.
-- STiROT/Keys/STiRoT_Authentication_pub.pem   Public key for authentication.
-- STiROT/Keys/STiRoT_Encryption.pem           Private key for encryption.
-- STiROT/Keys/STiRoT_Encryption_pub.pem       Public key for encryption.
-- STiROT/Binary                               It contains generated binary data images and obk binary.
-- STiROT/Config/STiROT_Config.xml             It contains the STiROT configuration.
+<b>Sub-directories</b>
 
+- STiROT/Binary                               Output binaries and generated images.
+- STiROT/Config                               STiROT configuration files.
+- STiROT/Image                                Image configuration files.
+- STiROT/Keys                                 Keys for firmware image authentication and encryption.
 
+<b>Scripts</b>
+
+- STiROT/ob_flash_programming.bat/.sh         Programs option bytes and firmware image on the device.
+- STiROT/obkey_provisioning.bat/.sh           Programs OBKeys on the device.
+- STiROT/provisioning.bat/.sh                 Performs device provisioning process.
+- STiROT/update_appli_setup.bat/.sh           Updates application files according to STiRoT configuration.
+- STiROT/update_ob_setup.bat/.sh              Updates the programming scripts according to STiRoT configuration.
 ### <b>Hardware and Software environment</b>
 
-- This example runs on STM32H533xx devices with security enabled (TZEN=B4).
 - This example has been tested with STMicroelectronics NUCLEO-H533RE (MB1814)
   board and can be easily tailored to any other supported device and development board.
 
-
 ### <b>How to use it?</b>
 
-Before compiling the project, you should first start the provisioning process. During the provisioning process, the linker files
-of project as well as the postbuild commands will be automatically updated.
+To use STiRoT bootpath, you should first configure ROT_Provisioning/env.bat/.sh script
+(tools path, application path and COM port configuration).<br>
+The .bat scripts are designed for Windows, whereas the .sh scripts are designed for Linux and Mac-OS.
 
-All scripts are relying on env.bat/env.sh for tools path and application path. (ROT_Provisioning/env.bat/.sh)
+Then you should run the provisioning script (provisioning.bat/.sh).<br>
+During the **provisioning process**, the programming scripts and the application files will
+be automatically updated according to STiRoT configuration, and user answers.
 
-The **provisioning process** (STiROT/provisioning.bat/.sh) is divided into 3 majors steps :
+The **provisioning process** (STiROT/provisioning.bat/.sh) is divided into 3 majors steps:
 
-  Step 1 : Configuration management
+-   Step 1: Configuration management
+-   Step 2: Images generation
+-   Step 3: Provisioning
 
-    * STiRoT_Config.obk generation : Using TPC, regenerate your own keys and update the configuration through
-      STiROT_Config.xml(ROT_Provisioning/STiROT/Config/STiRoT_Config.xml)
+The provisioning script is relying on ob_flash_programming, obkey_provisioning, update_appli_setup
+and update_ob_setup scripts.
 
-    * DA_Config.obk generation : Using TPC, update the keys and permissions then regenerate the certificate and update the configuration through
-      DA_Config.xml.(ROT_Provisioning/DA/Config/DA_Config.xml)
+For more details, refer to STM32H533 Wiki articles:
 
-    * updateAppliSetup script update : Update full secure value in updateAppliSetup.bat/.sh according to
-      STiRoT_Config.xml.(ROT_Provisioning/STiROT/Config/STiRoT_Config.xml)
+  - [STiRoT for STM32H5](https://wiki.st.com/stm32mcu/wiki/Security:STiRoT_for_STM32H5)
+  - [How to start with STiRoT on STM32H533](https://wiki.st.com/stm32mcu/wiki/Security:How_to_start_with_STiRoT_on_STM32H573)
 
-    * ob_flash_programming script update : Updating the Option bytes in update_ob_setup.bat/.sh according to
-      STiRoT_Config.xml.(ROT_Provisioning/STiROT/Config/STiRoT_Config.xml)
+#### <b>Notes</b>
 
-    * STiROT_Appli or STiROT_Appli_TrustZone project files (main.h, .icf) update: stm32h573xx_flash.icf and main.h updated according to
-      STiRoT_Config.xml.(ROT_Provisioning/STiROT/Config/STiRoT_Config.xml)
-
-  Step 2 : Images generation
-
-    * Code firmware image generation :
-      - If full_secure = 1 : Build the STiROT_Appli project with the preferred toolchain.
-      - If full_secure = 0 : Build the STiROT_Appli_TrustZone with the preferred toolchain.
-
-    * Data generation : Data image generation with TrustedPackageCreator, if data image enabled.
-
-  Step 3 : Provisioning
-
-    * Program the option bytes and flash the images using ob_flash_programming.bat/.sh.
-
-    * Define the final product state value. (OPEN/PROVISIONED/CLOSED/LOCKED)
-
-The provisioning script is relying on ob_flash_programming, obkey_provisioning, update_appli_setup and update_ob_setup scripts.
-
-It is possible to run ob_flash_programming.bat/.sh, obkey_provisioning.bat/.sh, update_appli_setup.bat/.sh
-and update_ob_setup.bat/.sh directly (advanced mode).
-
-- The **ob_flash_programming process** (STiROT/ob_flash_programming.bat/.sh) includes :
-
-  Step 1 : Initialize option bytes
-
-  Step 2 : Configure the option Bytes
-
-    * Remove Protection and erase all.
-    * Configure option Bytes.
-
-  Step 3 : Download Images
-
-    * Download boot image.
-    * Download Appli image.
-    * Download data image, if data image enabled.
-
-
-## Environment Setup
-
-  All scripts rely on env.bat and env.sh for setting the necessary tools path and application path.
-    - File path : ROT_Provisioning/env.bat/.sh.
-    - Purpose : Sets the necessary tools path and application path for Windows, Linux and Mac operating system.
-    - Usage : Exporting the Environment Variables, Path Configuration, Dependency Setup, Perform initial setup tasks.
-
-
-## Additional Resources
-
-  * For STiRoT_STM32H533, follow the same steps as STM32H573 :
-    [STiRoT_STM32H573](https://wiki.st.com/stm32mcu/wiki/Security:How_to_start_with_STiRoT_on_STM32H573)
+AppliCfg.py (located in Utilities/PC_Software/ROT_AppliConfig) is used during provisioning process.
+It is needed to have python and some python packages installed in your environment.
+Refer to Utilities/PC_Software/ROT_AppliConfig/README.md for more details.

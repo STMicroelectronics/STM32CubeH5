@@ -95,27 +95,27 @@ set "action=Define product state value"
 echo    * %action%
 set /p "product_state=%BS%       %ps_option%: "
 
-if /i "%product_state%" == "PROVISIONED" (
+if /i "!product_state!" == "PROVISIONED" (
 echo.
 set ps_value=0x2E
 goto set_final_ps
 )
 
 if /i "%tzen_state%" == "y" (
-if /i "%product_state%" == "TZ-CLOSED" (
+if /i "!product_state!" == "TZ-CLOSED" (
 echo.
 set ps_value=0xC6
 goto set_final_ps
 )
 )
 
-if /i "%product_state%" == "CLOSED" (
+if /i "!product_state!" == "CLOSED" (
 echo.
 set ps_value=0x72
 goto set_final_ps
 )
 
-if /i "%product_state%" == "LOCKED" (
+if /i "!product_state!" == "LOCKED" (
 echo.
 set ps_value=0x5C
 goto set_final_ps
@@ -128,7 +128,7 @@ goto product_state_choice
 
 : Set the final product state of the STM32H5 product
 :set_final_ps
-set "action=Setting the final product state %product_state% "
+set "action=Setting the final product state !product_state! "
 set current_log_file=%provisioning%
 echo    * %action%
 set "command=%stm32programmercli% %connect_no_reset% -ob PRODUCT_STATE=%ps_value%"

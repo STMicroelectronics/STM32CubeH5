@@ -13,7 +13,6 @@ else
 fi
 
 board_password="$project_dir/board_password.bin"
-otp_data_soc_mask="$project_dir/data_soc_mask.bin"
 
 address_password=0x8FFF000
 address_data_soc_mask=0x8FFF020
@@ -28,13 +27,6 @@ error()
   echo "       Programming aborted 2>&1"
   if [ "$script_mode" != "AUTO" ]; then $SHELL; fi
 }
-
-# =========================================== Write data soc mask =========================================================================
-action="Write data soc mask"
-echo $action
-
-# Write OTP data soc mask
-"$stm32programmercli" $connect_no_reset -w $otp_data_soc_mask $address_data_soc_mask
 
 # =============================================== Write password ==========================================================================
 action="Write Password"

@@ -16,8 +16,8 @@
         <TargetCommonOption>
           <Device>STM32H573IIKx</Device>
           <Vendor>STMicroelectronics</Vendor>
-          <PackID>Keil.STM32H5xx_DFP.0.0.5</PackID>
-          <PackURL>http://www.keil.com/pack</PackURL>
+          <PackID>Keil.STM32H5xx_DFP.1.5.0-A02</PackID>
+          <PackURL>https://www.keil.com/pack/</PackURL>
           <Cpu>IROM(0x08000000-0x81FFFFF) IRAM(0x20000000-0x2009FFFF) CLOCK(8000000) FPU3(SFPU) CPUTYPE("Cortex-M33") ELITTLE TZ DSP</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
           <StartupFile></StartupFile>
@@ -513,6 +513,11 @@
               <FileName>app_usbpd.c</FileName>
               <FileType>1</FileType>
               <FilePath>../USBX/App/app_usbpd.c</FilePath>
+            </File>
+            <File>
+              <FileName>app_usbx.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\USBX\App\app_usbx.c</FilePath>
             </File>
           </Files>
         </Group>

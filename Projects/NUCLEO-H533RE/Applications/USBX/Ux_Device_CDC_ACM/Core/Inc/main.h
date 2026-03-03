@@ -59,6 +59,9 @@ void MX_USART2_UART_Init(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
+#define USBC_DETECT_Pin GPIO_PIN_4
+#define USBC_DETECT_GPIO_Port GPIOC
+#define USBC_DETECT_EXTI_IRQn EXTI4_IRQn
 
 /* USER CODE BEGIN Private defines */
 

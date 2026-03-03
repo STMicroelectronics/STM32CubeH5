@@ -75,7 +75,7 @@ extern UCHAR String_Descriptor[50];
 /**
   * @brief  Run the USBPD menu application
   * @param  None.
-  * @note   init and display information about the USBPD.
+  * @note   Init and display information about the USBPD.
   * @retval None.
   */
 void USBPDMenuProcessingThread(ULONG arg)

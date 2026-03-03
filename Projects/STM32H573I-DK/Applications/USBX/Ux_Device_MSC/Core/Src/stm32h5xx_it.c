@@ -235,4 +235,29 @@ void SDMMC1_IRQHandler(void)
 {
     BSP_SD_IRQHandler(0);
 }
+
+#if defined(TCPP0203_SUPPORT)
+
+/**
+  * @brief  This function handles external line interrupt request.
+  *         (Associated to FLGn line in case of TCPP0203 management)
+  * @retval None
+  */
+
+void EXTI1_IRQHandler(void)
+{
+  /* Manage Flags */
+  if (LL_EXTI_IsActiveFallingFlag_0_31(LL_EXTI_LINE_1) != RESET)
+
+  {
+    /* Call BSP USBPD PWR callback */
+    BSP_USBPD_PWR_EventCallback(USBPD_PWR_TYPE_C_PORT_1);
+
+    /* Clear Flag */
+    LL_EXTI_ClearFallingFlag_0_31(LL_EXTI_LINE_1);
+
+  }
+}
+
+#endif /* TCPP0203_SUPPORT */
 /* USER CODE END 1 */

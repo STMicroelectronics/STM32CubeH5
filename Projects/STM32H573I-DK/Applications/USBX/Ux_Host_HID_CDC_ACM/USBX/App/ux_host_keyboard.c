@@ -62,7 +62,7 @@ extern UX_HOST_CLASS_HID_KEYBOARD *keyboard;
 /**
   * @brief  Function implementing hid_keyboard_thread_entry.
   * @param  thread_input: Not used
-  * @retval none
+  * @retval None
   */
 VOID hid_keyboard_thread_entry(ULONG thread_input)
 {

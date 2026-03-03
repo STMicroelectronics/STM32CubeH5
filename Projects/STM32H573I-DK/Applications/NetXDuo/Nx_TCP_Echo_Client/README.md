@@ -13,8 +13,8 @@ The main entry function tx_application_define() is then called by ThreadX during
 
 The application then creates 2 threads with the same priorities:
 
- + **AppMainThread** (priority 10, PreemtionThreashold 10) : created with the <i>TX_AUTO_START</i> flag to start automatically.
- + **AppTCPThread** (priority 10, PreemtionThreashold 10) : created with the <i>TX_DONT_START</i> flag to be started later.
+ + **AppMainThread** (priority 10, PreemptionThreshold 10) : created with the <i>TX_AUTO_START</i> flag to start automatically.
+ + **AppTCPThread** (priority 10, PreemptionThreshold 10) : created with the <i>TX_DONT_START</i> flag to be started later.
 
 The **AppMainThread** starts and performs the following actions:
 

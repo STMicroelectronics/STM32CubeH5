@@ -31,7 +31,6 @@ extern "C" {
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "app_usbx_host.h"
 #include "stm32h573i_discovery_usbpd_pwr.h"
 /* USER CODE END Includes */
 
@@ -61,6 +60,7 @@ void MX_USB_HCD_Init(void);
 /* Private defines -----------------------------------------------------------*/
 
 /* USER CODE BEGIN Private defines */
+
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus

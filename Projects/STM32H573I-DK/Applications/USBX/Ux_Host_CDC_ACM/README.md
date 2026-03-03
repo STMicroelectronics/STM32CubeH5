@@ -1,14 +1,14 @@
 
 ## <b>Ux_Host_CDC_ACM Application Description </b>
 
-This application provides an example of Azure RTOS USBX stack usage .
+This application provides an example of Azure RTOS USBX stack usage.
 
 The application is designed to behave as an USB CDC_ACM Host, the code provides required requests to properly enumerate
-CDC devices , CDC_ACM Class APIs to send or receive data and display data on uart HyperTerminal.
+CDC devices, CDC_ACM Class APIs to send or receive data and display data on UART HyperTerminal.
 
 The main entry function tx_application_define() is then called by ThreadX during kernel start, at this stage, all USBx resources
 are initialized.
-The application creates 3 threads with different priorities :
+The application creates 3 threads with different priorities:
 
   - app_ux_device_thread_entry       (Priority : 10; Preemption threshold : 10) used to initialize USB DRD HAL HCD driver and start the Host.
   - cdc_acm_send_app_thread_entry    (Priority : 30; Preemption threshold : 30) used to send data from host to device.
@@ -16,7 +16,7 @@ The application creates 3 threads with different priorities :
 
 #### <b> Expected success behavior</b>
 
-- When a cdc device is plugged to STM32H573I-DK board, a Message will be displayed on the uart HyperTerminal (STlink VCP) showing
+- When a cdc device is plugged to STM32H573I-DK board, a Message will be displayed on the UART HyperTerminal (STlink VCP) showing
 the Vendor ID and Product ID of the attached device. The host must be able to properly decode CDC_ACM class request data sent by the device.
 After enumeration phase, a message will indicates that the device is ready for use.
 
@@ -31,10 +31,12 @@ Errors are detected such as (Unsupported device, Enumeration Fail) and the corre
 User is familiar with USB 2.0 "Universal Serial BUS" Specification and CDC_ACM class Specification.
 
 #### <b>Known limitations</b>
+
 None
 
 ### <b>Notes</b>
 
+None
 
 #### <b>ThreadX usage hints</b>
 
@@ -68,19 +70,17 @@ None
        } >RAM_D1 AT> RAM_D1
     ```
 
-     The simplest way to provide memory for ThreadX is to define a new section, see ._threadx_heap above.
-     In the example above the ThreadX heap size is set to 64KBytes.
-     The ._threadx_heap must be located between the .bss and the ._user_heap_stack sections in the linker script.
-     Caution: Make sure that ThreadX does not need more than the provided heap memory (64KBytes in this example).
-     Read more in STM32CubeIDE User Guide, chapter: "Linker script".
+    The simplest way to provide memory for ThreadX is to define a new section, see ._threadx_heap above.
+    In the example above the ThreadX heap size is set to 64KBytes.
+    The ._threadx_heap must be located between the .bss and the ._user_heap_stack sections in the linker script.
+    Caution: Make sure that ThreadX does not need more than the provided heap memory (64KBytes in this example).
+    Read more in STM32CubeIDE User Guide, chapter: "Linker script".
 
     + The "tx_initialize_low_level.S" should be also modified to enable the "USE_DYNAMIC_MEMORY_ALLOCATION" flag.
-
 
 ### <b>Keywords</b>
 
 Connectivity, USBX Host, USBPD, ThreadX, USB, CDC_ACM, UART, USART,
-
 
 ### <b>Hardware and Software environment</b>
 
@@ -109,7 +109,7 @@ Connectivity, USBX Host, USBPD, ThreadX, USB, CDC_ACM, UART, USART,
        - Flow control: None
 
      - To send data from the USB CDC_ACM Host use the user push-button and data will be received
-     and displayed in the hyperterminal connected to the CDC ACM Device.
+     and displayed in the HyperTerminal connected to the CDC ACM Device.
 
 ### <b>How to use it ?</b>
 

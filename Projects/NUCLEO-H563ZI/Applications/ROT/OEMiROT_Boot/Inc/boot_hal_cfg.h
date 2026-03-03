@@ -65,6 +65,9 @@
 #define OEMIROT_FLASH_PRIVONLY_ENABLE  /*!< Flash Command in Privileged only  */
 #define OEMIROT_MPU_PROTECTION    /*!< OEMiROT_Boot uses MPU to prevent execution outside of OEMiROT_Boot code  */
 
+/* Fast wake-up from low power */
+#define OEMIROT_FAST_WAKE_UP         /*!< Enable fast wake-up from low power: bypass images control */
+
 /* Exported types ------------------------------------------------------------*/
 typedef enum
 {

@@ -35,9 +35,12 @@ Errors are detected such as (Unsupported device, Enumeration Fail, File operatio
 User is familiar with USB 2.0 "Universal Serial BUS" Specification and Mass storage class Specification.
 
 #### <b>Known limitations</b>
+
 None.
 
 ### <b>Notes</b>
+
+None.
 
 #### <b>ThreadX usage hints</b>
 
@@ -77,8 +80,6 @@ None.
     Read more in STM32CubeIDE User Guide, chapter: "Linker script".
 
     + The "tx_initialize_low_level.s" should be also modified to enable the "USE_DYNAMIC_MEMORY_ALLOCATION" flag.
-
-#### <b>USBX usage hints</b>
 
 ### <b>Keywords</b>
 

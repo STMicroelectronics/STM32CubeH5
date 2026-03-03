@@ -38,6 +38,8 @@
 #define CURSOR_STEP     4
 uint32_t Old_TsState_Mouse ;
 extern __IO uint32_t TsState_Mouse ;
+UX_SLAVE_DEVICE    *device_test;
+UX_SLAVE_CLASS_HID_EVENT hid_event_test;
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -63,12 +65,10 @@ UINT app_usbx_device_thread_hid_callback(UX_SLAVE_CLASS_HID *hid,
 }
 /**
   * @brief  Function implementing usbx_hid_thread_entry.
-  * @param arg: Not used
+  * @param  arg: Not used
   * @retval None
   */
-UX_SLAVE_DEVICE    *device_test;
 
-UX_SLAVE_CLASS_HID_EVENT hid_event_test;
 void usbx_hid_thread_entry(ULONG arg)
 {
   UX_SLAVE_DEVICE    *device;

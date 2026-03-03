@@ -33,7 +33,6 @@ extern "C" {
 #include "ux_device_descriptors.h"
 #include "app_azure_rtos_config.h"
 #include "ux_dcd_stm32.h"
-
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
@@ -45,7 +44,6 @@ extern UART_HandleTypeDef huart3;
 /* USER CODE END ET */
 
 /* Exported constants --------------------------------------------------------*/
-#define USBX_DEVICE_MEMORY_STACK_SIZE       10 * 1024
 
 #define UX_DEVICE_APP_THREAD_STACK_SIZE   1024
 #define UX_DEVICE_APP_THREAD_PRIO         10
@@ -61,15 +59,16 @@ extern UART_HandleTypeDef huart3;
 
 /* Exported functions prototypes ---------------------------------------------*/
 UINT MX_USBX_Device_Init(VOID *memory_ptr);
+UINT MX_USBX_Device_Stack_Init(void);
+UINT MX_USBX_Device_Stack_DeInit(void);
 
 /* USER CODE BEGIN EFP */
-VOID USBX_APP_Device_Init(VOID);
 VOID USBX_APP_UART_Init(UART_HandleTypeDef **huart);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define APP_QUEUE_SIZE          5
+#define APP_QUEUE_SIZE 5
 /* USER CODE END PD */
 
 #ifndef UX_DEVICE_APP_THREAD_NAME

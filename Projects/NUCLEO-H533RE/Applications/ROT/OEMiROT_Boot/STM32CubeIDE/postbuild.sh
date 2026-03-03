@@ -1,4 +1,40 @@
 #!/bin/bash -
+#=================================================================================================
+# Managing HOST OS diversity : begin
+#=================================================================================================
+OS=$(uname)
+
+echo ${OS} | grep -i -e windows -e mingw >/dev/null
+if [ $? == 0 ]; then
+  echo "=================================="
+  echo "HOST OS : Windows detected"
+  echo ""
+  echo ">>> Running ../postbuild.bat $@"
+  echo ""
+  # Enable : exit immediately if any commands returns a non-zero status
+  set -e
+  cd ../
+  cmd.exe /C postbuild.bat $@
+  # Return OK if no error detected during .bat script
+  exit 0
+fi
+
+if [ "$OS" == "Linux" ]; then
+  echo "HOST OS : Linux detected"
+elif [ "$OS" == "Darwin" ]; then
+  echo "HOST OS : MacOS detected"
+else
+  echo "!!!HOST OS not supported : >$OS<!!!"
+  exit 1
+fi
+
+#=================================================================================================
+# Managing HOST OS diversity : end
+#=================================================================================================
+echo "=================================="
+echo ">>> Running $0 $@"
+echo ""
+
 # arg1 is the config type (Debug, Release)
 config=$1
 # Getting the Trusted Package Creator CLI path
@@ -24,26 +60,27 @@ error()
     exit 1
 }
 
-applicfg="$cube_fw_path/Utilities/PC_Software/ROT_AppliConfig/dist/AppliCfg.exe"
-uname | grep -i -e windows -e mingw
-if [ $? == 0 ] && [ -e "$applicfg" ]; then
-  #line for window executable
-  echo "AppliCfg with windows executable"
-  python=""
+# Check if Python is installed
+python3 --version >/dev/null 2>&1
+if [ $? -ne 0 ]; then
+  python --version >/dev/null 2>&1
+  if [ $? -ne 0 ]; then
+  echo "Python installation missing. Refer to Utilities/PC_Software/ROT_AppliConfig/README.md"
+  exit 1
+  fi
+  python="python "
 else
-  #line for python
-  echo "AppliCfg with python script"
-  applicfg="$cube_fw_path/Utilities/PC_Software/ROT_AppliConfig/AppliCfg.py"
-  #determine/check python version command
   python="python3 "
 fi
 
+# Environment variable for AppliCfg
+applicfg="$cube_fw_path/Utilities/PC_Software/ROT_AppliConfig/AppliCfg.py"
+
 #postbuild
 preprocess_bl2_file="$project_dir/image_macros_preprocessed_bl2.c"
-appli_dir="../../../../$oemirot_boot_path_project"
+appli_dir="../../../../$oemirot_appli_path_project"
 auto_rot_update="$project_dir/../auto_rot_update.sh"
 map_properties="$project_dir/../map.properties"
-update="$project_dir/../../../../ROT_Provisioning/OEMiROT/ob_flash_programming.sh"
 
 provisioning="$project_dir/../../../../ROT_Provisioning/img_config.sh"
 flash_layout="$project_dir/../Inc/flash_layout.h"
@@ -56,6 +93,7 @@ $python$applicfg flash --layout $preprocess_bl2_file -b oemurot_enable -m  RE_OE
 if [ $? != 0 ]; then error; fi
 
 source $auto_rot_update
+update="$provisioningdir/$bootpath/ob_flash_programming.sh"
 
 #======================================================================================
 #image xml configuration files
@@ -297,12 +335,11 @@ if [ $? != 0 ]; then error; fi
 $python$applicfg definevalue --layout $preprocess_bl2_file -m RE_IMAGE_NON_SECURE_IMAGE_SIZE -n NS_CODE_SIZE $s_main --vb >> $current_log_file
 if [ $? != 0 ]; then error; fi
 
+$python$applicfg setdefine --layout $preprocess_bl2_file -m RE_NS_DATA_IMAGE_NUMBER -n NS_DATA_IMAGE_EN -v 1 $ns_main --vb >> $current_log_file
+if [ $? != 0 ]; then error; fi
+
 # Bypass configuration of appli_flash_layout file if not present
 if [ -f $appli_flash_layout ]; then
-
-  $python$applicfg setdefine --layout $preprocess_bl2_file -m RE_NS_DATA_IMAGE_NUMBER -n NS_DATA_IMAGE_EN -v 1 $ns_main --vb >> $current_log_file
-  $command
-  if [ $? != 0 ]; then error; fi
 
   $python$applicfg setdefine --layout $preprocess_bl2_file -m RE_OVER_WRITE -n MCUBOOT_OVERWRITE_ONLY -v 1 $appli_flash_layout --vb >> $current_log_file
   $command
@@ -435,16 +472,16 @@ if [ $? != 0 ]; then error; fi
 
 #xml for init image generation
 
-cp $s_code_xml $s_code_init_xml >> $current_log_file 2>&1
+$python$applicfg xmlval --layout $preprocess_bl2_file -m RE_IMAGE_FLASH_SECURE_IMAGE_SIZE -c S $s_code_init_xml --vb >> $current_log_file
 if [ $? != 0 ]; then error; fi
 
-cp $ns_code_xml $ns_code_init_xml >> $current_log_file 2>&1
+$python$applicfg xmlval --layout $preprocess_bl2_file -m RE_IMAGE_FLASH_NON_SECURE_IMAGE_SIZE -c S $ns_code_init_xml --vb >> $current_log_file
 if [ $? != 0 ]; then error; fi
 
-cp $s_data_xml $s_data_init_xml >> $current_log_file 2>&1
+$python$applicfg xmlval --layout $preprocess_bl2_file -m RE_IMAGE_FLASH_SECURE_DATA_IMAGE_SIZE -c S $s_data_init_xml --vb >> $current_log_file
 if [ $? != 0 ]; then error; fi
 
-cp $ns_data_xml $ns_data_init_xml >> $current_log_file 2>&1
+$python$applicfg xmlval --layout $preprocess_bl2_file -m RE_IMAGE_FLASH_NON_SECURE_DATA_IMAGE_SIZE -c S $ns_data_init_xml --vb >> $current_log_file
 if [ $? != 0 ]; then error; fi
 
 $python $applicfg xmlparam --option add -n "Clear" -t Data -c -c -h 1 -d "" $s_code_init_xml --vb >> $current_log_file

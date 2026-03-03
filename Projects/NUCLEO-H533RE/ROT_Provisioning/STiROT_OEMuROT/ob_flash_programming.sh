@@ -44,9 +44,9 @@ remove_protect="-ob SECWM1_STRT=1 SECWM1_END=0 WRPSGn1=0xff WRPSGn2=0xff SECWM2_
 erase_all="-e all"
 
 if [ $isGeneratedByCubeMX == "true" ]; then
-   appli_dir=$oemirot_boot_path_project
+   appli_dir=$oemirot_appli_path_project
 else
-   appli_dir="../../$oemirot_boot_path_project"
+   appli_dir="../../$oemirot_appli_path_project"
 fi
 # =============================================== Configure Option Bytes ====================================================================
 action="Set TZEN = 1"
@@ -141,7 +141,7 @@ fi
 
 action="Write OEMuROT_Boot"
 echo "$action"
-"$stm32programmercli" $connect_no_reset -d "$cube_fw_path/Projects/NUCLEO-H533RE/Applications/ROT/OEMiROT_Boot/Binary/$oemurot_image" -v
+"$stm32programmercli" $connect_no_reset -d "$cube_fw_path/Projects/NUCLEO-H533RE/${oemirot_boot_path_project}/Binary/$oemurot_image" -v
 if [ $? -ne 0 ]; then error; return 1; fi
 echo "OEMuROT_Boot Written"
 

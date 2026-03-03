@@ -1,5 +1,7 @@
 @ECHO OFF
-:: arg1 is the binary type (1 nonsecure, 2 secure)
+:: arg1 is the security type (nonsecure, secure)
+:: When script is called from STM32CubeIDE : set signing="%1"
+:: When script is called from IAR or KEIL  : set "signing=%1"
 set "signing=%1"
 
 :: Getting the Trusted Package Creator CLI path
@@ -64,6 +66,11 @@ set ns_data_enc_sign_hex_xml_field="%provisioningdir%\%bootpath%\Binary\ns_data_
 set s_data_init_sign_hex_xml_field="%provisioningdir%\%bootpath%\Binary\s_data_init_sign.hex"
 set ns_data_init_sign_hex_xml_field="%provisioningdir%\%bootpath%\Binary\ns_data_init_sign.hex"
 
+::Make sure we have a Binary sub-folder in UserApp folder
+if not exist "%bin_path_xml_field%" (
+mkdir "%bin_path_xml_field%"
+)
+
 ::===============================================
 ::Variables updated by OEMiROT_Boot postbuild
 ::===============================================
@@ -71,19 +78,21 @@ set app_image_number=2
 set image_s_size=0x6000
 
 :start
-goto exe:
-goto py:
-:exe
-::line for window executable
-set "applicfg=%cube_fw_path%\Utilities\PC_Software\ROT_AppliConfig\dist\AppliCfg.exe"
-set "python="
-if exist %applicfg% (
-goto postbuild
+:: Check if Python is installed
+python3 --version >nul 2>&1
+if %errorlevel% neq 0 (
+ python --version >nul 2>&1
+ if !errorlevel! neq 0 (
+    echo Python installation missing. Refer to Utilities\PC_Software\ROT_AppliConfig\README.md
+    goto :error
+ )
+  set "python=python "
+) else (
+  set "python=python3 "
 )
-:py
-::called if we just want to use AppliCfg python (think to comment "goto exe:")
+
+:: Environment variable for AppliCfg
 set "applicfg=%cube_fw_path%\Utilities\PC_Software\ROT_AppliConfig\AppliCfg.py"
-set "python=python "
 
 :postbuild
 echo Postbuild %signing% image >> %current_log_file% 2>>&1

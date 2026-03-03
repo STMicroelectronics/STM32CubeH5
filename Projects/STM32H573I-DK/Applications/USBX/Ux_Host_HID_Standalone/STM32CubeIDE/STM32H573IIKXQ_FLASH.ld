@@ -22,7 +22,7 @@
 ******************************************************************************
 ** @attention
 **
-** Copyright (c) 2024 STMicroelectronics.
+** Copyright (c) 2023 STMicroelectronics.
 ** All rights reserved.
 **
 ** This software is licensed under terms that can be found in the LICENSE file
@@ -51,6 +51,7 @@ MEMORY
 /* Sections */
 SECTIONS
 {
+
   /* The startup code into "FLASH" Rom type memory */
   .isr_vector :
   {

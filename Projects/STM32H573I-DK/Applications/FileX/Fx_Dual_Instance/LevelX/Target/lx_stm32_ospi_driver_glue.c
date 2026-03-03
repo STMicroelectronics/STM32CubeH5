@@ -28,7 +28,7 @@
   DelayBlockBypass      = used
  */
 
-extern XSPI_HandleTypeDef hospi1;
+extern XSPI_HandleTypeDef hxspi1;
 
 #if (LX_STM32_OSPI_INIT == 1)
 extern void MX_OCTOSPI1_Init(void);
@@ -65,8 +65,8 @@ INT lx_stm32_ospi_lowlevel_init(UINT instance)
 
   /* Call the DeInit function to reset the driver */
 #if (LX_STM32_OSPI_INIT == 1)
-  hospi1.Instance = OCTOSPI1;
-  if (HAL_XSPI_DeInit(&hospi1) != HAL_OK)
+  hxspi1.Instance = OCTOSPI1;
+  if (HAL_XSPI_DeInit(&hxspi1) != HAL_OK)
   {
     return 1;
   }
@@ -76,13 +76,13 @@ INT lx_stm32_ospi_lowlevel_init(UINT instance)
 #endif
 
   /* OSPI memory reset */
-  if (ospi_memory_reset(&hospi1) != 0)
+  if (ospi_memory_reset(&hxspi1) != 0)
   {
     return 1;
   }
 
   /* Enable octal mode */
-  if (ospi_set_octal_mode(&hospi1) != 0)
+  if (ospi_set_octal_mode(&hxspi1) != 0)
   {
     return 1;
   }
@@ -108,7 +108,7 @@ INT lx_stm32_ospi_lowlevel_deinit(UINT instance)
   tx_semaphore_delete(&xspi_rx_semaphore);
 
   /* Call the DeInit function to reset the driver */
-  if (HAL_XSPI_DeInit(&hospi1) != HAL_OK)
+  if (HAL_XSPI_DeInit(&hxspi1) != HAL_OK)
   {
     return 1;
   }
@@ -163,13 +163,13 @@ INT lx_stm32_ospi_get_status(UINT instance)
   /* USER CODE END GET_STATUS_CMD */
 
   /* Configure the command */
-  if (HAL_XSPI_Command(&hospi1, &s_command, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
+  if (HAL_XSPI_Command(&hxspi1, &s_command, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
   {
     return 1;
   }
 
   /* Reception of the data */
-  if (HAL_XSPI_Receive(&hospi1, reg, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
+  if (HAL_XSPI_Receive(&hxspi1, reg, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
   {
     return 1;
   }
@@ -257,13 +257,13 @@ INT lx_stm32_ospi_read(UINT instance, ULONG *address, ULONG *buffer, ULONG words
   /* USER CODE END OSPI_READ_CMD */
 
   /* Configure the command */
-  if (HAL_XSPI_Command(&hospi1, &s_command, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
+  if (HAL_XSPI_Command(&hxspi1, &s_command, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
   {
     return 1;
   }
 
   /* Reception of the data */
-  if (HAL_XSPI_Receive_DMA(&hospi1, (uint8_t*)buffer) != HAL_OK)
+  if (HAL_XSPI_Receive_DMA(&hxspi1, (uint8_t*)buffer) != HAL_OK)
   {
     return 1;
   }
@@ -344,19 +344,19 @@ INT lx_stm32_ospi_write(UINT instance, ULONG *address, ULONG *buffer, ULONG word
     s_command.DataLength  = current_size;
 
     /* Enable write operations */
-    if (ospi_set_write_enable(&hospi1) != 0)
+    if (ospi_set_write_enable(&hxspi1) != 0)
     {
       return 1;
     }
 
     /* Configure the command */
-    if (HAL_XSPI_Command(&hospi1, &s_command, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
+    if (HAL_XSPI_Command(&hxspi1, &s_command, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
     {
       return 1;
     }
 
     /* Transmission of the data */
-    if (HAL_XSPI_Transmit_DMA(&hospi1, (uint8_t*)data_buffer) != HAL_OK)
+    if (HAL_XSPI_Transmit_DMA(&hxspi1, (uint8_t*)data_buffer) != HAL_OK)
     {
       return 1;
     }
@@ -368,7 +368,7 @@ INT lx_stm32_ospi_write(UINT instance, ULONG *address, ULONG *buffer, ULONG word
     }
 
     /* Configure automatic polling mode to wait for end of program */
-    if (ospi_auto_polling_ready(&hospi1, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != 0)
+    if (ospi_auto_polling_ready(&hxspi1, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != 0)
     {
       return 1;
     }
@@ -442,19 +442,19 @@ INT lx_stm32_ospi_erase(UINT instance, ULONG block, ULONG erase_count, UINT full
   /* USER CODE END OSPI_ERASE_CMD */
 
   /* Enable write operations */
-  if (ospi_set_write_enable(&hospi1) != 0)
+  if (ospi_set_write_enable(&hxspi1) != 0)
   {
     return 1;
   }
 
   /* Send the command */
-  if (HAL_XSPI_Command(&hospi1, &s_command, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
+  if (HAL_XSPI_Command(&hxspi1, &s_command, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
   {
     return 1;
   }
 
   /* Configure automatic polling mode to wait for end of erase */
-  if (ospi_auto_polling_ready(&hospi1, LX_STM32_OSPI_BULK_ERASE_MAX_TIME) != 0)
+  if (ospi_auto_polling_ready(&hxspi1, LX_STM32_OSPI_BULK_ERASE_MAX_TIME) != 0)
   {
     return 1;
   }
@@ -527,14 +527,14 @@ static uint8_t ospi_memory_reset(XSPI_HandleTypeDef *hxspi)
   s_command.SIOOMode              = HAL_XSPI_SIOO_INST_EVERY_CMD;
 
   /* Send the command */
-  if (HAL_XSPI_Command(&hospi1, &s_command, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
+  if (HAL_XSPI_Command(&hxspi1, &s_command, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
   {
     return 1;
   }
 
   /* Send the reset memory command */
   s_command.Instruction = LX_STM32_OSPI_RESET_MEMORY_CMD;
-  if (HAL_XSPI_Command(&hospi1, &s_command, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
+  if (HAL_XSPI_Command(&hxspi1, &s_command, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
   {
     return 1;
   }
@@ -551,12 +551,12 @@ static uint8_t ospi_memory_reset(XSPI_HandleTypeDef *hxspi)
   s_config.IntervalTime  = 0x10;
   s_config.AutomaticStop = HAL_XSPI_AUTOMATIC_STOP_ENABLE;
 
-  if (HAL_XSPI_Command(&hospi1, &s_command, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
+  if (HAL_XSPI_Command(&hxspi1, &s_command, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
   {
     return 1;
   }
 
-  if (HAL_XSPI_AutoPolling(&hospi1, &s_config, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
+  if (HAL_XSPI_AutoPolling(&hxspi1, &s_config, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
   {
     return 1;
   }
@@ -595,7 +595,7 @@ static uint8_t ospi_set_write_enable(XSPI_HandleTypeDef *hxspi)
   /* DTR mode is enabled */
   s_command.InstructionDTRMode    = HAL_XSPI_INSTRUCTION_DTR_ENABLE;
 
-  if (HAL_XSPI_Command(&hospi1, &s_command, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
+  if (HAL_XSPI_Command(&hxspi1, &s_command, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
   {
     return 1;
   }
@@ -653,13 +653,13 @@ static uint8_t ospi_auto_polling_ready(XSPI_HandleTypeDef *hxspi, uint32_t timeo
 
   while( LX_STM32_OSPI_CURRENT_TIME() - start < timeout)
   {
-     if (HAL_XSPI_Command(&hospi1, &s_command, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
+     if (HAL_XSPI_Command(&hxspi1, &s_command, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
     {
       status = 1;
       break;
     }
 
-    if (HAL_XSPI_Receive(&hospi1, reg, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
+    if (HAL_XSPI_Receive(&hxspi1, reg, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
     {
       status = 1;
       break;
@@ -715,7 +715,7 @@ static uint8_t ospi_set_octal_mode(XSPI_HandleTypeDef *hxspi)
   /* Add a short delay to let the IP settle before starting the command */
   HAL_Delay(1);
 
-  if (HAL_XSPI_Command(&hospi1, &s_command, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
+  if (HAL_XSPI_Command(&hxspi1, &s_command, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
   {
     return 1;
   }
@@ -728,12 +728,12 @@ static uint8_t ospi_set_octal_mode(XSPI_HandleTypeDef *hxspi)
   s_command.DataMode    = HAL_XSPI_DATA_1_LINE;
   s_command.DataLength  = 1;
 
-  if (HAL_XSPI_Command(&hospi1, &s_command, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
+  if (HAL_XSPI_Command(&hxspi1, &s_command, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
   {
     return 1;
   }
 
-  if (HAL_XSPI_AutoPolling(&hospi1, &s_config, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
+  if (HAL_XSPI_AutoPolling(&hxspi1, &s_config, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
   {
     return 1;
   }
@@ -746,12 +746,12 @@ static uint8_t ospi_set_octal_mode(XSPI_HandleTypeDef *hxspi)
 
   reg[0] = LX_STM32_OSPI_DUMMY_CYCLES_CR_CFG;
 
-  if (HAL_XSPI_Command(&hospi1, &s_command, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
+  if (HAL_XSPI_Command(&hxspi1, &s_command, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
   {
     return 1;
   }
 
-  if (HAL_XSPI_Transmit(&hospi1, reg, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
+  if (HAL_XSPI_Transmit(&hxspi1, reg, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
   {
     return 1;
   }
@@ -762,7 +762,7 @@ static uint8_t ospi_set_octal_mode(XSPI_HandleTypeDef *hxspi)
   s_command.AddressMode = HAL_XSPI_ADDRESS_NONE;
   s_command.DataMode    = HAL_XSPI_DATA_NONE;
 
-  if (HAL_XSPI_Command(&hospi1, &s_command, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
+  if (HAL_XSPI_Command(&hxspi1, &s_command, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
   {
     return 1;
   }
@@ -772,12 +772,12 @@ static uint8_t ospi_set_octal_mode(XSPI_HandleTypeDef *hxspi)
   s_command.Instruction = LX_STM32_OSPI_READ_STATUS_REG_CMD;
   s_command.DataMode    = HAL_XSPI_DATA_1_LINE;
 
-  if (HAL_XSPI_Command(&hospi1, &s_command, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
+  if (HAL_XSPI_Command(&hxspi1, &s_command, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
   {
     return 1;
   }
 
-  if (HAL_XSPI_AutoPolling(&hospi1, &s_config, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
+  if (HAL_XSPI_AutoPolling(&hxspi1, &s_config, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
   {
     return 1;
   }
@@ -792,17 +792,17 @@ static uint8_t ospi_set_octal_mode(XSPI_HandleTypeDef *hxspi)
 
   reg[0] = LX_STM32_OSPI_CR2_DOPI;
 
-  if (HAL_XSPI_Command(&hospi1, &s_command, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
+  if (HAL_XSPI_Command(&hxspi1, &s_command, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
   {
     return 1;
   }
 
-  if (HAL_XSPI_Transmit(&hospi1, reg, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
+  if (HAL_XSPI_Transmit(&hxspi1, reg, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
   {
     return 1;
   }
 
-  if (ospi_auto_polling_ready(&hospi1, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != 0)
+  if (ospi_auto_polling_ready(&hxspi1, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != 0)
   {
     return 1;
   }
@@ -822,12 +822,12 @@ static uint8_t ospi_set_octal_mode(XSPI_HandleTypeDef *hxspi)
   s_command.DataDTRMode        = HAL_XSPI_DATA_DTR_ENABLE;
   s_command.DQSMode            = HAL_XSPI_DQS_ENABLE;
 
-  if (HAL_XSPI_Command(&hospi1, &s_command, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
+  if (HAL_XSPI_Command(&hxspi1, &s_command, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
   {
     return 1;
   }
 
-  if (HAL_XSPI_Receive(&hospi1, reg, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
+  if (HAL_XSPI_Receive(&hxspi1, reg, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
   {
     return 1;
   }

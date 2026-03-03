@@ -61,29 +61,25 @@ LCD.
 
 When the board is in Host mode :
 
-- A menu will appear with 4 buttons and the device name below :
+- A menu will appear with 3 buttons and the device name below :
 
 - Data Role Swap
 
 - Power Role Swap
 
 - Get Source(or Sink) Capa
-
-- Return
 
 When the board is in Device mode :
 
 - The Board in mouse mode will be launched (the touch screen will move the cursor)
 
-- If the "Switch" button is clicked, a menu will be displayed with 4 buttons :
+- If the "Switch" button is clicked, a menu will be displayed with 3 buttons :
 
 - Data Role Swap
 
 - Power Role Swap
 
 - Get Source(or Sink) Capa
-
-- Return
 
 The Power Role Swap feature is supported (as requiring Dual Role Power support) :
 
@@ -152,7 +148,6 @@ The Get Sink Capabilities feature is supported :
 
 - If the request is accepted, the capabilities of the Provider will be displayed.
 
-
 #### <b>Notes</b>
 
 1. Care must be taken when using HAL_Delay(), this function provides accurate
@@ -166,10 +161,8 @@ function.
 2. The application needs to ensure that the HAL time base is always set to 1 millisecond
 to have correct HAL operation.
 
-
 ### <b>Keywords</b>
-Azure rtos, USBX, USB, HID, USB-PD
-
+USBX Device, USBX Host, USBX, USB, HID, USB-PD, RTOS, DRD.
 
 ### <b>Hardware and Software environment</b>
 
@@ -185,5 +178,3 @@ In order to make the program work, you must do the following :
 - Open your preferred toolchain
 - Rebuild all files and load your image into target memory
 - Run the application
-
-

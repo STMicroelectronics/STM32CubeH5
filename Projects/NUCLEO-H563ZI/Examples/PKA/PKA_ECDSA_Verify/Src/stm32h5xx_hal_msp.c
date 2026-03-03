@@ -1,7 +1,7 @@
 /* USER CODE BEGIN Header */
 /**
   ******************************************************************************
-  * @file    PKA/PKA_ECDSA_Verify/Src/stm32wbaxx_hal_msp.c
+  * @file    PKA/PKA_ECDSA_Verify/Src/stm32h5xx_hal_msp.c
   * @author  MCD Application Team
   * @brief   HAL MSP module.
   ******************************************************************************

@@ -555,6 +555,7 @@ uint8_t  USBD_FrameWork_AddToConfDesc(USBD_DevClassHandleTypeDef *pdev, uint8_t 
       break;
 
 #endif /* USBD_MSC_CLASS_ACTIVATED */
+
     /* USER CODE BEGIN FrameWork_AddToConfDesc_1 */
 
     /* USER CODE END FrameWork_AddToConfDesc_1 */

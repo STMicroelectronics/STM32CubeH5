@@ -1,7 +1,7 @@
 /* USER CODE BEGIN Header */
 /**
   ******************************************************************************
-  * @file    CEC/CEC_DataExchange_Device_2/Src/stm32f0xx_hal_msp.c 
+  * @file    CEC/CEC_DataExchange_Device_2/Src/stm32h5xx_hal_msp.c 
   * @author  MCD Application Team
   * @brief   HAL MSP module.
   ******************************************************************************

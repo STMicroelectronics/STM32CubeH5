@@ -452,10 +452,10 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_WritePin(MXCHIP_NSS_GPIO_Port, MXCHIP_NSS_Pin, GPIO_PIN_SET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(MXCHIP_RESET_GPIO_Port, MXCHIP_RESET_Pin, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(MXCHIP_BOOT_GPIO_Port, MXCHIP_BOOT_Pin, GPIO_PIN_SET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(MXCHIP_BOOT_GPIO_Port, MXCHIP_BOOT_Pin, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(MXCHIP_RESET_GPIO_Port, MXCHIP_RESET_Pin, GPIO_PIN_SET);
 
   /*Configure GPIO pin : MXCHIP_FLOW_Pin */
   GPIO_InitStruct.Pin = MXCHIP_FLOW_Pin;
@@ -470,6 +470,13 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
   HAL_GPIO_Init(MXCHIP_NSS_GPIO_Port, &GPIO_InitStruct);
 
+  /*Configure GPIO pin : MXCHIP_BOOT_Pin */
+  GPIO_InitStruct.Pin = MXCHIP_BOOT_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(MXCHIP_BOOT_GPIO_Port, &GPIO_InitStruct);
+
   /*Configure GPIO pin : MXCHIP_RESET_Pin */
   GPIO_InitStruct.Pin = MXCHIP_RESET_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
@@ -482,13 +489,6 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(MXCHIP_NOTIFY_GPIO_Port, &GPIO_InitStruct);
-
-  /*Configure GPIO pin : MXCHIP_BOOT_Pin */
-  GPIO_InitStruct.Pin = MXCHIP_BOOT_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(MXCHIP_BOOT_GPIO_Port, &GPIO_InitStruct);
 
   /* EXTI interrupt init*/
   HAL_NVIC_SetPriority(EXTI3_IRQn, 2, 0);

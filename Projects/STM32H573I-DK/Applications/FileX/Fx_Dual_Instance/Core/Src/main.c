@@ -46,7 +46,7 @@
 
 DCACHE_HandleTypeDef hdcache1;
 
-XSPI_HandleTypeDef hospi1;
+XSPI_HandleTypeDef hxspi1;
 DMA_HandleTypeDef handle_GPDMA1_Channel1;
 DMA_HandleTypeDef handle_GPDMA1_Channel0;
 
@@ -120,7 +120,6 @@ int main(void)
   MX_OCTOSPI1_Init();
   MX_USART1_UART_Init();
   MX_DCACHE1_Init();
-  MX_SDMMC1_SD_Init();
   /* USER CODE BEGIN 2 */
 
   /* USER CODE END 2 */
@@ -293,34 +292,34 @@ static void MX_OCTOSPI1_Init(void)
 
   /* USER CODE END OCTOSPI1_Init 0 */
 
-  HAL_XSPI_DLYB_CfgTypeDef HAL_OSPI_DLYB_Cfg_Struct = {0};
+  HAL_XSPI_DLYB_CfgTypeDef HAL_XSPI_DLYB_Cfg_Struct = {0};
 
   /* USER CODE BEGIN OCTOSPI1_Init 1 */
 
   /* USER CODE END OCTOSPI1_Init 1 */
   /* OCTOSPI1 parameter configuration*/
-  hospi1.Instance = OCTOSPI1;
-  hospi1.Init.FifoThresholdByte = 1;
-  hospi1.Init.MemoryMode = HAL_XSPI_SINGLE_MEM;
-  hospi1.Init.MemoryType = HAL_XSPI_MEMTYPE_MACRONIX;
-  hospi1.Init.MemorySize = HAL_XSPI_SIZE_512MB;
-  hospi1.Init.ChipSelectHighTimeCycle = 2;
-  hospi1.Init.FreeRunningClock = HAL_XSPI_FREERUNCLK_DISABLE;
-  hospi1.Init.ClockMode = HAL_XSPI_CLOCK_MODE_0;
-  hospi1.Init.WrapSize = HAL_XSPI_WRAP_NOT_SUPPORTED;
-  hospi1.Init.ClockPrescaler = 3;
-  hospi1.Init.SampleShifting = HAL_XSPI_SAMPLE_SHIFT_NONE;
-  hospi1.Init.DelayHoldQuarterCycle = HAL_XSPI_DHQC_ENABLE;
-  hospi1.Init.ChipSelectBoundary = HAL_XSPI_BONDARYOF_NONE;
-  hospi1.Init.DelayBlockBypass = HAL_XSPI_DELAY_BLOCK_ON;
-  hospi1.Init.Refresh = 0;
-  if (HAL_XSPI_Init(&hospi1) != HAL_OK)
+  hxspi1.Instance = OCTOSPI1;
+  hxspi1.Init.FifoThresholdByte = 1;
+  hxspi1.Init.MemoryMode = HAL_XSPI_SINGLE_MEM;
+  hxspi1.Init.MemoryType = HAL_XSPI_MEMTYPE_MACRONIX;
+  hxspi1.Init.MemorySize = HAL_XSPI_SIZE_512MB;
+  hxspi1.Init.ChipSelectHighTimeCycle = 2;
+  hxspi1.Init.FreeRunningClock = HAL_XSPI_FREERUNCLK_DISABLE;
+  hxspi1.Init.ClockMode = HAL_XSPI_CLOCK_MODE_0;
+  hxspi1.Init.WrapSize = HAL_XSPI_WRAP_NOT_SUPPORTED;
+  hxspi1.Init.ClockPrescaler = 3;
+  hxspi1.Init.SampleShifting = HAL_XSPI_SAMPLE_SHIFT_NONE;
+  hxspi1.Init.DelayHoldQuarterCycle = HAL_XSPI_DHQC_ENABLE;
+  hxspi1.Init.ChipSelectBoundary = HAL_XSPI_BONDARYOF_NONE;
+  hxspi1.Init.DelayBlockBypass = HAL_XSPI_DELAY_BLOCK_ON;
+  hxspi1.Init.Refresh = 0;
+  if (HAL_XSPI_Init(&hxspi1) != HAL_OK)
   {
     Error_Handler();
   }
-  HAL_OSPI_DLYB_Cfg_Struct.Units = 56;
-  HAL_OSPI_DLYB_Cfg_Struct.PhaseSel = 2;
-  if (HAL_XSPI_DLYB_SetConfig(&hospi1, &HAL_OSPI_DLYB_Cfg_Struct) != HAL_OK)
+  HAL_XSPI_DLYB_Cfg_Struct.Units = 56;
+  HAL_XSPI_DLYB_Cfg_Struct.PhaseSel = 2;
+  if (HAL_XSPI_DLYB_SetConfig(&hxspi1, &HAL_XSPI_DLYB_Cfg_Struct) != HAL_OK)
   {
     Error_Handler();
   }
@@ -417,8 +416,8 @@ static void MX_USART1_UART_Init(void)
 static void MX_GPIO_Init(void)
 {
   GPIO_InitTypeDef GPIO_InitStruct = {0};
-/* USER CODE BEGIN MX_GPIO_Init_1 */
-/* USER CODE END MX_GPIO_Init_1 */
+  /* USER CODE BEGIN MX_GPIO_Init_1 */
+  /* USER CODE END MX_GPIO_Init_1 */
 
   /* GPIO Ports Clock Enable */
   __HAL_RCC_GPIOG_CLK_ENABLE();
@@ -460,8 +459,8 @@ static void MX_GPIO_Init(void)
   HAL_NVIC_SetPriority(EXTI14_IRQn, 6, 0);
   HAL_NVIC_EnableIRQ(EXTI14_IRQn);
 
-/* USER CODE BEGIN MX_GPIO_Init_2 */
-/* USER CODE END MX_GPIO_Init_2 */
+  /* USER CODE BEGIN MX_GPIO_Init_2 */
+  /* USER CODE END MX_GPIO_Init_2 */
 }
 
 /* USER CODE BEGIN 4 */

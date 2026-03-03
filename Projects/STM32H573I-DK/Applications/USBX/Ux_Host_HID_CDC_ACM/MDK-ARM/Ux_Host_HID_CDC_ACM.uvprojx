@@ -10,13 +10,13 @@
       <TargetName>Ux_Host_HID_CDC_ACM</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>6180000::V6.18::ARMCLANG</pCCUsed>
+      <pCCUsed>6210000::V6.21::ARMCLANG</pCCUsed>
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
           <Device>STM32H573IIKx</Device>
           <Vendor>STMicroelectronics</Vendor>
-          <PackID>Keil.STM32H5xx_DFP.1.3.0</PackID>
+          <PackID>Keil.STM32H5xx_DFP.1.5.0-A02</PackID>
           <PackURL>https://www.keil.com/pack/</PackURL>
           <Cpu>IRAM(0x20000000-0x2009FFFF) IROM(0x08000000-0x81FFFFF) CLOCK(8000000) FPU3(SFPU) CPUTYPE("Cortex-M33") ELITTLE TZ DSP</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -33,7 +33,7 @@
           <SLE66CMisc></SLE66CMisc>
           <SLE66AMisc></SLE66AMisc>
           <SLE66LinkerMisc></SLE66LinkerMisc>
-          <SFDFile>$$Device:STM32H573IIKx$CMSIS\SVD\STM32H57x.svd</SFDFile>
+          <SFDFile>$$Device:STM32H573IIKx$CMSIS\SVD\STM32H573.svd</SFDFile>
           <bCustSvd>0</bCustSvd>
           <UseEnv>0</UseEnv>
           <BinPath></BinPath>
@@ -358,7 +358,7 @@
               <MiscControls></MiscControls>
               <Define>TX_SINGLE_MODE_NON_SECURE=1</Define>
               <Undefine></Undefine>
-              <IncludePath></IncludePath>
+              <IncludePath>../Core/Inc;../AZURE_RTOS/App;../USBPD/App;../USBPD/Target;../USBX/App;../USBX/Target;../../../../../../Drivers/STM32H5xx_HAL_Driver/Inc;../../../../../../Drivers/STM32H5xx_HAL_Driver/Inc/Legacy;../../../../../../Middlewares/ST/threadx/common/inc;../../../../../../Middlewares/ST/STM32_USBPD_Library/Core/inc;../../../../../../Middlewares/ST/STM32_USBPD_Library/Devices/STM32H5XX/inc;../../../../../../Drivers/CMSIS/Device/ST/STM32H5xx/Include;../../../../../../Middlewares/ST/threadx/ports/cortex_m33/ac6/inc;../../../../../../Middlewares/ST/usbx/common/core/inc;../../../../../../Middlewares/ST/usbx/ports/generic/inc;../../../../../../Middlewares/ST/usbx/common/usbx_stm32_host_controllers;../../../../../../Middlewares/ST/usbx/common/usbx_host_classes/inc;../../../../../../Drivers/CMSIS/Include;../../../../../../Drivers/BSP/STM32H573I-DK</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -445,6 +445,11 @@
           <GroupName>Application/User/USBPD/App</GroupName>
           <Files>
             <File>
+              <FileName>usbpd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../USBPD/App/usbpd.c</FilePath>
+            </File>
+            <File>
               <FileName>usbpd_dpm_core.c</FileName>
               <FileType>1</FileType>
               <FilePath>../USBPD/App/usbpd_dpm_core.c</FilePath>
@@ -453,11 +458,6 @@
               <FileName>usbpd_pwr_if.c</FileName>
               <FileType>1</FileType>
               <FilePath>../USBPD/App/usbpd_pwr_if.c</FilePath>
-            </File>
-            <File>
-              <FileName>usbpd.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../USBPD/App/usbpd.c</FilePath>
             </File>
             <File>
               <FileName>usbpd_usb_if.c</FileName>
@@ -473,6 +473,11 @@
               <FileName>app_usbx_host.c</FileName>
               <FileType>1</FileType>
               <FilePath>../USBX/App/app_usbx_host.c</FilePath>
+            </File>
+            <File>
+              <FileName>app_usbx.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../USBX/App/app_usbx.c</FilePath>
             </File>
             <File>
               <FileName>ux_host_keyboard.c</FileName>
@@ -558,6 +563,16 @@
               <FileName>stm32h5xx_ll_exti.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_ll_exti.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32h5xx_hal_tim.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_tim.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32h5xx_hal_tim_ex.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_tim_ex.c</FilePath>
             </File>
             <File>
               <FileName>stm32h5xx_hal_adc.c</FileName>
@@ -648,16 +663,6 @@
               <FileName>stm32h5xx_hal_icache.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_icache.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32h5xx_hal_tim.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_tim.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32h5xx_hal_tim_ex.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_tim_ex.c</FilePath>
             </File>
             <File>
               <FileName>stm32h5xx_ll_ucpd.c</FileName>
@@ -2000,9 +2005,14 @@
               <FilePath>../../../../../../Middlewares/ST/usbx/common/core/src/ux_utility_memory_free.c</FilePath>
             </File>
             <File>
-              <FileName>ux_utility_memory_free_block_best_get.c</FileName>
+              <FileName>ux_utility_memory_byte_pool_create.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../Middlewares/ST/usbx/common/core/src/ux_utility_memory_free_block_best_get.c</FilePath>
+              <FilePath>../../../../../../Middlewares/ST/usbx/common/core/src/ux_utility_memory_byte_pool_create.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_utility_memory_byte_pool_search.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../Middlewares/ST/usbx/common/core/src/ux_utility_memory_byte_pool_search.c</FilePath>
             </File>
             <File>
               <FileName>ux_utility_memory_set.c</FileName>
@@ -2183,16 +2193,6 @@
               <FileName>ux_system_uninitialize.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../Middlewares/ST/usbx/common/core/src/ux_system_uninitialize.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_utility_memory_byte_pool_create.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../Middlewares/ST/usbx/common/core/src/ux_utility_memory_byte_pool_create.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_utility_memory_byte_pool_search.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../Middlewares/ST/usbx/common/core/src/ux_utility_memory_byte_pool_search.c</FilePath>
             </File>
           </Files>
         </Group>

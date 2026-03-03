@@ -264,16 +264,12 @@ void SDMMC1_IRQHandler(void)
 #if defined(TCPP0203_SUPPORT)
 
 /**
-
   * @brief  This function handles external line interrupt request.
-
   *         (Associated to FLGn line in case of TCPP0203 management)
-
   * @retval None
-
   */
 
-void TCPP0203_PORT0_FLG_EXTI_IRQHANDLER(void)
+void EXTI1_IRQHandler(void)
 {
   /* Manage Flags */
   if (LL_EXTI_IsActiveFallingFlag_0_31(LL_EXTI_LINE_1) != RESET)

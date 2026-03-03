@@ -1,6 +1,6 @@
 # STM32CubeH5 MCU Firmware Package
 
-![latest tag](https://img.shields.io/github/v/tag/STMicroelectronics/STM32CubeH5.svg?color=brightgreen)
+![tag](https://img.shields.io/badge/tag-v1.6.0-brightgreen.svg)
 
 > [!IMPORTANT]
 > This repository has been created using the `git submodule` command. Please refer to the ["How to use"](README.md#how-to-use) section for more details.

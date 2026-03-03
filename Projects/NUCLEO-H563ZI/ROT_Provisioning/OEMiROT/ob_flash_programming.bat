@@ -32,9 +32,9 @@ set connect_no_reset=-c port=SWD speed=fast ap=1 mode=Hotplug
 set connect_reset=-c port=SWD speed=fast ap=1 mode=UR
 
 if "%isGeneratedByCubeMX%" == "true" (
-set appli_dir=%oemirot_boot_path_project%
+set appli_dir=%oemirot_appli_path_project%
 ) else (
-set appli_dir=../../%oemirot_boot_path_project%
+set appli_dir=../../%oemirot_appli_path_project%
 )
 
 :: =============================================== Remove protections and initialize Option Bytes ==========================================
@@ -117,7 +117,7 @@ IF !errorlevel! NEQ 0 goto :error
 
 set "action=Write OEMiROT_Boot"
 echo %action%
-%stm32programmercli% %connect_no_reset% -d %cube_fw_path%\Projects\NUCLEO-H563ZI\Applications\ROT\OEMiROT_Boot\Binary\OEMiROT_Boot.bin %bootaddress% -v
+%stm32programmercli% %connect_no_reset% -d %cube_fw_path%\Projects\NUCLEO-H563ZI\%oemirot_boot_path_project%\Binary\OEMiROT_Boot.bin %bootaddress% -v
 IF !errorlevel! NEQ 0 goto :error
 echo "OEMiROT_Boot Written"
 

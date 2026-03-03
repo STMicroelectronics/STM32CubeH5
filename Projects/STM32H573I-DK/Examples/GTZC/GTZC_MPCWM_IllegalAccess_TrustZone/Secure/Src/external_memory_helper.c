@@ -25,7 +25,7 @@
 /* Private define ------------------------------------------------------------*/
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
-extern XSPI_HandleTypeDef    hospi1;
+extern XSPI_HandleTypeDef    hxspi1;
 XSPI_RegularCmdTypeDef sCommand = {0};
 XSPI_MemoryMappedTypeDef sMemMappedCfg = {0};
 
@@ -55,12 +55,12 @@ uint32_t extMemory_Config(void)
   /* USER CODE END OCTOSPI1_Init 1 */
   HAL_OSPI_DLYB_Cfg_Struct.Units = 0;
   HAL_OSPI_DLYB_Cfg_Struct.PhaseSel = 0;
-  if (HAL_XSPI_DLYB_SetConfig(&hospi1, &HAL_OSPI_DLYB_Cfg_Struct) != HAL_OK)
+  if (HAL_XSPI_DLYB_SetConfig(&hxspi1, &HAL_OSPI_DLYB_Cfg_Struct) != HAL_OK)
   {
     return 1;
   }
   /* Configure the memory in octal mode ------------------------------------- */
-  OSPI_OctalModeCfg(&hospi1);
+  OSPI_OctalModeCfg(&hxspi1);
 
   sCommand.InstructionMode    = HAL_XSPI_INSTRUCTION_8_LINES;
   sCommand.InstructionWidth   = HAL_XSPI_INSTRUCTION_16_BITS;
@@ -73,7 +73,7 @@ uint32_t extMemory_Config(void)
   sCommand.SIOOMode           = HAL_XSPI_SIOO_INST_EVERY_CMD;
 
   /* Enable write operations ------------------------------------------ */
-  OSPI_WriteEnable(&hospi1);
+  OSPI_WriteEnable(&hxspi1);
 
   /* Erasing Sequence ------------------------------------------------- */
   sCommand.OperationType = HAL_XSPI_OPTYPE_COMMON_CFG;
@@ -83,16 +83,16 @@ uint32_t extMemory_Config(void)
   sCommand.DataMode      = HAL_XSPI_DATA_NONE;
   sCommand.DummyCycles   = 0;
 
-  if (HAL_XSPI_Command(&hospi1, &sCommand,5000U) != HAL_OK)
+  if (HAL_XSPI_Command(&hxspi1, &sCommand,5000U) != HAL_OK)
   {
     return 2;
   }
 
   /* Configure automatic polling mode to wait for end of erase ------ */
-  OSPI_AutoPollingMemReady(&hospi1);
+  OSPI_AutoPollingMemReady(&hxspi1);
 
   /* Enable write operations ---------------------------------------- */
-  OSPI_WriteEnable(&hospi1);
+  OSPI_WriteEnable(&hxspi1);
 
   /* Memory-mapped mode configuration ------------------------------- */
   sCommand.OperationType = HAL_XSPI_OPTYPE_WRITE_CFG;
@@ -101,7 +101,7 @@ uint32_t extMemory_Config(void)
   sCommand.DataLength    = 1;
   sCommand.DQSMode       = HAL_XSPI_DQS_ENABLE;
 
-  if (HAL_XSPI_Command(&hospi1, &sCommand, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
+  if (HAL_XSPI_Command(&hxspi1, &sCommand, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
   {
     return 3;
   }
@@ -111,14 +111,14 @@ uint32_t extMemory_Config(void)
   sCommand.DummyCycles   = DUMMY_CLOCK_CYCLES_READ;
   sCommand.DQSMode       = HAL_XSPI_DQS_DISABLE;
 
-  if (HAL_XSPI_Command(&hospi1, &sCommand, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
+  if (HAL_XSPI_Command(&hxspi1, &sCommand, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
   {
     return 4;
   }
 
   sMemMappedCfg.TimeOutActivation  = HAL_XSPI_TIMEOUT_COUNTER_ENABLE;
   sMemMappedCfg.TimeoutPeriodClock = 0x50;
-  if (HAL_XSPI_MemoryMapped(&hospi1, &sMemMappedCfg) != HAL_OK)
+  if (HAL_XSPI_MemoryMapped(&hxspi1, &sMemMappedCfg) != HAL_OK)
   {
     return 5;
   }

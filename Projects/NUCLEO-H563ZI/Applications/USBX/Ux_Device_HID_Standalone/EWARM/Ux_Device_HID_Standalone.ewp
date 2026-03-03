@@ -74,7 +74,7 @@
         </option>
         <option>
           <name>OGLastSavedByProductVersion</name>
-          <state>9.20.1.43525</state>
+          <state>9.20.4.46976</state>
         </option>
         <option>
           <name>OGChipSelectEditMenu</name>
@@ -1105,6 +1105,9 @@
             <name>$PROJ_DIR$\..\USBX\App\app_usbx_device.c</name>
           </file>
           <file>
+            <name>$PROJ_DIR$/../USBX/App/app_usbx.c</name>
+          </file>
+          <file>
             <name>$PROJ_DIR$\..\USBX\App\ux_device_mouse.c</name>
           </file>
         </group>
@@ -1127,6 +1130,12 @@
     </group>
     <group>
       <name>STM32H5xx_HAL_Driver</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_tim.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_tim_ex.c</name>
+      </file>
       <file>
         <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_hal_adc.c</name>
       </file>
@@ -1171,12 +1180,6 @@
       </file>
       <file>
         <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_hal_icache.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_tim.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_tim_ex.c</name>
       </file>
       <file>
         <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_hal_pcd.c</name>
@@ -1231,12 +1234,6 @@
         <file>
           <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_utility_memory_allocate.c</name>
         </file>
-		<file>
-			<name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_utility_memory_byte_pool_create.c</name>
-		</file>
-		<file>
-			<name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_utility_memory_byte_pool_search.c</name>
-		</file>
         <file>
           <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_utility_memory_allocate_add_safe.c</name>
         </file>
@@ -1256,7 +1253,10 @@
           <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_utility_memory_free.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_utility_memory_free_block_best_get.c</name>
+          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_utility_memory_byte_pool_create.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_utility_memory_byte_pool_search.c</name>
         </file>
         <file>
           <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\usbx\common\core\src\ux_utility_memory_set.c</name>

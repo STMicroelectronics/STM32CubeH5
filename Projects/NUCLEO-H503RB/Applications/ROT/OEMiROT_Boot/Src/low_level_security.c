@@ -45,6 +45,17 @@
 /* OEMIROT_Boot Vector Address  */
 #define OEMIROT_BOOT_VTOR_ADDR ((uint32_t)(BL2_CODE_START))
 
+#define TAMP_ACTIVE_OUT_PERIOD 4U
+
+/**
+  * @brief  check register value different from the expected value
+  *
+  * @param  REG 32-bit register to read
+  * @param  VAL 32-bit mask and expected register value
+  * @retval None
+  */
+#define CHECK_REG(REG, VAL)  (READ_BIT((REG), (VAL)) != (VAL))
+
 /**************************
   * Initial configuration *
   *************************/
@@ -887,7 +898,7 @@ static void mpu_loader_cfg(void)
     for (i = 0U; i < ARRAY_SIZE(region_cfg_loader); i++)
     {
       if (mpu_armv8m_region_enable_check(&dev_mpu,
-        (struct mpu_armv8m_region_cfg_t *)&region_cfg_loader[i]) != MPU_ARMV8M_OK)
+          (struct mpu_armv8m_region_cfg_t *)&region_cfg_loader[i]) != MPU_ARMV8M_OK)
       {
         Error_Handler();
       }
@@ -949,15 +960,8 @@ static void flash_priv_cfg(void)
 
 
 #if (OEMIROT_TAMPER_ENABLE != NO_TAMPER)
-const RTC_PrivilegeStateTypeDef TamperPrivConf = {
-    .rtcPrivilegeFull = RTC_PRIVILEGE_FULL_NO,
-    .rtcPrivilegeFeatures = RTC_PRIVILEGE_FEATURE_NONE,
-    .tampPrivilegeFull = TAMP_PRIVILEGE_FULL_YES,
-    .MonotonicCounterPrivilege = TAMP_MONOTONIC_CNT_PRIVILEGE_NO,
-    .backupRegisterStartZone2 = 0,
-    .backupRegisterStartZone3 = 0
-};
-const RTC_InternalTamperTypeDef InternalTamperConf = {
+const RTC_InternalTamperTypeDef InternalTamperConf =
+{
     .IntTamper = RTC_INT_TAMPER_9 | RTC_INT_TAMPER_15,
     .TimeStampOnTamperDetection = RTC_TIMESTAMPONTAMPERDETECTION_DISABLE,
     .NoErase                  = RTC_TAMPER_ERASE_BACKUP_ENABLE
@@ -974,10 +978,6 @@ RTC_HandleTypeDef RTCHandle;
 
 static void active_tamper(void)
 {
-#if (OEMIROT_TAMPER_ENABLE != NO_TAMPER)
-    RTC_PrivilegeStateTypeDef TamperPrivConfGet;
-    fih_int fih_rc = FIH_FAILURE;
-#endif /* OEMIROT_TAMPER_ENABLE != NO_TAMPER) */
     /* configuration stage */
     if (uFlowStage == FLOW_STAGE_CFG)
     {
@@ -988,7 +988,9 @@ static void active_tamper(void)
             Error_Handler();
         }
 #endif /*  OEMIROT_DEV_MODE && (OEMIROT_TAMPER_ENABLE != NO_TAMPER) */
+        HAL_PWR_EnableBkUpAccess();
 
+#if (OEMIROT_TAMPER_ENABLE == ALL_TAMPER)
         /* RTC Init */
         RTCHandle.Instance = RTC;
         RTCHandle.Init.HourFormat     = RTC_HOURFORMAT_12;
@@ -1005,12 +1007,16 @@ static void active_tamper(void)
             Error_Handler();
         }
 
-HAL_RTCEx_DeactivateTamper(&RTCHandle, RTC_TAMPER_ALL);
-
+#elif defined(OEMIROT_DEV_MODE)
+        /* Deactivation is required when OEMIROT_TAMPER_ENABLE moved from != NO_TAMPER to == NO_TAMPER with no power off */
+        HAL_RTCEx_DeactivateTamper(&RTCHandle, RTC_TAMPER_ALL);
+#else
+        /* Keep the user tamper configuration */
+#endif  /* (OEMIROT_TAMPER_ENABLE == ALL_TAMPER) */
 #if (OEMIROT_TAMPER_ENABLE != NO_TAMPER)
         /*  Internal Tamper activation  */
         /*  Enable Cryptographic IPs fault (tamp_itamp9), Backup domain voltage threshold monitoring (tamp_itamp1)*/
-        if (HAL_RTCEx_SetInternalTamper(&RTCHandle,(RTC_InternalTamperTypeDef *)&InternalTamperConf)!=HAL_OK)
+        if (HAL_RTCEx_SetInternalTamper_IT(&RTCHandle, (RTC_InternalTamperTypeDef *)&InternalTamperConf) != HAL_OK)
         {
             Error_Handler();
         }
@@ -1018,47 +1024,43 @@ HAL_RTCEx_DeactivateTamper(&RTCHandle, RTC_TAMPER_ALL);
 
 
         /*  Set tamper configuration privileged only   */
-        if (HAL_RTCEx_PrivilegeModeSet(&RTCHandle,(RTC_PrivilegeStateTypeDef *)&TamperPrivConf) != HAL_OK)
-        {
-            Error_Handler();
-        }
+        SET_BIT(TAMP->PRIVCFGR, TAMP_PRIVILEGE_FULL_YES);
         FLOW_CONTROL_STEP(uFlowProtectValue, FLOW_STEP_TAMP_PRIV_EN, FLOW_CTRL_TAMP_PRIV_EN);
 
         /*  Activate Secret Erase */
         HAL_RTCEx_Erase_SecretDev_Conf(&RTCHandle,(uint32_t)TAMP_SECRETDEVICE_ERASE_BKP_SRAM);
         FLOW_CONTROL_STEP(uFlowProtectValue, FLOW_STEP_TAMP_CFG_EN, FLOW_CTRL_TAMP_CFG_EN);
         BOOT_LOG_INF("TAMPER Activated");
-#else
-        HAL_RTCEx_DeactivateInternalTamper(&RTCHandle, RTC_INT_TAMPER_ALL);
+#elif defined(OEMIROT_DEV_MODE)
+        HAL_RTCEx_DeactivateTamper(&RTCHandle, RTC_TAMPER_ALL);
 #endif /* (OEMIROT_TAMPER_ENABLE != NO_TAMPER) */
+        HAL_PWR_DisableBkUpAccess();
     }
 #if (OEMIROT_TAMPER_ENABLE != NO_TAMPER)
     /* verification stage */
     else
     {
         /*  Check Internal Tamper activation */
-        if ((READ_BIT(RTC->CR, RTC_CR_TAMPTS) != InternalTamperConf.TimeStampOnTamperDetection) ||
-            (READ_REG(TAMP->CR1) != 0x41000000U) ||
-            (READ_REG(TAMP->CR3) != 0x00000000U))
+        if ((READ_BIT(RTC->CR, RTC_CR_TAMPTS) != RTC_TIMESTAMPONTAMPERDETECTION_DISABLE) ||
+            (CHECK_REG(TAMP->CR1, (TAMP_CR1_ITAMP9E | TAMP_CR1_ITAMP15E))) ||
+            (CHECK_REG(TAMP->IER, (TAMP_IER_ITAMP9IE | TAMP_IER_ITAMP15IE))) ||
+            (READ_BIT(TAMP->CR3, (TAMP_CR3_ITAMP9NOER | TAMP_CR3_ITAMP15NOER)) != 0x00000000U))
+
         {
             Error_Handler();
         }
         FLOW_CONTROL_STEP(uFlowProtectValue, FLOW_STEP_TAMP_INT_CH, FLOW_CTRL_TAMP_INT_CH);
 
+        FLOW_CONTROL_STEP(uFlowProtectValue, FLOW_STEP_TAMP_SEC_CH, FLOW_CTRL_TAMP_SEC_CH);
 
-        /*  Check tamper configuration privileged only   */
-        if (HAL_RTCEx_PrivilegeModeGet(&RTCHandle,(RTC_PrivilegeStateTypeDef *)&TamperPrivConfGet) != HAL_OK)
+        if (CHECK_REG(TAMP->PRIVCFGR, TAMP_PRIVILEGE_FULL_YES))
         {
-            Error_Handler();
-        }
-        FIH_CALL(boot_fih_memequal, fih_rc,(void *)&TamperPrivConf, (void *)&TamperPrivConfGet, sizeof(TamperPrivConf));
-        if (fih_not_eq(fih_rc, FIH_SUCCESS)) {
                 Error_Handler();
         }
         FLOW_CONTROL_STEP(uFlowProtectValue, FLOW_STEP_TAMP_PRIV_CH, FLOW_CTRL_TAMP_PRIV_CH);
 
         /*  Check Secret Erase */
-        if (READ_BIT(TAMP->ERCFGR, TAMP_ERCFGR_ERCFG0) != TAMP_ERCFGR_ERCFG0)
+        if (CHECK_REG(TAMP->ERCFGR, TAMP_ERCFGR_ERCFG0))
         {
             Error_Handler();
         }

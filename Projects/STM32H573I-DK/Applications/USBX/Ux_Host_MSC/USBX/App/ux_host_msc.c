@@ -62,7 +62,7 @@ extern TX_EVENT_FLAGS_GROUP ux_app_EventFlag;
 /**
   * @brief  Function implementing msc_process_thread_entry.
   * @param  thread_input: Not used
-  * @retval none
+  * @retval None
   */
 VOID msc_process_thread_entry(ULONG thread_input)
 {

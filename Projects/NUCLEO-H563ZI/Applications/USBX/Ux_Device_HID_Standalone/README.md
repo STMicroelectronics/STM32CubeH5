@@ -40,8 +40,6 @@ The remote wakeup feature is not yet implemented (used to bring the USB suspende
 
 - Connect the STM32H563xx board CN11 to the PC through "TYPE-C" to "Standard A" cable.
 
-#### <b>USBX usage hints</b>
-
 ### <b>Keywords</b>
 
 Standalone, USBX Device, USB_DRD, Full Speed, HID, Mouse

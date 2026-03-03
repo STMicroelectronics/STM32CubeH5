@@ -1,4 +1,6 @@
 call ../env.bat
+:: Get config updated by OEMiROT_Boot
+call img_config.bat
 set rot_provisioning_path=%rot_provisioning_path:"=%
 set cube_fw_path=%cube_fw_path:"=%
 
@@ -32,9 +34,9 @@ set connect_no_reset=-c port=SWD speed=fast ap=1 mode=Hotplug
 set connect_reset=-c port=SWD speed=fast ap=1 mode=UR
 
 if "%isGeneratedByCubeMX%" == "true" (
-set appli_dir=%oemirot_boot_path_project%
+set appli_dir=%oemirot_appli_path_project%
 ) else (
-set appli_dir=../../%oemirot_boot_path_project%
+set appli_dir=../../%oemirot_appli_path_project%
 )
 
 :: =============================================== Remove protections and initialize Option Bytes ==========================================
@@ -90,12 +92,20 @@ echo "TZ Appli NonSecure Written"
 )
 
 if  "%app_image_number%" == "1" (
+if  "%app_full_secure%" == "1" (
+set "action=Write Appli Full Secure"
+echo %action%
+%stm32programmercli% %connect_no_reset% -d %appli_dir%\Binary\%s_code_image% -v
+IF !errorlevel! NEQ 0 goto :error
+echo "Appli Full Secure Written"
+) else (
 set "action=Write One image Appli"
 echo %action%
 %stm32programmercli% %connect_no_reset% -d %appli_dir%\Binary\%one_code_image% -v
 IF !errorlevel! NEQ 0 goto :error
 
 echo "TZ Appli Written"
+)
 )
 
 if  "%s_data_image_number%" == "1" (
@@ -123,7 +133,7 @@ IF !errorlevel! NEQ 0 goto :error
 
 set "action=Write OEMiROT_Boot"
 echo %action%
-%stm32programmercli% %connect_no_reset% -d %cube_fw_path%\Projects\STM32H573I-DK\Applications\ROT\OEMiROT_Boot\Binary\OEMiROT_Boot.bin %bootaddress% -v
+%stm32programmercli% %connect_no_reset% -d %cube_fw_path%\Projects\STM32H573I-DK\%oemirot_boot_path_project%\Binary\OEMiROT_Boot.bin %bootaddress% -v
 IF !errorlevel! NEQ 0 goto :error
 echo "OEMiROT_Boot Written"
 

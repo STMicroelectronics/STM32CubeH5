@@ -29,13 +29,13 @@ Security, PKA, NIST, CAVP, ECDSA verification
 
 ### <b>Directory contents</b>
 
-  - PKA/PKA_ECDSA_Verify/Inc/stm32wbaxx_hal_conf.h    HAL configuration file
-  - PKA/PKA_ECDSA_Verify/Inc/stm32wbaxx_it.h          Interrupt handlers header file
+  - PKA/PKA_ECDSA_Verify/Inc/stm32h5xx_hal_conf.h     HAL configuration file
+  - PKA/PKA_ECDSA_Verify/Inc/stm32h5xx_it.h           Interrupt handlers header file
   - PKA/PKA_ECDSA_Verify/Inc/main.h                   Header for main.c module
-  - PKA/PKA_ECDSA_Verify/Src/stm32wbaxx_it.c          Interrupt handlers
+  - PKA/PKA_ECDSA_Verify/Src/stm32h5xx_it.c           Interrupt handlers
   - PKA/PKA_ECDSA_Verify/Src/main.c                   Main program
-  - PKA/PKA_ECDSA_Verify/Src/stm32wbaxx_hal_msp.c     HAL MSP module 
-  - PKA/PKA_ECDSA_Verify/Src/system_stm32wbaxx.c      STM32WBAxx system source file
+  - PKA/PKA_ECDSA_Verify/Src/stm32h5xx_hal_msp.c      HAL MSP module 
+  - PKA/PKA_ECDSA_Verify/Src/system_stm32h5xx.c       STM32H5xx system source file
   - PKA/PKA_ECDSA_Verify/Src/prime256v1.c             Description of P-256 (ECDSA-256)
   - PKA/PKA_ECDSA_Verify/Inc/prime256v1.h             Header for prime256v1.c
   - PKA/PKA_ECDSA_Verify/Src/SigVer.c                 Reflect the content of the test vector from SigVer.rsp

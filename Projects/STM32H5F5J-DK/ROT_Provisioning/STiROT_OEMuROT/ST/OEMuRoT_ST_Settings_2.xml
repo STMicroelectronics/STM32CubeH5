@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Root xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="SCHVerif.xsd">
+<Obdata>
+	<Info>
+		<Title>OEMuRoT configuration</Title>
+		<ObDestAddress>0xFFD0900</ObDestAddress> 
+		<DoEncryption>1</DoEncryption>
+		<GlobalAlign>16</GlobalAlign>
+	</Info>
+	<File>
+		<Name>OBK image</Name>
+		<Value>./../Binary/OEMuRoT_Config.bin</Value>
+		<Align>1</Align>
+		<KeyType>ecdsa-p256</KeyType>
+		<Type></Type>
+		<Hidden>1</Hidden>
+		<Default>OEMuRoT_Config.bin</Default>
+		<Tooltip>Select the file with obk content</Tooltip>
+	</File>
+	<Output>
+		<Name>Output File</Name>
+		<Value>./../Binary/OEMuRoT_Config.obk</Value>
+		<Default>OEMuRoT_Config.obk</Default>
+		<Tooltip>Select the output file .obk </Tooltip>
+	</Output>	
+</Obdata>
+</Root>

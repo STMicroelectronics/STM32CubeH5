@@ -29,11 +29,12 @@ extern "C" {
 #include "ux_api.h"
 #include "main.h"
 #include "ux_host_cdc_acm.h"
+#include "ux_hcd_stm32.h"
+
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "ux_system.h"
 #include "ux_utility.h"
-#include "ux_hcd_stm32.h"
 #include "ux_host_class_cdc_acm.h"
 #include "stm32h573i_discovery.h"
 #include "app_azure_rtos_config.h"
@@ -49,11 +50,9 @@ extern "C" {
 /* USER CODE END ET */
 
 /* Exported constants --------------------------------------------------------*/
-#define USBX_HOST_MEMORY_STACK_SIZE     1024*12
 
 #define UX_HOST_APP_THREAD_STACK_SIZE   1024
 #define UX_HOST_APP_THREAD_PRIO         10
-
 /* USER CODE BEGIN EC */
 
 /* USER CODE END EC */
@@ -92,16 +91,17 @@ extern "C" {
 
 /* Exported functions prototypes ---------------------------------------------*/
 UINT MX_USBX_Host_Init(VOID *memory_ptr);
+UINT MX_USBX_Host_Stack_Init(VOID);
+UINT MX_USBX_Host_Stack_DeInit(VOID);
 
 /* USER CODE BEGIN EFP */
-VOID USBX_APP_Host_Init(VOID);
 void HAL_GPIO_EXTI_Rising_Callback(uint16_t GPIO_Pin);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define BUTTON_KEY                                   BUTTON_USER
-#define BUTTON_KEY_PIN                               BUTTON_USER_PIN
+#define BUTTON_KEY      BUTTON_USER
+#define BUTTON_KEY_PIN  BUTTON_USER_PIN
 /* USER CODE END PD */
 
 #ifndef UX_HOST_APP_THREAD_NAME

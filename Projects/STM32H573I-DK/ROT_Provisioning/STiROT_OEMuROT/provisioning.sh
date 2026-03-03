@@ -37,25 +37,27 @@ ob_flash_log="ob_flash_programming.log"
 product_state=OPEN
 connect_no_reset=-c port=SWD speed=fast ap=1 mode=Hotplug
 
-flash_layout="$cube_fw_path/Projects/STM32H573I-DK/Applications/ROT/OEMiROT_Boot/Inc/flash_layout.h"
+flash_layout="$cube_fw_path/Projects/STM32H573I-DK/${oemirot_boot_path_project}/Inc/flash_layout.h"
 
 # Environment variable used to know if the firmware image is full secure or not
 stirot_config="./Config/STiRoT_Config.xml"
 
 # Environment variable for AppliCfg
-applicfg="$cube_fw_path/Utilities/PC_Software/ROT_AppliConfig/dist/AppliCfg.exe"
-uname | grep -i -e windows -e mingw
-if [ $? == 0 ] && [ -e "$applicfg" ]; then
-  #line for window executable
-  echo AppliCfg with windows executable
-  python=""
+# Check if Python is installed
+python3 --version >/dev/null 2>&1
+if [ $? -ne 0 ]; then
+  python --version >/dev/null 2>&1
+  if [ $? -ne 0 ]; then
+  echo "Python installation missing. Refer to Utilities/PC_Software/ROT_AppliConfig/README.md"
+  exit 1
+  fi
+  python="python "
 else
-  #line for python
-  echo AppliCfg with python script
-  applicfg="$cube_fw_path/Utilities/PC_Software/ROT_AppliConfig/AppliCfg.py"
-  #determine/check python version command
   python="python3 "
 fi
+
+# Environment variable for AppliCfg
+applicfg="$cube_fw_path/Utilities/PC_Software/ROT_AppliConfig/AppliCfg.py"
 
 error_config()
 {
@@ -203,14 +205,14 @@ step_error()
 echo "====="
 echo "===== Provisioning of STiRoT_OEMuROT boot path"
 echo "===== Application selected through env.sh:"
-echo "=====   $oemirot_boot_path_project"
+echo "=====   $oemirot_appli_path_project"
 echo "===== Product state must be Open. Execute  /ROT_Provisioning/DA/regression.sh if not the case."
 echo "====="
 echo ""
 if [ $isGeneratedByCubeMX != "true" ]; then
-  if [[ ! $oemirot_boot_path_project =~ "OEMiROT_Appli_TrustZone" ]]; then
+  if [[ ! $oemirot_appli_path_project =~ "OEMiROT_Appli_TrustZone" ]]; then
     echo "====="
-    echo "===== Wrong Boot path: $oemirot_boot_path_project"
+    echo "===== Wrong Boot path: $oemirot_appli_path_project"
     echo "===== please modify the env.sh to the right path"
     step_error
   fi
@@ -282,12 +284,18 @@ if [ $isGeneratedByCubeMX != "true" ]; then
   source $tmp_file
 
   echo "   * Code firmware image generation"
-  echo "       Open the OEMiROT_Appli_TrustZone project with preferred toolchain."
-  echo "       Rebuild the Secure project. The rot_tz_s_app_init_sign.hex and rot_tz_s_app_enc_sign.hex files are"
-  echo "       generated with the postbuild command."
-  echo "       Rebuild the NonSecure project. The rot_tz_ns_app_init_sign.hex and rot_tz_ns_app_enc_sign.hex files are"
-  echo "       generated with the postbuild command."
-  echo "       Press any key to continue..."
+    if [ "$app_full_secure" == "1" ]; then
+      echo "       Open the OEMiROT_Appli project with preferred toolchain."
+      echo "       Rebuild the Secure project. The rot_tz_s_app_init_sign.hex and rot_tz_s_app_enc_sign.hex files are"
+      echo "       generated with the postbuild command."
+    else
+      echo "       Open the OEMiROT_Appli_TrustZone project with preferred toolchain."
+      echo "       Rebuild the Secure project. The rot_tz_s_app_init_sign.hex and rot_tz_s_app_enc_sign.hex files are"
+      echo "       generated with the postbuild command."
+      echo "       Rebuild the NonSecure project. The rot_tz_ns_app_init_sign.hex and rot_tz_ns_app_enc_sign.hex files are"
+      echo "       generated with the postbuild command."
+      echo "       Press any key to continue..."
+    fi
   if [ "$mode" != "AUTO" ]; then read -p "" -n1 -s; fi
   echo
 
@@ -305,18 +313,20 @@ if [ $isGeneratedByCubeMX != "true" ]; then
     if [ $? != "0" ]; then error_config; fi
   fi
 
-  echo "   * Data non secure generation (if Data non secure image is enabled)"
-  echo "       Select OEMuROT_NS_Data_Image.xml(Default path is \ROT_Provisioning\STiROT_OEMuROT\Images\OEMuROT_NS_Data_Image.xml)"
-  echo "       Generate the ns_data_enc_sign.hex image"
-  echo "       Press any key to continue..."
-  if [ "$mode" != "AUTO" ]; then read -p "" -n1 -s; fi
-  echo
+  if [ "$app_full_secure" != "1" ]; then
+    echo "   * Data non secure generation (if Data non secure image is enabled)"
+    echo "       Select OEMuROT_NS_Data_Image.xml(Default path is \ROT_Provisioning\STiROT_OEMuROT\Images\OEMuROT_NS_Data_Image.xml)"
+    echo "       Generate the ns_data_enc_sign.hex image"
+    echo "       Press any key to continue..."
+    if [ "$mode" != "AUTO" ]; then read -p "" -n1 -s; fi
+    echo
 
-  if [ "$ns_data_image_number" != "0" ]; then
-    "$stm32tpccli" -pb $ns_data_xml >> $provisioning_log
-    if [ $? != "0" ]; then error_config; fi
-    "$stm32tpccli" -pb $ns_data_init_xml >> $provisioning_log
-    if [ $? != "0" ]; then error_config; fi
+    if [ "$ns_data_image_number" != "0" ]; then
+        "$stm32tpccli" -pb $ns_data_xml >> $provisioning_log
+        if [ $? != "0" ]; then error_config; fi
+        "$stm32tpccli" -pb $ns_data_init_xml >> $provisioning_log
+        if [ $? != "0" ]; then error_config; fi
+    fi
   fi
 fi
 

@@ -24,12 +24,10 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-
 /* Includes ------------------------------------------------------------------*/
 #include "ux_api.h"
 #include "ux_stm32_config.h"
 #include "ux_device_class_storage.h"
-
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
@@ -39,7 +37,7 @@ extern "C" {
 #define USBD_MAX_NUM_CONFIGURATION                     1U
 #define USBD_MAX_SUPPORTED_CLASS                       3U
 #define USBD_MAX_CLASS_ENDPOINTS                       9U
-#define USBD_MAX_CLASS_INTERFACES                      11U
+#define USBD_MAX_CLASS_INTERFACES                      12U
 
 #define USBD_MSC_CLASS_ACTIVATED                       1U
 
@@ -52,7 +50,6 @@ extern "C" {
 /* USER CODE BEGIN ET */
 
 /* USER CODE END ET */
-
 /* Enum Class Type */
 typedef enum
 {
@@ -67,6 +64,8 @@ typedef enum
   CLASS_TYPE_VIDEO    = 8,
   CLASS_TYPE_CCID     = 9,
   CLASS_TYPE_PRINTER  = 10,
+  CLASS_TYPE_AUDIO_10 = 11,
+  CLASS_TYPE_AUDIO_20 = 12
 } USBD_CompositeClassTypeDef;
 
 /* USB Endpoint handle structure */

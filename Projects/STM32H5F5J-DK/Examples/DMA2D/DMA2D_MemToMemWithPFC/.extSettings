@@ -1,0 +1,12 @@
+[ProjectFiles]
+HeaderPath=..\..\..\..\..\..\Drivers\BSP\STM32H5F5J-DK;..\..\..\..\..\..\Drivers\BSP\Components\st1633i;..\..\..\..\..\..\Utilities\lcd;..\..\..\..\..\..\Drivers\BSP\Components\Common;
+
+[Others]
+Define=
+HALModule=EXTI
+[Groups]
+Doc=../README.md;
+Drivers/BSP/STM32H5F5J-DK=../../../../../../Drivers/BSP/STM32H5F5J-DK/stm32h5f5j_discovery.c;../../../../../../Drivers/BSP/STM32H5F5J-DK/stm32h5f5j_discovery_lcd.c;
+Drivers/BSP/Components=../../../../../../Drivers/BSP/Components/st1633i/st1633i_reg.c;../../../../../../Drivers/BSP/Components/st1633i/st1633i.c;
+Utilities=../../../../../../Utilities/lcd/stm32_lcd.c;
+Drivers/STM32H5xx_HAL_Driver=../../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_exti.c;

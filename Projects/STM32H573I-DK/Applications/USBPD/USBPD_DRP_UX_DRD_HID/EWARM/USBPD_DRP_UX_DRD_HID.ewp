@@ -646,7 +646,25 @@
                 </option>
                 <option>
                     <name>AUserIncludes</name>
-                    <state></state>
+                    <state>$PROJ_DIR$/../Core/Inc</state>
+                    <state>$PROJ_DIR$/../AZURE_RTOS/App</state>
+                    <state>$PROJ_DIR$/../USBPD/App</state>
+                    <state>$PROJ_DIR$/../USBPD/Target</state>
+                    <state>$PROJ_DIR$/../USBX/App</state>
+                    <state>$PROJ_DIR$/../USBX/Target</state>
+                    <state>$PROJ_DIR$/../../../../../../Drivers/STM32H5xx_HAL_Driver/Inc</state>
+                    <state>$PROJ_DIR$/../../../../../../Drivers/STM32H5xx_HAL_Driver/Inc/Legacy</state>
+                    <state>$PROJ_DIR$/../../../../../../Middlewares/ST/threadx/common/inc</state>
+                    <state>$PROJ_DIR$/../../../../../../Middlewares/ST/STM32_USBPD_Library/Core/inc</state>
+                    <state>$PROJ_DIR$/../../../../../../Middlewares/ST/STM32_USBPD_Library/Devices/STM32H5XX/inc</state>
+                    <state>$PROJ_DIR$/../../../../../../Drivers/CMSIS/Device/ST/STM32H5xx/Include</state>
+                    <state>$PROJ_DIR$/../../../../../../Middlewares/ST/threadx/ports/cortex_m33/iar/inc</state>
+                    <state>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/core/inc</state>
+                    <state>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/ports/generic/inc</state>
+                    <state>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/usbx_stm32_host_controllers</state>
+                    <state>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/usbx_host_classes/inc</state>
+                    <state>$PROJ_DIR$/../../../../../../Drivers/CMSIS/Include</state>
+                    <state>$PROJ_DIR$/../../../../../../Drivers/BSP/STM32H573I-DK</state>
                 </option>
                 <option>
                     <name>AExtraOptionsCheckV2</name>
@@ -1127,6 +1145,27 @@
                 </group>
             </group>
             <group>
+                <name>Core</name>
+                <file>
+                    <name>$PROJ_DIR$\..\Core\Src\app_threadx.c</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\..\Core\Src\main.c</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\..\Core\Src\stm32h5xx_hal_msp.c</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\..\Core\Src\stm32h5xx_hal_timebase_tim.c</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\..\Core\Src\stm32h5xx_it.c</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\..\Core\Src\tx_initialize_low_level.S</name>
+                </file>
+            </group>
+            <group>
                 <name>USBPD</name>
                 <group>
                     <name>App</name>
@@ -1164,6 +1203,9 @@
                         <name>$PROJ_DIR$\..\USBX\App\app_usbpd.c</name>
                     </file>
                     <file>
+                        <name>$PROJ_DIR$\..\USBX\App\app_usbx.c</name>
+                    </file>
+                    <file>
                         <name>$PROJ_DIR$\..\USBX\App\app_usbx_device.c</name>
                     </file>
                     <file>
@@ -1180,24 +1222,6 @@
                     </file>
                 </group>
             </group>
-            <file>
-                <name>$PROJ_DIR$\..\Core\Src\app_threadx.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\Core\Src\main.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\Core\Src\stm32h5xx_hal_msp.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\Core\Src\stm32h5xx_hal_timebase_tim.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\Core\Src\stm32h5xx_it.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\Core\Src\tx_initialize_low_level.S</name>
-            </file>
         </group>
     </group>
     <group>

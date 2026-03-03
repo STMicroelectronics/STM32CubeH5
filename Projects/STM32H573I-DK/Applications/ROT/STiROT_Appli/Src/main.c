@@ -305,6 +305,7 @@ void RNG_Init(void)
   handle.Instance = RNG;
   handle.State = HAL_RNG_STATE_RESET;
   handle.Lock = HAL_UNLOCKED;
+  handle.Init.ClockErrorDetection = RNG_CED_ENABLE;
 
   if (HAL_RNG_Init(&handle) != HAL_OK)
   {

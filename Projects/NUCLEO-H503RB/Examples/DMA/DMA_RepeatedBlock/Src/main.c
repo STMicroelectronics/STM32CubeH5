@@ -398,8 +398,6 @@ static void MX_GPDMA1_Init(void)
 
   /* USER CODE END GPDMA1_Init 0 */
 
-  DMA_RepeatBlockConfTypeDef RepeatBlockConfig = {0};
-
   /* Peripheral clock enable */
   __HAL_RCC_GPDMA1_CLK_ENABLE();
 
@@ -425,15 +423,6 @@ static void MX_GPDMA1_Init(void)
   handle_GPDMA1_Channel7.Init.TransferEventMode = DMA_TCEM_BLOCK_TRANSFER;
   handle_GPDMA1_Channel7.Init.Mode = DMA_NORMAL;
   if (HAL_DMA_Init(&handle_GPDMA1_Channel7) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  RepeatBlockConfig.RepeatCount = 4;
-  RepeatBlockConfig.SrcAddrOffset = 0;
-  RepeatBlockConfig.DestAddrOffset = 0;
-  RepeatBlockConfig.BlkSrcAddrOffset = 32;
-  RepeatBlockConfig.BlkDestAddrOffset = 0;
-  if (HAL_DMAEx_ConfigRepeatBlock(&handle_GPDMA1_Channel7, &RepeatBlockConfig) != HAL_OK)
   {
     Error_Handler();
   }
@@ -491,14 +480,14 @@ static void MX_ICACHE_Init(void)
   */
 static void MX_GPIO_Init(void)
 {
-/* USER CODE BEGIN MX_GPIO_Init_1 */
-/* USER CODE END MX_GPIO_Init_1 */
+  /* USER CODE BEGIN MX_GPIO_Init_1 */
+  /* USER CODE END MX_GPIO_Init_1 */
 
   /* GPIO Ports Clock Enable */
   __HAL_RCC_GPIOH_CLK_ENABLE();
 
-/* USER CODE BEGIN MX_GPIO_Init_2 */
-/* USER CODE END MX_GPIO_Init_2 */
+  /* USER CODE BEGIN MX_GPIO_Init_2 */
+  /* USER CODE END MX_GPIO_Init_2 */
 }
 
 /* USER CODE BEGIN 4 */
@@ -761,8 +750,7 @@ void Error_Handler(void)
   }
   /* USER CODE END Error_Handler_Debug */
 }
-
-#ifdef  USE_FULL_ASSERT
+#ifdef USE_FULL_ASSERT
 /**
   * @brief  Reports the name of the source file and the source line number
   *         where the assert_param error has occurred.

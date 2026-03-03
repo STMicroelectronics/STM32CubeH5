@@ -16,19 +16,21 @@ set stirot_config=".\Config\STiRoT_Config.xml"
 set is_fw_sec="Is the firmware full secure"
 
 :start
-goto exe:
-goto py:
-:exe
-::called if we want to use AppliCfg executable
-set "applicfg=%cube_fw_path%\Utilities\PC_Software\ROT_AppliConfig\dist\AppliCfg.exe"
-set "python="
-if exist %applicfg% (
-goto update
+:: Check if Python is installed
+python3 --version >nul 2>&1
+if %errorlevel% neq 0 (
+ python --version >nul 2>&1
+ if !errorlevel! neq 0 (
+    echo Python installation missing. Refer to Utilities\PC_Software\ROT_AppliConfig\README.md
+    goto :error
+ )
+  set "python=python "
+) else (
+  set "python=python3 "
 )
-:py
-::called if we just want to use AppliCfg python (think to comment "goto exe:")
+
+:: Environment variable for AppliCfg
 set "applicfg=%cube_fw_path%\Utilities\PC_Software\ROT_AppliConfig\AppliCfg.py"
-set "python=python "
 
 :update
 set "AppliCfg=%python%%applicfg%"
@@ -77,6 +79,18 @@ goto step_error
 )
 
 :: ====================================================== STM32H5 product preparation ======================================================
+if /i "%project_name%" == "STiROT_Appli_TrustZone" (
+set "action=Update full secure to 0 in %stirot_config%"
+%AppliCfg% xmlval -v 0x00 --string -n "Is the firmware full secure" %stirot_config% --vb >> %current_log_file% 2>>&1
+if !errorlevel! neq 0 goto :error
+) else (
+set "action=Update full secure to 1 in %stirot_config%"
+%AppliCfg% xmlval -v 0x01 --string -n "Is the firmware full secure" %stirot_config% --vb >> %current_log_file% 2>>&1
+if !errorlevel! neq 0 goto :error
+)
+set "action=Rebuild obk"
+%stm32tpccli% -obk %stirot_config% >> %provisioning_log%
+
 :: =============================================== Steps to create the STiRoT_Config.obk file ==============================================
 echo Step 1 : Configuration management
 echo    * STiRoT_Config.obk generation:
@@ -243,13 +257,13 @@ if [%1] neq [AUTO] (
     set /p "product_state=%BS%       [ OPEN | PROVISIONED | TZ-CLOSED | CLOSED | LOCKED ]: "
 ) else (
     set "product_state=%2%"
-    if /i "%product_state%" == "OPEN" (
+    if /i "!product_state!" == "OPEN" (
     echo        Product state OPEN not supported in AUTO mode
     goto step_error
     )
 )
 
-if /I "%product_state%" == "OPEN" (
+if /I "!product_state!" == "OPEN" (
 :: Reset SECBOOT_LOCK option bit to 0xC3 (unlock boot address & unique boot entry) to handle Open product state
 set "command=%stm32programmercli% %connect_under_reset% -ob SECBOOT_LOCK=0xC3"
 echo !command! >> %provisioning_log%
@@ -259,25 +273,25 @@ set ps_value=0xED
 goto connect_boot0
 )
 
-if /i "%product_state%" == "PROVISIONED" (
+if /i "!product_state!" == "PROVISIONED" (
 echo;
 set ps_value=0x2E
 goto set_provisionning_ps
 )
 
-if /i "%product_state%" == "TZ-CLOSED" (
+if /i "!product_state!" == "TZ-CLOSED" (
 echo;
 set ps_value=0xC6
 goto set_provisionning_ps
 )
 
-if /i "%product_state%" == "CLOSED" (
+if /i "!product_state!" == "CLOSED" (
 echo;
 set ps_value=0x72
 goto set_provisionning_ps
 )
 
-if /i "%product_state%" == "LOCKED" (
+if /i "!product_state!" == "LOCKED" (
 echo;
 set ps_value=0x5C
 goto set_provisionning_ps
@@ -313,7 +327,7 @@ goto provisioning_step
 :: Set the final product state of the STM32H5 product
 :set_final_ps
 set current_log_file=%provisioning_log%
-set "action=Setting the final product state %product_state% "
+set "action=Setting the final product state !product_state! "
 echo    * %action%
 set "command=%stm32programmercli% %connect_no_reset% -ob PRODUCT_STATE=%ps_value%"
 echo %command% >> %provisioning_log%
@@ -335,7 +349,7 @@ if %obkey_prog_error% neq 0 goto :step_error
 echo        Successful obk provisioning
 echo        (see %ob_key_provisioning_log% for details^)
 echo;
-if /i "%product_state%" == "OPEN" goto :final_execution
+if /i "!product_state!" == "OPEN" goto :final_execution
 goto set_final_ps
 
 :: ============================================================= End functions =============================================================

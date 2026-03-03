@@ -42,11 +42,11 @@ are enabled for the <i>NX_IP</i> instance</p></li>
 </ul>
 <p>The application then creates 3 threads with the different
 priorities:</p>
-<p><strong>NxAppThread</strong> (priority 10, PreemtionThreashold 10) :
+<p><strong>NxAppThread</strong> (priority 10, PreemptionThreshold 10) :
 created with the <i>TX_AUTO_START</i> flag to start automatically.</p>
-<p><strong>AppMQTTClientThread</strong> (priority 3, PreemtionThreashold
+<p><strong>AppMQTTClientThread</strong> (priority 3, PreemptionThreshold
 3) : created with the <i>TX_DONT_START</i> flag to be started later.</p>
-<p><strong>AppSNTPThread</strong> (priority 5, PreemtionThreashold 5) :
+<p><strong>AppSNTPThread</strong> (priority 5, PreemptionThreshold 5) :
 created with the <i>TX_DONT_START</i> flag to be started later.</p>
 <p>The <strong>NxAppThread</strong> starts and perform the following
 actions:</p>

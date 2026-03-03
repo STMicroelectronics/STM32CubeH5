@@ -257,10 +257,10 @@ void BSP_TS_Callback(uint32_t Instance)
 }
 
 /**
-* @brief USB_DRD_FS Initialization Function
-* @param None
-* @retval None
-*/
+  * @brief USB_DRD_FS Initialization Function
+  * @param None
+  * @retval None
+  */
 void MX_USB_DRD_FS_PCD_Init(void)
 {
 
@@ -284,16 +284,18 @@ void MX_USB_DRD_FS_PCD_Init(void)
     Error_Handler();
   }
   /* USER CODE BEGIN USB_DRD_FS_Init 2 */
-
+  HAL_PCDEx_PMAConfig(&hpcd_USB_DRD_FS, 0x00, PCD_SNG_BUF, 0x0C);
+  HAL_PCDEx_PMAConfig(&hpcd_USB_DRD_FS, 0x80, PCD_SNG_BUF, 0x4C);
+  HAL_PCDEx_PMAConfig(&hpcd_USB_DRD_FS, 0x81, PCD_SNG_BUF, 0x8C);
   /* USER CODE END USB_DRD_FS_Init 2 */
 
 }
 
 /**
-* @brief USB_DRD_FS Initialization Function
-* @param None
-* @retval None
-*/
+  * @brief USB_DRD_FS Initialization Function
+  * @param None
+  * @retval None
+  */
 void MX_USB_DRD_FS_HCD_Init(void)
 {
 
@@ -327,8 +329,8 @@ void MX_USB_DRD_FS_HCD_Init(void)
 /**
   * @brief  Period elapsed callback in non blocking mode
   * @note   This function is called  when TIM6 interrupt took place, inside
-  * HAL_TIM_IRQHandler(). It makes a direct call to HAL_IncTick() to increment
-  * a global variable "uwTick" used as application time base.
+  *         HAL_TIM_IRQHandler(). It makes a direct call to HAL_IncTick() to increment
+  *         a global variable "uwTick" used as application time base.
   * @param  htim : TIM handle
   * @retval None
   */
@@ -371,13 +373,13 @@ void Error_Handler(void)
   /* User can add his own implementation to report the HAL error return state */
   while (1)
   {
-  	HAL_Delay(100);
+    HAL_Delay(100);
     BSP_LED_Toggle(LED_RED);
   }
   /* USER CODE END Error_Handler_Debug */
 }
 
-#ifdef  USE_FULL_ASSERT
+#ifdef USE_FULL_ASSERT
 /**
   * @brief  Reports the name of the source file and the source line number
   *         where the assert_param error has occurred.

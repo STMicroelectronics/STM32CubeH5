@@ -34,6 +34,8 @@ The remote wakeup feature is not yet implemented (used to bring the USB suspende
 
 ### <b>Notes</b>
 
+None
+
 #### <b>ThreadX usage hints</b>
 
  - ThreadX uses the Systick as time base, thus it is mandatory that the HAL uses a separate time base through the TIM IPs.
@@ -79,7 +81,6 @@ The remote wakeup feature is not yet implemented (used to bring the USB suspende
 ### <b>Keywords</b>
 
 RTOS, ThreadX, USBX Device, USBPD, Network, NetxDuo, FileX, File ,SDMMC, UART
-
 
 ### <b>Hardware and Software environment</b>
 

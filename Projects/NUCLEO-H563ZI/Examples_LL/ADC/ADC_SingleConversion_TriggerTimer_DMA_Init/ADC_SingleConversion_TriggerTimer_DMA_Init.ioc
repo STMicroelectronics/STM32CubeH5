@@ -110,10 +110,16 @@ ProjectManager.CompilerLinker=GCC
 ProjectManager.CompilerOptimize=6
 ProjectManager.ComputerToolchain=false
 ProjectManager.CoupleFile=false
+<<<<<<< HEAD   (4b0001 [H5] Activate the “Dead battery signals disabled”)
+=======
+>>>>>>> CHANGE (2390c0 fix(example): fix IOC in ADC/ADC_SingleConversion_TriggerTim)
 ProjectManager.DeletePrevious=true
 ProjectManager.DeviceId=STM32H563ZITx
+<<<<<<< HEAD   (4b0001 [H5] Activate the “Dead battery signals disabled”)
+=======
 ProjectManager.Example=ADC_SingleConversion_TriggerTimer_DMA_Init
 ProjectManager.ExampleSource=CubeFw
+>>>>>>> CHANGE (2390c0 fix(example): fix IOC in ADC/ADC_SingleConversion_TriggerTim)
 ProjectManager.FreePins=false
 ProjectManager.HalAssertFull=false
 ProjectManager.HeapSize=0x200

@@ -32,7 +32,7 @@ vertical-align: middle;
 .</p>
 <p>The application is designed to behave as an USB CDC_ACM Host, the
 code provides required requests to properly enumerate CDC devices ,
-CDC_ACM Class APIs to send or receive data and display data on uart
+CDC_ACM Class APIs to send or receive data and display data on UART
 HyperTerminal.</p>
 <p>The main entry function tx_application_define() is then called by
 ThreadX during kernel start, at this stage, all USBx resources are
@@ -50,7 +50,7 @@ threshold : 30) used to receive data from the device.</li>
 behavior</b></h4>
 <ul>
 <li><p>When a cdc device is plugged to STM32H573I-DK board, a Message
-will be displayed on the uart HyperTerminal (STlink VCP) showing the
+will be displayed on the UART HyperTerminal (STlink VCP) showing the
 Vendor ID and Product ID of the attached device. The host must be able
 to properly decode CDC_ACM class request data sent by the device. After
 enumeration phase, a message will indicates that the device is ready for
@@ -67,6 +67,7 @@ and CDC_ACM class Specification.</p>
 <h4 id="known-limitations"><b>Known limitations</b></h4>
 <p>None</p>
 <h3 id="notes"><b>Notes</b></h3>
+<p>None</p>
 <h4 id="threadx-usage-hints"><b>ThreadX usage hints</b></h4>
 <ul>
 <li>ThreadX uses the Systick as time base, thus it is mandatory that the
@@ -159,7 +160,7 @@ plugging the device:</p>
 <li>Flow control: None</li>
 </ul></li>
 <li>To send data from the USB CDC_ACM Host use the user push-button and
-data will be received and displayed in the hyperterminal connected to
+data will be received and displayed in the HyperTerminal connected to
 the CDC ACM Device.</li>
 </ul></li>
 </ul>

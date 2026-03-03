@@ -15,12 +15,11 @@
   * If no LICENSE file comes with this software, it is provided AS-IS.
   *
   ******************************************************************************
-*/
+  */
 /* USER CODE END Header */
 
 /* Includes ------------------------------------------------------------------*/
-#include "app_usbx_host.h"
-#include "app_usbx_device.h"
+#include "app_usbx.h"
 #include "main.h"
 #include "usbpd_core.h"
 #include "usbpd_dpm_user.h"
@@ -47,8 +46,6 @@
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
 #define APP_QUEUE_SIZE         5
-#define USBX_APP_STACK_SIZE    1024
-#define USBX_MEMORY_SIZE       (84 * 1024)
 
 /* USER CODE END PD */
 
@@ -98,7 +95,7 @@ __ALIGN_BEGIN USB_DRD_ModeMsg_TypeDef USB_DRD_State_Msg __ALIGN_END;
 /* USER CODE END PFP */
 /**
   * @brief  Application USBX Host Initialization.
-  * @param memory_ptr: memory pointer
+  * @param  memory_ptr: memory pointer
   * @retval int
   */
 UINT MX_USBX_Host_Init(VOID *memory_ptr)
@@ -109,9 +106,10 @@ UINT MX_USBX_Host_Init(VOID *memory_ptr)
   /* USER CODE BEGIN App_USBX_Host_MEM_POOL */
 #if (USE_MEMORY_POOL_ALLOCATION == 1)
   CHAR *pointer;
+
   /* Allocate the stack for thread 0. */
   if (tx_byte_allocate(byte_pool, (VOID **) &pointer,
-                       USBX_MEMORY_SIZE, TX_NO_WAIT) != TX_SUCCESS)
+                       USBX_MEMORY_STACK_SIZE, TX_NO_WAIT) != TX_SUCCESS)
   {
     return TX_POOL_ERROR;
   }
@@ -119,11 +117,7 @@ UINT MX_USBX_Host_Init(VOID *memory_ptr)
   /* USER CODE END App_USBX_Host_MEM_POOL */
 
   /* USER CODE BEGIN MX_USBX_Host_Init */
-  /* Initialize USBX memory. */
-  if (ux_system_initialize(pointer, USBX_MEMORY_SIZE, UX_NULL, 0) != UX_SUCCESS)
-  {
-    return UX_ERROR;
-  }
+
   /* register a callback error function */
 
   _ux_utility_error_callback_register(&ux_host_error_callback);
@@ -246,10 +240,16 @@ void  ucpd_app_thread_entry(ULONG arg)
       USBH_UsrLog("Starting HID Application");
       USBH_UsrLog("Connect your HID Device\n");
 
-      App_USBX_Host_Init();
-
       /* Initialize the LL driver */
       MX_USB_DRD_FS_HCD_Init();
+
+      /* Initialize the Stack USB Host*/
+      if (MX_USBX_Host_Stack_Init() != UX_SUCCESS)
+      {
+        /* USER CODE BEGIN MAIN_INITIALIZE_STACK_ERROR */
+        Error_Handler();
+        /* USER CODE END MAIN_INITIALIZE_STACK_ERROR */
+      }
 
       /* Start USB Host */
       HAL_HCD_Start(&hhcd_USB_DRD_FS);
@@ -257,14 +257,21 @@ void  ucpd_app_thread_entry(ULONG arg)
     /* Check if received message equal to STOP_USB_HOST */
     else if (USB_DRD_State_Msg.HostState == STOP_USB_HOST)
     {
-      /* Stop USB Host */
-      App_USBX_Host_DeInit();
 
       if (hhcd_USB_DRD_FS.State == HAL_HCD_STATE_READY)
       {
         /* Stop USB Host */
         HAL_HCD_Stop(&hhcd_USB_DRD_FS);
         USB_DisableGlobalInt(hhcd_USB_DRD_FS.Instance);
+      }
+
+      /* Stop USB Host */
+      /* Uninitialize the Stack USB Device*/
+      if (MX_USBX_Host_Stack_DeInit() != UX_SUCCESS)
+      {
+        /* USER CODE BEGIN MAIN_UNINITIALIZE_STACK_ERROR */
+        Error_Handler();
+        /* USER CODE END MAIN_UNINITIALIZE_STACK_ERROR */
       }
 
       HAL_HCD_DeInit(&hhcd_USB_DRD_FS);
@@ -291,12 +298,12 @@ void  ucpd_app_thread_entry(ULONG arg)
 }
 
 /**
-  * @brief App_User_USBX_Init
-  *        Initialization of USB Host.
-  * Init USB Host Library, add supported class and start the library
-  * @retval None
+  * @brief  MX_USBX_Host_Stack_Init
+  *         Initialization of USB host stack.
+  *         Init USB Host stack, add register the host class stack
+  * @retval Status
   */
-UINT App_USBX_Host_Init(void)
+UINT MX_USBX_Host_Stack_Init(void)
 {
   UINT ret = UX_SUCCESS;
   /* USER CODE BEGIN USB_Host_Init_PreTreatment_0 */
@@ -307,6 +314,10 @@ UINT App_USBX_Host_Init(void)
   {
     return UX_ERROR;
   }
+
+  /* Register a callback error function */
+
+  ux_utility_error_callback_register(&ux_host_error_callback);
 
   /* Register hid class. */
   if (ux_host_stack_class_register(_ux_system_host_class_hid_name,
@@ -339,12 +350,13 @@ UINT App_USBX_Host_Init(void)
 }
 
 /**
-  * @brief App_User_USBX_DeInit
-  *        Initialization of USB Host.
-  * Init USB Host Library, add supported class and start the library
-  * @retval None
+  * @brief  MX_USBX_Host_Stack_DeInit
+  *         Uninitialize of USB Host stack.
+  *         Uninitialize the host stack, unregister of host class stack and
+  *         Unregister of the usb host controllers
+  * @retval Status
   */
-UINT App_USBX_Host_DeInit(void)
+UINT MX_USBX_Host_Stack_DeInit(void)
 {
   UINT ret = UX_SUCCESS;
 
@@ -524,10 +536,10 @@ UINT ux_host_event_callback(ULONG event, UX_HOST_CLASS *Current_class, VOID *Cur
 }
 
 /**
-  * @brief ux_host_error_callback
-  * @param ULONG event
-  UINT system_context
-  UINT error_code
+  * @brief  ux_host_error_callback
+  * @param  ULONG event
+            UINT system_context
+            UINT error_code
   * @retval Status
   */
 VOID ux_host_error_callback(UINT system_level, UINT system_context, UINT error_code)

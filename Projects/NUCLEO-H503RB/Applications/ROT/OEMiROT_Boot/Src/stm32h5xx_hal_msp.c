@@ -431,23 +431,26 @@ HAL_StatusTypeDef RCCEx_PeriphCLKConfig(const RCC_PeriphCLKInitTypeDef  *pPeriph
   */
 void HAL_RTC_MspInit(RTC_HandleTypeDef *hrtc)
 {
-    HAL_PWR_EnableBkUpAccess();
+#if defined(RTC_CLOCK_SOURCE_LSE)
     /*  not required to be removed */
     __HAL_RCC_LSEDRIVE_CONFIG(RCC_LSEDRIVE_HIGH);
+#endif /* RTC_CLOCK_SOURCE_LSE */
     /* Reset the whole backup domain, RTC included */
     if (RCC_OscConfig((RCC_OscInitTypeDef *)&RCC_OscInitStruct_RTC) != HAL_OK)
     {
         Error_Handler();
     }
-    if (RCCEx_PeriphCLKConfig((RCC_PeriphCLKInitTypeDef *)&PeriphClkInitStruct_RTC) != HAL_OK)
-    {
-        Error_Handler();
-    }
-    /* Enable RTC */
-    __HAL_RCC_RTC_ENABLE();
 
-    /* Enable RTC clock  */
-    __HAL_RCC_RTC_CLK_ENABLE();
+    /* Configure RTC clock only if the RTC clock is not set */
+    if ((RCC->BDCR & RCC_BDCR_RTCSEL_Msk) == RCC_RTCCLKSOURCE_NO_CLK)
+    {
+        if (RCCEx_PeriphCLKConfig((RCC_PeriphCLKInitTypeDef *)&PeriphClkInitStruct_RTC) != HAL_OK)
+        {
+            Error_Handler();
+        }
+        /* Enable RTC */
+        __HAL_RCC_RTC_ENABLE();
+    }
 
     HAL_NVIC_SetPriority(TAMP_IRQn, 0x4, 0);
     HAL_NVIC_EnableIRQ(TAMP_IRQn);

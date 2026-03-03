@@ -22,14 +22,13 @@
 #ifndef APP_AZURE_RTOS_H
 #define APP_AZURE_RTOS_H
 #ifdef __cplusplus
- extern "C" {
+extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
 #include "app_azure_rtos_config.h"
 #include "app_threadx.h"
-#include "app_usbx_device.h"
-#include "app_usbx_host.h"
+#include "app_usbx.h"
 #include "usbpd.h"
 
 /* Private includes ----------------------------------------------------------*/

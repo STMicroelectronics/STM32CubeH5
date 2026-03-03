@@ -61,8 +61,8 @@ extern UX_HOST_CLASS_HID_KEYBOARD *keyboard;
 
 /**
   * @brief  USBX_HOST_HID_KEYBORAD_Task
-  * @param  none
-  * @retval none
+  * @param  None
+  * @retval None
   */
 VOID USBX_HOST_HID_KEYBORAD_Task(VOID)
 {

@@ -71,7 +71,7 @@ TrustZone, OEMiROT, boot path, Root Of Trust, Security, mcuboot
 ### <b>Hardware and Software environment</b>
 
   - This example runs on STM32H533xx devices with security enabled (TZEN=B4).
-  - It can be configured for STM32H523xx 256K device by uncommenting DEVICE_256K_FLASH_ENABLE (flash_layout.h).
+  - It can be configured for STM32H523xx 256K device (refer to https://wiki.st.com/stm32mcu/wiki/Security:How_to_create_ROT_examples_for_STM32H5).
   - It can be configured as OEMuRoT by uncommenting OEMUROT_ENABLE (flash_layout.h).
   - This example has been tested with STMicroelectronics NUCLEO-H533RE (MB1814)
     board and can be easily tailored to any other supported device

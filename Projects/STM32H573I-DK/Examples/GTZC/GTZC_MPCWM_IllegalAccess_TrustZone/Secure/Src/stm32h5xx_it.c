@@ -57,7 +57,7 @@
 /* USER CODE END 0 */
 
 /* External variables --------------------------------------------------------*/
-extern XSPI_HandleTypeDef hospi1;
+extern XSPI_HandleTypeDef hxspi1;
 /* USER CODE BEGIN EV */
 extern funcptr_NS pSecureFaultCallback;
 extern funcptr_NS pSecureErrorCallback;
@@ -258,7 +258,7 @@ void OCTOSPI1_IRQHandler(void)
   /* USER CODE BEGIN OCTOSPI1_IRQn 0 */
 
   /* USER CODE END OCTOSPI1_IRQn 0 */
-  HAL_XSPI_IRQHandler(&hospi1);
+  HAL_XSPI_IRQHandler(&hxspi1);
   /* USER CODE BEGIN OCTOSPI1_IRQn 1 */
 
   /* USER CODE END OCTOSPI1_IRQn 1 */

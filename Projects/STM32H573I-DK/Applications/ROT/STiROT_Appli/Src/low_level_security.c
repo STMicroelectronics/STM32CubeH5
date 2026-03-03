@@ -320,6 +320,6 @@ void nvic_loader_cfg(void)
   NVIC->ITNS[2U] = RSS_NVIC_INIT_ITNS2_VAL;
   NVIC->ITNS[3U] = RSS_NVIC_INIT_ITNS3_VAL;
 
-  /* Disable secure irqs */
-  __disable_irq();
+  /* Stop systick before jumping */
+  HAL_SuspendTick();
 }

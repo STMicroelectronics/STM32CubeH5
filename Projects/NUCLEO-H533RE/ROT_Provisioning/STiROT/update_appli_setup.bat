@@ -54,20 +54,21 @@ set data_image_en="Number of images managed"
 set secure_code_size="Size of the secure area"
 
 :start
-goto exe:
-goto py:
-:exe
-::line for Windows executable
-set "applicfg=%cube_fw_path%\Utilities\PC_Software\ROT_AppliConfig\dist\AppliCfg.exe"
-set "python="
-if exist %applicfg% (
-echo run config Appli with Windows executable
-goto update
+:: Check if Python is installed
+python3 --version >nul 2>&1
+if %errorlevel% neq 0 (
+ python --version >nul 2>&1
+ if !errorlevel! neq 0 (
+    echo Python installation missing. Refer to Utilities\PC_Software\ROT_AppliConfig\README.md
+    goto :error
+ )
+  set "python=python "
+) else (
+  set "python=python3 "
 )
-:py
-::called if we just want to use AppliCfg python (think to comment "goto exe:")
+
+:: Environment variable for AppliCfg
 set "applicfg=%cube_fw_path%\Utilities\PC_Software\ROT_AppliConfig\AppliCfg.py"
-set "python=python "
 
 :update
 set "AppliCfg=%python%%applicfg%"

@@ -61,7 +61,7 @@ extern UX_HOST_CLASS_HID_MOUSE *mouse;
 /**
   * @brief  Function implementing hid_mouse_thread_entry.
   * @param  thread_input: Not used
-  * @retval none
+  * @retval None
   */
 VOID hid_mouse_thread_entry(ULONG thread_input)
 {

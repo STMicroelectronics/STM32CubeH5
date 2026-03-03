@@ -147,6 +147,11 @@ void boot_platform_noimage(void)
 #endif /* defined(__ICCARM__) */
 }
 #endif /* MCUBOOT_EXT_LOADER */
+
+#if defined(OEMIROT_FAST_WAKE_UP)
+fih_int boot_platform_wakeup(void);
+#endif /* OEMIROT_FAST_WAKE_UP */
+
 /**
   * @brief  Jumping to next image using RSS service, after erasing SRAM twice
   * @param  boot_jump_addr1 boot_jump_to_RSS address in order to execute twice SRAM erasing
@@ -185,6 +190,28 @@ __attribute__((naked)) void boot_jump_to_NSS(uint32_t boot_jump_addr1, uint32_t 
     "bx      r7                      \n" /* Jump to NSS service */
   );
 }
+
+#if defined(OEMIROT_FAST_WAKE_UP)
+/**
+  * @brief This function checks if system wakes-up from low-power mode:
+  *        Stand-by mode and shut down mode (depending on HW capability)
+  * @note
+  * @retval FIH_SUCCESS in case of wake-up
+  */
+fih_int boot_platform_wakeup(void)
+{
+  fih_int fih_rc = FIH_FAILURE;
+
+  /* Check Stand-By Flag */
+  if (__HAL_PWR_GET_FLAG(PWR_FLAG_SBF))
+  {
+    fih_rc = FIH_SUCCESS;
+  }
+
+  FIH_RET(fih_rc);
+}
+#endif /* OEMIROT_FAST_WAKE_UP */
+
 /**
   * @brief This function manage the jump to secure application.
   * @note
@@ -198,6 +225,15 @@ void boot_platform_quit(struct boot_arm_vector_table *vector)
     uint32_t image_index;
 
    (void)fih_delay();
+#if defined(OEMIROT_FAST_WAKE_UP)
+  fih_int fih_rc = FIH_FAILURE;
+
+  /* Check if wake-up from low-power to bypass images revalidation */
+  FIH_CALL(boot_platform_wakeup, fih_rc);
+  if (fih_not_eq(fih_rc, FIH_SUCCESS)) {
+#else
+  {
+#endif /* OEMIROT_FAST_WAKE_UP */
     /* Check again if images have been validated, to resist to basic hw attacks */
     for (image_index = 0; image_index < MCUBOOT_IMAGE_NUMBER; image_index++)
     {
@@ -207,6 +243,7 @@ void boot_platform_quit(struct boot_arm_vector_table *vector)
             Error_Handler();
         }
     }
+  }
 #endif /* MCUBOOT_DOUBLE_SIGN_VERIF */
 
     /* Init NSS jump function descriptor */

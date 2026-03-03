@@ -1,7 +1,7 @@
 /* USER CODE BEGIN Header */
 /**
   ******************************************************************************
-  * @file    Examples/ADC/ADC_AnalogWatchdog/Src/stm32wlxx_hal_msp.c
+  * @file    Examples/ADC/ADC_AnalogWatchdog/Src/stm32h5xx_hal_msp.c
   * @author  MCD Application Team
   * @brief   HAL MSP module.
   ******************************************************************************

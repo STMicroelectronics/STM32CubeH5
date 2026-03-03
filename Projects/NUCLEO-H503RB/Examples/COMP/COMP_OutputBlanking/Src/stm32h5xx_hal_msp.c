@@ -1,7 +1,7 @@
 /* USER CODE BEGIN Header */
 /**
   ******************************************************************************
-  * @file    Examples/COMP/COMP_OutputBlanking/Src/stm32f3xx_hal_msp.c
+  * @file    Examples/COMP/COMP_OutputBlanking/Src/stm32h5xx_hal_msp.c
   * @author  MCD Application Team
   * @brief   HAL MSP module.
   ******************************************************************************

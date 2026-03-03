@@ -649,6 +649,11 @@
 			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/ST/usbx/common/core/src/ux_device_stack_uninitialize.c</locationURI>
 		</link>
 		<link>
+			<name>Application/User/USBX/App/app_usbx.c</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/USBX/App/app_usbx.c</locationURI>
+		</link>
+		<link>
 			<name>Application/User/USBX/App/app_usbx_device.c</name>
 			<type>1</type>
 			<locationURI>PARENT-1-PROJECT_LOC/USBX/App/app_usbx_device.c</locationURI>

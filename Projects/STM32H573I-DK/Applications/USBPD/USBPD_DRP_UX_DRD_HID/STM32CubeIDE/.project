@@ -318,36 +318,6 @@
 			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c</locationURI>
 		</link>
 		<link>
-			<name>Application/User/Core/app_threadx.c</name>
-			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/Core/Src/app_threadx.c</locationURI>
-		</link>
-		<link>
-			<name>Application/User/Core/main.c</name>
-			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/Core/Src/main.c</locationURI>
-		</link>
-		<link>
-			<name>Application/User/Core/stm32h5xx_hal_msp.c</name>
-			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/Core/Src/stm32h5xx_hal_msp.c</locationURI>
-		</link>
-		<link>
-			<name>Application/User/Core/stm32h5xx_hal_timebase_tim.c</name>
-			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/Core/Src/stm32h5xx_hal_timebase_tim.c</locationURI>
-		</link>
-		<link>
-			<name>Application/User/Core/stm32h5xx_it.c</name>
-			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/Core/Src/stm32h5xx_it.c</locationURI>
-		</link>
-		<link>
-			<name>Application/User/Core/tx_initialize_low_level.S</name>
-			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/Core/Src/tx_initialize_low_level.S</locationURI>
-		</link>
-		<link>
 			<name>Utilities/GUI_INTERFACE/bsp_gui.c</name>
 			<type>1</type>
 			<locationURI>PARENT-6-PROJECT_LOC/Utilities/GUI_INTERFACE/bsp_gui.c</locationURI>
@@ -376,6 +346,36 @@
 			<name>Utilities/lcd/stm32_lcd.c</name>
 			<type>1</type>
 			<locationURI>PARENT-6-PROJECT_LOC/Utilities/lcd/stm32_lcd.c</locationURI>
+		</link>
+		<link>
+			<name>Application/User/Core/app_threadx.c</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/Core/Src/app_threadx.c</locationURI>
+		</link>
+		<link>
+			<name>Application/User/Core/main.c</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/Core/Src/main.c</locationURI>
+		</link>
+		<link>
+			<name>Application/User/Core/stm32h5xx_hal_msp.c</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/Core/Src/stm32h5xx_hal_msp.c</locationURI>
+		</link>
+		<link>
+			<name>Application/User/Core/stm32h5xx_hal_timebase_tim.c</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/Core/Src/stm32h5xx_hal_timebase_tim.c</locationURI>
+		</link>
+		<link>
+			<name>Application/User/Core/stm32h5xx_it.c</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/Core/Src/stm32h5xx_it.c</locationURI>
+		</link>
+		<link>
+			<name>Application/User/Core/tx_initialize_low_level.S</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/Core/Src/tx_initialize_low_level.S</locationURI>
 		</link>
 		<link>
 			<name>Drivers/BSP/Component/ft6x06.c</name>
@@ -1291,46 +1291,6 @@
 			<name>Middlewares/ThreadX/Core/txe_timer_info_get.c</name>
 			<type>1</type>
 			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/ST/threadx/common/src/txe_timer_info_get.c</locationURI>
-		</link>
-		<link>
-			<name>Application/User/AZURE_RTOS/App/app_azure_rtos.c</name>
-			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/AZURE_RTOS/App/app_azure_rtos.c</locationURI>
-		</link>
-		<link>
-			<name>Application/User/USBPD/App/usbpd.c</name>
-			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/USBPD/App/usbpd.c</locationURI>
-		</link>
-		<link>
-			<name>Application/User/USBPD/App/usbpd_dpm_core.c</name>
-			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/USBPD/App/usbpd_dpm_core.c</locationURI>
-		</link>
-		<link>
-			<name>Application/User/USBPD/App/usbpd_usb_if.c</name>
-			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/USBPD/App/usbpd_usb_if.c</locationURI>
-		</link>
-		<link>
-			<name>Application/User/USBPD/App/usbpd_pwr_if.c</name>
-			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/USBPD/App/usbpd_pwr_if.c</locationURI>
-		</link>
-		<link>
-			<name>Application/User/USBPD/Target/usbpd_dpm_user.c</name>
-			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/USBPD/Target/usbpd_dpm_user.c</locationURI>
-		</link>
-		<link>
-			<name>Application/User/USBPD/Target/usbpd_pwr_user.c</name>
-			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/USBPD/Target/usbpd_pwr_user.c</locationURI>
-		</link>
-		<link>
-			<name>Application/User/USBPD/Target/usbpd_vdm_user.c</name>
-			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/USBPD/Target/usbpd_vdm_user.c</locationURI>
 		</link>
 		<link>
 			<name>Middlewares/USBX/Core System/ux_system_error_handler.c</name>
@@ -2503,6 +2463,56 @@
 			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/ST/usbx/common/core/src/ux_host_stack_uninitialize.c</locationURI>
 		</link>
 		<link>
+			<name>Application/User/AZURE_RTOS/App/app_azure_rtos.c</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/AZURE_RTOS/App/app_azure_rtos.c</locationURI>
+		</link>
+		<link>
+			<name>Application/User/USBPD/App/usbpd.c</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/USBPD/App/usbpd.c</locationURI>
+		</link>
+		<link>
+			<name>Application/User/USBPD/App/usbpd_dpm_core.c</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/USBPD/App/usbpd_dpm_core.c</locationURI>
+		</link>
+		<link>
+			<name>Application/User/USBPD/App/usbpd_pwr_if.c</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/USBPD/App/usbpd_pwr_if.c</locationURI>
+		</link>
+		<link>
+			<name>Application/User/USBPD/App/usbpd_usb_if.c</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/USBPD/App/usbpd_usb_if.c</locationURI>
+		</link>
+		<link>
+			<name>Application/User/USBPD/Target/usbpd_dpm_user.c</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/USBPD/Target/usbpd_dpm_user.c</locationURI>
+		</link>
+		<link>
+			<name>Application/User/USBPD/Target/usbpd_pwr_user.c</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/USBPD/Target/usbpd_pwr_user.c</locationURI>
+		</link>
+		<link>
+			<name>Application/User/USBPD/Target/usbpd_vdm_user.c</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/USBPD/Target/usbpd_vdm_user.c</locationURI>
+		</link>
+		<link>
+			<name>Application/User/USBX/App/app_usbpd.c</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/USBX/App/app_usbpd.c</locationURI>
+		</link>
+		<link>
+			<name>Application/User/USBX/App/app_usbx.c</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/USBX/App/app_usbx.c</locationURI>
+		</link>
+		<link>
 			<name>Application/User/USBX/App/app_usbx_device.c</name>
 			<type>1</type>
 			<locationURI>PARENT-1-PROJECT_LOC/USBX/App/app_usbx_device.c</locationURI>
@@ -2526,11 +2536,6 @@
 			<name>Application/User/USBX/App/ux_host_mouse.c</name>
 			<type>1</type>
 			<locationURI>PARENT-1-PROJECT_LOC/USBX/App/ux_host_mouse.c</locationURI>
-		</link>
-		<link>
-			<name>Application/User/USBX/App/app_usbpd.c</name>
-			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/USBX/App/app_usbpd.c</locationURI>
 		</link>
 	</linkedResources>
 </projectDescription>

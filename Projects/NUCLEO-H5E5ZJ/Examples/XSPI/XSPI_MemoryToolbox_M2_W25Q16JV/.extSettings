@@ -1,0 +1,9 @@
+[ProjectFiles]
+HeaderPath=..\..\..\..\..\..\Drivers\BSP\STM32H5xx_Nucleo
+[Others]
+Define=M2_W25Q16JV;EXAMPLE_TRACE_ENABLE
+HALModule=
+[Groups]
+Doc=../README.md;
+Drivers/BSP/STM32H5xx_Nucleo=../../../../../../Drivers/BSP/STM32H5xx_Nucleo/stm32h5xx_nucleo.c;
+Application/User=../Src/memory_toolbox.c;

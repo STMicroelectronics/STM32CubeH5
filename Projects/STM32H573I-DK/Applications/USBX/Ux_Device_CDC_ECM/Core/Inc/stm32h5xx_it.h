@@ -22,7 +22,7 @@
 #define __STM32H5xx_IT_H
 
 #ifdef __cplusplus
- extern "C" {
+extern "C" {
 #endif
 
 /* Private includes ----------------------------------------------------------*/
@@ -61,7 +61,7 @@ void UCPD1_IRQHandler(void);
 void SDMMC1_IRQHandler(void);
 /* USER CODE BEGIN EFP */
 #if defined(TCPP0203_SUPPORT)
-void TCPP0203_PORT0_FLG_EXTI_IRQHANDLER(void);
+void EXTI1_IRQHandler(void);
 #endif /* TCPP0203_SUPPORT */
 /* USER CODE END EFP */
 

@@ -13,25 +13,48 @@ set current_log_file="%projectdir%\postbuild.log"
 echo. > %current_log_file%
 
 :start
-goto exe:
-goto py:
-:exe
-::line for window executable
-set "applicfg=%cube_fw_path%\Utilities\PC_Software\ROT_AppliConfig\dist\AppliCfg.exe"
-set "python="
-if exist %applicfg% (
-echo run config Appli with windows executable
-goto postbuild
+::=================================================================================================
+:: Check if Python V3 is installed
+::-------------------------------------------------------------------------------------------------
+python --version >nul 2>&1
+if %errorlevel% neq 0 (
+  echo.
+  echo Python installation missing. Refer to Utilities\PC_Software\ROT_AppliConfig\README.md
+  echo.
+  set "command=Python installation"
+  goto :error
 )
-:py
-::line for python
-echo run config Appli with python script
+set "python=python "
+:: If found, capture version string removing "Python "
+for /f "tokens=2 delims= " %%A in ('python --version 2^>^&1') do (
+    set "full_version=%%A"
+)
+:: extract version details
+for /F "tokens=1,2,3 delims=." %%A in ("!full_version!") do (
+  set MAJOR_VER=%%A
+  set MINOR_VER=%%B
+  set PATCH_VER=%%C
+)
+:: is v3
+if not "%MAJOR_VER%" == "3" (
+  python3 --version >nul 2>&1
+  if !errorlevel! neq 0 (
+    echo.
+    echo Python installation missing. Refer to Utilities\PC_Software\ROT_AppliConfig\README.md
+    echo.
+    set "command=Python installation"
+    goto :error
+  )
+  set "python=python3 "
+)
+::=================================================================================================
+
+:: Environment variable for AppliCfg
 set "applicfg=%cube_fw_path%\Utilities\PC_Software\ROT_AppliConfig\AppliCfg.py"
-set "python= "
 
 :postbuild
 set "preprocess_bl2_file=%projectdir%\image_macros_preprocessed_bl2.c"
-set "appli_dir=../../../../%oemirot_boot_path_project%"
+set "appli_dir=../../../../%oemirot_appli_path_project%"
 set "update=%projectdir%\..\..\..\..\ROT_Provisioning\OEMiROT\ob_flash_programming.bat"
 
 
@@ -326,12 +349,12 @@ set "command=%python%%applicfg% definevalue --layout %preprocess_bl2_file% -m RE
 %command%
 IF !errorlevel! NEQ 0 goto :error
 
-:: Bypass configuration of appli_flash_layout file if not present
-if /i %oemirot_boot_path_project% == %oemirot_boot_path_project:Applications=% (goto :end)
-
 set "command=%python%%applicfg% setdefine --layout %preprocess_bl2_file% -m RE_NS_DATA_IMAGE_NUMBER -n NS_DATA_IMAGE_EN -v 1 %ns_main% --vb >> %current_log_file% 2>&1"
 %command%
 IF !errorlevel! NEQ 0 goto :error
+
+:: Bypass configuration of appli_flash_layout file if not present
+if not exist %appli_flash_layout% (goto :end)
 
 set "command=%python%%applicfg% setdefine --layout %preprocess_bl2_file% -m RE_OVER_WRITE -n MCUBOOT_OVERWRITE_ONLY -v 1 %appli_flash_layout% --vb  >> %current_log_file% 2>&1"
 %command%
@@ -437,6 +460,7 @@ set "command=%python%%applicfg% definevalue --layout %preprocess_bl2_file% -m RE
 %command%
 IF !errorlevel! NEQ 0 goto :error
 
+:end
 set "command=%python%%applicfg% flash --layout %preprocess_bl2_file% -b FLASH_SIZE -m RE_FLASH_SIZE %map_properties% --vb >> %current_log_file% 2>&1"
 %command%
 IF !errorlevel! NEQ 0 goto :error
@@ -475,16 +499,20 @@ IF !errorlevel! NEQ 0 goto :error
 
 ::xml for init image generation
 
-copy %s_code_xml% %s_code_init_xml% 2>&1
+set "command=%python%%applicfg% xmlval --layout %preprocess_bl2_file% -m RE_IMAGE_FLASH_SECURE_IMAGE_SIZE -c S %s_code_init_xml% --vb >> %current_log_file% 2>&1"
+%command%
 IF !errorlevel! NEQ 0 goto :error
 
-copy %ns_code_xml% %ns_code_init_xml% 2>&1
+set "command=%python%%applicfg% xmlval --layout %preprocess_bl2_file% -m RE_IMAGE_FLASH_NON_SECURE_IMAGE_SIZE -c S %ns_code_init_xml% --vb >> %current_log_file% 2>&1"
+%command%
 IF !errorlevel! NEQ 0 goto :error
 
-copy %s_data_xml% %s_data_init_xml% 2>&1
+set "command=%python%%applicfg% xmlval --layout %preprocess_bl2_file% -m RE_IMAGE_FLASH_SECURE_DATA_IMAGE_SIZE -c S %s_data_init_xml% --vb >> %current_log_file% 2>&1"
+%command%
 IF !errorlevel! NEQ 0 goto :error
 
-copy %ns_data_xml% %ns_data_init_xml% 2>&1
+set "command=%python%%applicfg% xmlval --layout %preprocess_bl2_file% -m RE_IMAGE_FLASH_NON_SECURE_DATA_IMAGE_SIZE -c S %ns_data_init_xml% --vb >> %current_log_file% 2>&1"
+%command%
 IF !errorlevel! NEQ 0 goto :error
 
 set "command=%python%%applicfg% xmlparam --option add -n "Clear" -t Data -c -c -h 1 -d "" %s_code_init_xml% --vb >> %current_log_file% 2>&1"
@@ -553,7 +581,6 @@ IF !errorlevel! NEQ 0 goto :error
 
 ECHO comd : %command%
 
-:end
 exit 0
 
 :error

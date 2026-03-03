@@ -1,0 +1,11 @@
+[ProjectFiles]
+HeaderPath=..\..\..\..\..\..\Drivers\BSP\STM32H5F5J-DK;..\..\..\..\..\..\Utilities\JPEG;
+[Others]
+Define=
+HALModule=EXTI
+[Groups]
+Application/User=../Src/decode_dma.c;
+Doc=../README.md;
+Drivers/BSP/STM32H5F5J-DK=../../../../../../Drivers/BSP/STM32H5F5J-DK/stm32h5f5j_discovery.c;
+Utilities=../../../../../../Utilities/JPEG/jpeg_utils.c;
+Drivers/STM32H5xx_HAL_Driver=../../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_exti.c;

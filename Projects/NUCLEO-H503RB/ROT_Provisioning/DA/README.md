@@ -1,90 +1,66 @@
 ## <b>ROT_Provisioning DA Description</b>
 
-This section provides an overview of the available scripts for provisioning, regression and discovery
-along with their basic descriptions, usage and instructions.
+This section provides an overview of the available scripts for Debug Authentication (DA) usage.
 
-Debug authentication(DA) controls debug opening and regressions.
-Before using the debug authentication services, the user must provision STM32 with its credentials.
-The debug authentication allows Password method (TZ=0), the user must provision a password hash (SHA256) within STM32.
-Debug authentication can be used when the STM32 is in product state PROVISIONNING up to product state CLOSED.
+Debug authentication controls debug opening and regressions of the device.<br>
+Before using the debug authentication services, the user must provision device with its authentication
+secrets.<br>
+The debug authentication support password authentication.<br>
+Debug authentication can then be used when the device is in product state CLOSED to
+open debug or perform device regression.
 
+### <b>Notes</b>
+
+The OEMiRoT **provisioning process** are also relying on files present in
+this directory for DA configuration.
 
 ### <b>Keywords</b>
 
-DA, Password, Security, Root of Trust
-
+DA, Password, Root of Trust, Security
 
 ### <b>Directory contents</b>
 
-- DA/discovery.bat/.sh               It allows the user to get the information about the device state.
-- DA/ob_programming.bat/.sh          It removes the protections, initializes and configures the option bytes.
-- DA/create_password.bat/.sh         It creates a password for a board.
-- DA/password_provisioning.bat/.sh   The password will be programmed on a specific address.
-- DA/provisioning.bat/.sh            It configures the option bytes, the password, and the final product state for the board.
-- DA/regression.bat/.sh              It erases the user stored content and sets the product to an open state.
+<b>Scripts</b>
 
+- DA/discovery.bat/.sh                  Provides the information about the device state.
+- DA/ob_programming.bat/.sh             Programs option bytes on the device.
+- DA/create_password.bat/.sh            Creates password for device authentication.
+- DA/password_provisioning.bat/.sh      Programs the password on the device.
+- DA/provisioning.bat/.sh               Performs device provisioning process.
+- DA/regression.bat/.sh                 Performs full regression of the device.
 
 ### <b>Hardware and Software environment</b>
 
-- This example runs on STM32H503xx devices
 - This example has been tested with STMicroelectronics NUCLEO-STM32H503RB (MB1814)
   board and can be easily tailored to any other supported device and development board.
 
-
 ### <b>How to use it ?</b>
 
-All scripts are relying on env.bat/env.sh for tools path and application path. (ROT_Provisioning/env.bat/.sh)
+To use DA scripts, you should first configure ROT_Provisioning/env.bat/.sh script (tools path).<br>
+The .bat scripts are designed for Windows, whereas the .sh scripts are designed for Linux and Mac-OS.
 
-* provisioning.bat/.sh :
+<b>provisioning.bat/.sh</b>
 
-  Run the provisioning.bat/.sh script by double clicking on it.
+This script performs the provisioning of debug authentication.<br>
+The **provisioning process** (DA/provisioning.bat/.sh) is divided into 3 majors steps:
 
-  Step 1 : Programming of initial option bytes :
+- Step 1: Configuration
+- Step 2: Images generation
+- Step 3: Provisioning
 
-    - The script proceeds with the programming of option bytes, removing all the protections
-      and erasing the user flash memory using ob_programming.bat/.sh.
+The provisioning script is relying on ob_programming , create_password and password_provisioning scripts.<br>
+At the end of the **provisioning process**, the DA is provisioned and the product state is
+configured to user choice value (at least CLOSED).
 
-  Step 2 : Generating and flashing the code image :
+<b>regression.bat/.sh</b>
 
-    - In this step, you will be able to flash your application with your preferred toolchain. (Rebuild the projects)
+This script performs the full regression of the device: erases the user flash memory and resets
+the product state to OPEN.<br>
+It requires that product state is not already OPEN (in OPEN the flash erase is always possible).
 
-  Step 3 : Provisioning the password and setting the final product state :
+### <b>Notes</b>
 
-    - If it is the first time you are provisioning your board,
-      you have the possibility to update the default password in the user_password.bin file.
+For more details, refer to STM32H503 Wiki article:
 
-    - You can also use this default user_password.bin file without modifying it.
-
-    - If you already created and provisioned password for your board,
-      then you can proceed to jump to the setting of the final product state.
-
-      * user_password.bin : the password (16 bytes) to be filled by User is defined here.
-      * board_password.bin : HASH of user password, which will be provisioned in the chip.
-      * da_password.bin : the output file opening the DA access for regression.
-
-    - Board_password.bin and da_password.bin files are automatically updated with the
-      new password saved in user_password.bin through create_password.bat/.sh.
-
-    - Provisioning the password through password_provisioning.bat/.sh.
-
-* regression.bat/.sh :
-
-  - Regression service to erase the user firmware and data within the user flash memory, SRAM and option bytes keys (OBK)
-    when OBK are supported.
-
-  - After a regression, STM32 falls back in product state open.
-
-  - Launch the provided regression.bat/.sh script by double clicking on it.
-
-
-## Environment Setup
-
-  All scripts rely on env.bat and env.sh for setting the necessary tools path and application path.
-    - File path : ROT_Provisioning/env.bat/.sh.
-    - Purpose : Sets the necessary tools path and application path for Windows, Linux and Mac operating system.
-    - Usage : Exporting the Environment Variables, Path Configuration, Dependency Setup, Perform initial setup tasks.
-
-
-## Additional Resources
-
-  * [DA_STM32H503](https://wiki.st.com/stm32mcu/wiki/Security:How_to_start_with_DA_access_on_STM32H503)
+  - [Debug authentication for STM32H503](https://wiki.st.com/stm32mcu/wiki/Security:How_to_start_with_DA_access_on_STM32H503)
+  - [How to start with DA on STM32H5](https://wiki.st.com/stm32mcu/wiki/Category:How_to_start_with_DA_on_STM32H5)

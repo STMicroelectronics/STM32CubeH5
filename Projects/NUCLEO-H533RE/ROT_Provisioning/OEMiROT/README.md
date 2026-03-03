@@ -1,101 +1,64 @@
 ## <b>ROT_Provisioning OEMiROT Description</b>
 
-This section provides available configuration scripts for OEMiROT example.
+This section provides an overview of the available scripts for OEMiROT boot path.
 
-To ease the configuration process, ob_flash_programming, obkey_programming and provisioning scripts are used.
-The ob_flash_programming script is in charge of removing the protections, initializing and configuring the option bytes and download the images.
-The obkey_programming script is in charge of configuring option byte keys (OBKeys).
-The provisioning script is in charge of target provisioning.
+OEMiROT stands for "OEM Immutable Root of Trust" and it provides two services:
 
+  - Secure Boot: Verification of the integrity, and authenticity of the application code before any execution.
+  - Secure Firmware Update: If a new firmware image is available on detection, check of its authenticity.
+                            Once the firmware is decrypted, check of the integrity of the code before installing it.
 
 ### <b>Keywords</b>
 
-OEMiROT, TrustZone, boot path, Root Of Trust, Security, mcuboot
-
+OEMiROT, boot path, Root Of Trust, Security, mcuboot
 
 ### <b>Directory contents</b>
 
-- OEMiROT/provisioning.bat/.sh                  Target provisioning.
-- OEMiROT/obkey_programming.bat/.sh             Configure option byte keys(OBKeys).
-- OEMiROT/ob_flash_programming.bat/.sh          Option bytes Initialization and Image download.
-- OEMiROT/Binary                                It contains generated binary data images and obk binary.
-- OEMiROT/Images/OEMiROT_S_Code_Image.xml       Configuration file for Secure Firmware image generation.
-- OEMiROT/Images/OEMiROT_S_Data_Image.xml       Configuration file for Secure Data image generation.
-- OEMiROT/Images/OEMiROT_NS_Code_Image.xml      Configuration file for NonSecure Firmware image generation.
-- OEMiROT/Images/OEMiROT_NS_Data_Image.xml      Configuration file for NonSecure Data image generation.
-- OEMiROT/Keys/OEMiRoT_Authentication_S.pem     Private key for secure authentication.
-- OEMiROT/Keys/OEMiRoT_Authentication_NS.pem    Private key for nonsecure authentication.
-- OEMiROT/Keys/OEMiRoT_Encryption.pem           Private key for encryption.
-- OEMiROT/Keys/OEMiRoT_Encryption_Pub.pem       Public key for encryption.
-- OEMiROT/Config/OEMiRoT_Config.xml             Configuring keys for authentication and encryption.
+<b>Sub-directories</b>
 
+- OEMiROT/Binary                               Output binaries and generated images.
+- OEMiROT/Config                               OEMiROT configuration files.
+- OEMiROT/Image                                Image configuration files.
+- OEMiROT/Keys                                 Keys for firmware image authentication and encryption.
+
+<b>Scripts</b>
+
+- OEMiROT/ob_flash_programming.bat/.sh         Programs option bytes and firmware image on the device.
+- OEMiROT/obkey_programming.bat/.sh            Programs OBKeys on the device.
+- OEMiROT/provisioning.bat/.sh                 Performs device provisioning process.
 
 ### <b>Hardware and Software environment</b>
 
-- This example runs on STM32H533xx devices with security enabled (TZEN=B4).
 - This example has been tested with STMicroelectronics NUCLEO-H533RE (MB1814)
   board and can be easily tailored to any other supported device and development board.
 
 
 ### <b>How to use it ?</b>
 
-Before compiling the project, you should first start the provisioning process. During the provisioning process, the linker files
-of project as well as the postbuild commands will be automatically updated.
+To use OEMiRoT bootpath, you should first configure ROT_Provisioning/env.bat/.sh script
+(tools path, application path and COM port configuration).<br>
+The .bat scripts are designed for Windows, whereas the .sh scripts are designed for Linux and Mac-OS.
 
-All scripts are relying on env.bat/env.sh for tools path and application path. (ROT_Provisioning/env.bat/.sh)
+Then you should run the provisioning script (provisioning.bat/.sh).<br>
+During the **provisioning process**, the programming scripts and the application files will
+be automatically updated according to OEMiRoT configuration, and user answers.
 
-The **provisioning process** (OEMiROT/provisioning.bat/.sh) is divided into 3 majors steps :
+The **provisioning process** (OEMiROT/provisioning.bat/.sh) is divided into 3 majors steps:
 
-  Step 1 : Configuration management
+-   Step 1: Configuration management
+-   Step 2: Images generation
+-   Step 3: Provisioning
 
-    * OEMiROT_Config.obk generation : Using TPC, regenerate the keys through
-      OEMiROT_Config.xml.(ROT_Provisioning/OEMiROT/Config/OEMiRoT_Config.xml)
+The provisioning script is relying on ob_flash_programming, obkey_provisioning and obkey_provisioning_open scripts.
 
-    * DA_Config.obk generation : Using TPC, generate certificates, update the keys and permissions through
-      DA_Config.xml.(ROT_Provisioning/DA/Config/DA_Config.xml)
+For more details, refer to STM32H533 Wiki articles:
 
-  Step 2 : Image generation
+  - [OEMiRoT OEMuRoT for STM32H5](https://wiki.st.com/stm32mcu/wiki/Security:OEMiRoT_OEMuRoT_for_STM32H5)
+  - [How to start with OEMiRoT on STM32H533](https://wiki.st.com/stm32mcu/wiki/Security:How_to_start_with_OEMiRoT_on_STM32H533)
+  - [How_to_create_h5_example] (https://wiki.st.com/stm32mcu/wiki/Security:How_to_create_ROT_examples_for_STM32H5)
 
-    * Boot firmware image generation : Build the OEMiROT_Boot project with the preferred toolchain.
+### <b>Notes</b>
 
-    * Code firmware image generation : Build the OEMiROT_Appli_TrustZone project with the preferred toolchain.
-
-    * Data generation : Data image generation with TrustedPackageCreator, if data image enabled.
-
-  Step 3 : Provisioning
-
-    * Program the option bytes and flash the images using ob_flash_programming.bat/.sh.
-
-    * Define the final product state value. (OPEN/PROVISIONED/CLOSED/LOCKED)
-
-The provisioning script is relying on ob_flash_programming and obkey_programming scripts.
-
-It is possible to run ob_flash_programming.bat/.sh and obkey_programming.bat/.sh directly (advanced mode).
-
-- The **ob_flash_programming process** (OEMiROT/ob_flash_programming.bat/.sh) includes :
-
-  Step 1 : Initialize option bytes
-
-  Step 2 : Configure the option Bytes
-
-    * Remove Protection and erase all.
-    * Configure option Bytes.
-
-  Step 3 : Download Images
-
-    * Download boot image.
-    * Download Appli image.
-    * Download data image, if data image enabled.
-
-
-## Environment Setup
-
-  All scripts rely on env.bat and env.sh for setting the necessary tools path and application path.
-    - File path : ROT_Provisioning/env.bat/.sh.
-    - Purpose : Sets the necessary tools path and application path for Windows, Linux and Mac operating system.
-    - Usage : Exporting the Environment Variables, Path Configuration, Dependency Setup, Perform initial setup tasks.
-
-
-## Additional Resources
-
-  * [OEMiRoT_STM32H533] (https://wiki.st.com/stm32mcu/wiki/Security:How_to_start_with_OEMiRoT_on_STM32H533)
+AppliCfg.py (located in Utilities/PC_Software/ROT_AppliConfig) is used during provisioning process.
+It is needed to have python and some python packages installed in your environment.
+Refer to Utilities/PC_Software/ROT_AppliConfig/README.md for more details.

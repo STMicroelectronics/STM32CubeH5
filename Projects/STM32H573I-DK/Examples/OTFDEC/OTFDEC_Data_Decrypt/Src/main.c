@@ -55,7 +55,7 @@ uint32_t pInitVectAES[4] = {0x00000000,0x00000000,0x00000000,0x00000000};
 
 DCACHE_HandleTypeDef hdcache1;
 
-XSPI_HandleTypeDef hospi1;
+XSPI_HandleTypeDef hxspi1;
 
 OTFDEC_HandleTypeDef hotfdec1;
 
@@ -202,7 +202,7 @@ int main(void)
   HAL_OTFDEC_DeInit(&hotfdec1);
   
   /* DeInit OCTOSPI */
-  HAL_XSPI_DeInit(&hospi1);
+  HAL_XSPI_DeInit(&hxspi1);
   
   if (errorBuffer == 0)
   {
@@ -384,22 +384,22 @@ static void MX_OCTOSPI1_Init(void)
   
   /* USER CODE END OCTOSPI1_Init 1 */
   /* OCTOSPI1 parameter configuration*/
-  hospi1.Instance = OCTOSPI1;
-  hospi1.Init.FifoThresholdByte = 4;
-  hospi1.Init.MemoryMode = HAL_XSPI_SINGLE_MEM;
-  hospi1.Init.MemoryType = HAL_XSPI_MEMTYPE_MACRONIX;
-  hospi1.Init.MemorySize = HAL_XSPI_SIZE_8MB;
-  hospi1.Init.ChipSelectHighTimeCycle = 1;
-  hospi1.Init.FreeRunningClock = HAL_XSPI_FREERUNCLK_DISABLE;
-  hospi1.Init.ClockMode = HAL_XSPI_CLOCK_MODE_0;
-  hospi1.Init.WrapSize = HAL_XSPI_WRAP_NOT_SUPPORTED;
-  hospi1.Init.ClockPrescaler = 2;
-  hospi1.Init.SampleShifting = HAL_XSPI_SAMPLE_SHIFT_NONE;
-  hospi1.Init.DelayHoldQuarterCycle = HAL_XSPI_DHQC_ENABLE;
-  hospi1.Init.ChipSelectBoundary = HAL_XSPI_BONDARYOF_NONE;
-  hospi1.Init.DelayBlockBypass = HAL_XSPI_DELAY_BLOCK_BYPASS;
-  hospi1.Init.Refresh = 0;
-  if (HAL_XSPI_Init(&hospi1) != HAL_OK)
+  hxspi1.Instance = OCTOSPI1;
+  hxspi1.Init.FifoThresholdByte = 4;
+  hxspi1.Init.MemoryMode = HAL_XSPI_SINGLE_MEM;
+  hxspi1.Init.MemoryType = HAL_XSPI_MEMTYPE_MACRONIX;
+  hxspi1.Init.MemorySize = HAL_XSPI_SIZE_8MB;
+  hxspi1.Init.ChipSelectHighTimeCycle = 1;
+  hxspi1.Init.FreeRunningClock = HAL_XSPI_FREERUNCLK_DISABLE;
+  hxspi1.Init.ClockMode = HAL_XSPI_CLOCK_MODE_0;
+  hxspi1.Init.WrapSize = HAL_XSPI_WRAP_NOT_SUPPORTED;
+  hxspi1.Init.ClockPrescaler = 2;
+  hxspi1.Init.SampleShifting = HAL_XSPI_SAMPLE_SHIFT_NONE;
+  hxspi1.Init.DelayHoldQuarterCycle = HAL_XSPI_DHQC_ENABLE;
+  hxspi1.Init.ChipSelectBoundary = HAL_XSPI_BONDARYOF_NONE;
+  hxspi1.Init.DelayBlockBypass = HAL_XSPI_DELAY_BLOCK_BYPASS;
+  hxspi1.Init.Refresh = 0;
+  if (HAL_XSPI_Init(&hxspi1) != HAL_OK)
   {
     Error_Handler();
   }
@@ -442,8 +442,8 @@ static void MX_OTFDEC1_Init(void)
   */
 static void MX_GPIO_Init(void)
 {
-/* USER CODE BEGIN MX_GPIO_Init_1 */
-/* USER CODE END MX_GPIO_Init_1 */
+  /* USER CODE BEGIN MX_GPIO_Init_1 */
+  /* USER CODE END MX_GPIO_Init_1 */
 
   /* GPIO Ports Clock Enable */
   __HAL_RCC_GPIOG_CLK_ENABLE();
@@ -453,8 +453,8 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOD_CLK_ENABLE();
   __HAL_RCC_GPIOB_CLK_ENABLE();
 
-/* USER CODE BEGIN MX_GPIO_Init_2 */
-/* USER CODE END MX_GPIO_Init_2 */
+  /* USER CODE BEGIN MX_GPIO_Init_2 */
+  /* USER CODE END MX_GPIO_Init_2 */
 }
 
 /* USER CODE BEGIN 4 */
@@ -499,7 +499,7 @@ static uint32_t OSPI_Write(uint32_t * pBuffer, uint32_t FlashAddress, uint32_t S
   sCommand.AddressMode = HAL_XSPI_ADDRESS_NONE;
   sCommand.DataMode    = HAL_XSPI_DATA_NONE;
   
-  if (HAL_XSPI_SetFifoThreshold(&hospi1, 4) != HAL_OK)
+  if (HAL_XSPI_SetFifoThreshold(&hxspi1, 4) != HAL_OK)
   {
     Error_Handler();
   }
@@ -508,7 +508,7 @@ static uint32_t OSPI_Write(uint32_t * pBuffer, uint32_t FlashAddress, uint32_t S
   sCommand.AddressMode = HAL_XSPI_ADDRESS_NONE;
   sCommand.DataMode    = HAL_XSPI_DATA_NONE;
   
-  if (HAL_XSPI_Command(&hospi1, &sCommand, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
+  if (HAL_XSPI_Command(&hxspi1, &sCommand, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
   {
     Error_Handler();
   }
@@ -521,18 +521,18 @@ static uint32_t OSPI_Write(uint32_t * pBuffer, uint32_t FlashAddress, uint32_t S
   sCommand.DataMode       = HAL_XSPI_DATA_1_LINE;
   sCommand.DataLength     = 1;
   
-  if (HAL_XSPI_Command(&hospi1, &sCommand, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
+  if (HAL_XSPI_Command(&hxspi1, &sCommand, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
   {
     Error_Handler();
   }
   
-  if (HAL_XSPI_AutoPolling(&hospi1, &sConfig,HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
+  if (HAL_XSPI_AutoPolling(&hxspi1, &sConfig,HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
   {
     Error_Handler();
   }
   
   /* Writing Sequence ----------------------------------------------- */
-  if (HAL_XSPI_SetFifoThreshold(&hospi1, 4) != HAL_OK)
+  if (HAL_XSPI_SetFifoThreshold(&hxspi1, 4) != HAL_OK)
   {
     Error_Handler();
   }
@@ -543,12 +543,12 @@ static uint32_t OSPI_Write(uint32_t * pBuffer, uint32_t FlashAddress, uint32_t S
   sCommand.Address     = FlashAddress;
   sCommand.DataMode    = HAL_XSPI_DATA_1_LINE;
   sCommand.DataLength  = Size;
-  if (HAL_XSPI_Command(&hospi1, &sCommand, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
+  if (HAL_XSPI_Command(&hxspi1, &sCommand, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
   {
     Error_Handler();
   }
   
-  if (HAL_XSPI_Transmit(&hospi1,(uint8_t *) pBuffer,HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
+  if (HAL_XSPI_Transmit(&hxspi1,(uint8_t *) pBuffer,HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
   {
     Error_Handler();
   }
@@ -562,12 +562,12 @@ static uint32_t OSPI_Write(uint32_t * pBuffer, uint32_t FlashAddress, uint32_t S
   sCommand.DataMode       = HAL_XSPI_DATA_1_LINE;
   sCommand.DataLength     = 1;
   
-  if (HAL_XSPI_Command(&hospi1, &sCommand, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
+  if (HAL_XSPI_Command(&hxspi1, &sCommand, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
   {
     Error_Handler();
   }
   
-  if (HAL_XSPI_AutoPolling(&hospi1, &sConfig,HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
+  if (HAL_XSPI_AutoPolling(&hxspi1, &sConfig,HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
   {
     Error_Handler();
   }
@@ -602,7 +602,7 @@ static uint32_t OSPI_MemoryMap(void)
   sCommand.DQSMode               = HAL_XSPI_DQS_DISABLE;
   sCommand.SIOOMode              = HAL_XSPI_SIOO_INST_EVERY_CMD;
   
-  if (HAL_XSPI_SetFifoThreshold(&hospi1, 4) != HAL_OK)
+  if (HAL_XSPI_SetFifoThreshold(&hxspi1, 4) != HAL_OK)
   {
     Error_Handler();
   }
@@ -614,7 +614,7 @@ static uint32_t OSPI_MemoryMap(void)
   sCommand.DataMode      = HAL_XSPI_DATA_1_LINE;
   sCommand.DummyCycles   = 0;
   
-  if (HAL_XSPI_Command(&hospi1, &sCommand, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
+  if (HAL_XSPI_Command(&hxspi1, &sCommand, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
   {
     Error_Handler();
   }
@@ -626,7 +626,7 @@ static uint32_t OSPI_MemoryMap(void)
   sCommand.DataMode           = HAL_XSPI_DATA_1_LINE;
   sCommand.DummyCycles        = 0;
   
-  if (HAL_XSPI_Command(&hospi1, &sCommand, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
+  if (HAL_XSPI_Command(&hxspi1, &sCommand, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
   {
     Error_Handler();
   }
@@ -634,7 +634,7 @@ static uint32_t OSPI_MemoryMap(void)
   sMemMappedCfg.TimeOutActivation      = HAL_XSPI_TIMEOUT_COUNTER_DISABLE;
   sMemMappedCfg.TimeoutPeriodClock     = 0x40;
   
-  if (HAL_XSPI_MemoryMapped(&hospi1, &sMemMappedCfg))
+  if (HAL_XSPI_MemoryMapped(&hxspi1, &sMemMappedCfg))
   {
     Error_Handler();
   }
@@ -667,7 +667,7 @@ static void OSPI_ResetMemory(void)
   
   sCommand.Instruction = RESET_ENABLE_CMD;
   /* Send the command */
-  if (HAL_XSPI_Command(&hospi1, &sCommand, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
+  if (HAL_XSPI_Command(&hxspi1, &sCommand, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
   {
     Error_Handler();
   }
@@ -675,7 +675,7 @@ static void OSPI_ResetMemory(void)
   
   /* Send the reset memory command */
   sCommand.Instruction = RESET_MEMORY_CMD;
-  if (HAL_XSPI_Command(&hospi1, &sCommand, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
+  if (HAL_XSPI_Command(&hxspi1, &sCommand, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
   {
     Error_Handler();
   }
@@ -716,7 +716,7 @@ static uint32_t OSPI_Erase(void)
   sCommand.AddressMode = HAL_XSPI_ADDRESS_NONE;
   sCommand.DataMode    = HAL_XSPI_DATA_NONE;
   
-  if (HAL_XSPI_Command(&hospi1, &sCommand, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
+  if (HAL_XSPI_Command(&hxspi1, &sCommand, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
   {
     Error_Handler();
   }
@@ -729,12 +729,12 @@ static uint32_t OSPI_Erase(void)
   sCommand.DataMode       = HAL_XSPI_DATA_1_LINE;
   sCommand.DataLength     = 1;
   
-  if (HAL_XSPI_Command(&hospi1, &sCommand, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
+  if (HAL_XSPI_Command(&hxspi1, &sCommand, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
   {
     Error_Handler();
   }
   
-  if (HAL_XSPI_AutoPolling(&hospi1, &sConfig,HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
+  if (HAL_XSPI_AutoPolling(&hxspi1, &sConfig,HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
   {
     Error_Handler();
   }
@@ -746,7 +746,7 @@ static uint32_t OSPI_Erase(void)
   sCommand.AddressWidth = HAL_XSPI_ADDRESS_24_BITS;
   sCommand.Address     = 0;
   sCommand.DataMode    = HAL_XSPI_DATA_NONE;
-  if (HAL_XSPI_Command(&hospi1, &sCommand, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
+  if (HAL_XSPI_Command(&hxspi1, &sCommand, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
   {
     Error_Handler();
   }
@@ -760,12 +760,12 @@ static uint32_t OSPI_Erase(void)
   sCommand.DataMode       = HAL_XSPI_DATA_1_LINE;
   sCommand.DataLength     = 1;
   
-  if (HAL_XSPI_Command(&hospi1, &sCommand, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
+  if (HAL_XSPI_Command(&hxspi1, &sCommand, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
   {
     Error_Handler();
   }
   
-  if (HAL_XSPI_AutoPolling(&hospi1, &sConfig,HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
+  if (HAL_XSPI_AutoPolling(&hxspi1, &sConfig,HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
   {
     Error_Handler();
   }
@@ -839,8 +839,7 @@ void Error_Handler(void)
   }
   /* USER CODE END Error_Handler_Debug */
 }
-
-#ifdef  USE_FULL_ASSERT
+#ifdef USE_FULL_ASSERT
 /**
   * @brief  Reports the name of the source file and the source line number
   *         where the assert_param error has occurred.

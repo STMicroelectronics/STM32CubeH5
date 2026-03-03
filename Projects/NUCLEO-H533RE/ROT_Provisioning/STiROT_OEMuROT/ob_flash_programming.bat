@@ -36,9 +36,9 @@ set remove_protect=-ob SECWM1_STRT=1 SECWM1_END=0 WRPSGn1=0xff WRPSGn2=0xff SECW
 set erase_all=-e all
 
 if "%isGeneratedByCubeMX%" == "true" (
-set appli_dir=%oemirot_boot_path_project%
+set appli_dir=%oemirot_appli_path_project%
 ) else (
-set appli_dir=../../%oemirot_boot_path_project%
+set appli_dir=../../%oemirot_appli_path_project%
 )
 
 :: =============================================== Configure Option Bytes ====================================================================
@@ -134,7 +134,7 @@ IF !errorlevel! NEQ 0 goto :error
 
 set "action=Write OEMuROT_Boot"
 echo %action%
-%stm32programmercli% %connect_no_reset% -d %cube_fw_path%\Projects\NUCLEO-H533RE\Applications\ROT\OEMiROT_Boot\Binary\%oemurot_image% -v
+%stm32programmercli% %connect_no_reset% -d %cube_fw_path%\Projects\NUCLEO-H533RE\%oemirot_boot_path_project%\Binary\%oemurot_image% -v
 IF !errorlevel! NEQ 0 goto :error
 echo "OEMuROT_Boot Written"
 

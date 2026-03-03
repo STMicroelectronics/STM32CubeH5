@@ -10,7 +10,6 @@ As stated earlier, the present application runs in standalone mode without Threa
 
  - #define UX_STANDALONE
 
-
 The application is designed to behave as an USB HID Host, the code provides required requests to properly enumerate
 HID devices , HID Class APIs to decode HID reports received from a mouse or a keyboard and display data on uart HyperTerminal.
 
@@ -44,14 +43,15 @@ None.
 
 ### <b>Notes</b>
 
+None.
 
 #### <b>USBX usage hints</b>
 
+None.
 
 ### <b>Keywords</b>
 
 Standalone, USBX Host, USB, HID, Mouse, Keyboard, UART, USART,
-
 
 ### <b>Hardware and Software environment</b>
 
@@ -65,15 +65,15 @@ Standalone, USBX Host, USB, HID, Mouse, Keyboard, UART, USART,
     - Connect ST-Link cable to the PC USB port to display data on the HyperTerminal.
 
     A virtual COM port will then appear in the HyperTerminal:
-     - Hyperterminal configuration
-       - Data Length = 8 Bits
-       - One Stop Bit
-       - No parity
-       - BaudRate = 115200 baud
-       - Flow control: None
+    - Hyperterminal configuration
+      - Data Length = 8 Bits
+      - One Stop Bit
+      - No parity
+      - BaudRate = 115200 baud
+      - Flow control: None
 
 <b>Note</b>
-    - JP4 : Check USB-PD Jumper is removed in order to provide Vbus 5V.
+ - JP4 : Check USB-PD Jumper is removed in order to provide Vbus 5V.
 
 ### <b>How to use it ?</b>
 

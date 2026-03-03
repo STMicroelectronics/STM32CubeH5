@@ -22,7 +22,6 @@
 #include "stm32h5xx_it.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -234,11 +233,8 @@ void USB_DRD_FS_IRQHandler(void)
 /**
 
   * @brief  This function handles external line interrupt request.
-
   *         (Associated to FLGn line in case of TCPP0203 management)
-
   * @retval None
-
   */
 
 void TCPP0203_PORT0_FLG_EXTI_IRQHANDLER(void)

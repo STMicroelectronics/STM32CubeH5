@@ -693,6 +693,7 @@ uint8_t  USBD_FrameWork_AddToConfDesc(USBD_DevClassHandleTypeDef *pdev, uint8_t 
 
       break;
 #endif /* USBD_HID_CLASS_ACTIVATED == 1U */
+
     /* USER CODE BEGIN FrameWork_AddToConfDesc_1 */
 
     /* USER CODE END FrameWork_AddToConfDesc_1 */

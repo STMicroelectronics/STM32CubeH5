@@ -42,17 +42,19 @@ HAL_StatusTypeDef HAL_InitTick(uint32_t TickPriority)
 {
   RCC_ClkInitTypeDef    clkconfig;
   uint32_t              uwTimclock, uwAPB1Prescaler;
-
   uint32_t              uwPrescalerValue;
   uint32_t              pFLatency;
   HAL_StatusTypeDef     status;
 
   /* Enable TIM6 clock */
   __HAL_RCC_TIM6_CLK_ENABLE();
+
   /* Get clock configuration */
   HAL_RCC_GetClockConfig(&clkconfig, &pFLatency);
+
   /* Get APB1 prescaler */
   uwAPB1Prescaler = clkconfig.APB1CLKDivider;
+
   /* Compute TIM6 clock */
   if (uwAPB1Prescaler == RCC_HCLK_DIV1)
   {
@@ -98,7 +100,7 @@ HAL_StatusTypeDef HAL_InitTick(uint32_t TickPriority)
         status = HAL_ERROR;
       }
     }
-  }
+}
 
   /* Enable the TIM6 global Interrupt */
   HAL_NVIC_EnableIRQ(TIM6_IRQn);

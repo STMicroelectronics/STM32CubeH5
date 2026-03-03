@@ -74,7 +74,7 @@ static UCHAR                    UserRxBuffer[APP_RX_DATA_SIZE];
 /**
   * @brief  Function implementing cdc_acm_send_app_thread_entry.
   * @param  thread_input: Not used
-  * @retval none
+  * @retval None
   */
 VOID cdc_acm_send_app_thread_entry(ULONG thread_input)
 {
@@ -121,7 +121,7 @@ VOID cdc_acm_send_app_thread_entry(ULONG thread_input)
 /**
   * @brief  Function implementing cdc_acm_recieve_app_thread_entry.
   * @param  thread_input: Not used
-  * @retval none
+  * @retval None
   */
 VOID cdc_acm_recieve_app_thread_entry(ULONG thread_input)
 {
@@ -223,7 +223,7 @@ VOID cdc_acm_recieve_app_thread_entry(ULONG thread_input)
   * @param  status: reception status.
   * @param  reception_buffer: reception buffer pointer.
   * @param  reception_size: block size reception.
-  * @retval none
+  * @retval None
   */
 VOID cdc_acm_reception_callback(struct UX_HOST_CLASS_CDC_ACM_STRUCT *cdc_acm,
                                 UINT status, UCHAR *reception_buffer, ULONG reception_size)

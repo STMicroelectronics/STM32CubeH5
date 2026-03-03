@@ -67,6 +67,8 @@ void HAL_MspInit(void)
 
   /* USER CODE END MspInit 0 */
 
+  __HAL_RCC_GTZC1_CLK_ENABLE();
+
   /* System interrupt init*/
 
   /* Peripheral interrupt init */

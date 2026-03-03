@@ -183,6 +183,16 @@ But the firmware can be made of a secure part and a non secure part but at least
 		<Default>.\..\Keys\STiRoT_Authentication.pem</Default>
 		<Tooltip>Select the key used to authenticate firmware and data images. When this key is regenerated, both frmware and data images must be processed with Imgtool</Tooltip>
 	</File>
+    <Bool>
+        <Name>Internal tampers activation</Name>
+        <Value>0x0</Value>
+        <Width>1</Width>
+        <Hidden>1</Hidden>
+        <Default>0x0</Default>
+        <True>0x0</True>
+        <False>0xC3</False>
+        <Tooltip>If selected, the STiRoT will activate internal tampers 9 and 15 at startup</Tooltip>
+    </Bool>
 	<Output>
 		<Name>Output File</Name>
 		<Value>./../Binary/STiRoT_Config.obk</Value>

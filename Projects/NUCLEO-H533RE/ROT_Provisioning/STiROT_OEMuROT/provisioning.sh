@@ -37,25 +37,26 @@ ob_flash_log="ob_flash_programming.log"
 product_state=OPEN
 connect_no_reset=-c port=SWD speed=fast ap=1 mode=Hotplug
 
-flash_layout="$cube_fw_path/Projects/NUCLEO-H533RE/Applications/ROT/OEMiROT_Boot/Inc/flash_layout.h"
+flash_layout="$cube_fw_path/Projects/NUCLEO-H533RE/${oemirot_boot_path_project}/Inc/flash_layout.h"
 
 # Environment variable used to know if the firmware image is full secure or not
 stirot_config="./Config/STiRoT_Config.xml"
 
-# Environment variable for AppliCfg
-applicfg="$cube_fw_path/Utilities/PC_Software/ROT_AppliConfig/dist/AppliCfg.exe"
-uname | grep -i -e windows -e mingw
-if [ $? == 0 ] && [ -e "$applicfg" ]; then
-  #line for window executable
-  echo AppliCfg with windows executable
-  python=""
+# Check if Python is installed
+python3 --version >/dev/null 2>&1
+if [ $? -ne 0 ]; then
+  python --version >/dev/null 2>&1
+  if [ $? -ne 0 ]; then
+  echo "Python installation missing. Refer to Utilities/PC_Software/ROT_AppliConfig/README.md"
+  exit 1
+  fi
+  python="python "
 else
-  #line for python
-  echo AppliCfg with python script
-  applicfg="$cube_fw_path/Utilities/PC_Software/ROT_AppliConfig/AppliCfg.py"
-  #determine/check python version command
   python="python3 "
 fi
+
+# Environment variable for AppliCfg
+applicfg="$cube_fw_path/Utilities/PC_Software/ROT_AppliConfig/AppliCfg.py"
 
 error_config()
 {
@@ -203,14 +204,14 @@ step_error()
 echo "====="
 echo "===== Provisioning of STiRoT_OEMuROT boot path"
 echo "===== Application selected through env.sh:"
-echo "=====   $oemirot_boot_path_project"
+echo "=====   $oemirot_appli_path_project"
 echo "===== Product state must be Open. Execute  /ROT_Provisioning/DA/regression.sh if not the case."
 echo "====="
 echo ""
 if [ $isGeneratedByCubeMX != "true" ]; then
-  if [[ ! $oemirot_boot_path_project =~ "OEMiROT_Appli_TrustZone" ]]; then
+  if [[ ! $oemirot_appli_path_project =~ "OEMiROT_Appli_TrustZone" ]]; then
     echo "====="
-    echo "===== Wrong Boot path: $oemirot_boot_path_project"
+    echo "===== Wrong Boot path: $oemirot_appli_path_project"
     echo "===== please modify the env.sh to the right path"
     step_error
   fi

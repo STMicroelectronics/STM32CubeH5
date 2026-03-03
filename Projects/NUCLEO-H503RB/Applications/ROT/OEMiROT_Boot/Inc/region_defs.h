@@ -80,6 +80,8 @@
 #define NS_IMAGE_PRIMARY_AREA_OFFSET        (IMAGE_PRIMARY_PARTITION_OFFSET + BL2_HEADER_SIZE)
 #define CODE_START                          (NS_ROM_ALIAS(NS_IMAGE_PRIMARY_AREA_OFFSET))
 
+#define S_CODE_START                          (CODE_START)
+
 #ifdef BL2
 /* Personalized region */
 #define PERSO_START                         (NS_ROM_ALIAS(FLASH_AREA_PERSO_OFFSET))

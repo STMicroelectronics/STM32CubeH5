@@ -37,6 +37,7 @@
   */
 
 #define HAL_MODULE_ENABLED
+/*#define HAL_CCB_MODULE_ENABLED */
 /*#define HAL_ADC_MODULE_ENABLED */
 /*#define HAL_CEC_MODULE_ENABLED */
 /*#define HAL_COMP_MODULE_ENABLED */
@@ -69,6 +70,7 @@
 /*#define HAL_RTC_MODULE_ENABLED */
 /*#define HAL_SAI_MODULE_ENABLED */
 /*#define HAL_SD_MODULE_ENABLED */
+/*#define HAL_SDIO_MODULE_ENABLED */
 /*#define HAL_SDRAM_MODULE_ENABLED */
 /*#define HAL_MMC_MODULE_ENABLED */
 /*#define HAL_SMARTCARD_MODULE_ENABLED */
@@ -204,6 +206,7 @@
   *        for each PPP peripheral).
   */
 #define  USE_HAL_ADC_REGISTER_CALLBACKS       0U    /* ADC register callback disabled       */
+#define  USE_HAL_CCB_REGISTER_CALLBACKS           0U /* CCB register callback disabled       */
 #define  USE_HAL_CEC_REGISTER_CALLBACKS       0U    /* CEC register callback disabled       */
 #define  USE_HAL_COMP_REGISTER_CALLBACKS      0U    /* COMP register callback disabled      */
 #define  USE_HAL_CORDIC_REGISTER_CALLBACKS    0U    /* CORDIC register callback disabled    */
@@ -234,6 +237,7 @@
 #define  USE_HAL_RTC_REGISTER_CALLBACKS       0U    /* RTC register callback disabled       */
 #define  USE_HAL_SAI_REGISTER_CALLBACKS       0U    /* SAI register callback disabled       */
 #define  USE_HAL_SD_REGISTER_CALLBACKS        0U    /* SD register callback disabled        */
+#define  USE_HAL_SDIO_REGISTER_CALLBACKS      0U    /* SDIO register callback disabled      */
 #define  USE_HAL_SDRAM_REGISTER_CALLBACKS     0U    /* SDRAM register callback disabled     */
 #define  USE_HAL_SMARTCARD_REGISTER_CALLBACKS 0U    /* SMARTCARD register callback disabled */
 #define  USE_HAL_SMBUS_REGISTER_CALLBACKS     0U    /* SMBUS register callback disabled     */
@@ -252,6 +256,15 @@
  * Deactivated: CRC code cleaned from driver
  */
 #define USE_SPI_CRC                   0U
+
+/* ################## SDMMC peripheral configuration ######################### */
+
+#define USE_SD_TRANSCEIVER            0U
+
+/* ################## SDIO peripheral configuration ######################### */
+
+#define USE_SDIO_TRANSCEIVER          0U
+#define SDIO_MAX_IO_NUMBER            7U
 
 /* Includes ----------------------------------------------------------------------------------------------------------*/
 
@@ -326,6 +339,10 @@
 #ifdef HAL_SDRAM_MODULE_ENABLED
   #include "stm32h5xx_hal_sdram.h"
 #endif /* HAL_SDRAM_MODULE_ENABLED */
+
+#ifdef HAL_SDIO_MODULE_ENABLED
+#include "stm32h5xx_hal_sdio.h"
+#endif /* HAL_SDIO_MODULE_ENABLED */
 
 #ifdef HAL_MMC_MODULE_ENABLED
  #include "stm32h5xx_hal_mmc.h"
@@ -418,6 +435,10 @@
 #ifdef HAL_PCD_MODULE_ENABLED
  #include "stm32h5xx_hal_pcd.h"
 #endif /* HAL_PCD_MODULE_ENABLED */
+
+#ifdef HAL_CCB_MODULE_ENABLED
+#include "stm32h5xx_hal_ccb.h"
+#endif /* HAL_CCB_MODULE_ENABLED */
 
 #ifdef HAL_HCD_MODULE_ENABLED
  #include "stm32h5xx_hal_hcd.h"

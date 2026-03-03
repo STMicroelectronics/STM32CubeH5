@@ -33,7 +33,6 @@ Host PC shows that USB device does not operate as designed (MSC enumeration fail
 
 #### <b>Assumptions if any</b>
 
-  - USB cable should not be unplugged during enumeration and driver install.
   - SD card should be inserted before application is started.
 
 #### <b>Known limitations</b>
@@ -41,6 +40,8 @@ Host PC shows that USB device does not operate as designed (MSC enumeration fail
 The remote wakeup feature is not yet implemented (used to bring the USB suspended bus back to the active condition).
 
 ### <b>Notes</b>
+
+None
 
 #### <b>ThreadX usage hints</b>
 
@@ -81,6 +82,10 @@ The remote wakeup feature is not yet implemented (used to bring the USB suspende
     Read more in STM32CubeIDE User Guide, chapter: "Linker script".
 
     + The "tx_initialize_low_level.S" should be also modified to enable the "USE_DYNAMIC_MEMORY_ALLOCATION" flag.
+
+#### <b>USBX usage hints</b>
+
+None
 
 ### <b>Keywords</b>
 

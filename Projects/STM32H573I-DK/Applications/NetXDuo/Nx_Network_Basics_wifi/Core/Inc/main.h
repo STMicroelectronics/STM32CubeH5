@@ -61,13 +61,13 @@ int hardware_rand(void);
 #define MXCHIP_FLOW_EXTI_IRQn EXTI3_IRQn
 #define MXCHIP_NSS_Pin GPIO_PIN_6
 #define MXCHIP_NSS_GPIO_Port GPIOF
+#define MXCHIP_BOOT_Pin GPIO_PIN_12
+#define MXCHIP_BOOT_GPIO_Port GPIOB
 #define MXCHIP_RESET_Pin GPIO_PIN_8
 #define MXCHIP_RESET_GPIO_Port GPIOH
 #define MXCHIP_NOTIFY_Pin GPIO_PIN_4
 #define MXCHIP_NOTIFY_GPIO_Port GPIOH
 #define MXCHIP_NOTIFY_EXTI_IRQn EXTI4_IRQn
-#define MXCHIP_BOOT_Pin GPIO_PIN_0
-#define MXCHIP_BOOT_GPIO_Port GPIOB
 
 /* USER CODE BEGIN Private defines */
 /* USER CODE END Private defines */

@@ -1,4 +1,40 @@
 #!/bin/bash -
+#=================================================================================================
+# Managing HOST OS diversity : begin
+#=================================================================================================
+OS=$(uname)
+
+echo ${OS} | grep -i -e windows -e mingw >/dev/null
+if [ $? == 0 ]; then
+  echo "=================================="
+  echo "HOST OS : Windows detected"
+  echo ""
+  echo ">>> Running ../postbuild.bat $@"
+  echo ""
+  # Enable : exit immediately if any commands returns a non-zero status
+  set -e
+  cd ../
+  cmd.exe /C postbuild.bat $@
+  # Return OK if no error detected during .bat script
+  exit 0
+fi
+
+if [ "$OS" == "Linux" ]; then
+  echo "HOST OS : Linux detected"
+elif [ "$OS" == "Darwin" ]; then
+  echo "HOST OS : MacOS detected"
+else
+  echo "!!!HOST OS not supported : >$OS<!!!"
+  exit 1
+fi
+
+#=================================================================================================
+# Managing HOST OS diversity : end
+#=================================================================================================
+echo "=================================="
+echo ">>> Running $0 $@"
+echo ""
+
 # arg1 is the config type (Debug, Release)
 config=$1
 # Getting the Trusted Package Creator CLI path
@@ -22,24 +58,26 @@ error()
     echo "====="
     exit 1
 }
-# Environment variable for AppliCfg
-applicfg="$cube_fw_path/Utilities/PC_Software/ROT_AppliConfig/dist/AppliCfg.exe"
-uname | grep -i -e windows -e mingw
-if [ $? == 0 ] && [ -e "$applicfg" ]; then
-  #line for window executable
-  echo AppliCfg with windows executable
-  python=""
+
+# Check if Python is installed
+python3 --version >/dev/null 2>&1
+if [ $? -ne 0 ]; then
+  python --version >/dev/null 2>&1
+  if [ $? -ne 0 ]; then
+  echo "Python installation missing. Refer to Utilities/PC_Software/ROT_AppliConfig/README.md"
+  exit 1
+  fi
+  python="python "
 else
-  #line for python
-  echo AppliCfg with python script
-  applicfg="$cube_fw_path/Utilities/PC_Software/ROT_AppliConfig/AppliCfg.py"
-  #determine/check python version command
   python="python3 "
 fi
 
+# Environment variable for AppliCfg
+applicfg="$cube_fw_path/Utilities/PC_Software/ROT_AppliConfig/AppliCfg.py"
+
 #postbuild
 preprocess_bl2_file="$project_dir/image_macros_preprocessed_bl2.c"
-appli_dir="../../../../$oemirot_boot_path_project"
+appli_dir="../../../../$oemirot_appli_path_project"
 update="$project_dir/../../../../ROT_Provisioning/OEMiROT/ob_flash_programming.sh"
 
 #Environment variable for AppliCfg
@@ -156,10 +194,10 @@ if [ $? != 0 ]; then  error; fi
 
 #xml for init image generation
 
-cp $code_xml $code_init_xml >> $current_log_file 2>&1
-if [ $? != 0 ]; then error; fi
+$python$applicfg xmlval --layout $preprocess_bl2_file -m RE_IMAGE_FLASH_ADDRESS -c x $code_init_xml --vb >> $current_log_file 2>&1
+if [ $? != 0 ]; then  error; fi
 
-cp $data_xml $data_init_xml >> $current_log_file 2>&1
-if [ $? != 0 ]; then error; fi
+$python$applicfg xmlval --layout $preprocess_bl2_file -m RE_IMAGE_FLASH_DATA_UPDATE -c x $data_init_xml --vb >> $current_log_file 2>&1
+if [ $? != 0 ]; then  error; fi
 
 exit 0

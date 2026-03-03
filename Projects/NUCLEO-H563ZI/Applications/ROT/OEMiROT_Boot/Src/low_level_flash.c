@@ -21,6 +21,8 @@
 #include "flash_layout.h"
 #include "stm32h5xx_hal.h"
 #include <stdio.h>
+extern void Error_Handler(void);
+
 #ifdef OEMIROT_DEV_MODE
 #define BOOT_LOG_LEVEL BOOT_LOG_LEVEL_INFO
 #else
@@ -332,13 +334,7 @@ static int32_t Flash_ReadData(uint32_t addr, void *data, uint32_t cnt)
   is_valid = is_range_valid(&ARM_FLASH0_DEV, addr + cnt - 1);
   if (is_valid != true)
   {
-    if (ARM_FLASH0_DEV.dev->read_error)
-    {
-      ARM_FLASH0_STATUS.error = DRIVER_STATUS_ERROR;
-      return ARM_DRIVER_ERROR_PARAMETER;
-    }
-    memset(data, 0xff, cnt);
-    return ARM_DRIVER_OK;
+    return ARM_DRIVER_ERROR_PARAMETER;
   }
   /*  ECC to implement with NMI */
   /*  do a memcpy */
@@ -376,12 +372,13 @@ static int32_t Flash_ReadData(uint32_t addr, void *data, uint32_t cnt)
   return ret;
 }
 #endif
-static int32_t Flash_ProgramData(uint32_t addr,
+static int32_t Flash_ProgramData(uint32_t address,
                                  const void *data, uint32_t cnt)
 {
   uint32_t loop = 0;
   uint32_t flash_base = (uint32_t)FLASH_BASE;
   uint32_t write_type = FLASH_TYPEPROGRAM_QUADWORD;
+  uint32_t addr = address;
   HAL_StatusTypeDef err;
 #if defined(CHECK_WRITE) || defined(DEBUG_FLASH_ACCESS)
   void *dest;
@@ -451,6 +448,16 @@ static int32_t Flash_ProgramData(uint32_t addr,
     BOOT_LOG_INF("failed write %x n=%x \r\n", (uint32_t)(dest), cnt);
   }
 #endif /* DEBUG_FLASH_ACCESS */
+
+  /* Check that the flash base address is consistent with the range (Secure or Non Secure) */
+  if (((is_range_secure(&ARM_FLASH0_DEV, address, cnt)) &&
+       ((flash_base != (uint32_t)FLASH_BASE_S) || (write_type != FLASH_TYPEPROGRAM_QUADWORD)))
+      || ((!is_range_secure(&ARM_FLASH0_DEV, address, cnt)) &&
+      ((flash_base != (uint32_t)FLASH_BASE_NS) || (write_type != FLASH_TYPEPROGRAM_QUADWORD_NS))))
+  {
+    err = HAL_ERROR;
+  }
+
   return (err == HAL_OK) ? ARM_DRIVER_OK : ARM_DRIVER_ERROR;
 }
 
@@ -534,6 +541,14 @@ static int32_t Flash_EraseSector(uint32_t addr)
     }
   }
 #endif /* CHECK_ERASE */
+
+  /* Check that the flash base address is consistent with the range (Secure or Non Secure) */
+  if (((is_range_secure(&ARM_FLASH0_DEV, addr, 4)) && (EraseInit.TypeErase != FLASH_TYPEERASE_SECTORS))
+     || ((!is_range_secure(&ARM_FLASH0_DEV, addr, 4)) && (EraseInit.TypeErase != FLASH_TYPEERASE_SECTORS_NS)))
+  {
+    err = HAL_ERROR;
+  }
+
   return (err == HAL_OK) ? ARM_DRIVER_OK : ARM_DRIVER_ERROR;
 }
 #if !defined(LOCAL_LOADER_CONFIG)
@@ -620,7 +635,7 @@ void NMI_Handler(void)
   else
   {
     /* This exception occurs for another reason than flash double ECC errors */
-    while (1U);
+    Error_Handler();
   }
 }
 #endif /* !LOCAL_LOADER_CONFIG */

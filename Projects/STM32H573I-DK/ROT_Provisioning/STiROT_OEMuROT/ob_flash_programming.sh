@@ -1,6 +1,9 @@
 #!/bin/bash -
 source ../env.sh
 
+# Get config updated by OEMiROT_Boot
+source img_config.sh
+
 sec1_start=0
 sec1_end=0xE
 sec2_start=0x7F
@@ -44,9 +47,9 @@ remove_protect="-ob SECWM1_STRT=1 SECWM1_END=0 WRPSGn1=0xffffffff WRPSGn2=0xffff
 erase_all="-e all"
 
 if [ $isGeneratedByCubeMX == "true" ]; then
-   appli_dir=$oemirot_boot_path_project
+   appli_dir=$oemirot_appli_path_project
 else
-   appli_dir="../../$oemirot_boot_path_project"
+   appli_dir="../../$oemirot_appli_path_project"
 fi
 # =============================================== Configure Option Bytes ====================================================================
 action="Set TZEN = 1"
@@ -107,11 +110,19 @@ if [ "$app_image_number" == "2" ]; then
 fi
 
 if [ "$app_image_number" == "1" ]; then
-    action="Write One image Appli"
-    echo "$action"
-    "$stm32programmercli" $connect_no_reset -d "$appli_dir/Binary/$one_code_image" -v
-    if [ $? -ne 0 ]; then error; return 1; fi
-    echo "TZ Appli Written"
+    if [ "$app_full_secure" == "1" ]; then
+        action="Write Appli Full Secure"
+        echo "$action"
+        "$stm32programmercli" $connect_no_reset -d "$appli_dir/Binary/$s_code_image" -v
+        if [ $? -ne 0 ]; then error; return 1; fi
+        echo "Appli Full Secure Written"
+    else
+        action="Write One image Appli"
+        echo "$action"
+        "$stm32programmercli" $connect_no_reset -d "$appli_dir/Binary/$one_code_image" -v
+        if [ $? -ne 0 ]; then error; return 1; fi
+        echo "TZ Appli Written"
+    fi
 fi
 
 if [ "$s_data_image_number" == "1" ]; then
@@ -141,7 +152,7 @@ fi
 
 action="Write OEMuROT_Boot"
 echo "$action"
-"$stm32programmercli" $connect_no_reset -d "$cube_fw_path/Projects/STM32H573I-DK/Applications/ROT/OEMiROT_Boot/Binary/$oemurot_image" -v
+"$stm32programmercli" $connect_no_reset -d "$cube_fw_path/Projects/STM32H573I-DK/${oemirot_boot_path_project}/Binary/$oemurot_image" -v
 if [ $? -ne 0 ]; then error; return 1; fi
 echo "OEMuROT_Boot Written"
 

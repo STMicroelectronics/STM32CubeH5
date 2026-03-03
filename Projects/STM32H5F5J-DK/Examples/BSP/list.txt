@@ -1,0 +1,109 @@
+change I929930e55e4aff2b12dc386c3ef5a8c87b68ece5
+  project: stm32cube/fw/projects_h5
+  branch: master
+  id: I929930e55e4aff2b12dc386c3ef5a8c87b68ece5
+  number: 511208
+  subject: feat(example): JPEG Decoding & Encoding Example added for H5-4M on STM32H5F5-DK board
+  owner:
+    name: Sai Sankar DHIRISALA
+    email: saisankar.dhirisala@st.com
+    username: dhirisas
+  url: https://gerrit.st.com/c/stm32cube/fw/projects_h5/+/511208
+  hashtags:
+  createdOn: 2025-11-21 09:07:34 CET
+  lastUpdated: 2025-11-26 05:08:50 CET
+  open: true
+  status: NEW
+
+change I2cb3859faeab389981545dac95094762e8bae247
+  project: stm32cube/fw/manifests
+  branch: h5/master
+  id: I2cb3859faeab389981545dac95094762e8bae247
+  number: 512139
+  subject: feat(Manifests): JPEG module added in utilities
+  owner:
+    name: Shalini UPADHYAYA
+    email: shalini.upadhyaya@st.com
+    username: upadhyas
+  url: https://gerrit.st.com/c/stm32cube/fw/manifests/+/512139
+  hashtags:
+  createdOn: 2025-11-25 04:57:09 CET
+  lastUpdated: 2025-11-25 05:06:57 CET
+  open: true
+  status: NEW
+
+change I7aeffc8055e6e3e508c319126b3405ba6363dfbb
+  project: stm32cube/ip/otfdec
+  branch: h5/master
+  id: I7aeffc8055e6e3e508c319126b3405ba6363dfbb
+  number: 499083
+  subject: fix(otfdec): MISRAC warning fixed for H5/master
+  owner:
+    name: Shalini UPADHYAYA
+    email: shalini.upadhyaya@st.com
+    username: upadhyas
+  url: https://gerrit.st.com/c/stm32cube/ip/otfdec/+/499083
+  hashtags:
+  createdOn: 2025-10-14 08:02:45 CEST
+  lastUpdated: 2025-10-21 10:31:50 CEST
+  open: true
+  status: NEW
+
+change I6d16a5c53bf12ff8061b05ad56de8a508c584f76
+  project: stm32cube/ip/hash
+  branch: c7amba_hash1_V2_2
+  id: I6d16a5c53bf12ff8061b05ad56de8a508c584f76
+  number: 498788
+  subject: fix(hash): fixed MisraC_Rule-2.7
+  owner:
+    name: Shalini UPADHYAYA
+    email: shalini.upadhyaya@st.com
+    username: upadhyas
+  url: https://gerrit.st.com/c/stm32cube/ip/hash/+/498788
+  hashtags:
+  cherryPickOfChange: 481369
+  cherryPickOfPatchSet: 2
+  createdOn: 2025-10-13 11:52:04 CEST
+  lastUpdated: 2025-10-20 11:00:40 CEST
+  open: true
+  status: NEW
+
+change I6d16a5c53bf12ff8061b05ad56de8a508c584f76
+  project: stm32cube/ip/hash
+  branch: h5/master
+  id: I6d16a5c53bf12ff8061b05ad56de8a508c584f76
+  number: 481369
+  subject: fix(hash): fixed MisraC_Rule-2.7
+  owner:
+    name: Shalini UPADHYAYA
+    email: shalini.upadhyaya@st.com
+    username: upadhyas
+  url: https://gerrit.st.com/c/stm32cube/ip/hash/+/481369
+  hashtags:
+  createdOn: 2025-08-08 08:01:04 CEST
+  lastUpdated: 2025-10-20 10:56:32 CEST
+  open: true
+  status: NEW
+
+change I8400c4061dab616976172a452ccc909a58bcbf3c
+  project: stm32cube/ip/ccb
+  branch: h5/master
+  id: I8400c4061dab616976172a452ccc909a58bcbf3c
+  number: 498693
+  subject: fix(ccb): MISRAC warning fixed for H5/master
+  owner:
+    name: Shalini UPADHYAYA
+    email: shalini.upadhyaya@st.com
+    username: upadhyas
+  url: https://gerrit.st.com/c/stm32cube/ip/ccb/+/498693
+  hashtags:
+  createdOn: 2025-10-13 07:42:03 CEST
+  lastUpdated: 2025-10-20 10:47:50 CEST
+  open: true
+  status: NEW
+
+type: stats
+rowCount: 6
+runTimeMilliseconds: 2
+moreChanges: false
+

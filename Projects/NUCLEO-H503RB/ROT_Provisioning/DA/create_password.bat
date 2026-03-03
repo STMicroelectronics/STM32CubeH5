@@ -25,9 +25,45 @@ goto create
 )
 :py
 ::line for python
+::=================================================================================================
+:: Check if Python V3 is installed
+::-------------------------------------------------------------------------------------------------
+python --version >nul 2>&1
+if %errorlevel% neq 0 (
+  echo.
+  echo Python installation missing. Refer to Utilities\PC_Software\ROT_AppliConfig\README.md
+  echo.
+  set "command=Python installation"
+  goto :error
+)
+set "python=python "
+:: If found, capture version string removing "Python "
+for /f "tokens=2 delims= " %%A in ('python --version 2^>^&1') do (
+    set "full_version=%%A"
+)
+:: extract version details
+for /F "tokens=1,2,3 delims=." %%A in ("!full_version!") do (
+  set MAJOR_VER=%%A
+  set MINOR_VER=%%B
+  set PATCH_VER=%%C
+)
+:: is v3
+if not "%MAJOR_VER%" == "3" (
+  python3 --version >nul 2>&1
+  if !errorlevel! neq 0 (
+    echo.
+    echo Python installation missing. Refer to Utilities\PC_Software\ROT_AppliConfig\README.md
+    echo.
+    set "command=Python installation"
+    goto :error
+  )
+  set "python=python3 "
+)
+::=================================================================================================
+
+:: Environment variable for AppliCfg
 echo run config Appli with python script
 set "applicfg=%projectdir%\..\..\..\..\Utilities\PC_Software\ROT_AppliConfig\AppliCfg.py"
-set "python=python "
 
 :create
 set "AppliCfg=%python% %applicfg%"

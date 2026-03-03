@@ -20,11 +20,16 @@ The Internal flash memory is split as follows:
  - Application area located in [USBD_DFU_APP_DEFAULT_ADD : Device's end address]: Read, Write, and Erase
    access
 
-*note 1:
+### <b>Notes</b>
+
 In this application, two operating modes are available:
+
  1. DFU operating mode:
+
     This mode is entered after an MCU reset in case:
+
      - The DFU mode is forced by the user: the user presses the TAMP button.
+
      - No valid code found in the application area: a code is considered valid if the MSB of the initial
        Main Stack Pointer (MSP) value located in the first address of the application area is equal to
        0x22000.
@@ -32,19 +37,7 @@ In this application, two operating modes are available:
  2. Run-time application mode:
     This is the normal run-time activities. A binary which toggles LED1 and LED2 on the STM32H573I-DK board "STM32H573I-DK_GPIO_IOToggle_@0x08022000.bin" is provided in Binary directory.
 
-
 After each device reset (unplug the STM32H573I-DK board from PC), Plug the STM32H573I-DK board with Key User push-button button pressed to enter the DFU mode.
-
-**note 3:
-In case of composite device, we shall :
-  1.  Uninstall device composite driver.
-  1.  Activate the install of unsigned drives in windows.
-  2. Updated STtube.inf driver by replacing this line in all sections from
-    %USB\VID_0483&PID_DF11_DeviceDesc%=STTub30.Device, USB\VID_0483
-    to
-    %USB\VID_0483&PID_DF11_DeviceDesc%=STTub30.Device, USB\VID_0483&PID_DF11&MI_00
-  3. Reinstall driver.
-
 
 #### <b>Expected success behavior</b>
 
@@ -52,7 +45,6 @@ When plugged to PC host, the STM32H573I must be properly enumerated as an USB DF
 During the enumeration phase, device provides host with the requested descriptors (Device, configuration, string).
 Those descriptors are used by host driver to identify the device capabilities.
 Once the STM32H573I USB device successfully completed the enumeration phase, Open CubeProgrammer you can now download and upload to/from media .
-
 
 #### <b>Error behaviors</b>
 
@@ -65,8 +57,6 @@ User is familiar with USB 2.0 "Universal Serial BUS" Specification and DFU class
 #### <b>Known limitations</b>
 
 The remote wakeup feature is not yet implemented (used to bring the USB suspended bus back to the active condition).
-
-### <b>Notes</b>
 
 #### <b>ThreadX usage hints</b>
 

@@ -250,13 +250,9 @@ void UCPD1_IRQHandler(void)
 #if defined(TCPP0203_SUPPORT)
 
 /**
-
   * @brief  This function handles external line interrupt request.
-
   *         (Associated to FLGn line in case of TCPP0203 management)
-
   * @retval None
-
   */
 
 void EXTI1_IRQHandler(void)

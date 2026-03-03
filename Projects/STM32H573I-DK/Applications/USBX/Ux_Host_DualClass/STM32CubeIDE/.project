@@ -2364,16 +2364,6 @@
 			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/ST/usbx/common/core/src/ux_utility_memory_allocate_add_safe.c</locationURI>
 		</link>
 		<link>
-			<name>Middlewares/USBX/Core System/ux_utility_memory_byte_pool_create.c</name>
-			<type>1</type>
-			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/ST/usbx/common/core/src/ux_utility_memory_byte_pool_create.c</locationURI>
-		</link>
-		<link>
-			<name>Middlewares/USBX/Core System/ux_utility_memory_byte_pool_search.c</name>
-			<type>1</type>
-			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/ST/usbx/common/core/src/ux_utility_memory_byte_pool_search.c</locationURI>
-		</link>
-		<link>
 			<name>Middlewares/USBX/Core System/ux_utility_memory_allocate_mulc_safe.c</name>
 			<type>1</type>
 			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/ST/usbx/common/core/src/ux_utility_memory_allocate_mulc_safe.c</locationURI>
@@ -2382,6 +2372,16 @@
 			<name>Middlewares/USBX/Core System/ux_utility_memory_allocate_mulv_safe.c</name>
 			<type>1</type>
 			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/ST/usbx/common/core/src/ux_utility_memory_allocate_mulv_safe.c</locationURI>
+		</link>
+		<link>
+			<name>Middlewares/USBX/Core System/ux_utility_memory_byte_pool_create.c</name>
+			<type>1</type>
+			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/ST/usbx/common/core/src/ux_utility_memory_byte_pool_create.c</locationURI>
+		</link>
+		<link>
+			<name>Middlewares/USBX/Core System/ux_utility_memory_byte_pool_search.c</name>
+			<type>1</type>
+			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/ST/usbx/common/core/src/ux_utility_memory_byte_pool_search.c</locationURI>
 		</link>
 		<link>
 			<name>Middlewares/USBX/Core System/ux_utility_memory_compare.c</name>
@@ -2397,11 +2397,6 @@
 			<name>Middlewares/USBX/Core System/ux_utility_memory_free.c</name>
 			<type>1</type>
 			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/ST/usbx/common/core/src/ux_utility_memory_free.c</locationURI>
-		</link>
-		<link>
-			<name>Middlewares/USBX/Core System/ux_utility_memory_free_block_best_get.c</name>
-			<type>1</type>
-			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/ST/usbx/common/core/src/ux_utility_memory_free_block_best_get.c</locationURI>
 		</link>
 		<link>
 			<name>Middlewares/USBX/Core System/ux_utility_memory_set.c</name>
@@ -2852,11 +2847,6 @@
 			<name>Middlewares/USBX/UX Host Class MSC/ux_host_class_storage_media_characteristics_get.c</name>
 			<type>1</type>
 			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/ST/usbx/common/usbx_host_classes/src/ux_host_class_storage_media_characteristics_get.c</locationURI>
-		</link>
-		<link>
-			<name>Middlewares/USBX/UX Host Class MSC/ux_host_class_storage_media_check.c</name>
-			<type>1</type>
-			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/ST/usbx/common/usbx_host_classes/src/ux_host_class_storage_media_check.c</locationURI>
 		</link>
 		<link>
 			<name>Middlewares/USBX/UX Host Class MSC/ux_host_class_storage_media_format_capacity_get.c</name>
@@ -3422,6 +3412,11 @@
 			<name>Application/User/USBPD/Target/usbpd_pwr_user.c</name>
 			<type>1</type>
 			<locationURI>PARENT-1-PROJECT_LOC/USBPD/Target/usbpd_pwr_user.c</locationURI>
+		</link>
+		<link>
+			<name>Application/User/USBX/App/app_usbx.c</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/USBX/App/app_usbx.c</locationURI>
 		</link>
 		<link>
 			<name>Application/User/USBX/App/app_usbx_host.c</name>

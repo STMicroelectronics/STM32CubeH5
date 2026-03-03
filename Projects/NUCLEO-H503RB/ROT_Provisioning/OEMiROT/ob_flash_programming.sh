@@ -54,7 +54,7 @@ echo "Application images programming in download slots"
 if [ "$app_image_number" == "1" ]; then
     action="Write OEMiROT_Appli Code"
     echo "$action"
-    "$stm32programmercli" $connect_no_reset -d "../../$oemirot_boot_path_project/Binary/$code_image" -v
+    "$stm32programmercli" $connect_no_reset -d "../../$oemirot_appli_path_project/Binary/$code_image" -v
     if [ $? -ne 0 ]; then error; return 1; fi
     echo "TZ Appli Written"
 fi
@@ -75,7 +75,7 @@ fi
 
 action="Write OEMiROT_Boot"
 echo "$action"
-"$stm32programmercli" "$connect_no_reset" -d "$cube_fw_path/Projects/NUCLEO-H503RB/Applications/ROT/OEMiROT_Boot/Binary/OEMiROT_Boot.bin" $bootaddress -v
+"$stm32programmercli" "$connect_no_reset" -d "$cube_fw_path/Projects/NUCLEO-H503RB/${oemirot_boot_path_project}/Binary/OEMiROT_Boot.bin" $bootaddress -v
 if [ $? -ne 0 ]; then error; return 1; fi
 echo "OEMiROT_Boot Written"
 

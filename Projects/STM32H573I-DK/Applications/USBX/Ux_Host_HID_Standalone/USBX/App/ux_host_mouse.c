@@ -3,7 +3,7 @@
   ******************************************************************************
   * @file    ux_host_mouse.c
   * @author  MCD Application Team
-  * @brief   USBX host applicative file
+  * @brief   USBX Host Mouse applicative source file
   ******************************************************************************
   * @attention
   *
@@ -60,8 +60,8 @@ extern UX_HOST_CLASS_HID_MOUSE *mouse;
 
 /**
   * @brief  USBX_HOST_HID_MOUSE_Task
-  * @param  none
-  * @retval none
+  * @param  None
+  * @retval None
   */
 VOID USBX_HOST_HID_MOUSE_Task(VOID)
 {

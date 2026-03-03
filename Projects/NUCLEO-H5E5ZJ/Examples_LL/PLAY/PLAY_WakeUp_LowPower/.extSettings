@@ -1,0 +1,7 @@
+[ProjectFiles]
+HeaderPath=..\..\..\..\..\..\Drivers\BSP\STM32H5xx_Nucleo
+[Others]
+Define=
+LLModule=EXTI
+[Groups]
+Doc=../README.md;

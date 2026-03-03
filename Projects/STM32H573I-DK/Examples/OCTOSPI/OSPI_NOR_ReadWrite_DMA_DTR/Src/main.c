@@ -41,7 +41,7 @@
 
 /* Private variables ---------------------------------------------------------*/
 
-XSPI_HandleTypeDef hospi1;
+XSPI_HandleTypeDef hxspi1;
 DMA_HandleTypeDef handle_GPDMA1_Channel1;
 DMA_HandleTypeDef handle_GPDMA1_Channel0;
 
@@ -122,7 +122,7 @@ int main(void)
   MX_ICACHE_Init();
   /* USER CODE BEGIN 2 */
   /* Delay block configuration ------------------------------------------------ */
-  if (HAL_XSPI_DLYB_GetClockPeriod(&hospi1,&dlyb_cfg) != HAL_OK)
+  if (HAL_XSPI_DLYB_GetClockPeriod(&hxspi1,&dlyb_cfg) != HAL_OK)
   {
     BSP_LED_On(LED_RED);
   }
@@ -134,17 +134,17 @@ int main(void)
   dlyb_cfg_test = dlyb_cfg;
   
   /*set delay block configuration*/
-  HAL_XSPI_DLYB_SetConfig(&hospi1,&dlyb_cfg);
+  HAL_XSPI_DLYB_SetConfig(&hxspi1,&dlyb_cfg);
   
   /*check the set value*/
-  HAL_XSPI_DLYB_GetConfig(&hospi1,&dlyb_cfg);
+  HAL_XSPI_DLYB_GetConfig(&hxspi1,&dlyb_cfg);
   if ((dlyb_cfg.PhaseSel != dlyb_cfg_test.PhaseSel) || (dlyb_cfg.Units != dlyb_cfg_test.Units))
   {
     BSP_LED_On(LED_RED);
   }
   
   /* Configure the memory in octal mode ------------------------------------- */
-  OSPI_OctalDTRModeCfg(&hospi1);
+  OSPI_OctalDTRModeCfg(&hxspi1);
   
   sCommand.InstructionMode     = HAL_XSPI_INSTRUCTION_8_LINES;
   sCommand.InstructionWidth    = HAL_XSPI_INSTRUCTION_16_BITS;
@@ -168,7 +168,7 @@ int main(void)
       CmdCplt = 0;
       
       /* Enable write operations ------------------------------------------ */
-      OSPI_WriteEnable(&hospi1);
+      OSPI_WriteEnable(&hxspi1);
       
       /* Erasing Sequence ------------------------------------------------- */
       sCommand.OperationType = HAL_XSPI_OPTYPE_COMMON_CFG;
@@ -179,7 +179,7 @@ int main(void)
       sCommand.DummyCycles   = 0;
       sCommand.DQSMode       = HAL_XSPI_DQS_DISABLE;
       
-      if (HAL_XSPI_Command_IT(&hospi1, &sCommand) != HAL_OK)
+      if (HAL_XSPI_Command_IT(&hxspi1, &sCommand) != HAL_OK)
       {
         Error_Handler();
       }
@@ -193,22 +193,22 @@ int main(void)
           TxCplt = 0;
 
           /* Configure automatic polling mode to wait for end of erase ------ */  
-          XSPI_AutoPollingMemReady(&hospi1);
+          XSPI_AutoPollingMemReady(&hxspi1);
 
           /* Enable write operations ---------------------------------------- */
-          OSPI_WriteEnable(&hospi1);
+          OSPI_WriteEnable(&hxspi1);
 
           /* Writing Sequence ----------------------------------------------- */
           sCommand.Instruction = OCTAL_PAGE_PROG_CMD;
           sCommand.DataMode    = HAL_XSPI_DATA_8_LINES;
           sCommand.DataLength  = BUFFERSIZE;
 
-          if (HAL_XSPI_Command(&hospi1, &sCommand, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
+          if (HAL_XSPI_Command(&hxspi1, &sCommand, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
           {
             Error_Handler();
           }
 
-          if (HAL_XSPI_Transmit_DMA(&hospi1, aTxBuffer) != HAL_OK)
+          if (HAL_XSPI_Transmit_DMA(&hxspi1, aTxBuffer) != HAL_OK)
           {
             Error_Handler();
           }
@@ -224,19 +224,19 @@ int main(void)
           RxCplt = 0;
 
           /* Configure automatic polling mode to wait for end of program ---- */  
-          XSPI_AutoPollingMemReady(&hospi1);
+          XSPI_AutoPollingMemReady(&hxspi1);
         
           /* Reading Sequence ----------------------------------------------- */
           sCommand.Instruction = OCTAL_IO_DTR_READ_CMD;
           sCommand.DummyCycles = DUMMY_CLOCK_CYCLES_READ;
           sCommand.DQSMode     = HAL_XSPI_DQS_ENABLE;
 
-          if (HAL_XSPI_Command(&hospi1, &sCommand, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
+          if (HAL_XSPI_Command(&hxspi1, &sCommand, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
           {
             Error_Handler();
           }
 
-          if (HAL_XSPI_Receive_DMA(&hospi1, aRxBuffer) != HAL_OK)
+          if (HAL_XSPI_Receive_DMA(&hxspi1, aRxBuffer) != HAL_OK)
           {
             Error_Handler();
           }
@@ -408,34 +408,34 @@ static void MX_OCTOSPI1_Init(void)
   
   /* USER CODE END OCTOSPI1_Init 0 */
 
-  HAL_XSPI_DLYB_CfgTypeDef HAL_OSPI_DLYB_Cfg_Struct = {0};
+  HAL_XSPI_DLYB_CfgTypeDef HAL_XSPI_DLYB_Cfg_Struct = {0};
 
   /* USER CODE BEGIN OCTOSPI1_Init 1 */
   
   /* USER CODE END OCTOSPI1_Init 1 */
   /* OCTOSPI1 parameter configuration*/
-  hospi1.Instance = OCTOSPI1;
-  hospi1.Init.FifoThresholdByte = 4;
-  hospi1.Init.MemoryMode = HAL_XSPI_SINGLE_MEM;
-  hospi1.Init.MemoryType = HAL_XSPI_MEMTYPE_MACRONIX;
-  hospi1.Init.MemorySize = HAL_XSPI_SIZE_8MB;
-  hospi1.Init.ChipSelectHighTimeCycle = 2;
-  hospi1.Init.FreeRunningClock = HAL_XSPI_FREERUNCLK_DISABLE;
-  hospi1.Init.ClockMode = HAL_XSPI_CLOCK_MODE_0;
-  hospi1.Init.WrapSize = HAL_XSPI_WRAP_NOT_SUPPORTED;
-  hospi1.Init.ClockPrescaler = 1;
-  hospi1.Init.SampleShifting = HAL_XSPI_SAMPLE_SHIFT_NONE;
-  hospi1.Init.DelayHoldQuarterCycle = HAL_XSPI_DHQC_ENABLE;
-  hospi1.Init.ChipSelectBoundary = HAL_XSPI_BONDARYOF_NONE;
-  hospi1.Init.DelayBlockBypass = HAL_XSPI_DELAY_BLOCK_ON;
-  hospi1.Init.Refresh = 0;
-  if (HAL_XSPI_Init(&hospi1) != HAL_OK)
+  hxspi1.Instance = OCTOSPI1;
+  hxspi1.Init.FifoThresholdByte = 4;
+  hxspi1.Init.MemoryMode = HAL_XSPI_SINGLE_MEM;
+  hxspi1.Init.MemoryType = HAL_XSPI_MEMTYPE_MACRONIX;
+  hxspi1.Init.MemorySize = HAL_XSPI_SIZE_8MB;
+  hxspi1.Init.ChipSelectHighTimeCycle = 2;
+  hxspi1.Init.FreeRunningClock = HAL_XSPI_FREERUNCLK_DISABLE;
+  hxspi1.Init.ClockMode = HAL_XSPI_CLOCK_MODE_0;
+  hxspi1.Init.WrapSize = HAL_XSPI_WRAP_NOT_SUPPORTED;
+  hxspi1.Init.ClockPrescaler = 1;
+  hxspi1.Init.SampleShifting = HAL_XSPI_SAMPLE_SHIFT_NONE;
+  hxspi1.Init.DelayHoldQuarterCycle = HAL_XSPI_DHQC_ENABLE;
+  hxspi1.Init.ChipSelectBoundary = HAL_XSPI_BONDARYOF_NONE;
+  hxspi1.Init.DelayBlockBypass = HAL_XSPI_DELAY_BLOCK_ON;
+  hxspi1.Init.Refresh = 0;
+  if (HAL_XSPI_Init(&hxspi1) != HAL_OK)
   {
     Error_Handler();
   }
-  HAL_OSPI_DLYB_Cfg_Struct.Units = 0;
-  HAL_OSPI_DLYB_Cfg_Struct.PhaseSel = 0;
-  if (HAL_XSPI_DLYB_SetConfig(&hospi1, &HAL_OSPI_DLYB_Cfg_Struct) != HAL_OK)
+  HAL_XSPI_DLYB_Cfg_Struct.Units = 0;
+  HAL_XSPI_DLYB_Cfg_Struct.PhaseSel = 0;
+  if (HAL_XSPI_DLYB_SetConfig(&hxspi1, &HAL_XSPI_DLYB_Cfg_Struct) != HAL_OK)
   {
     Error_Handler();
   }
@@ -452,8 +452,8 @@ static void MX_OCTOSPI1_Init(void)
   */
 static void MX_GPIO_Init(void)
 {
-/* USER CODE BEGIN MX_GPIO_Init_1 */
-/* USER CODE END MX_GPIO_Init_1 */
+  /* USER CODE BEGIN MX_GPIO_Init_1 */
+  /* USER CODE END MX_GPIO_Init_1 */
 
   /* GPIO Ports Clock Enable */
   __HAL_RCC_GPIOG_CLK_ENABLE();
@@ -463,8 +463,8 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOD_CLK_ENABLE();
   __HAL_RCC_GPIOB_CLK_ENABLE();
 
-/* USER CODE BEGIN MX_GPIO_Init_2 */
-/* USER CODE END MX_GPIO_Init_2 */
+  /* USER CODE BEGIN MX_GPIO_Init_2 */
+  /* USER CODE END MX_GPIO_Init_2 */
 }
 
 /* USER CODE BEGIN 4 */
@@ -767,8 +767,7 @@ void Error_Handler(void)
   }
   /* USER CODE END Error_Handler_Debug */
 }
-
-#ifdef  USE_FULL_ASSERT
+#ifdef USE_FULL_ASSERT
 /**
   * @brief  Reports the name of the source file and the source line number
   *         where the assert_param error has occurred.

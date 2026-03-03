@@ -21,7 +21,6 @@
 /* Define to prevent recursive inclusion -------------------------------------*/
 #ifndef __APP_THREADX_H
 #define __APP_THREADX_H
-
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -31,7 +30,7 @@ extern "C" {
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "app_azure_rtos_config.h"
+
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/

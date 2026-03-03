@@ -193,4 +193,4 @@ log output on the server side (select "Click here" on the web page to get result
  This will make Target board to act as UDP Client and third-party application as UDP Server.
 
 
-- Please refer to the following link for all the Iperf tests with example [Chapter 3 Running the Demonstration](https://docs.microsoft.com/en-us/azure/rtos/netx-duo/netx-duo-iperf/chapter3)
+- Please refer to the following link for all the Iperf tests with example [Chapter 3 Running the Demonstration](https://github.com/eclipse-threadx/rtos-docs/blob/main/rtos-docs/netx-duo/netx-duo-iperf/chapter3.md)

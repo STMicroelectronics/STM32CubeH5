@@ -150,6 +150,14 @@ SECTIONS
 
     } > RAM
 
+    /* Uninitialized data not overwritten at startup. section into "RAM" Ram type memory */
+    .bss.NoInit (NOLOAD) :
+    {
+        . = ALIGN(4);
+        *(.bss.NoInit*)
+        . = ALIGN(4);
+    } > RAM
+
     .bss :
     {
         . = ALIGN(4);

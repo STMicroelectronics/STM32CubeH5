@@ -222,12 +222,12 @@
    For applications using multiple media devices with varying sector size, the value should be set to the
    size of largest sector size. */
 
-/* #define FX_EXFAT_MAX_CACHE_SIZE         512 */
+/* #define FX_EXFAT_MAX_CACHE_SIZE            512 */
 
 /* Define the size of fault tolerant cache, which is used when freeing FAT chain.
    The FX_FAULT_TOLERANT_CACHE_SIZE is 2 power of FX_FAULT_TOLERANT_CACHE_SIZE_NB_SIZE.  */
 
-/* #define FX_FAULT_TOLERANT_CACHE_SIZE         1024 */
+/* #define FX_FAULT_TOLERANT_CACHE_SIZE            1024 */
 
 /* USER CODE BEGIN 2 */
 

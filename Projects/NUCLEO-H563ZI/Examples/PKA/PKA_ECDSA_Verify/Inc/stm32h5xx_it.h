@@ -1,7 +1,7 @@
 /* USER CODE BEGIN Header */
 /**
   ******************************************************************************
-  * @file    PKA/PKA_ECDSA_Verify/Inc/stm32wbaxx_it.h
+  * @file    PKA/PKA_ECDSA_Verify/Inc/stm32h5xx_it.h
   * @author  MCD Application Team
   * @brief   This file contains the headers of the interrupt handlers.
   ******************************************************************************

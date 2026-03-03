@@ -459,7 +459,6 @@ void MX_USB_HCD_Init(void)
 
   /* USER CODE END USB_Init 1 */
   hhcd_USB_DRD_FS.Instance = USB_DRD_FS;
-  hhcd_USB_DRD_FS.Init.dev_endpoints = 8;
   hhcd_USB_DRD_FS.Init.Host_channels = 8;
   hhcd_USB_DRD_FS.Init.speed = USBD_FS_SPEED;
   hhcd_USB_DRD_FS.Init.phy_itface = HCD_PHY_EMBEDDED;
@@ -485,8 +484,8 @@ void MX_USB_HCD_Init(void)
   */
 static void MX_GPIO_Init(void)
 {
-/* USER CODE BEGIN MX_GPIO_Init_1 */
-/* USER CODE END MX_GPIO_Init_1 */
+  /* USER CODE BEGIN MX_GPIO_Init_1 */
+  /* USER CODE END MX_GPIO_Init_1 */
 
   /* GPIO Ports Clock Enable */
   __HAL_RCC_GPIOB_CLK_ENABLE();
@@ -494,8 +493,8 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOH_CLK_ENABLE();
   __HAL_RCC_GPIOF_CLK_ENABLE();
 
-/* USER CODE BEGIN MX_GPIO_Init_2 */
-/* USER CODE END MX_GPIO_Init_2 */
+  /* USER CODE BEGIN MX_GPIO_Init_2 */
+  /* USER CODE END MX_GPIO_Init_2 */
 }
 
 /* USER CODE BEGIN 4 */
@@ -542,8 +541,7 @@ void Error_Handler(void)
   }
   /* USER CODE END Error_Handler_Debug */
 }
-
-#ifdef  USE_FULL_ASSERT
+#ifdef USE_FULL_ASSERT
 /**
   * @brief  Reports the name of the source file and the source line number
   *         where the assert_param error has occurred.

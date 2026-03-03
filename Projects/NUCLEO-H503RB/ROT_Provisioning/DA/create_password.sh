@@ -25,7 +25,18 @@ else
   echo AppliCfg with python script
   applicfg="$cube_fw_path/Utilities/PC_Software/ROT_AppliConfig/AppliCfg.py"
   #determine/check python version command
-  python="python3 "
+# Check if Python is installed
+  python3 --version >/dev/null 2>&1
+  if [ $? -ne 0 ]; then
+    python --version >/dev/null 2>&1
+    if [ $? -ne 0 ]; then
+    echo "Python installation missing. Refer to Utilities/PC_Software/ROT_AppliConfig/README.md"
+    exit 1
+  fi
+    python="python "
+  else
+    python="python3 "
+  fi
 fi
 AppliCfg=$python$applicfg
 

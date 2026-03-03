@@ -86,7 +86,10 @@ OBK_Hdpl1Config OBK_Hdpl1_Cfg;
 extern __IO uint32_t DoubleECC_Error_Counter;
 
 /* Private function prototypes -----------------------------------------------*/
+#ifdef STM32H533xx
 int32_t OBK_Flash_WriteEncrypted(uint32_t Offset, const void *pData, uint32_t Length);
+#endif  /* STM32H533xx */
+
 /* Functions Definition ------------------------------------------------------*/
 /**
   * \brief      Check if the Flash memory boundaries are not violated.
@@ -127,6 +130,7 @@ static bool is_write_allowed(struct arm_obk_flash_dev_t *Flash_dev, uint32_t Len
   return ((Length % Flash_dev->data->program_unit) != 0U) ? (false) : (true);
 }
 
+#if defined (STM32H533xx)
 /**
   * @brief  Read encrypted OBkeys
   * @param  Offset Offset in the OBKeys area (aligned on 16 bytes)
@@ -287,6 +291,7 @@ int32_t OBK_Flash_WriteEncrypted(uint32_t Offset, const void *pData, uint32_t Le
 
   return ARM_DRIVER_OK;
 }
+#endif  /* STM32H533xx */
 
 /**
   * @brief  Read non-encrypted OBkeys
@@ -603,7 +608,11 @@ void OBK_ReadHdpl1Config(OBK_Hdpl1Config *pOBK_Hdpl1Cfg)
   uint32_t Address = (uint32_t) pOBK_Hdpl1Cfg;
 
   /* Read configuration in OBKeys */
+#ifdef STM32H533xx
   if (OBK_Flash_ReadEncrypted(OBK_HDPL1_CFG_OFFSET,(void *) pOBK_Hdpl1Cfg,  sizeof(OBK_Hdpl1Config)) != ARM_DRIVER_OK)
+#else
+  if (OBK_Read(OBK_HDPL1_CFG_OFFSET,(void *) pOBK_Hdpl1Cfg,  sizeof(OBK_Hdpl1Config)) != ARM_DRIVER_OK)
+#endif
   {
     Error_Handler();
   }

@@ -31,7 +31,7 @@ extern "C" {
 #include "stm32h5xx_hal.h"
 #include "app_azure_rtos_config.h"
 
-#include "app_usbx_device.h"
+#include "app_usbx.h"
 #include "usbpd.h"
 #include "gui_api.h"
 
@@ -70,4 +70,3 @@ extern "C" {
 }
 #endif
 #endif /* APP_AZURE_RTOS_H */
-

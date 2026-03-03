@@ -138,7 +138,7 @@ void USBPD_USBIF_DeviceStart(uint32_t PortNum)
 {
 /* USER CODE BEGIN USBPD_USBIF_DeviceStart */
   USBPD_TRACE_Add(USBPD_TRACE_DEBUG, PortNum, 0, (uint8_t *) "USBIF Device start", 18);
-  
+
   /* Set Device state */
   USB_Device_EVENT = START_USB_DEVICE;
 

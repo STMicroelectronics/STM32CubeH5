@@ -85,10 +85,10 @@ extern "C" {
 
 /* Exported functions prototypes ---------------------------------------------*/
 UINT MX_USBX_Host_Init(VOID *memory_ptr);
+UINT MX_USBX_Host_Stack_Init(VOID);
+UINT MX_USBX_Host_Stack_DeInit(VOID);
 
 /* USER CODE BEGIN EFP */
-UINT App_USBX_Host_Init(void);
-UINT App_USBX_Host_DeInit(void);
 void usbx_host_app_thread_entry(ULONG arg);
 void ucpd_app_thread_entry(ULONG arg);
 void hid_mouse_thread_entry(ULONG arg);
@@ -112,13 +112,11 @@ MIDDLE_Button_Pressed,
 Button_Reset,
 } Button_State;
 
-
 typedef enum
 {
   USB_VBUS_FALSE = 0,
   USB_VBUS_TRUE,
 } USB_VBUS_State;
-
 
 typedef enum
 {
@@ -126,7 +124,6 @@ typedef enum
   Keyboard_Device,
   Unknown_Device,
 } HID_Device_Type;
-
 
 typedef enum
 {
@@ -147,7 +144,6 @@ typedef enum
   STOP_USB_HOST = 1,
   START_USB_HOST,
 } USB_HOST_MODE_STATE;
-
 
 typedef struct
 {

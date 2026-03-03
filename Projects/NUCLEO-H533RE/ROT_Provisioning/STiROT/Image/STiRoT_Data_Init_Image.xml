@@ -63,6 +63,11 @@
 		<Type>Data</Type>
 		<Command>-s</Command>
 		<Hidden>1</Hidden>
+		<Tooltip>Value of Security counter on which antirollback feature is relying.
+		'auto' (default) : security counter value is automatically aligned to image version.
+		'32 bits value': security counter value manually selected (not aligned with image version).
+		Antirollback feature is inactive if security counter value remains unchanged at each version of image.
+		</Tooltip>
 		<Default>auto</Default>
 	</Param>
 	<Param>

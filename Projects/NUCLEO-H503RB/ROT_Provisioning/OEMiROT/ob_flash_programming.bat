@@ -47,7 +47,7 @@ echo %action%
 if  "%app_image_number%" == "1" (
 set "action=Write OEMiROT_Appli Code"
 echo %action%
-%stm32programmercli% %connect_no_reset% -d ../../%oemirot_boot_path_project%/Binary/%code_image% -v
+%stm32programmercli% %connect_no_reset% -d ../../%oemirot_appli_path_project%/Binary/%code_image% -v
 IF !errorlevel! NEQ 0 goto :error
 
 echo "TZ Appli Written"
@@ -66,7 +66,7 @@ IF !errorlevel! NEQ 0 goto :error
 
 set "action=Write OEMiROT_Boot"
 echo %action%
-%stm32programmercli% %connect_no_reset% -d %cube_fw_path%\Projects\NUCLEO-H503RB\Applications\ROT\OEMiROT_Boot\Binary\OEMiROT_Boot.bin %bootaddress% -v
+%stm32programmercli% %connect_no_reset% -d %cube_fw_path%\Projects\NUCLEO-H503RB\%oemirot_boot_path_project%\Binary\OEMiROT_Boot.bin %bootaddress% -v
 IF !errorlevel! NEQ 0 goto :error
 
 set "action=OEMiROT_Boot Written"

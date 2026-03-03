@@ -19,9 +19,9 @@ The main entry function tx_application_define() is called by ThreadX during kern
 
 The application then creates 2 threads with the same priorities:
 
- + **AppMainThread** (priority 10, PreemtionThreashold 10) : created with the TX_AUTO_START flag to start automatically.
+ + **AppMainThread** (priority 10, PreemptionThreshold 10) : created with the TX_AUTO_START flag to start automatically.
 
- + **AppSNTPThread** (priority 5, PreemtionThreashold 5) : created with the TX_DONT_START flag to be started later.
+ + **AppSNTPThread** (priority 5, PreemptionThreshold 5) : created with the TX_DONT_START flag to be started later.
 
 The **AppMainThread** starts and perform the following actions:
   + starts the DHCP client

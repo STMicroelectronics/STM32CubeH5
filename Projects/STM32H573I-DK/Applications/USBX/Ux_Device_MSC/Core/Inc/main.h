@@ -44,6 +44,7 @@ extern "C" {
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "stm32h573i_discovery_sd.h"
+#include "app_usbx.h"
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/

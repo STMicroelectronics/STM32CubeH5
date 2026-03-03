@@ -44,10 +44,10 @@ instance</p></li>
 </ul>
 <p>The application then creates 2 threads with the same priorities:</p>
 <ul>
-<li><p><strong>AppMainThread</strong> (priority 10, PreemtionThreashold
+<li><p><strong>AppMainThread</strong> (priority 10, PreemptionThreshold
 10) : created with the TX_AUTO_START flag to start
 automatically.</p></li>
-<li><p><strong>AppSNTPThread</strong> (priority 5, PreemtionThreashold
+<li><p><strong>AppSNTPThread</strong> (priority 5, PreemptionThreshold
 5) : created with the TX_DONT_START flag to be started later.</p></li>
 </ul>
 <p>The <strong>AppMainThread</strong> starts and perform the following

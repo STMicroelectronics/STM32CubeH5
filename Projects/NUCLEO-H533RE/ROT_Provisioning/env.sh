@@ -13,11 +13,17 @@ fi
 if [ "$OS" == "Windows_NT" ]; then
     stm32programmercli="C:\Program Files\STMicroelectronics\STM32Cube\STM32CubeProgrammer\bin\STM32_Programmer_CLI.exe"
     stm32tpccli="C:\Program Files\STMicroelectronics\STM32Cube\STM32CubeProgrammer\bin\STM32TrustedPackageCreator_CLI.exe"
-else
+elif [[ "$OS" == "Linux" ]]; then
     stm32programmercli_path=~/STMicroelectronics/STM32Cube/STM32CubeProgrammer/bin/
     PATH=$stm32programmercli_path:$PATH
     stm32programmercli="STM32_Programmer_CLI"
     stm32tpccli="STM32TrustedPackageCreator_CLI"
+elif [[ "$OS" == "Darwin" ]]; then
+    stm32programmercli=/Applications/STMicroelectronics/STM32Cube/STM32CubeProgrammer/STM32CubeProgrammer.app/Contents/MacOs/bin/STM32_Programmer_CLI
+    stm32tpccli=/Applications/STMicroelectronics/STM32Cube/STM32CubeProgrammer/STM32TrustedPackageCreator.app/Contents/MacOs/bin/STM32TrustedPackageCreator_CLI
+else
+  echo "OS not supported : >$OS<"
+  return
 fi
 
 #==============================================================================
@@ -30,10 +36,16 @@ stirot_boot_path_project=Templates/ROT/STiROT_Appli
 #==============================================================================
 
 #==============================================================================
+#                           OEMiROT Appli boot path
+# Select application project below
+oemirot_appli_path_project=Templates/ROT/OEMiROT_Appli_TrustZone
+#==============================================================================
+
+#==============================================================================
 #                           OEMiROT bootpath
 #==============================================================================
-#Select application project below
-oemirot_boot_path_project=Templates/ROT/OEMiROT_Appli_TrustZone
+#Select OEMiROT Boot project below
+oemirot_boot_path_project=Applications/ROT/OEMiROT_Boot
 #==============================================================================
 
 #==============================================================================

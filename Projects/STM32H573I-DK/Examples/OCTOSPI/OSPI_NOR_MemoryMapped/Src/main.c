@@ -42,7 +42,7 @@
 
 /* Private variables ---------------------------------------------------------*/
 
-XSPI_HandleTypeDef hospi1;
+XSPI_HandleTypeDef hxspi1;
 
 /* USER CODE BEGIN PV */
 __IO uint8_t CmdCplt;
@@ -117,7 +117,7 @@ int main(void)
   MX_OCTOSPI1_Init();
   /* USER CODE BEGIN 2 */
   /* Configure the memory in octal mode ------------------------------------- */
-  OSPI_OctalModeCfg(&hospi1);
+  OSPI_OctalModeCfg(&hxspi1);
 
   sCommand.InstructionMode    = HAL_XSPI_INSTRUCTION_8_LINES;
   sCommand.InstructionWidth   = HAL_XSPI_INSTRUCTION_16_BITS;
@@ -141,7 +141,7 @@ int main(void)
         CmdCplt = 0;
 
         /* Enable write operations ------------------------------------------ */
-        OSPI_WriteEnable(&hospi1);
+        OSPI_WriteEnable(&hxspi1);
 
         /* Erasing Sequence ------------------------------------------------- */
         sCommand.OperationType = HAL_XSPI_OPTYPE_COMMON_CFG;
@@ -151,7 +151,7 @@ int main(void)
         sCommand.DataMode      = HAL_XSPI_DATA_NONE;
         sCommand.DummyCycles   = 0;
 
-        if (HAL_XSPI_Command_IT(&hospi1, &sCommand) != HAL_OK)
+        if (HAL_XSPI_Command_IT(&hxspi1, &sCommand) != HAL_OK)
         {
           Error_Handler();
         }
@@ -165,10 +165,10 @@ int main(void)
           CmdCplt = 0;
 
           /* Configure automatic polling mode to wait for end of erase ------ */
-          OSPI_AutoPollingMemReady(&hospi1);
+          OSPI_AutoPollingMemReady(&hxspi1);
 
           /* Enable write operations ---------------------------------------- */
-          OSPI_WriteEnable(&hospi1);
+          OSPI_WriteEnable(&hxspi1);
 
           /* Memory-mapped mode configuration ------------------------------- */
           sCommand.OperationType = HAL_XSPI_OPTYPE_WRITE_CFG;
@@ -177,7 +177,7 @@ int main(void)
           sCommand.DataLength    = 1;
           sCommand.DQSMode       = HAL_XSPI_DQS_ENABLE;
 
-          if (HAL_XSPI_Command(&hospi1, &sCommand, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
+          if (HAL_XSPI_Command(&hxspi1, &sCommand, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
           {
             Error_Handler();
           }
@@ -187,14 +187,14 @@ int main(void)
           sCommand.DummyCycles   = DUMMY_CLOCK_CYCLES_READ;
           sCommand.DQSMode       = HAL_XSPI_DQS_DISABLE;
 
-          if (HAL_XSPI_Command(&hospi1, &sCommand, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
+          if (HAL_XSPI_Command(&hxspi1, &sCommand, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
           {
             Error_Handler();
           }
 
           sMemMappedCfg.TimeOutActivation  = HAL_XSPI_TIMEOUT_COUNTER_ENABLE;
           sMemMappedCfg.TimeoutPeriodClock = 0x50;
-          if (HAL_XSPI_MemoryMapped(&hospi1, &sMemMappedCfg) != HAL_OK)
+          if (HAL_XSPI_MemoryMapped(&hxspi1, &sMemMappedCfg) != HAL_OK)
           {
             Error_Handler();
           }
@@ -232,7 +232,7 @@ int main(void)
           }
 
           /* Abort OctoSPI driver to stop the memory-mapped mode ------------ */
-          if (HAL_XSPI_Abort(&hospi1) != HAL_OK)
+          if (HAL_XSPI_Abort(&hxspi1) != HAL_OK)
           {
             Error_Handler();
           }
@@ -354,22 +354,22 @@ static void MX_OCTOSPI1_Init(void)
 
   /* USER CODE END OCTOSPI1_Init 1 */
   /* OCTOSPI1 parameter configuration*/
-  hospi1.Instance = OCTOSPI1;
-  hospi1.Init.FifoThresholdByte = 4;
-  hospi1.Init.MemoryMode = HAL_XSPI_SINGLE_MEM;
-  hospi1.Init.MemoryType = HAL_XSPI_MEMTYPE_MACRONIX;
-  hospi1.Init.MemorySize = HAL_XSPI_SIZE_8MB;
-  hospi1.Init.ChipSelectHighTimeCycle = 1;
-  hospi1.Init.FreeRunningClock = HAL_XSPI_FREERUNCLK_DISABLE;
-  hospi1.Init.ClockMode = HAL_XSPI_CLOCK_MODE_0;
-  hospi1.Init.WrapSize = HAL_XSPI_WRAP_NOT_SUPPORTED;
-  hospi1.Init.ClockPrescaler = 1;
-  hospi1.Init.SampleShifting = HAL_XSPI_SAMPLE_SHIFT_NONE;
-  hospi1.Init.DelayHoldQuarterCycle = HAL_XSPI_DHQC_ENABLE;
-  hospi1.Init.ChipSelectBoundary = HAL_XSPI_BONDARYOF_NONE;
-  hospi1.Init.DelayBlockBypass = HAL_XSPI_DELAY_BLOCK_BYPASS;
-  hospi1.Init.Refresh = 0;
-  if (HAL_XSPI_Init(&hospi1) != HAL_OK)
+  hxspi1.Instance = OCTOSPI1;
+  hxspi1.Init.FifoThresholdByte = 4;
+  hxspi1.Init.MemoryMode = HAL_XSPI_SINGLE_MEM;
+  hxspi1.Init.MemoryType = HAL_XSPI_MEMTYPE_MACRONIX;
+  hxspi1.Init.MemorySize = HAL_XSPI_SIZE_8MB;
+  hxspi1.Init.ChipSelectHighTimeCycle = 1;
+  hxspi1.Init.FreeRunningClock = HAL_XSPI_FREERUNCLK_DISABLE;
+  hxspi1.Init.ClockMode = HAL_XSPI_CLOCK_MODE_0;
+  hxspi1.Init.WrapSize = HAL_XSPI_WRAP_NOT_SUPPORTED;
+  hxspi1.Init.ClockPrescaler = 1;
+  hxspi1.Init.SampleShifting = HAL_XSPI_SAMPLE_SHIFT_NONE;
+  hxspi1.Init.DelayHoldQuarterCycle = HAL_XSPI_DHQC_ENABLE;
+  hxspi1.Init.ChipSelectBoundary = HAL_XSPI_BONDARYOF_NONE;
+  hxspi1.Init.DelayBlockBypass = HAL_XSPI_DELAY_BLOCK_BYPASS;
+  hxspi1.Init.Refresh = 0;
+  if (HAL_XSPI_Init(&hxspi1) != HAL_OK)
   {
     Error_Handler();
   }
@@ -386,8 +386,8 @@ static void MX_OCTOSPI1_Init(void)
   */
 static void MX_GPIO_Init(void)
 {
-/* USER CODE BEGIN MX_GPIO_Init_1 */
-/* USER CODE END MX_GPIO_Init_1 */
+  /* USER CODE BEGIN MX_GPIO_Init_1 */
+  /* USER CODE END MX_GPIO_Init_1 */
 
   /* GPIO Ports Clock Enable */
   __HAL_RCC_GPIOG_CLK_ENABLE();
@@ -397,8 +397,8 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOD_CLK_ENABLE();
   __HAL_RCC_GPIOB_CLK_ENABLE();
 
-/* USER CODE BEGIN MX_GPIO_Init_2 */
-/* USER CODE END MX_GPIO_Init_2 */
+  /* USER CODE BEGIN MX_GPIO_Init_2 */
+  /* USER CODE END MX_GPIO_Init_2 */
 }
 
 /* USER CODE BEGIN 4 */
@@ -677,8 +677,7 @@ void Error_Handler(void)
   }
   /* USER CODE END Error_Handler_Debug */
 }
-
-#ifdef  USE_FULL_ASSERT
+#ifdef USE_FULL_ASSERT
 /**
   * @brief  Reports the name of the source file and the source line number
   *         where the assert_param error has occurred.

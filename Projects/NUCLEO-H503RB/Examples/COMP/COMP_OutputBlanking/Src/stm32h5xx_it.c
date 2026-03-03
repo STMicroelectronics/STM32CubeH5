@@ -1,7 +1,7 @@
 /* USER CODE BEGIN Header */
 /**
   ******************************************************************************
-  * @file    Examples/COMP/COMP_OutputBlanking/Src/stm32f3xx_it.c 
+  * @file    Examples/COMP/COMP_OutputBlanking/Src/stm32h5xx_it.c 
   * @author  MCD Application Team
   * @brief   Main Interrupt Service Routines.
   *          This file provides template for all exceptions handler and 

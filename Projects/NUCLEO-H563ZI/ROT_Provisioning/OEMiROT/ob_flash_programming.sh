@@ -29,9 +29,9 @@ connect_no_reset="-c port=SWD speed=fast ap=1 mode=Hotplug"
 connect_reset="-c port=SWD speed=fast ap=1 mode=UR"
 
 if [ $isGeneratedByCubeMX == "true" ]; then
-   appli_dir=$oemirot_boot_path_project
+   appli_dir=$oemirot_appli_path_project
 else
-   appli_dir="../../$oemirot_boot_path_project"
+   appli_dir="../../$oemirot_appli_path_project"
 fi
 
 # =============================================== Remove protections and initialize Option Bytes ==========================================
@@ -126,7 +126,7 @@ fi
 
 action="Write OEMiROT_Boot"
 echo "$action"
-"$stm32programmercli" "$connect_no_reset" -d "$cube_fw_path/Projects/NUCLEO-H563ZI/Applications/ROT/OEMiROT_Boot/Binary/OEMiROT_Boot.bin" $bootaddress -v
+"$stm32programmercli" "$connect_no_reset" -d "$cube_fw_path/Projects/NUCLEO-H563ZI/${oemirot_boot_path_project}/Binary/OEMiROT_Boot.bin" $bootaddress -v
 if [ $? -ne 0 ]; then error; return 1; fi
 echo "OEMiROT_Boot Written"
 
