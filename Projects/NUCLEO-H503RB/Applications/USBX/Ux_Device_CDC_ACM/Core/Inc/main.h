@@ -59,6 +59,9 @@ void MX_USB_PCD_Init(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
+#define USBC_DETECT_Pin GPIO_PIN_9
+#define USBC_DETECT_GPIO_Port GPIOA
+#define USBC_DETECT_EXTI_IRQn EXTI9_IRQn
 
 /* USER CODE BEGIN Private defines */
 

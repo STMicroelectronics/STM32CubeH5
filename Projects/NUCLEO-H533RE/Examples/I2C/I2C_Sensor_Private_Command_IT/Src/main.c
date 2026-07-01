@@ -440,6 +440,7 @@ static void DisplayValue(uint8_t *pPrivateBuffer)
 
 /**
   * @brief  This function is executed in case of error occurrence.
+  * @param  None
   * @retval None
   */
 void Error_Handler(void)

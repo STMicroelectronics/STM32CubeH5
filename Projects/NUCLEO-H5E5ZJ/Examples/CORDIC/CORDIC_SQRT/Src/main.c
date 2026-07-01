@@ -370,6 +370,7 @@ uint32_t Check_Residual_Error(int32_t VarA, int32_t VarB, uint32_t MaxError)
 
 /**
   * @brief  This function is executed in case of error occurrence.
+  * @param  None
   * @retval None
   */
 void Error_Handler(void)

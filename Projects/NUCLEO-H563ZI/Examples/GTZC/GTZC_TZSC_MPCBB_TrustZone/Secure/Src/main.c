@@ -370,6 +370,7 @@ void HAL_GTZC_TZIC_Callback(uint32_t PeriphId)
 
 /**
   * @brief  This function is executed in case of error occurrence.
+  * @param  None
   * @retval None
   */
 void Error_Handler(void)

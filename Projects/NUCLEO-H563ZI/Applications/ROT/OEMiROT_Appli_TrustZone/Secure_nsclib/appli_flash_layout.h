@@ -23,6 +23,10 @@
 #define MCUBOOT_OVERWRITE_ONLY                 /* Defined: the FW installation uses overwrite method.
                                                   UnDefined: The FW installation uses swap mode. */
 
+/*#define MCUBOOT_PRIMARY_ONLY*/                   /* Defined: No secondary (download) slot(s).*/
+                                               /* only primary slot(s) for each image.
+                                                  Undefined: Primary and secondary slot(s) for each image. */
+
 #define MCUBOOT_APP_IMAGE_NUMBER       0x2      /* 1: S and NS application binaries are assembled in one single image.
                                                    2: Two separated images for S and NS application binaries. */
 

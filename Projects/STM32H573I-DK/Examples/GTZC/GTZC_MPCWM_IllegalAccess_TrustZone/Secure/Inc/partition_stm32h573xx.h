@@ -198,7 +198,7 @@
 //         <0=>Non-Secure
 //         <1=>Secure, Non-Secure Callable
 */
-#define SAU_INIT_NSC4       0
+#define SAU_INIT_NSC4       1
 /*
 //   </e>
 */

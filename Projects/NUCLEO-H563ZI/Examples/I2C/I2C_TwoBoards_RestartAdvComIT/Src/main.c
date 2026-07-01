@@ -777,6 +777,7 @@ static void FlushBuffer8(uint8_t* pBuffer1, uint16_t BufferLength)
 
 /**
   * @brief  This function is executed in case of error occurrence.
+  * @param  None
   * @retval None
   */
 void Error_Handler(void)

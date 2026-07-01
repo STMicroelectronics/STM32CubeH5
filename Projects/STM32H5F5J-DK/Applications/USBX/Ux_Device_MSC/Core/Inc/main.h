@@ -60,6 +60,9 @@ void MX_SDMMC1_SD_Init(void);
 /* Private defines -----------------------------------------------------------*/
 #define SD_Detect_Pin GPIO_PIN_5
 #define SD_Detect_GPIO_Port GPIOD
+#define USBC_DETECT_Pin GPIO_PIN_9
+#define USBC_DETECT_GPIO_Port GPIOA
+#define USBC_DETECT_EXTI_IRQn EXTI9_IRQn
 #define LED_RED_Pin GPIO_PIN_10
 #define LED_RED_GPIO_Port GPIOH
 

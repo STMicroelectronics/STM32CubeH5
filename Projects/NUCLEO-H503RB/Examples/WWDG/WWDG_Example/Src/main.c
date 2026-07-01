@@ -332,6 +332,7 @@ static uint32_t TimeoutCalculation(uint32_t timevalue)
 
 /**
   * @brief  This function is executed in case of error occurrence.
+  * @param  None
   * @retval None
   */
 void Error_Handler(void)

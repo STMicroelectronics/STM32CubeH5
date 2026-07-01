@@ -1,7 +1,7 @@
 /* USER CODE BEGIN Header */
 /**
   ******************************************************************************
-  * @file    ThreadX/Tx_SecureLEDToggle_TrustZone/NonSecure/Inc/main.h
+  * @file    NetXDuo/Nx_UDP_Echo_Client/Core/Src/main.h
   * @author  MCD Application Team
   * @brief   This file contains all the functions prototypes for the main.c
   *          file.

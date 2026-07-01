@@ -827,6 +827,7 @@ void CRYP_Cipher(uint32_t index,uint32_t* pRange, uint32_t StartAdressWritingReg
 
 /**
   * @brief  This function is executed in case of error occurrence.
+  * @param  None
   * @retval None
   */
 void Error_Handler(void)

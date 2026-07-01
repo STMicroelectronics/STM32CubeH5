@@ -322,6 +322,10 @@ static void MX_PLAY1_Init(void)
   /** Configure Output 14
   */
   LL_PLAY_OUTPUT_SetSource(PLAY1, LL_PLAY_OUT14, LL_PLAY_LUT0_OUT_DIRECT);
+
+  /** PLAY Privileged access configuration
+  */
+  LL_PLAY_SetPrivAttr(PLAY1, LL_PLAY_PRIV_ITEM_ALL, LL_PLAY_ATTR_NPRIV);
   /* USER CODE BEGIN PLAY1_Init 2 */
   LL_EXTI_InitTypeDef exti_config;
 
@@ -423,6 +427,7 @@ void LED_Toggle(Led_TypeDef led)
 
 /**
   * @brief  This function is executed in case of error occurrence.
+  * @param  None
   * @retval None
   */
 void Error_Handler(void)

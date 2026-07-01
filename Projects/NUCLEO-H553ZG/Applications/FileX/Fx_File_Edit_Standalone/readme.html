@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Readme</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="../../../../../_htmresc/mini-st_2020.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<div class="row">
+<section id="fx_file_edit_standalone-application-description" class="col-sm-12 col-lg-8">
+<h2><b>Fx_File_Edit_Standalone Application Description</b></h2>
+<p>This application provides an example of FileX stack usage on NUCLEO-H553ZG board, running in standalone mode (without ThreadX). It demonstrates how to create a Fat File system on the internal SRAM memory using FileX.</p>
+<p>The application is designed to execute file operations on the SRAM-Disk device, it provides all required software code for properly managing it.</p>
+<p>The application’s main calls the MX_FileX_Process() function that handles file operations. At this stage, all FileX resources are created and the SRAM driver is initialized. After that, the MX_FileX_Process will start by formatting the SRAM-Disk using FileX services. The resulting file system is a FAT32 compatible, with 512 bytes per sector.</p>
+<p>Upon successful opening of the created SRAM-Disk media, FileX continue with creating a file called “STM32.TXT” into the root directory, then write into it some predefined data. The file is re-opened in read only mode and content is checked.</p>
+<p>To configure FileX in standalone mode, the following flags should be added in the "fx_user.h" file:</p>
+<pre><code>#define FX_SINGLE_THREAD
+#define FX_STANDALONE_ENABLE</code></pre>
+<h4 id="expected-success-behavior"><b>Expected success behavior</b></h4>
+<p>Successful operation is marked by a toggling green LED light.</p>
+<p>Also, information regarding executing operation on the SRAM-Disk is printed to the serial port.</p>
+<h4 id="error-behaviors"><b>Error behaviors</b></h4>
+<p>On failure, an error message is printed to the serial port while the red LED starts toggling and the green LED is switched OFF.</p>
+<h4 id="assumptions-if-any"><b>Assumptions if any</b></h4>
+<p>None</p>
+<h4 id="known-limitations"><b>Known limitations</b></h4>
+<p>None</p>
+<h3 id="notes"><b>Notes</b></h3>
+<ol type="1">
+<li>The created SRAM-Disk, is placed in SRAM3(96 KB) starting from the (FX_SRAM_DISK_BASE_ADDRESS=<span class="citation" data-cites="0x20040000">@0x20040000</span>).</li>
+<li>User can change the location of the SRAM-Disk by modifying FX_SRAM_DISK_BASE_ADDRESS.</li>
+</ol>
+<h4 id="filexlevelx-usage-hints"><b>FileX/LevelX usage hints</b></h4>
+<ul>
+<li>When calling the fx_media_format() API, it is highly recommended to understand all the parameters used by the API to correctly generate a valid filesystem.</li>
+</ul>
+<h3 id="keywords"><b>Keywords</b></h3>
+<p>FileX, File System, FAT32, SRAM, SRAM-DISK</p>
+<h3 id="hardware-and-software-environment"><b>Hardware and Software environment</b></h3>
+<ul>
+<li><p>This application runs on STM32H553ZGTx devices.</p></li>
+<li><p>This application has been tested with STMicroelectronics NUCLEO-H553ZG boards revision MB2321-H553ZG_S-A0 and can be easily tailored to any other supported device and development board.</p></li>
+<li><p>This application uses USART3 to display logs, the hyperterminal configuration is as follows:</p>
+<ul>
+<li>BaudRate = 115200 baud</li>
+<li>Word Length = 8 Bits</li>
+<li>Stop Bit = 1</li>
+<li>Parity = None</li>
+<li>Flow control = None</li>
+</ul></li>
+</ul>
+<h3 id="how-to-use-it"><b>How to use it ?</b></h3>
+<p>In order to make the program work, you must do the following:</p>
+<ul>
+<li>Open your preferred toolchain</li>
+<li>Rebuild all files and load your image into target memory</li>
+<li>Run the application</li>
+</ul>
+</section>
+</div>
+</body>
+</html>

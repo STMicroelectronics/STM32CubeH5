@@ -32,6 +32,10 @@
                                                To enter it, press user button at reset.
                                       Undefined: Do not use system bootloader. */
 
+/*#define MCUBOOT_PRIMARY_ONLY*/     /* Defined: No secondary (download) slot(s).*/
+                                     /* only primary slot(s) for each image.
+                                      Undefined: Primary and secondary slot(s) for each image. */
+
 #define MCUBOOT_APP_IMAGE_NUMBER 2 /* 1: S and NS application binaries are assembled in one single image.
                                       2: Two separated images for S and NS application binaries. */
 
@@ -53,6 +57,9 @@
 #define MCUBOOT_USE_HASH_REF
 
 /* control configuration */
+#if defined(MCUBOOT_PRIMARY_ONLY) && !defined(MCUBOOT_OVERWRITE_ONLY)
+#error "Config not supported: When MCUBOOT_PRIMARY_ONLY is enabled, MCUBOOT_OVERWRITE_ONLY is required."
+#endif /* defined(MCUBOOT_PRIMARY_ONLY) */
 
 /* The size of a partition. This should be large enough to contain a S or NS
  * sw binary. Each FLASH_AREA_IMAGE contains two partitions. See Flash layout
@@ -76,16 +83,22 @@
 #if (MCUBOOT_APP_IMAGE_NUMBER == 2)
 #define FLASH_AREA_1_ID                 (2)
 #endif /* MCUBOOT_APP_IMAGE_NUMBER == 2 */
+
+#if !defined(MCUBOOT_PRIMARY_ONLY)
 #define FLASH_AREA_2_ID                 (3)
 #if (MCUBOOT_APP_IMAGE_NUMBER == 2)
 #define FLASH_AREA_3_ID                 (4)
 #endif /* MCUBOOT_APP_IMAGE_NUMBER == 2 */
+#endif /* MCUBOOT_PRIMARY_ONLY */
+
 #if (MCUBOOT_S_DATA_IMAGE_NUMBER == 1)
 #define FLASH_AREA_4_ID                 (5)
 #endif /* MCUBOOT_S_DATA_IMAGE_NUMBER == 1 */
 #if (MCUBOOT_NS_DATA_IMAGE_NUMBER == 1)
 #define FLASH_AREA_5_ID                 (6)
 #endif /* MCUBOOT_NS_DATA_IMAGE_NUMBER == 1 */
+
+#if !defined(MCUBOOT_PRIMARY_ONLY)
 #if (MCUBOOT_S_DATA_IMAGE_NUMBER == 1)
 #define FLASH_AREA_6_ID                 (7)
 #endif /* MCUBOOT_S_DATA_IMAGE_NUMBER == 1 */
@@ -93,6 +106,7 @@
 #define FLASH_AREA_7_ID                 (8)
 #endif /* MCUBOOT_NS_DATA_IMAGE_NUMBER == 1 */
 #define FLASH_AREA_SCRATCH_ID           (9)
+#endif /* MCUBOOT_PRIMARY_ONLY */
 
 /* Offset and size definitions of the flash partitions that are handled by the
  * bootloader. The image swapping is done between IMAGE_0 and IMAGE_1, SCRATCH
@@ -118,10 +132,16 @@
 #endif /* (FLASH_AREA_SCRATCH_OFFSET % FLASH_AREA_IMAGE_SECTOR_SIZE) != 0*/
 #else /* FLASH_AREA_SCRATCH_ID */
 #define FLASH_AREA_SCRATCH_SIZE         (0x0)
+#define FLASH_AREA_SCRATCH_OFFSET       (0x0)
 #endif /* FLASH_AREA_SCRATCH_ID */
 
 /* HDP area end at this address */
-#define FLASH_BL2_HDP_END               (FLASH_AREA_SCRATCH_OFFSET+FLASH_AREA_SCRATCH_SIZE-1)
+#if !defined(MCUBOOT_PRIMARY_ONLY) && !defined(MCUBOOT_OVERWRITE_ONLY)
+#define FLASH_BL2_HDP_END               (FLASH_AREA_SCRATCH_OFFSET+FLASH_AREA_SCRATCH_SIZE -1)
+#else
+#define FLASH_BL2_HDP_END               (FLASH_AREA_BL2_OFFSET + FLASH_AREA_BL2_SIZE -1)
+#endif /* !defined(MCUBOOT_PRIMARY_ONLY) && !defined(MCUBOOT_OVERWRITE_ONLY) */
+
 /* control area for BL2 code protected by hdp */
 #if ((FLASH_AREA_BL2_OFFSET+FLASH_AREA_BL2_SIZE) % FLASH_AREA_IMAGE_SECTOR_SIZE) != 0
 #error "HDP area must be aligned on FLASH_AREA_IMAGE_SECTOR_SIZE"

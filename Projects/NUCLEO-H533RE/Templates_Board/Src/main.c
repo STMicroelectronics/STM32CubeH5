@@ -264,6 +264,7 @@ void BSP_PB_Callback(Button_TypeDef Button)
 
 /**
   * @brief  This function is executed in case of error occurrence.
+  * @param  None
   * @retval None
   */
 void Error_Handler(void)

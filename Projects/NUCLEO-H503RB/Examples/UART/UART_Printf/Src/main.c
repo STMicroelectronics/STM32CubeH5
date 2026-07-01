@@ -318,6 +318,7 @@ size_t __write(int file, unsigned char const *ptr, size_t len)
 
 /**
   * @brief  This function is executed in case of error occurrence.
+  * @param  None
   * @retval None
   */
 void Error_Handler(void)

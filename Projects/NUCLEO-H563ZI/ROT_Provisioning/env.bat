@@ -8,6 +8,11 @@ set stm32programmercli="C:\Program Files\STMicroelectronics\STM32Cube\STM32CubeP
 set stm32tpccli="C:\Program Files\STMicroelectronics\STM32Cube\STM32CubeProgrammer\bin\STM32TrustedPackageCreator_CLI.exe"
 
 :: ==============================================================================
+::                            OEMiROT loader path
+:: ==============================================================================
+set oemirot_loader_path_project=Applications/ROT/OEMiROT_Loader
+
+:: ==============================================================================
 ::                            OEMiROT Appli boot path
 :: Select application project below
 ::set oemirot_appli_path_project=Templates/ROT/OEMiROT_Appli_TrustZone
@@ -29,4 +34,8 @@ set cube_fw_path=%~dp0..\..\..\
 set oemirot_appli_secure=rot_tz_s_app_init_sign.hex
 set oemirot_appli_non_secure=rot_tz_ns_app_init_sign.hex
 set oemirot_appli_assembly_sign=rot_tz_app_init_sign.hex
+set oemirot_loader=rot_tz_s_loader.bin
+set oemirot_appli_secure_primary=rot_tz_s_app_init_sign.bin
+set oemirot_appli_non_secure_primary=rot_tz_ns_app_init_sign.bin
+set oemirot_appli_assembly_sign_primary=rot_tz_app_init_sign.bin
 set rot_provisioning_path="%~dp0"

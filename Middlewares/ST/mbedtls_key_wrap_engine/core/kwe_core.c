@@ -509,7 +509,7 @@ KWE_StatusTypeDef KWE_EcdsaPublicKeyExport(
 
   p_public_key[0]                    = 0x04;
   publickey.pPointX                  = p_public_key + 1;
-  publickey.pPointY                  = p_public_key + 1 + (public_key_size / 2U);
+  publickey.pPointY                  = p_public_key + 1 + ecdsa_param.primeOrderSizeByte;
 
 #else /* To Do */
   *p_public_key_length               = ecdsa_param.primeOrderSizeByte;
@@ -683,7 +683,7 @@ KWE_StatusTypeDef KWE_EcdsaSignHash(
   ecdsa_blob.pWrappedKey = (uint32_t *)p_key_buffer + KWE_BLOB_KEY_OFFSET;
 
   ecdsa_result.pRSign                      = p_signature;
-  ecdsa_result.pSSign                      = p_signature + signature_size / 2U;
+  ecdsa_result.pSSign                      = p_signature + ecdsa_param.primeOrderSizeByte;
 
   if (HAL_CCB_ECDSA_Sign(&hccb, &ecdsa_param, &wrapping_key_conf, &ecdsa_blob, p_hash_tmp, &ecdsa_result) != HAL_OK)
   {
@@ -1055,21 +1055,25 @@ KWE_StatusTypeDef KWE_AesAeadEncrypt(
 
   if ((alg == KWE_ALG_AES_GCM) || (alg == KWE_ALG_AES_CCM))
   {
+    if (alg == KWE_ALG_AES_GCM)
+    {
+      /* Set Initialization vector (IV) in Little endian format */
+      for (i = 0; i < (nonce_length / 4U); i++)
+      {
+        GET_UINT32_BE(iv_p[i], p_nonce, 4U * i);
+      }
+
+      /* counter value must be set to 2 when processing the first block of payload */
+      iv_p[3] = 0x00000002;
+      conf.pInitVect = iv_p;
+    }
+
     /* additional authentication data limited to 2^64 bits */
     conf.HeaderWidthUnit = CRYP_HEADERWIDTHUNIT_BYTE;
     if (additional_data_length != 0U)
     {
-      if (alg == KWE_ALG_AES_GCM) 
+      if (alg == KWE_ALG_AES_GCM)
       {
-        /* Set Initialization vector (IV) in Little endian format */
-        for (i = 0; i < (nonce_length / 4U); i++)
-        {
-          GET_UINT32_BE(iv_p[i], p_nonce, 4U * i);
-        }
-
-        /* counter value must be set to 2 when processing the first block of payload */
-        iv_p[3] = 0x00000002;
-        conf.pInitVect = iv_p;
         conf.HeaderSize = additional_data_length;
         conf.Header = (uint32_t *)p_additional_data;
       }
@@ -1191,7 +1195,7 @@ KWE_StatusTypeDef KWE_AesAeadEncrypt(
     return status;
   }
 
-  *p_ciphertext_length = ciphertext_size;
+  *p_ciphertext_length = plaintext_length + tag_length;
 
   if (HAL_CRYP_DeInit(&hcryp) != HAL_OK)
   {
@@ -1276,21 +1280,25 @@ KWE_StatusTypeDef KWE_AesAeadDecrypt(
 
   if ((alg == KWE_ALG_AES_GCM) || (alg == KWE_ALG_AES_CCM))
   {
+    if (alg == KWE_ALG_AES_GCM)
+    {
+      /* Set Initialization vector (IV) in Little endian format */
+      for (i = 0; i < (nonce_length / 4U); i++)
+      {
+        GET_UINT32_BE(iv_p[i], p_nonce, 4U * i);
+      }
+
+      /* Counter value must be set to 2 when processing the first block of payload */
+      iv_p[3] = 0x00000002;
+      conf.pInitVect = iv_p;
+    }
+
     /* Additional authentication data limited to 2^64 bits */
     conf.HeaderWidthUnit = CRYP_HEADERWIDTHUNIT_BYTE;
     if (additional_data_length != 0U)
     {
-      if (alg == KWE_ALG_AES_GCM) 
+      if (alg == KWE_ALG_AES_GCM)
       {
-        /* Set Initialization vector (IV) in Little endian format */
-        for (i = 0; i < (nonce_length / 4U); i++)
-        {
-          GET_UINT32_BE(iv_p[i], p_nonce, 4U * i);
-        }
-
-        /* Counter value must be set to 2 when processing the first block of payload */
-        iv_p[3] = 0x00000002;
-        conf.pInitVect = iv_p;
         conf.HeaderSize = (uint32_t)additional_data_length;
         conf.Header = (uint32_t *)p_additional_data;
       }
@@ -1421,12 +1429,12 @@ KWE_StatusTypeDef KWE_AesAeadDecrypt(
     return status;
   }
 
-  if (memcmp(check_tag, p_ciphertext + plaintext_size, tag_length) != 0)
+  if (memcmp(check_tag, (p_ciphertext + (ciphertext_length - tag_length)), tag_length) != 0)
   {
     goto exit;
   }
 
-  *p_plaintext_length = plaintext_size;
+  *p_plaintext_length = ciphertext_length - tag_length;
 
   if (HAL_CRYP_DeInit(&hcryp) != HAL_OK)
   {
@@ -1517,7 +1525,8 @@ KWE_StatusTypeDef KWE_AesEncrypt(
     return status;
   }
 
-  *p_ciphertext_length = ciphertext_size;
+  *p_ciphertext_length = plaintext_length;
+
 
   if (HAL_CRYP_DeInit(&hcryp) != HAL_OK)
   {

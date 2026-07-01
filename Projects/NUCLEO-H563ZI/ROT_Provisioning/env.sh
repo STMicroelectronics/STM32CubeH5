@@ -56,6 +56,11 @@ else
   return
 fi
 
+# ==============================================================================
+#                            OEMiROT loader path
+# ==============================================================================
+oemirot_loader_path_project=Applications/ROT/OEMiROT_Loader
+
 #==============================================================================
 #                           OEMiROT Appli boot path
 # Select application project below
@@ -78,4 +83,8 @@ cube_fw_path=$projectdir/../../../
 oemirot_appli_secure=rot_tz_s_app_init_sign.hex
 oemirot_appli_non_secure=rot_tz_ns_app_init_sign.hex
 oemirot_appli_assembly_sign=rot_tz_app_init_sign.hex
+oemirot_loader=rot_tz_s_loader.bin
+oemirot_appli_secure_primary=rot_tz_s_app_init_sign.bin
+oemirot_appli_non_secure_primary=rot_tz_ns_app_init_sign.bin
+oemirot_appli_assembly_sign_primary=rot_tz_app_init_sign.bin
 rot_provisioning_path=$projectdir

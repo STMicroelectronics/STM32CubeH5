@@ -218,6 +218,11 @@
 			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/Third_Party/mbed-crypto/library/sha256.c</locationURI>
 		</link>
 		<link>
+			<name>Middlewares/mbed-crypto/psa_crypto_random.c</name>
+			<type>1</type>
+			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/Third_Party/mbed-crypto/library/psa_crypto_random.c</locationURI>
+		</link>
+		<link>
 			<name>Drivers/BSP/STM32H5F5J-DK/stm32h5f5j_discovery.c</name>
 			<type>1</type>
 			<locationURI>PARENT-6-PROJECT_LOC/Drivers/BSP/STM32H5F5J-DK/stm32h5f5j_discovery.c</locationURI>

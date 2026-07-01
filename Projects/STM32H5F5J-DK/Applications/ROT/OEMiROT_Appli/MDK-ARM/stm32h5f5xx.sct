@@ -17,7 +17,7 @@
  */
 
 #define S_CODE_OFFSET 0x18000                       /* This definition is updated automatically from OEMiROT_Boot postbuild*/
-#define S_CODE_SIZE 0x6000                          /* This definition is updated automatically from OEMiROT_Boot postbuild*/
+#define S_CODE_SIZE 0x8000                          /* This definition is updated automatically from OEMiROT_Boot postbuild*/
 #define IMAGE_HEADER_SIZE 0x400                     /* mcuboot header size */
 
 #define CODE_START 0x0C000000 + S_CODE_OFFSET + IMAGE_HEADER_SIZE

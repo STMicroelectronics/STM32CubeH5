@@ -151,7 +151,7 @@ int main(void)
   SECURE_SAU_MPCWM_SetInitConfig();
 
   /* read/write test in second half of memory (secure area), should be OK */
-  *(uint32_t *)(OCTOSPI1_BASE + 8U*GTZC_TZSC_MPCWM_GRANULARITY_1) = 0xACCE38F0UL;
+  *(uint32_t *)(OCTOSPI1_BASE + 4U*GTZC_TZSC_MPCWM_GRANULARITY_1) = 0xACCE38F0UL;
 
   /* In memory-mapped mode, not possible to check if the memory is read
    after the programming. So a delay corresponding to max page programming
@@ -159,7 +159,7 @@ int main(void)
   */
   HAL_Delay(MEMORY_PAGE_PROG_DELAY);
 
-  read_value = *(uint32_t *)(OCTOSPI1_BASE + 8U*GTZC_TZSC_MPCWM_GRANULARITY_1);
+ read_value = *(uint32_t *)(OCTOSPI1_BASE + 4U*GTZC_TZSC_MPCWM_GRANULARITY_1);
 
   if( read_value != 0xACCE38F0UL)
   {
@@ -551,6 +551,7 @@ PUTCHAR_PROTOTYPE
 
 /**
   * @brief  This function is executed in case of error occurrence.
+  * @param  None
   * @retval None
   */
 void Error_Handler(void)

@@ -1,0 +1,8 @@
+[ProjectFiles]
+HeaderPath=../../../../../../Drivers/BSP/STM32H5F5J-DK
+[Others]
+Define=
+HALModule=
+[Groups]
+Doc=../readme.txt;
+Drivers/BSP/STM32H5F5J-DK=../../../../../../Drivers/BSP/STM32H5F5J-DK/stm32h5f5j_discovery.c;

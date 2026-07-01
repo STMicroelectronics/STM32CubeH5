@@ -199,10 +199,11 @@ uint8_t *USBD_Get_Device_Framework_Speed(uint8_t Speed, ULONG *Length)
   uint8_t *pFrameWork = NULL;
   /* USER CODE BEGIN Device_Framework0 */
 
-  /* USER TAG BEGIN Device_Framework0 */
+  /* USER CODE END Device_Framework0 */
 
   if (USBD_FULL_SPEED == Speed)
   {
+    _ux_utility_memory_set(&USBD_Device_FS, 0U, sizeof(USBD_Device_FS));
     USBD_Device_Framework_Builder(&USBD_Device_FS, pDevFrameWorkDesc_FS,
                                   UserClassInstance, Speed);
 
@@ -213,6 +214,7 @@ uint8_t *USBD_Get_Device_Framework_Speed(uint8_t Speed, ULONG *Length)
   }
   else
   {
+    _ux_utility_memory_set(&USBD_Device_HS, 0U, sizeof(USBD_Device_HS));
     USBD_Device_Framework_Builder(&USBD_Device_HS, pDevFrameWorkDesc_HS,
                                   UserClassInstance, Speed);
 
@@ -392,7 +394,7 @@ static uint8_t *USBD_Device_Framework_Builder(USBD_DevClassHandleTypeDef *pdev,
 
   /* Set Dev and conf descriptors size to 0 */
   pdev->CurrConfDescSz = 0U;
-  pdev->CurrDevDescSz = 0U;
+  pdev->CurrDevDescSz=0U;
 
   /* Set the pointer to the device descriptor area*/
   pDevDesc = (USBD_DeviceDescTypedef *)pDevFrameWorkDesc;

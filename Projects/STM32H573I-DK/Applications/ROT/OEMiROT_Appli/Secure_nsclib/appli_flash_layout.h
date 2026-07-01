@@ -26,7 +26,7 @@
 #define MCUBOOT_APP_IMAGE_NUMBER       0x1      /* 1: S and NS application binaries are assembled in one single image.
                                                    2: Two separated images for S and NS application binaries. */
 
-#define MCUBOOT_S_DATA_IMAGE_NUMBER    0x1      /* 1: S data image for S application.
+#define MCUBOOT_S_DATA_IMAGE_NUMBER    0x0      /* 1: S data image for S application.
                                                    0: No S data image. */
 
 #define MCUBOOT_NS_DATA_IMAGE_NUMBER   0x0      /* 1: NS data image for NS application.

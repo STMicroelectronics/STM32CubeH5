@@ -52,7 +52,7 @@
 /* USER CODE END PFP */
 
 /**
-  * @brief Application ThreadX Initialization.
+  * @brief  Application ThreadX Initialization.
   * @param memory_ptr: memory pointer
   * @retval int
   */
@@ -67,7 +67,7 @@ UINT App_ThreadX_Init(VOID *memory_ptr)
   return ret;
 }
 
-/**
+  /**
   * @brief  Function that implements the kernel's initialization.
   * @param  None
   * @retval None

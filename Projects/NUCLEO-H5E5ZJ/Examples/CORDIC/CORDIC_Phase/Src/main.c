@@ -403,6 +403,7 @@ uint32_t Check_Residual_Error(float VarA, float VarB, float MaxError)
 
 /**
   * @brief  This function is executed in case of error occurrence.
+  * @param  None
   * @retval None
   */
 void Error_Handler(void)

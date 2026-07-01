@@ -110,13 +110,13 @@ static int aes_set_key(mbedtls_aes_context *ctx,
 
 #if defined(HW_CRYPTO_DPA_AES)
   ctx->hcryp_aes.Instance = SAES;
+  ctx->hcryp_aes.Init.KeyMode = CRYP_KEYMODE_NORMAL;
 #else
   ctx->hcryp_aes.Instance = AES;
 #endif /* HW_CRYPTO_DPA_AES */
   ctx->hcryp_aes.Init.DataType = CRYP_BYTE_SWAP;
   ctx->hcryp_aes.Init.DataWidthUnit = CRYP_DATAWIDTHUNIT_BYTE;
   ctx->hcryp_aes.Init.pKey = ctx->aes_key;
-  ctx->hcryp_aes.Init.KeyMode = CRYP_KEYMODE_NORMAL;
 #if defined(HW_CRYPTO_DPA_AES)
   if (keybits == 0)
   {

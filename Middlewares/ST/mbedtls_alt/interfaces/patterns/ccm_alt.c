@@ -140,7 +140,9 @@ int mbedtls_ccm_setkey(mbedtls_ccm_context *ctx,
   ctx->hcryp_ccm.Init.pKey = ctx->ccm_key;
   ctx->hcryp_ccm.Init.DataWidthUnit = CRYP_DATAWIDTHUNIT_BYTE;
   ctx->hcryp_ccm.Init.DataType = CRYP_BYTE_SWAP;
+#if defined (SAES)
   ctx->hcryp_ccm.Init.KeyMode = CRYP_KEYMODE_NORMAL;
+#endif
   ctx->hcryp_ccm.Init.Algorithm  = CRYP_AES_CCM;
 
 #if defined(HW_CRYPTO_DPA_AES)
@@ -163,7 +165,7 @@ int mbedtls_ccm_setkey(mbedtls_ccm_context *ctx,
   ctx->hcryp_ccm.Init.B0 = NULL;
   ctx->hcryp_ccm.Init.KeyIVConfigSkip = CRYP_KEYIVCONFIG_ONCE;
   ctx->hcryp_ccm.Init.HeaderWidthUnit = CRYP_HEADERWIDTHUNIT_BYTE;
-  if (HAL_CRYP_Init(&ctx->hcryp_ccm) != HAL_OK)
+  if (HAL_CRYP_DeInit(&ctx->hcryp_ccm) != HAL_OK)
   {
     ret = MBEDTLS_ERR_PLATFORM_HW_ACCEL_FAILED;
     goto exit;
@@ -327,6 +329,11 @@ int mbedtls_ccm_starts(mbedtls_ccm_context *ctx,
    * See ccm_calculate_first_block_if_ready() for block layout description
    */
   memcpy(ctx->y + 1, iv, iv_len);
+#if defined(MBEDTLS_HAL_CCM_MULTIPART_ALT)
+  memset(ctx->buf, 0x00, sizeof(ctx->buf));
+  ctx->len = 0U;
+  ctx->remain_len = 0U;
+#endif /* MBEDTLS_HAL_CCM_MULTIPART_ALT */
 
   ctx->state |= CCM_STATE__STARTED;
   return ccm_calculate_first_block_if_ready(ctx);
@@ -471,6 +478,155 @@ exit:
   return ret;
 }
 
+#if defined(MBEDTLS_HAL_CCM_MULTIPART_ALT)
+int mbedtls_ccm_update(mbedtls_ccm_context *ctx,
+                       const unsigned char *input, size_t input_len,
+                       unsigned char *output, size_t output_size,
+                       size_t *output_len)
+{
+  uint16_t wordnb = 0;          /* number of four data words */
+  uint16_t wordlen = 0;         /* length (in bytes) of four data words */
+  uint16_t in_datalen = 0;  /* length (in bytes) of processed data within input buffer */
+  uint8_t *p_input = (uint8_t *)input;
+  uint8_t *p_output = (uint8_t *)output;
+  size_t tmp_lenght = 0;
+  int remain_bytes = 0;
+  tmp_lenght = ctx->len;
+  if (ctx->state & CCM_STATE__ERROR)
+  {
+    return MBEDTLS_ERR_CCM_BAD_INPUT;
+  }
+
+  /* Check against plaintext length only if performing operation with
+   * authentication
+   */
+  if (ctx->tag_len != 0 && input_len > ctx->plaintext_len)
+  {
+    return MBEDTLS_ERR_CCM_BAD_INPUT;
+  }
+
+  if (output_size < (input_len + ctx->remain_len) - ((input_len + ctx->remain_len)%16U))
+  {
+    return MBEDTLS_ERR_CCM_BAD_INPUT;
+  }
+
+  /* allow multi-context of CRYP use: restore context */
+  ctx->hcryp_ccm.Instance->CR = ctx->ctx_save_cr;
+
+    /* Calculate number of four data words */
+  wordnb = (input_len + ctx->remain_len) / 16U;
+
+  /* if available, process them */
+  if (wordnb)
+  {
+    if (ctx->remain_len)
+    {
+      memcpy((ctx->buf + ctx->remain_len), input, (16U - ctx->remain_len));
+      if (ctx->mode == MBEDTLS_CCM_DECRYPT || \
+          ctx->mode == MBEDTLS_CCM_STAR_DECRYPT)
+      {
+        if (HAL_CRYP_Decrypt(&ctx->hcryp_ccm,
+                             (uint32_t *)ctx->buf,
+                             16U,
+                             (uint32_t *)(output),
+                             ST_CRYP_TIMEOUT) != HAL_OK)
+        {
+          ctx->state |= CCM_STATE__ERROR;
+          return MBEDTLS_ERR_PLATFORM_HW_ACCEL_FAILED;
+        }
+      }
+      if (ctx->mode == MBEDTLS_CCM_ENCRYPT || \
+          ctx->mode == MBEDTLS_CCM_STAR_ENCRYPT)
+      {
+        if (HAL_CRYP_Encrypt(&ctx->hcryp_ccm,
+                             (uint32_t *)ctx->buf,
+                             16U,
+                             (uint32_t *)(output),
+                             ST_CRYP_TIMEOUT) != HAL_OK)
+        {
+          ctx->state |= CCM_STATE__ERROR;
+          return MBEDTLS_ERR_PLATFORM_HW_ACCEL_FAILED;
+        } 
+      }
+      
+      p_input += (16U - ctx->remain_len);
+      p_output += 16U;
+      /* update total length */
+      ctx->len += 16U;
+      in_datalen = ctx->remain_len + input_len;
+      wordnb -= 1U;
+      memset(ctx->buf, 0, 16U);
+      ctx->remain_len = 0;
+    }
+ 
+    if (wordnb)
+    {
+      /* Convert in bytes */
+      wordlen = wordnb * 16U;
+      if (ctx->mode == MBEDTLS_CCM_DECRYPT || \
+          ctx->mode == MBEDTLS_CCM_STAR_DECRYPT)
+      {
+        if (HAL_CRYP_Decrypt(&ctx->hcryp_ccm,
+                             (uint32_t *)p_input,
+                             wordlen,
+                             (uint32_t *)(p_output),
+                             ST_CRYP_TIMEOUT) != HAL_OK)
+        {
+          ctx->state |= CCM_STATE__ERROR;
+          return MBEDTLS_ERR_PLATFORM_HW_ACCEL_FAILED;
+        }
+      }
+      if (ctx->mode == MBEDTLS_CCM_ENCRYPT || \
+          ctx->mode == MBEDTLS_CCM_STAR_ENCRYPT)
+      {
+        if (HAL_CRYP_Encrypt(&ctx->hcryp_ccm,
+                             (uint32_t *)p_input,
+                             wordlen,
+                             (uint32_t *)(p_output),
+                             ST_CRYP_TIMEOUT) != HAL_OK)
+        {
+          ctx->state |= CCM_STATE__ERROR;
+          return MBEDTLS_ERR_PLATFORM_HW_ACCEL_FAILED;
+        }
+      }
+
+    p_input += wordlen;
+    /* update total length */
+    ctx->len += wordlen;
+
+    in_datalen += wordlen;
+    }
+
+    /* remain_bytes for multiple part */
+    remain_bytes = in_datalen % 16U;
+    if (remain_bytes > 0)
+    {
+      memcpy(ctx->buf, p_input, remain_bytes); 
+      ctx->remain_len = remain_bytes;
+    }
+    
+    /* remain_bytes for single part */
+    remain_bytes = input_len - in_datalen;
+    if (remain_bytes > 0)
+    {
+      memcpy(ctx->buf, p_input, remain_bytes); 
+      ctx->remain_len = remain_bytes;
+    }
+  }
+  else
+  {
+    memcpy(ctx->buf + ctx->remain_len, p_input, input_len);
+    ctx->remain_len += input_len;
+  }
+
+    *output_len = ctx->len - tmp_lenght;
+
+  /* allow multi-context of CRYP : save context */
+  ctx->ctx_save_cr = ctx->hcryp_ccm.Instance->CR;
+
+  return 0;
+}
+#else /* MBEDTLS_HAL_CCM_MULTIPART_ALT */
 int mbedtls_ccm_update(mbedtls_ccm_context *ctx,
                        const unsigned char *input, size_t input_len,
                        unsigned char *output, size_t output_size,
@@ -533,7 +689,93 @@ int mbedtls_ccm_update(mbedtls_ccm_context *ctx,
 
   return 0;
 }
+#endif /* MBEDTLS_HAL_CCM_MULTIPART_ALT */
 
+#if defined(MBEDTLS_HAL_CCM_MULTIPART_ALT)
+int mbedtls_ccm_finish(mbedtls_ccm_context *ctx,
+                       unsigned char *output, size_t output_size,
+                       size_t *ciphertext_length,
+                       unsigned char *tag, size_t tag_len)
+{
+  __ALIGN_BEGIN uint8_t mac[16]      __ALIGN_END;  /* temporary mac */
+
+  if (ctx->state & CCM_STATE__ERROR)
+  {
+    return MBEDTLS_ERR_ERROR_CORRUPTION_DETECTED;
+  }
+
+  if (ctx->add_len > 0 && !(ctx->state & CCM_STATE__AUTH_DATA_FINISHED))
+  {
+    return MBEDTLS_ERR_CCM_BAD_INPUT;
+  }
+
+  if ((output_size == 0U) && (ctx->remain_len != 0U))
+  {
+    return MBEDTLS_ERR_CCM_BAD_INPUT;
+  }
+
+  /* Tag has a variable length */
+  memset(mac, 0, sizeof(mac));
+  /* allow multi-context of CRYP use: restore context */
+  ctx->hcryp_ccm.Instance->CR = ctx->ctx_save_cr;
+
+  /* add padding zeros to last_data_word */
+  memset((ctx->buf + ctx->remain_len), 0U, 16U - ctx->remain_len);
+
+  if (ctx->mode == MBEDTLS_CCM_DECRYPT || \
+      ctx->mode == MBEDTLS_CCM_STAR_DECRYPT)
+  {
+    if (HAL_CRYP_Decrypt(&ctx->hcryp_ccm,
+                         (uint32_t *)ctx->buf,
+                         ctx->remain_len,
+                         (uint32_t *)(output),
+                         ST_CRYP_TIMEOUT) != HAL_OK)
+    {
+      ctx->state |= CCM_STATE__ERROR;
+      return MBEDTLS_ERR_PLATFORM_HW_ACCEL_FAILED;
+    }
+  }
+
+  if (ctx->mode == MBEDTLS_CCM_ENCRYPT || \
+      ctx->mode == MBEDTLS_CCM_STAR_ENCRYPT)
+  {
+    if (HAL_CRYP_Encrypt(&ctx->hcryp_ccm,
+                         (uint32_t *)ctx->buf,
+                         ctx->remain_len,
+                         (uint32_t *)(output),
+                         ST_CRYP_TIMEOUT) != HAL_OK)
+    {
+      ctx->state |= CCM_STATE__ERROR;
+      return MBEDTLS_ERR_PLATFORM_HW_ACCEL_FAILED;
+    }
+  }
+
+  /* update total length */
+  ctx->len += ctx->remain_len;
+  *ciphertext_length = ctx->remain_len;
+
+  /* Generate the authentication TAG */
+  if (HAL_CRYPEx_AESCCM_GenerateAuthTAG(&ctx->hcryp_ccm,
+                                        (uint32_t *)mac,
+                                        ST_CRYP_TIMEOUT) != HAL_OK)
+  {
+    return MBEDTLS_ERR_PLATFORM_HW_ACCEL_FAILED;
+  }
+
+  if (tag != NULL)
+  {
+    memcpy(tag, mac, tag_len);
+  }
+
+  /* allow multi-context of CRYP : save context */
+  ctx->ctx_save_cr = ctx->hcryp_ccm.Instance->CR;
+
+  mbedtls_ccm_clear_state(ctx);
+  mbedtls_platform_zeroize(ctx->ccm_key, sizeof(ctx->ccm_key));
+
+  return 0;
+}
+#else
 int mbedtls_ccm_finish(mbedtls_ccm_context *ctx,
                        unsigned char *tag, size_t tag_len)
 {
@@ -575,6 +817,7 @@ int mbedtls_ccm_finish(mbedtls_ccm_context *ctx,
 
   return 0;
 }
+#endif /* MBEDTLS_HAL_CCM_MULTIPART_ALT */
 
 /*
  * Authenticated encryption or decryption
@@ -586,7 +829,7 @@ static int ccm_auth_crypt(mbedtls_ccm_context *ctx, int mode, size_t length,
                           unsigned char *tag, size_t tag_len)
 {
   int ret = MBEDTLS_ERR_ERROR_CORRUPTION_DETECTED;
-  size_t olen;
+  size_t olen = 0;
 
   if ((ret = mbedtls_ccm_starts(ctx, mode, iv, iv_len)) != 0)
   {
@@ -609,11 +852,17 @@ static int ccm_auth_crypt(mbedtls_ccm_context *ctx, int mode, size_t length,
     return ret;
   }
 
-  if ((ret = mbedtls_ccm_finish(ctx, tag, tag_len)) != 0)
+#if defined(MBEDTLS_HAL_CCM_MULTIPART_ALT)
+  if ((ret = mbedtls_ccm_finish(ctx, (output + ctx->len), ctx->remain_len, &olen, tag, tag_len)) != 0)
   {
     return ret;
   }
-
+#else
+  if ((ret = mbedtls_ccm_finish(ctx, tag, tag_len)) != 0)
+  {
+     return ret;
+  }
+#endif /* MBEDTLS_HAL_CCM_MULTIPART_ALT */
   return 0;
 }
 

@@ -76,6 +76,26 @@
 #error "Config without BL2 not supported"
 #endif /* BL2 */
 
+#if defined(MCUBOOT_PRIMARY_ONLY)
+/*  Secure Loader Image */
+#define LOADER_S_CODE_SIZE                  (0x6000) /* 24 Kbytes  */
+#define FLASH_AREA_LOADER_OFFSET            (FLASH_TOTAL_SIZE - LOADER_S_CODE_SIZE)
+#define FLASH_AREA_LOADER_BANK_OFFSET       (FLASH_B_SIZE - LOADER_S_CODE_SIZE)
+
+/* wrp2 applied on loader, 3 last sector */
+#define BANK2_WRP_PROTECTION_MASK   0x80000000u
+/* Control  Secure Loader Image */
+#if (FLASH_AREA_LOADER_OFFSET  % FLASH_AREA_IMAGE_SECTOR_SIZE) != 0
+#error "FLASH_AREA_LOADER_OFFSET  not aligned on FLASH_AREA_IMAGE_SECTOR_SIZE"
+#endif /* (FLASH_AREA_LOADER_OFFSET  % FLASH_AREA_IMAGE_SECTOR_SIZE) != 0  */
+
+/* define used for checking possible overlap */
+#define LOADER_MAX_CODE_SIZE                 (FLASH_TOTAL_SIZE - FLASH_AREA_1_OFFSET - FLASH_AREA_1_SIZE)
+
+#if defined(MCUBOOT_EXT_LOADER) && (LOADER_CODE_SIZE > LOADER_MAX_CODE_SIZE)
+#error "Loader mapping overlapping slot %LOADER_CODE_SIZE %LOADER_MAX_CODE_SIZE"
+#endif /* defined(MCUBOOT_EXT_LOADER) && LOADER_CODE_SIZE > LOADER_MAX_CODE_SIZE */
+#endif /* defined(MCUBOOT_PRIMARY_ONLY) */
 
 #define S_ROM_ALIAS_BASE                    (_FLASH_BASE_S)
 #define NS_ROM_ALIAS_BASE                   (_FLASH_BASE_NS)
@@ -90,7 +110,9 @@
 #define S_RAM_ALIAS(x)                      (S_RAM_ALIAS_BASE + (x))
 #define NS_RAM_ALIAS(x)                     (NS_RAM_ALIAS_BASE + (x))
 
-
+#if defined(MCUBOOT_PRIMARY_ONLY)
+#define LOADER_S_CODE_START                 (S_ROM_ALIAS(FLASH_AREA_LOADER_OFFSET))
+#endif
 /* Secure regions */
 #define S_IMAGE_PRIMARY_AREA_OFFSET         (S_IMAGE_PRIMARY_PARTITION_OFFSET + BL2_HEADER_SIZE)
 #define S_CODE_START                        (S_ROM_ALIAS(S_IMAGE_PRIMARY_AREA_OFFSET))

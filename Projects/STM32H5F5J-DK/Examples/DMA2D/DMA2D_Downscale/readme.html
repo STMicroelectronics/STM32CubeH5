@@ -19,7 +19,7 @@
 <body>
 <div class="row">
 <div class="col-sm-12 col-lg-8">
-<h2 id="dma2d_downscaling-example-description"><strong>DMA2D_Downscale Example Description</strong></h2>
+<h2 id="DMA2D_Downscale-example-description"><strong>DMA2D_Downscale Example Description</strong></h2>
 <ul>
 <li>This example demonstrates how to utilize the STM32 DMA2D peripheral to perform efficient image downscaling and blending operations using the HAL API.<br /></li>
 </ul>
@@ -28,8 +28,9 @@
 </blockquote>
 <ul>
 <li><p>At the start of the program, the HAL_Init() function resets all peripherals, initializes the Flash interface, and configures the system tick timer.<br /> The SystemClock_Config() function sets the system clock (SYSCLK) to 250 MHz to ensure optimal performance.<br /></p></li>
-<li><p>The example performs progressive downscaling of a foreground image (“LifeAugmented”) blended over a background image (ST logo).<br /> The downscaling ratios for horizontal and vertical dimensions are incremented in a loop from 1 to 4, demonstrating scaling effects.<br /></p></li>
-<li><p>The DMA2D peripheral is configured in M2M_BLEND mode with RGB888 color format and a fixed alpha value of 0x7F (50% transparency) applied to both layers.<br /> The scaled and blended image is continuously updated on the LCD in an infinite loop.<br /> Dynamically LTDC layer window size and position are adjusted to center the scaled image.</p></li>
+<li><p>The example performs foreground image ("LifeAugmented") scaling blended over a background image (ST logo).<br /> The scaling configuration iterates through a predefined ratio profile table (horizontal and vertical) in an infinite loop, creating a progressive downscale sequence that returns to full size when the sequence restarts.<br /></p></li>
+<li><p>Downscaling is configured through HAL_DMA2D_ConfigDownscaling() using fractional ratios (Ratio/RatioDiv) on both axes.<br /></p></li>
+<li><p>The DMA2D peripheral is configured in M2M_BLEND mode with RGB888 color format and a fixed alpha value of 0x7F (50% transparency) applied to both layers.<br /> The scaled and blended image is continuously updated on the LTDC in an infinite loop.<br /> LTDC layer window size and position are updated for each profile to match and center the scaled image.</p></li>
 <li><p>The RED LED toggles in case of any error detected during initialization or DMA2D operations.<br /></p></li>
 </ul>
 <h4 id="notes"><strong>Notes</strong></h4>
@@ -38,28 +39,28 @@
 <li><p>The SysTick time base must be configured to 1 millisecond for accurate HAL timing functions.<br /></p></li>
 </ol>
 <h3 id="keywords"><strong>Keywords</strong></h3>
-<p>Graphic, Display, DMA2D, LTDC, Blending, Downscaling, RGB888, Alpha Blending, Blender Scaling, Layers, Dynamic window</p>
+<p>Graphic, Display, DMA2D, LTDC, Blending, Downscaling, RGB888, Alpha Blending, Blender Scaling, Ratio/RatioDiv, Layers, Dynamic window</p>
 <h3 id="directory-contents"><strong>Directory Contents</strong></h3>
 <ul>
-<li>DMA2D/DMA2D_Downscaling/Inc/stm32h5f5j_discovery_conf.h BSP configuration file<br />
+<li>DMA2D/DMA2D_Downscale/Inc/stm32h5f5j_discovery_conf.h BSP configuration file<br />
 </li>
-<li>DMA2D/DMA2D_Downscaling/Inc/stm32h5xx_hal_conf.h HAL configuration file<br />
+<li>DMA2D/DMA2D_Downscale/Inc/stm32h5xx_hal_conf.h HAL configuration file<br />
 </li>
-<li>DMA2D/DMA2D_Downscaling/Inc/stm32h5xx_it.h Interrupt handlers header file<br />
+<li>DMA2D/DMA2D_Downscale/Inc/stm32h5xx_it.h Interrupt handlers header file<br />
 </li>
-<li>DMA2D/DMA2D_Downscaling/Inc/main.h Header for main.c module<br />
+<li>DMA2D/DMA2D_Downscale/Inc/main.h Header for main.c module<br />
 </li>
-<li>DMA2D/DMA2D_Downscaling/Inc/STLogo.h Background image (ST logo) in RGB888 format<br />
+<li>DMA2D/DMA2D_Downscale/Inc/STLogo.h Background image (ST logo) in RGB888 format<br />
 </li>
-<li>DMA2D/DMA2D_Downscaling/Inc/LifeAugmented.h Foreground image in RGB888 format<br />
+<li>DMA2D/DMA2D_Downscale/Inc/LifeAugmented.h Foreground image in RGB888 format<br />
 </li>
-<li>DMA2D/DMA2D_Downscaling/Src/stm32h5xx_it.c Interrupt handlers<br />
+<li>DMA2D/DMA2D_Downscale/Src/stm32h5xx_it.c Interrupt handlers<br />
 </li>
-<li>DMA2D/DMA2D_Downscaling/Src/stm32h5xx_hal_msp.c HAL MSP file<br />
+<li>DMA2D/DMA2D_Downscale/Src/stm32h5xx_hal_msp.c HAL MSP file<br />
 </li>
-<li>DMA2D/DMA2D_Downscaling/Src/main.c Main program<br />
+<li>DMA2D/DMA2D_Downscale/Src/main.c Main program<br />
 </li>
-<li>DMA2D/DMA2D_Downscaling/Src/system_stm32h5xx.c STM32H5xx system source file</li>
+<li>DMA2D/DMA2D_Downscale/Src/system_stm32h5xx.c STM32H5xx system source file</li>
 </ul>
 <h3 id="hardware-and-software-environment"><strong>Hardware and Software Environment</strong></h3>
 <ul>
@@ -74,7 +75,7 @@
 </li>
 <li>Build all source files and flash the binary to the target device.<br />
 </li>
-<li>Run the application to observe the foreground image being progressively downscaled and blended over the background image on the LCD.<br />
+<li>Run the application to observe the foreground image blended over the background while continuously cycling through predefined scaling ratio profiles on the LTDC.<br />
 </li>
 </ul>
 </div>

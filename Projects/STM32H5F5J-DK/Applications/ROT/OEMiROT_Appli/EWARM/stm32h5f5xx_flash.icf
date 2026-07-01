@@ -3,7 +3,7 @@
 /* IcfEditorFile="$TOOLKIT_DIR$\config\ide\IcfEditor\cortex_v1_0.xml" */
 /*-Specials-*/
 define exported symbol S_CODE_OFFSET =0x18000; /* This definition is updated automatically from OEMiROT_Boot postbuild*/
-define exported symbol S_CODE_SIZE = 0x6000; /* This definition is updated automatically from OEMiROT_Boot postbuild*/
+define exported symbol S_CODE_SIZE = 0x8000; /* This definition is updated automatically from OEMiROT_Boot postbuild*/
 
 define exported symbol IMAGE_HEADER_SIZE = 0x400; /* mcuboot header size */
 

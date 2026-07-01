@@ -555,6 +555,25 @@ static const struct sau_cfg_t region_sau_load_cfg[] =
    ================= */
 static const struct mpu_armv8m_region_cfg_t region_cfg_loader_s[] =
 {
+  /* Region 1: Allows execution of loader */
+#if defined(MCUBOOT_PRIMARY_ONLY)
+  {
+    1,
+    FLASH_BASE_S + FLASH_AREA_LOADER_OFFSET,
+    FLASH_BASE_S + FLASH_AREA_LOADER_OFFSET + LOADER_S_CODE_SIZE - 1,
+    MPU_ARMV8M_MAIR_ATTR_CODE_IDX,
+    MPU_ARMV8M_XN_EXEC_OK,
+    MPU_ARMV8M_AP_RO_PRIV_ONLY,
+    MPU_ARMV8M_SH_NONE,
+#ifdef FLOW_CONTROL
+    FLOW_STEP_MPU_L_EN_R1,
+    FLOW_CTRL_MPU_L_EN_R1,
+    FLOW_STEP_MPU_L_CH_R1,
+    FLOW_CTRL_MPU_L_CH_R1,
+#endif /* FLOW_CONTROL */
+  },
+#endif /* defined(MCUBOOT_PRIMARY_ONLY) */
+
   /* Region 7: Extend read access to STM32 descriptors and bootloader vector table */
   {
     7,
@@ -591,14 +610,13 @@ static void ram_init_cfg(void);
 static void gtzc_loader_cfg(void);
 static void gpio_loader_cfg(void);
 static void nvic_loader_cfg(void);
+#if !defined(MCUBOOT_PRIMARY_ONLY)
 static void hdpext_loader_cfg(void);
-#endif
+#endif /* !defined(MCUBOOT_PRIMARY_ONLY) */
+#endif /* defined(MCUBOOT_EXT_LOADER) */
 #if defined(MCUBOOT_EXT_LOADER)
 static void mpu_loader_cfg(void);
 static void sau_loader_cfg(void);
-#if defined(MCUBOOT_PRIMARY_ONLY)
-static void secure_internal_flash(uint32_t offset_start, uint32_t offset_end);
-#endif /* MCUBOOT_PRIMARY_ONLY */
 #endif /* MCUBOOT_EXT_LOADER */
 static void active_tamper(void);
 /**
@@ -633,8 +651,9 @@ void LL_SECU_UpdateLoaderRunTimeProtections(void)
   nvic_loader_cfg();
 
   /* extend HDPL2 HDP in user flash except DWL area */
+#if !defined(MCUBOOT_PRIMARY_ONLY)
   hdpext_loader_cfg();
-
+#endif /* !defined(MCUBOOT_PRIMARY_ONLY) */
 }
 #endif /* MCUBOOT_EXT_LOADER */
 /**
@@ -752,8 +771,14 @@ void LL_SECU_CheckStaticProtections(void)
   }
 
   /* Check bank2 secure flash protection */
+#if defined(MCUBOOT_PRIMARY_ONLY)
+  start = (FLASH_AREA_LOADER_BANK_OFFSET - 1) / PAGE_SIZE;
+  end = (FLASH_TOTAL_SIZE - 1) / PAGE_SIZE;
+#else
   start = 0;
   end = (S_IMAGE_PRIMARY_PARTITION_OFFSET  + FLASH_S_PARTITION_SIZE - 1) / PAGE_SIZE;
+#endif
+
   if (end > PAGE_MAX_NUMBER_IN_BANK)
   {
     end = end - (PAGE_MAX_NUMBER_IN_BANK + 1);
@@ -794,6 +819,17 @@ void LL_SECU_CheckStaticProtections(void)
     Error_Handler();
   }
 
+#ifdef MCUBOOT_PRIMARY_ONLY
+  /* Check flash write protection for secure loader */
+  if ((flash_option_bytes_bank2.WRPState != OB_WRPSTATE_ENABLE)
+      || (flash_option_bytes_bank2.WRPSector != BANK2_WRP_PROTECTION_MASK))
+  {
+    BOOT_LOG_INF("BANK 2 flash write protection group 0x%x: OB 0x%x",
+                 (int)val, (int)flash_option_bytes_bank2.WRPSector);
+    BOOT_LOG_ERR("Unexpected value for write protection ");
+    Error_Handler();
+  }
+#endif /* MCUBOOT_PRIMARY_ONLY */
 #endif /* OEMIROT_WRP_PROTECT_ENABLE */
 
 #ifdef  OEMIROT_HDP_PROTECT_ENABLE
@@ -989,7 +1025,7 @@ static void nvic_loader_cfg(void)
     }
   }
 }
-
+#if !defined(MCUBOOT_PRIMARY_ONLY)
 /**
   * @brief  configure HDP extension before jumping into loader
   * @param  None
@@ -1121,6 +1157,7 @@ static void hdpext_loader_cfg(void)
     }
   }
 }
+#endif /* !defined(MCUBOOT_PRIMARY_ONLY) */
 #endif /* MCUBOOT_EXT_LOADER */
 
 

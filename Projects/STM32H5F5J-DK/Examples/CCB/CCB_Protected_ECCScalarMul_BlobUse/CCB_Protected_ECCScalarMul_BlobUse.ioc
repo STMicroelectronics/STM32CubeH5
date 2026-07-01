@@ -63,9 +63,6 @@ ProjectManager.ComputerToolchain=false
 ProjectManager.CoupleFile=false
 ProjectManager.DeletePrevious=true
 ProjectManager.DeviceId=STM32H5F5LJHxQ
-<<<<<<< HEAD   (8baca0 doc: fix wrong licensense for projects v1.6.0)
-=======
->>>>>>> CHANGE (89bb3c fix(example): CCB examples cube mx diff fixed)
 ProjectManager.FreePins=false
 ProjectManager.FreePinsContext=
 ProjectManager.HalAssertFull=false

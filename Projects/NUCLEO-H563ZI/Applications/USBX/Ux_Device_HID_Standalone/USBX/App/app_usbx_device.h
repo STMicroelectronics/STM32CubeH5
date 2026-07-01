@@ -31,7 +31,6 @@ extern "C" {
 #include "ux_device_mouse.h"
 #include "ux_device_descriptors.h"
 #include "ux_dcd_stm32.h"
-
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
@@ -60,19 +59,20 @@ UINT MX_USBX_Device_Stack_DeInit(void);
 
 /* USER CODE BEGIN EFP */
 VOID USBX_Device_Process(VOID *arg);
+VOID VBUS_Detect_Process(ADC_HandleTypeDef* hadc);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define APP_QUEUE_SIZE 5
+
 /* USER CODE END PD */
 
 /* USER CODE BEGIN 1 */
-typedef enum
-{
-  STOP_USB_DEVICE = 1,
-  START_USB_DEVICE,
-} USB_MODE_STATE;
+typedef enum {
+  Device_VBUS_SENSING=0,
+  Device_Connection,
+  Device_Disconnection,
+}Device_State;
 /* USER CODE END 1 */
 
 #ifdef __cplusplus

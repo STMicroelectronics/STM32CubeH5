@@ -32,7 +32,8 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-
+#define VBUS_ATTACH_THRESHOLD  850u  /* Adjust after measuring actual divider output */
+#define VBUS_DETACH_THRESHOLD  100u   /* Hysteresis lower threshold */
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -45,10 +46,14 @@
 static ULONG hid_mouse_interface_number;
 static ULONG hid_mouse_configuration_number;
 static UX_SLAVE_CLASS_HID_PARAMETER hid_mouse_parameter;
-extern PCD_HandleTypeDef hpcd_USB_DRD_FS;
+extern PCD_HandleTypeDef           hpcd_USB_DRD_FS;
 
 /* USER CODE BEGIN PV */
 extern uint8_t User_Button_State;
+/* State machine for VBUS monitoring */
+__IO Device_State device_state = Device_VBUS_SENSING;
+uint32_t vbus_on = 1;
+uint32_t raw = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -80,8 +85,6 @@ UINT MX_USBX_Device_Init(VOID)
 
   /* USER CODE BEGIN MX_USBX_Device_Init 1 */
 
-  /* Start the USB device */
-  HAL_PCD_Start(&hpcd_USB_DRD_FS);
   /* USER CODE END MX_USBX_Device_Init 1 */
 
   /* USER CODE BEGIN MX_USBX_Device_Init 2 */
@@ -206,7 +209,7 @@ UINT MX_USBX_Device_Stack_DeInit(void)
     return UX_ERROR;
   }
 
-  /* Unregister hid class. */
+/* Unregister hid class. */
   if (ux_device_stack_class_unregister(_ux_system_slave_class_hid_name,
                                        ux_device_class_hid_entry) != UX_SUCCESS)
   {
@@ -239,6 +242,69 @@ VOID USBX_Device_Process(VOID *arg)
 {
   ux_device_stack_tasks_run();
   USBX_DEVICE_HID_MOUSE_Task();
+}
+
+/**
+  * @brief  VBUS state machine processor
+  *         Handles USB device attach/detach transitions based on ADC value from VBUS pin.
+  *         Starts or stops the USB device and triggers logical disconnect as needed.
+  * @param  hadc: Pointer to the ADC handle used to sample the VBUS sense input channel.
+  * @retval none
+  */
+VOID VBUS_Detect_Process(ADC_HandleTypeDef* hadc)
+{
+
+  /* Start a new ADC conversion and wait for it to complete */
+  HAL_ADC_Start(hadc);
+
+  if (HAL_ADC_PollForConversion(hadc, 10) == HAL_OK)
+  {
+     raw = HAL_ADC_GetValue(hadc);
+  }
+
+  switch (device_state)
+  {
+  case Device_VBUS_SENSING:
+    if (raw >= VBUS_ATTACH_THRESHOLD)
+    {
+      device_state = Device_Connection;
+    }
+    else if (raw <= VBUS_DETACH_THRESHOLD)
+    {
+      device_state = Device_Disconnection;
+    }
+    break;
+
+  case Device_Connection:
+    if (vbus_on == 1)
+    {
+      if (HAL_PCD_Start(&hpcd_USB_DRD_FS) != HAL_OK)
+      {
+        Error_Handler();
+      }
+      vbus_on = 0;
+    }
+    device_state = Device_VBUS_SENSING;
+    break;
+
+  case Device_Disconnection:
+    if (vbus_on == 0)
+    {
+      ux_device_stack_disconnect();
+
+      if (HAL_PCD_Stop(&hpcd_USB_DRD_FS) != HAL_OK)
+      {
+        Error_Handler();
+      }
+      vbus_on = 1;
+    }
+    device_state = Device_VBUS_SENSING;
+    break;
+
+  default:
+    device_state = Device_VBUS_SENSING;
+    break;
+  }
 }
 
 /**

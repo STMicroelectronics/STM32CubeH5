@@ -1,0 +1,172 @@
+project:
+  packs:
+    - pack: ARM::CMSIS@6.3.0
+    - pack: Keil::STM32H5xx_DFP@2.3.0-B01
+    - pack: ARM::CMSIS-NN@^4.0.0
+    - pack: ARM::CMSIS-DSP@^1.10.1
+  setups:
+    - setup: Options for NUCLEO_H553ZG_Templates_TrustZoneDisabled
+      processor:
+        fpu: sp
+        trustzone: "off"
+      add-path:
+        - ../Inc
+        - ../../../../../Drivers/CMSIS/Include
+        - ../../../../../Drivers/CMSIS/Device/ST/STM32H5xx/Include
+        - ../../../../../Drivers/STM32H5xx_HAL_Driver/Inc
+        - ../../../../../Drivers/BSP/STM32H5xx_Nucleo
+      debug: "on"
+      define:
+        - STM32H553xx
+        - USE_HAL_DRIVER
+      misc:
+        - C:
+            - -std=c11
+          C-CPP:
+            - -fno-rtti
+            - -funsigned-char
+            - -fshort-enums
+            - -fshort-wchar
+            - -ffunction-sections
+            - -Wno-packed
+            - -Wno-missing-variable-declarations
+            - -Wno-missing-prototypes
+            - -Wno-missing-noreturn
+            - -Wno-sign-conversion
+            - -Wno-nonportable-include-path
+            - -Wno-reserved-id-macro
+            - -Wno-unused-macros
+            - -Wno-documentation-unknown-command
+            - -Wno-documentation
+            - -Wno-license-management
+            - -Wno-parentheses-equality
+          CPP:
+            - -xc++
+            - -std=c++11
+            - -fno-exceptions
+          ASM:
+            - -masm=auto
+          Link:
+            - --map
+            - --load_addr_map_info
+            - --xref
+            - --callgraph
+            - --symbols
+            - --info sizes
+            - --info totals
+            - --info unused
+            - --info veneers
+            - --strict
+            - --summary_stderr
+            - --info summarysizes
+  linker:
+    - script: Project_NUCLEO_H553ZG_Templates_TrustZoneDisabled.sct
+  groups:
+    - group: Doc
+      files:
+        - file: ../README.md
+    - group: Drivers/CMSIS
+      files:
+        - file: ../Src/system_stm32h5xx.c
+    - group: Drivers/STM32H5xx_HAL_Driver
+      files:
+        - file: ../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal.c
+        - file: ../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_adc.c
+        - file: ../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_adc_ex.c
+        - file: ../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_cec.c
+        - file: ../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_comp.c
+        - file: ../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_cordic.c
+        - file: ../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_cortex.c
+        - file: ../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_crc.c
+        - file: ../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_crc_ex.c
+        - file: ../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_dac.c
+        - file: ../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_dac_ex.c
+        - file: ../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_dcache.c
+        - file: ../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_dcmi.c
+        - file: ../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_dma.c
+        - file: ../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_dma2d.c
+        - file: ../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_dma_ex.c
+        - file: ../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_dts.c
+        - file: ../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_eth.c
+        - file: ../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_eth_ex.c
+        - file: ../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_exti.c
+        - file: ../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_fdcan.c
+        - file: ../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_flash.c
+        - file: ../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_flash_ex.c
+        - file: ../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_fmac.c
+        - file: ../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_gfxtim.c
+        - file: ../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_gpio.c
+        - file: ../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_gtzc.c
+        - file: ../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_hash.c
+        - file: ../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_hcd.c
+        - file: ../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_i2c.c
+        - file: ../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_i2c_ex.c
+        - file: ../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_i2s.c
+        - file: ../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_i2s_ex.c
+        - file: ../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_i3c.c
+        - file: ../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_icache.c
+        - file: ../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_irda.c
+        - file: ../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_iwdg.c
+        - file: ../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_jpeg.c
+        - file: ../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_lptim.c
+        - file: ../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_ltdc.c
+        - file: ../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_ltdc_ex.c
+        - file: ../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_mdf.c
+        - file: ../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_mmc.c
+        - file: ../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_mmc_ex.c
+        - file: ../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_nand.c
+        - file: ../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_nor.c
+        - file: ../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_opamp.c
+        - file: ../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_opamp_ex.c
+        - file: ../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pcd.c
+        - file: ../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pcd_ex.c
+        - file: ../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pka.c
+        - file: ../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_play.c
+        - file: ../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pssi.c
+        - file: ../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pwr.c
+        - file: ../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pwr_ex.c
+        - file: ../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_ramcfg.c
+        - file: ../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rcc.c
+        - file: ../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rcc_ex.c
+        - file: ../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rng.c
+        - file: ../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rng_ex.c
+        - file: ../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rtc.c
+        - file: ../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rtc_ex.c
+        - file: ../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_sai.c
+        - file: ../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_sai_ex.c
+        - file: ../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_sd.c
+        - file: ../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_sd_ex.c
+        - file: ../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_sdio.c
+        - file: ../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_sdram.c
+        - file: ../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_smartcard.c
+        - file: ../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_smartcard_ex.c
+        - file: ../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_smbus.c
+        - file: ../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_smbus_ex.c
+        - file: ../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_spi.c
+        - file: ../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_spi_ex.c
+        - file: ../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_sram.c
+        - file: ../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_tim.c
+        - file: ../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_tim_ex.c
+        - file: ../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_uart.c
+        - file: ../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_uart_ex.c
+        - file: ../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_usart.c
+        - file: ../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_usart_ex.c
+        - file: ../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_wwdg.c
+        - file: ../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_xspi.c
+        - file: ../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_ll_dlyb.c
+        - file: ../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_ll_fmc.c
+        - file: ../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_ll_sdmmc.c
+        - file: ../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_ll_usb.c
+    - group: Example/MDK-ARM
+      files:
+        - file: startup_stm32h553xx.s
+    - group: Example/User
+      files:
+        - file: ../Src/main.c
+        - file: ../Src/stm32h5xx_hal_msp.c
+        - file: ../Src/stm32h5xx_it.c
+    - group: Drivers/BSP/NUCLEO-H553ZG
+      files:
+        - file: ../../../../../Drivers/BSP/STM32H5xx_Nucleo/stm32h5xx_nucleo.c
+  components:
+    - component: ARM::CMSIS:CORE

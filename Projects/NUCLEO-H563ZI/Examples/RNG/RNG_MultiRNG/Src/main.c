@@ -138,7 +138,14 @@ int main(void)
       if (HAL_RNG_GenerateRandomNumber(&hrng, &aRandom32bit[counter]) != HAL_OK)
       {
         /* Random number generation error */
-        Error_Handler();
+        if(HAL_RNG_GetError(&hrng) != HAL_RNG_ERROR_SEED)
+        {
+          Error_Handler();
+        }
+        if (HAL_RNGEx_RecoverSeedError(&hrng) != HAL_OK)
+        {
+          Error_Handler();
+        }
       }
     }
     /* USER CODE END WHILE */
@@ -297,6 +304,7 @@ void HAL_GPIO_EXTI_Rising_Callback(uint16_t GPIO_Pin)
 
 /**
   * @brief  This function is executed in case of error occurrence.
+  * @param  None
   * @retval None
   */
 void Error_Handler(void)

@@ -185,6 +185,17 @@ int main(int argc, char **argv)
   /* Get boot cycles */
   end = DWT->CYCCNT;
 
+ /*
+  * When OEMIROT_FAST_WAKE_UP is enabled, the OEMiRoT relies on the hardware SBF (standby flag)
+  * to skip firmware image verification. The SBF flag remains set when the application is entered
+  * after a wake-up from standby mode. This allows the application to handle its own software
+  * context restoration. To maintain a secure execution environment, the user application must
+  * clear the SBF flag after it is processed.
+  *
+  * In this example, the SBF flag is simply cleared without any processing.
+  */
+  __HAL_PWR_CLEAR_FLAG(PWR_FLAG_SBF);
+
   /*  set example to const : this const changes in binary without rebuild */
   pUserAppId = (uint8_t *)&UserAppId;
 
@@ -406,32 +417,22 @@ void FW_APP_Run(void)
 void LOADER_Run(void)
 {
   printf("\r\n  Start config before jumping to the bootloader");
-  SECURE_loader_cfg();
 
   for (int i = 0; i < 16; i++)
   {
-  /*SRAM1 -> MPCBB1*/
-  GTZC_MPCBB1_NS->SECCFGR[i] = 0;
+    /*SRAM1 -> MPCBB1*/
+    GTZC_MPCBB1_NS->SECCFGR[i] = 0;
   }
-  uint32_t boot_address = *(uint32_t *)(BOOTLOADER_BASE_NS + 4U);
-
-  /*Increment HDPL to HDPL=3*/
-  SET_BIT(SBS->HDPLCR,  SBS_HDPLCR_INCR_HDPL);
 
   /*  change stack limit  */
   __set_MSPLIM(0);
-
-  __set_MSP((*(uint32_t *)BOOTLOADER_BASE_NS));
-
-  SCB->VTOR = BOOTLOADER_BASE_NS;
 
   printf("\r\n  Standard Bootloader started");
   printf("\r\n  If you want to connect through USART interface, disconnect your TeraTerm");
   printf("\r\n  Start download with STM32CubeProgrammer through supported interfaces (USART/SPI/I2C/USB)\r\n");
   printf("\r\n");
 
-  __asm volatile("movs r0, %0\n"
-               "bx r0\n" :: "r"(boot_address)); /*jump to non-secure address*/
+  SECURE_loader_run();
 }
 
 #if  !defined(MCUBOOT_OVERWRITE_ONLY)

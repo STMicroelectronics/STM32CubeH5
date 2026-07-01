@@ -34,7 +34,6 @@ fi
 echo "=================================="
 echo ">>> Running $0 $@"
 echo ""
-
 # arg1 is the security type (nonsecure, secure)
 signing=$1
 # arg2 is the config type (Debug, Release)
@@ -62,6 +61,13 @@ error()
 current_log_file="$project_dir/postbuild.log"
 echo "" > $current_log_file
 
+#=================================================
+#Variables updated by OEMiROT_Boot postbuild
+#=================================================
+app_image_number=2
+image_s_size=0x6000
+primary_only=0
+
 #========================================================================================
 #image binary files
 #========================================================================================
@@ -88,6 +94,8 @@ ns_data_init_xml="$provisioningdir/OEMiROT/Images/OEMiROT_NS_Data_Init_Image.xml
 bin_path_xml_field="../../../Applications/ROT/OEMiROT_Appli_TrustZone/Binary"
 fw_in_bin_xml_field="Firmware binary input file"
 fw_out_bin_xml_field="Image output file"
+
+if  [ $primary_only -eq 0 ]; then
 ns_app_bin_xml_field="$bin_path_xml_field/rot_tz_ns_app.bin"
 s_app_bin_xml_field="$bin_path_xml_field/rot_tz_s_app.bin"
 ns_app_enc_sign_hex_xml_field="$bin_path_xml_field/rot_tz_ns_app_enc_sign.hex"
@@ -98,33 +106,49 @@ s_data_enc_sign_hex_xml_field="$provisioningdir/OEMiROT/Binary/s_data_enc_sign.h
 ns_data_enc_sign_hex_xml_field="$provisioningdir/OEMiROT/Binary/ns_data_enc_sign.hex"
 s_data_init_sign_hex_xml_field="$provisioningdir/OEMiROT/Binary/s_data_init_sign.hex"
 ns_data_init_sign_hex_xml_field="$provisioningdir/OEMiROT/Binary/ns_data_init_sign.hex"
+else
+ns_app_bin_xml_field="$bin_path_xml_field/rot_tz_ns_app.bin"
+s_app_bin_xml_field="$bin_path_xml_field/rot_tz_s_app.bin"
+ns_app_enc_sign_hex_xml_field="$bin_path_xml_field/rot_tz_ns_app_enc_sign.bin"
+s_app_enc_sign_hex_xml_field="$bin_path_xml_field/rot_tz_s_app_enc_sign.bin"
+s_app_init_sign_hex_xml_field="$bin_path_xml_field/rot_tz_s_app_init_sign.bin"
+ns_app_init_sign_hex_xml_field="$bin_path_xml_field/rot_tz_ns_app_init_sign.bin"
+s_data_enc_sign_hex_xml_field="$provisioningdir/OEMiROT/Binary/s_data_enc_sign.bin"
+ns_data_enc_sign_hex_xml_field="$provisioningdir/OEMiROT/Binary/ns_data_enc_sign.bin"
+s_data_init_sign_hex_xml_field="$provisioningdir/OEMiROT/Binary/s_data_init_sign.bin"
+ns_data_init_sign_hex_xml_field="$provisioningdir/OEMiROT/Binary/ns_data_init_sign.bin"
+fi
 
 #Make sure we have a Binary sub-folder in UserApp folder
 if [ ! -e $bin_path_xml_field ]; then
 mkdir $bin_path_xml_field
 fi
 
-#=================================================
-#Variables updated by OEMiROT_Boot postbuild
-#=================================================
-app_image_number=2
-image_s_size=0x6000
-
-# Check if Python is installed
+#=================================================================================================
+# Check if Python V3 is installed
+#-------------------------------------------------------------------------------------------------
 python3 --version >/dev/null 2>&1
 if [ $? -ne 0 ]; then
   python --version >/dev/null 2>&1
   if [ $? -ne 0 ]; then
-  echo "Python installation missing. Refer to Utilities/PC_Software/ROT_AppliConfig/README.md"
-  exit 1
+    echo "Python installation missing. Refer to Utilities/PC_Software/ROT_AppliConfig/README.md"
+    exit 1
   fi
   python="python "
 else
   python="python3 "
 fi
+#=================================================================================================
 
 # Environment variable for AppliCfg
 applicfg="$cube_fw_path/Utilities/PC_Software/ROT_AppliConfig/AppliCfg.py"
+
+# Set "Firmware execution area offset" to 0x0 in all xml files in order to generate enc.bin that can be upgraded by YMODEM
+# to be used in case of primary only
+if  [ $primary_only -eq 1 ]; then
+  echo "Not supported in ${OS}!"
+  exit 1
+fi
 
 echo "Postbuild $signing image" >> $current_log_file 2>&1
 

@@ -425,6 +425,7 @@ void HAL_RCCEx_CRS_ErrorCallback(uint32_t Error)
 
 /**
   * @brief  This function is executed in case of error occurrence.
+  * @param  None
   * @retval None
   */
 void Error_Handler(void)

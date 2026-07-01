@@ -46,6 +46,7 @@ CRYP_HandleTypeDef hcryp;
 uint32_t pInitVectSAES[4] = {0x00010203,0x04050607,0x08090A0B,0x0C0D0E0F};
 
 /* USER CODE BEGIN PV */
+CRYP_HandleTypeDef hcryp1;
 /* The size of the plaintext is in words */
 #define PLAINTEXT_SIZE    16 /* Plaintext size in Words */
 
@@ -153,20 +154,20 @@ int main(void)
   application for any AES operation */
 
   /* Configure the CRYP peripheral */
-  hcryp.Instance = AES;
-  hcryp.Init.DataType  = CRYP_NO_SWAP;
-  hcryp.Init.KeySize   = CRYP_KEYSIZE_256B;
-  hcryp.Init.KeyMode      = CRYP_KEYMODE_SHARED;
-  hcryp.Init.Algorithm = CRYP_AES_ECB;
+  hcryp1.Instance = AES;
+  hcryp1.Init.DataType  = CRYP_NO_SWAP;
+  hcryp1.Init.KeySize   = CRYP_KEYSIZE_256B;
+  hcryp1.Init.KeyMode      = CRYP_KEYMODE_SHARED;
+  hcryp1.Init.Algorithm = CRYP_AES_ECB;
 
   /* Initialise CRYP */
-  if (HAL_CRYP_Init(&hcryp) != HAL_OK)
+  if (HAL_CRYP_Init(&hcryp1) != HAL_OK)
   {
     /* Initialization Error */
     Error_Handler();
   }
   /* AES ECB Encryption */
-  if (HAL_CRYP_Encrypt(&hcryp, Plaintext, 16, EncryptedText, TIMEOUT_VALUE) != HAL_OK)
+  if (HAL_CRYP_Encrypt(&hcryp1, Plaintext, 16, EncryptedText, TIMEOUT_VALUE) != HAL_OK)
   {
     /* Processing Error */
     Error_Handler();
@@ -179,7 +180,7 @@ int main(void)
   }
 
   /* AES ECB Decryption */
-  if (HAL_CRYP_Decrypt(&hcryp, EncryptedText, 16, DecryptedText, TIMEOUT_VALUE) != HAL_OK)
+  if (HAL_CRYP_Decrypt(&hcryp1, EncryptedText, 16, DecryptedText, TIMEOUT_VALUE) != HAL_OK)
   {
     /* Processing Error */
     Error_Handler();
@@ -377,6 +378,7 @@ static void MX_GPIO_Init(void)
 
 /**
   * @brief  This function is executed in case of error occurrence.
+  * @param None
   * @retval None
   */
 void Error_Handler(void)

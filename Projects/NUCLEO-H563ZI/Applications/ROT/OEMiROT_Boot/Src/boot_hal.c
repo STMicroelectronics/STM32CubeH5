@@ -112,6 +112,7 @@ void getDescriptorAdd(void);
   */
 void boot_platform_noimage(void)
 {
+#if !defined(MCUBOOT_PRIMARY_ONLY)
   uint32_t rsslib_sec_jump_HDP_lvl3ns;
 
   BOOT_LOG_INF("Jumping to bootloader");
@@ -119,7 +120,7 @@ void boot_platform_noimage(void)
 
   /* Init RSS jump function descriptor */
   rsslib_sec_jump_HDP_lvl3ns = (uint32_t)(Rss_lib_p->S.JumpHDPLvl3NS);
-
+#endif /* !defined(MCUBOOT_PRIMARY_ONLY) */
   /* Check Flow control */
   FLOW_CONTROL_CHECK(uFlowProtectValue, FLOW_CTRL_STAGE_2);
   uFlowStage = FLOW_STAGE_CFG;
@@ -138,10 +139,31 @@ void boot_platform_noimage(void)
 
   /* Check Flow control */
   FLOW_CONTROL_CHECK(uFlowProtectValue, FLOW_CTRL_STAGE_4_L);
-
+#if !defined(MCUBOOT_PRIMARY_ONLY)
   /* Jump into BL through RSS */
   /* last parameter (0U) not used in RSSLIB_Sec_JumpHDPL3NS(BOOTLOADER_BASE_NS); */
   boot_jump_to_RSS((uint32_t)&boot_jump_to_RSS, rsslib_sec_jump_HDP_lvl3ns, (uint32_t) BOOTLOADER_BASE_NS, 0U);
+
+#else
+  uint32_t rsslib_sec_jump_HDP_lvl3;
+  static struct boot_arm_vector_table *vt = (struct boot_arm_vector_table *)LOADER_S_CODE_START;
+  /* Init RSS jump function descriptor */
+  rsslib_sec_jump_HDP_lvl3 = (uint32_t)(Rss_lib_p->S.JumpHDPLvl3);
+
+  /* set the secure vector */
+  SCB->VTOR = LOADER_S_CODE_START;
+
+  /*  change stack limit  */
+  __set_MSPLIM(0);
+  /* Restore the Main Stack Pointer Limit register's reset value
+   * before passing execution to runtime firmware to make the
+   * bootloader transparent to it.
+  */
+  __set_MSP(vt->msp);
+  __DSB();
+  __ISB();
+  boot_jump_to_RSS((uint32_t)&boot_jump_to_RSS, rsslib_sec_jump_HDP_lvl3, (uint32_t) vt, 1U);
+#endif /* defined(MCUBOOT_PRIMARY_ONLY) */
 
   /* Avoid compiler to pop registers after having changed MSP */
 #if !defined(__ICCARM__)

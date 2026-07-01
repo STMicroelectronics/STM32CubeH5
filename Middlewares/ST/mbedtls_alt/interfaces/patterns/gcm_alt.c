@@ -199,7 +199,9 @@ int mbedtls_gcm_setkey(mbedtls_gcm_context *ctx,
   ctx->hcryp_gcm.Init.pKey = ctx->gcm_key;
   ctx->hcryp_gcm.Init.DataWidthUnit = CRYP_DATAWIDTHUNIT_BYTE;
   ctx->hcryp_gcm.Init.DataType = CRYP_BYTE_SWAP;
+#if defined (SAES)
   ctx->hcryp_gcm.Init.KeyMode = CRYP_KEYMODE_NORMAL;
+#endif
 #if defined(HW_CRYPTO_DPA_GCM) || defined (HW_CRYPTO_DPA_CTR_FOR_GCM)
   ctx->hcryp_gcm.Instance = SAES;
 #if defined(HW_CRYPTO_DPA_CTR_FOR_GCM)
@@ -342,6 +344,7 @@ int mbedtls_gcm_starts(mbedtls_gcm_context *ctx,
 
   memset(ctx->y, 0x00, sizeof(ctx->y));
   memset(ctx->buf, 0x00, sizeof(ctx->buf));
+  ctx->remain_len = 0U;
 
   /* HW implementation restrict support to the length of 96 bits */
   if (IV_LENGTH != iv_len)
@@ -498,16 +501,21 @@ int mbedtls_gcm_update(mbedtls_gcm_context *ctx,
   uint16_t wordnb = 0;          /* number of four data words */
   uint16_t wordlen = 0;         /* length (in bytes) of four data words */
   uint16_t in_datalen = 0;  /* length (in bytes) of processed data within input buffer */
-  __ALIGN_BEGIN unsigned char work_buf[16] __ALIGN_END;
-  uint16_t work_buf_len = 0;
+  uint8_t *p_input = (uint8_t *)input;
+  uint8_t *p_output = (uint8_t *)output;
 #endif /* HW_CRYPTO_DPA_CTR_FOR_GCM */
   size_t tmp_lenght = 0;
-
+  int remain_bytes = 0;
   tmp_lenght = ctx->len;
 
   if ((output > input) && ((size_t)(output - input) < input_length))
   {
     return MBEDTLS_ERR_GCM_BAD_INPUT;
+  }
+
+  if (output_size < (input_length + ctx->remain_len) - ((input_length + ctx->remain_len)%16U))
+  {
+    return MBEDTLS_ERR_GCM_BUFFER_TOO_SMALL;
   }
 
   /* Total length is restricted to 2^39 - 256 bits, ie 2^36 - 2^5 bytes
@@ -567,89 +575,104 @@ int mbedtls_gcm_update(mbedtls_gcm_context *ctx,
     out_p += use_len;
   }
 #else
+
   /* Calculate number of four data words */
-  wordnb = input_length / 16U;
+  wordnb = (input_length + ctx->remain_len) / 16U;
 
   /* if available, process them */
   if (wordnb)
   {
-    /* Convert in bytes */
-    wordlen = wordnb * 16U;
-
-    if (ctx->mode == MBEDTLS_GCM_DECRYPT)
+    if (ctx->remain_len)
     {
-      if (HAL_CRYP_Decrypt(&ctx->hcryp_gcm,
-                           (uint32_t *)input,
-                           wordlen,
-                           (uint32_t *)output,
-                           ST_GCM_TIMEOUT) != HAL_OK)
+      memcpy((ctx->buf + ctx->remain_len), input, (16U - ctx->remain_len));
+      if (ctx->mode == MBEDTLS_GCM_DECRYPT)
       {
-        return MBEDTLS_ERR_PLATFORM_HW_ACCEL_FAILED;
+        if (HAL_CRYP_Decrypt(&ctx->hcryp_gcm,
+                             (uint32_t *)ctx->buf,
+                             16U,
+                             (uint32_t *)(output),
+                             ST_GCM_TIMEOUT) != HAL_OK)
+        {
+          return MBEDTLS_ERR_PLATFORM_HW_ACCEL_FAILED;
+        }
       }
-    }
-    else
-    {
-      if (HAL_CRYP_Encrypt(&ctx->hcryp_gcm,
-                           (uint32_t *)input,
-                           wordlen,
-                           (uint32_t *)output,
-                           ST_GCM_TIMEOUT) != HAL_OK)
+      else
       {
-        return MBEDTLS_ERR_PLATFORM_HW_ACCEL_FAILED;
+        if (HAL_CRYP_Encrypt(&ctx->hcryp_gcm,
+                             (uint32_t *)ctx->buf,
+                             16U,
+                             (uint32_t *)(output),
+                             ST_GCM_TIMEOUT) != HAL_OK)
+        {
+          return MBEDTLS_ERR_PLATFORM_HW_ACCEL_FAILED;
+        } 
       }
+      
+      p_input += (16U - ctx->remain_len);
+      p_output += 16U;
+      /* update total length */
+      ctx->len += 16U;
+      in_datalen = ctx->remain_len + input_length;
+      wordnb -= 1U;
+      memset(ctx->buf, 0, 16U);
+      ctx->remain_len = 0;
     }
 
+    if (wordnb)
+    {
+      /* Convert in bytes */
+      wordlen = wordnb * 16U;
+      if (ctx->mode == MBEDTLS_GCM_DECRYPT)
+      {
+        if (HAL_CRYP_Decrypt(&ctx->hcryp_gcm,
+                             (uint32_t *)p_input,
+                             wordlen,
+                             (uint32_t *)(p_output),
+                             ST_GCM_TIMEOUT) != HAL_OK)
+        {
+          return MBEDTLS_ERR_PLATFORM_HW_ACCEL_FAILED;
+        }
+      }
+      else
+      {
+        if (HAL_CRYP_Encrypt(&ctx->hcryp_gcm,
+                             (uint32_t *)p_input,
+                             wordlen,
+                             (uint32_t *)(p_output),
+                             ST_GCM_TIMEOUT) != HAL_OK)
+        {
+          return MBEDTLS_ERR_PLATFORM_HW_ACCEL_FAILED;
+        }
+      }
+
+    p_input += wordlen;
     /* update total length */
     ctx->len += wordlen;
 
     in_datalen += wordlen;
-
-    if (in_datalen < input_length)
-    {
-      /* Process them into a last four data word */
-      goto last_data_word;
     }
-    else
+
+    /* remain_bytes for multiple part */
+    remain_bytes = in_datalen % 16U;
+    if (remain_bytes > 0)
     {
-      goto exit;
+      memcpy(ctx->buf, p_input, remain_bytes); 
+      ctx->remain_len = remain_bytes;
     }
-  }
-
-last_data_word:
-  /* Calculate remaining bytes */
-  /* Can have a null length when payload is omitted (GMAC) */
-  work_buf_len = (uint16_t)((input_length - in_datalen) % 16U);
-
-  memset(work_buf, 0, sizeof(work_buf));
-  memcpy(work_buf, input + in_datalen, work_buf_len);
-
-  if (ctx->mode == MBEDTLS_GCM_DECRYPT)
-  {
-    if (HAL_CRYP_Decrypt(&ctx->hcryp_gcm,
-                         (uint32_t *)work_buf,
-                         work_buf_len,
-                         (uint32_t *)(output + in_datalen),
-                         ST_GCM_TIMEOUT) != HAL_OK)
+    
+    /* remain_bytes for single part */
+    remain_bytes = input_length - in_datalen;
+    if (remain_bytes > 0)
     {
-      return MBEDTLS_ERR_PLATFORM_HW_ACCEL_FAILED;
+      memcpy(ctx->buf, p_input, remain_bytes); 
+      ctx->remain_len = remain_bytes;
     }
   }
   else
   {
-    if (HAL_CRYP_Encrypt(&ctx->hcryp_gcm,
-                         (uint32_t *)work_buf,
-                         work_buf_len,
-                         (uint32_t *)(output + in_datalen),
-                         ST_GCM_TIMEOUT) != HAL_OK)
-    {
-      return MBEDTLS_ERR_PLATFORM_HW_ACCEL_FAILED;
-    }
+    memcpy(ctx->buf + ctx->remain_len, p_input, input_length);
+    ctx->remain_len += input_length;
   }
-
-  /* update total length */
-  ctx->len += work_buf_len;
-
-exit:
 
 #endif /* HW_CRYPTO_DPA_CTR_FOR_GCM */
 
@@ -714,11 +737,46 @@ int mbedtls_gcm_finish(mbedtls_gcm_context *ctx,
     return MBEDTLS_ERR_PLATFORM_FEATURE_UNSUPPORTED;
   }
 
+  if ((output_size == 0U) && (ctx->remain_len != 0U))
+  {
+    return MBEDTLS_ERR_GCM_BAD_INPUT;
+  }
+
   /* allow multi-context of CRYP use: restore context */
   ctx->hcryp_gcm.Instance->CR = ctx->ctx_save_cr;
 
   /* Tag has a variable length */
   memset(mac, 0, sizeof(mac));
+
+  /* add padding zeros to last_data_word */
+  memset((ctx->buf + ctx->remain_len), 0U, 16U - ctx->remain_len);
+
+  if (ctx->mode == MBEDTLS_GCM_DECRYPT)
+  {
+    if (HAL_CRYP_Decrypt(&ctx->hcryp_gcm,
+                         (uint32_t *)ctx->buf,
+                         ctx->remain_len,
+                         (uint32_t *)(output),
+                         ST_GCM_TIMEOUT) != HAL_OK)
+    {
+      return MBEDTLS_ERR_PLATFORM_HW_ACCEL_FAILED;
+    }
+  }
+  else
+  {
+    if (HAL_CRYP_Encrypt(&ctx->hcryp_gcm,
+                         (uint32_t *)ctx->buf,
+                         ctx->remain_len,
+                         (uint32_t *)(output),
+                         ST_GCM_TIMEOUT) != HAL_OK)
+    {
+      return MBEDTLS_ERR_PLATFORM_HW_ACCEL_FAILED;
+    }
+  }
+
+  /* update total length */
+  ctx->len += ctx->remain_len;
+  *output_length = ctx->remain_len;
 
   /* Generate the authentication TAG */
   if (HAL_CRYPEx_AESGCM_GenerateAuthTAG(&ctx->hcryp_gcm,
@@ -770,7 +828,7 @@ int mbedtls_gcm_crypt_and_tag(mbedtls_gcm_context *ctx,
     return ret;
   }
 
-  if ((ret = mbedtls_gcm_finish(ctx, NULL, 0, &olen, tag, tag_len)) != 0)
+  if ((ret = mbedtls_gcm_finish(ctx, (output + ctx->len), ctx->remain_len, &olen, tag, tag_len)) != 0)
   {
     return ret;
   }

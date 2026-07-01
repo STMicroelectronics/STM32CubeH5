@@ -49,10 +49,10 @@ extern "C" {
   */
 typedef struct mbedtls_gcm_context
 {
-  uint32_t gcm_key[8];                  /* Encryption/Decryption key           */
-  CRYP_HandleTypeDef hcryp_gcm;         /* HW driver handle                    */
-  uint32_t ctx_save_cr;                 /* Saved HW context for multi-instance */
-  uint64_t len;                         /* total length of the encrypted data. */
+  uint32_t gcm_key[8];                  /*! Encryption/Decryption key           */
+  CRYP_HandleTypeDef hcryp_gcm;         /*! HW driver handle                    */
+  uint32_t ctx_save_cr;                 /*! Saved HW context for multi-instance */
+  uint64_t len;                         /*! total length of the encrypted data. */
 #if defined(HW_CRYPTO_DPA_GCM) || defined(HW_CRYPTO_DPA_CTR_FOR_GCM)
   uint64_t HL[16];                   /*!< Precalculated HTable low. */
   uint64_t HH[16];                   /*!< Precalculated HTable high. */
@@ -61,6 +61,7 @@ typedef struct mbedtls_gcm_context
 #endif /* HW_CRYPTO_DPA_GCM || HW_CRYPTO_DPA_CTR_FOR_GCM */
   unsigned char y[16];               /*!< The Y working value. */
   unsigned char buf[16];             /*!< The buf working value. */
+  uint64_t remain_len;           /*! remain length of the non encrypted data. */
   int mode;                             /* The operation to perform:
                                                #MBEDTLS_GCM_ENCRYPT or
                                                #MBEDTLS_GCM_DECRYPT.             */

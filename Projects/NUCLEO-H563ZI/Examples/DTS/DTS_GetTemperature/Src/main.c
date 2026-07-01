@@ -208,7 +208,7 @@ static void MX_DTS_Init(void)
   hdts.Init.QuickMeasure = DTS_QUICKMEAS_DISABLE;
   hdts.Init.RefClock = DTS_REFCLKSEL_PCLK;
   hdts.Init.TriggerInput = DTS_TRIGGER_HW_NONE;
-  hdts.Init.SamplingTime = DTS_SMP_TIME_4_CYCLE;
+  hdts.Init.SamplingTime = DTS_SMP_TIME_15_CYCLE;
   hdts.Init.Divider = 75;
   hdts.Init.HighThreshold = 0x0;
   hdts.Init.LowThreshold = 0x0;
@@ -273,6 +273,7 @@ static void MX_GPIO_Init(void)
 
 /**
   * @brief  This function is executed in case of error occurrence.
+  * @param  None
   * @retval None
   */
 void Error_Handler(void)

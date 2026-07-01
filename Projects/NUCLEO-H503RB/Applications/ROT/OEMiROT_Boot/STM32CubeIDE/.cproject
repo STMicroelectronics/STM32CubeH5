@@ -41,7 +41,6 @@
 									<listOptionValue builtIn="false" value="STM32H503xx"/>
 									<listOptionValue builtIn="false" value="USE_HAL_DRIVER"/>
 									<listOptionValue builtIn="false" value="NDEBUG"/>
-									<listOptionValue builtIn="false" value="MCUBOOT_TARGET_CONFIG=&lt;flash_layout.h&gt;"/>
 									<listOptionValue builtIn="false" value="MBEDTLS_CONFIG_FILE=&lt;mbedtls_config.h&gt;"/>
 									<listOptionValue builtIn="false" value="MCUBOOT_DOUBLE_SIGN_VERIF"/>
 									<listOptionValue builtIn="false" value="FLOW_CONTROL"/>
@@ -142,7 +141,6 @@
 									<listOptionValue builtIn="false" value="STM32H503xx"/>
 									<listOptionValue builtIn="false" value="USE_HAL_DRIVER"/>
 									<listOptionValue builtIn="false" value="NDEBUG"/>
-									<listOptionValue builtIn="false" value="MCUBOOT_TARGET_CONFIG=&lt;flash_layout.h&gt;"/>
 									<listOptionValue builtIn="false" value="MBEDTLS_CONFIG_FILE=&lt;mbedtls_config.h&gt;"/>
 									<listOptionValue builtIn="false" value="MCUBOOT_DOUBLE_SIGN_VERIF"/>
 									<listOptionValue builtIn="false" value="FLOW_CONTROL"/>

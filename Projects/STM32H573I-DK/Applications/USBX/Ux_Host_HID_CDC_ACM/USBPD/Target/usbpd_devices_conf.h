@@ -58,7 +58,7 @@ extern "C" {
 #define UCPDFRS_INSTANCE0_FRSCC2
 
 #define UCPD_INSTANCE0_ENABLEIRQ  do{                                                                 \
-                                        NVIC_SetPriority(UCPD1_IRQn,2);                              \
+                                        NVIC_SetPriority(UCPD1_IRQn,5);                              \
                                         NVIC_EnableIRQ(UCPD1_IRQn);                                  \
                                     } while(0)
 

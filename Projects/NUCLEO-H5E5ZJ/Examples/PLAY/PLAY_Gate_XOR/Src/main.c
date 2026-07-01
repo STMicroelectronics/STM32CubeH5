@@ -276,6 +276,10 @@ static void MX_PLAY1_Init(void)
   {
     Error_Handler();
   }
+
+  /** PLAY Privileged access configuration
+  */
+  HAL_PLAY_SetPrivAttr(&hplay1, HAL_PLAY_PRIV_ITEM_ALL, HAL_PLAY_NPRIV);
   /* USER CODE BEGIN PLAY1_Init 2 */
 
   /* USER CODE END PLAY1_Init 2 */
@@ -294,9 +298,7 @@ static void MX_GPIO_Init(void)
   /* USER CODE END MX_GPIO_Init_1 */
 
   /* GPIO Ports Clock Enable */
-  __HAL_RCC_GPIOF_CLK_ENABLE();
   __HAL_RCC_GPIOH_CLK_ENABLE();
-  __HAL_RCC_GPIOE_CLK_ENABLE();
 
   /* USER CODE BEGIN MX_GPIO_Init_2 */
 
@@ -309,6 +311,7 @@ static void MX_GPIO_Init(void)
 
 /**
   * @brief  This function is executed in case of error occurrence.
+  * @param  None
   * @retval None
   */
 void Error_Handler(void)

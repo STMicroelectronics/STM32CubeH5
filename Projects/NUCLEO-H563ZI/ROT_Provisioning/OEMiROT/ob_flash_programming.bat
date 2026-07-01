@@ -22,11 +22,27 @@ set app_image_number=2
 set s_data_image_number=0
 set ns_data_image_number=0
 
+set loaderaddress=0x0
+set slot0=0x0
+set slot1=0x0
+set slot4=0x0
+set slot5=0x0
+set primary_only=0
+
+IF  "%primary_only%" == "1" (
+set s_code_image=%oemirot_appli_secure_primary%
+set ns_code_image=%oemirot_appli_non_secure_primary%
+set one_code_image=%oemirot_appli_assembly_sign_primary%
+set l_code_image=%oemirot_loader%
+set s_data_image=s_data_init_sign.bin
+set ns_data_image=ns_data_init_sign.bin
+) ELSE (
 set s_code_image=%oemirot_appli_secure%
 set ns_code_image=%oemirot_appli_non_secure%
 set one_code_image=%oemirot_appli_assembly_sign%
 set s_data_image=s_data_init_sign.hex
 set ns_data_image=ns_data_init_sign.hex
+)
 
 set connect_no_reset=-c port=SWD speed=fast ap=1 mode=Hotplug
 set connect_reset=-c port=SWD speed=fast ap=1 mode=UR
@@ -36,6 +52,8 @@ set appli_dir=%oemirot_appli_path_project%
 ) else (
 set appli_dir=../../%oemirot_appli_path_project%
 )
+
+set loader_dir=..\..\%oemirot_loader_path_project%
 
 :: =============================================== Remove protections and initialize Option Bytes ==========================================
 set remove_protect_init=-ob SECWM1_STRT=1 SECWM1_END=0 WRPSGn1=0xffffffff WRPSGn2=0xffffffff SECWM2_STRT=1 SECWM2_END=0 HDP1_STRT=1 HDP1_END=0 HDP2_STRT=1 HDP2_END=0 SECBOOT_LOCK=0xC3 SECBOOTADD=%bootob% SWAP_BANK=0 SRAM2_RST=0 SRAM2_ECC=0 SRAM3_ECC=1 BOOT_UBE=0xB4
@@ -48,6 +66,15 @@ set hide_protect=HDP1_STRT=%hdp1_start% HDP1_END=%hdp1_end% HDP2_STRT=%hdp2_star
 set write_protect=WRPSGn1=%wrpgrp1% WRPSGn2=%wrpgrp2%
 set sec_water_mark=SECWM1_STRT=%sec1_start% SECWM1_END=%sec1_end% SECWM2_STRT=%sec2_start% SECWM2_END=%sec2_end%
 set boot_lock=-ob SECBOOT_LOCK=%boot_lck%
+
+::
+::
+::
+::
+::
+::
+::
+::
 
 :: =============================================== Configure Option Bytes ====================================================================
 set "action=Set TZEN = 1"
@@ -66,19 +93,27 @@ set "action=Configure Secure Water Mark"
 echo %action%
 %stm32programmercli% %connect_no_reset% -ob %sec_water_mark%
 IF !errorlevel! NEQ 0 goto :error
-:: ==================================================== Download images ====================================================================
 
+:: ==================================================== Download images ====================================================================
 echo "Application images programming in download slots"
 
 if  "%app_image_number%" == "2" (
 set "action=Write Appli Secure"
 echo %action%
+IF  "%primary_only%" == "1" (
+%stm32programmercli% %connect_no_reset% -d %appli_dir%\Binary\%s_code_image% %slot0% -v --skipErase
+) ELSE (
 %stm32programmercli% %connect_no_reset% -d %appli_dir%\Binary\%s_code_image% -v
+)
 IF !errorlevel! NEQ 0 goto :error
 echo "TZ Appli Secure Written"
 set "action=Write Appli NonSecure"
 echo %action%
+IF  "%primary_only%" == "1" (
+%stm32programmercli% %connect_no_reset% -d %appli_dir%\Binary\%ns_code_image% %slot1% -v --skipErase
+) ELSE (
 %stm32programmercli% %connect_no_reset% -d %appli_dir%\Binary\%ns_code_image% -v
+)
 IF !errorlevel! NEQ 0 goto :error
 echo "TZ Appli NonSecure Written"
 )
@@ -86,10 +121,23 @@ echo "TZ Appli NonSecure Written"
 if  "%app_image_number%" == "1" (
 set "action=Write One image Appli"
 echo %action%
+IF  "%primary_only%" == "1" (
+%stm32programmercli% %connect_no_reset% -d %appli_dir%\Binary\%one_code_image% %slot0% -v --skipErase
+) ELSE (
 %stm32programmercli% %connect_no_reset% -d %appli_dir%\Binary\%one_code_image% -v
+)
 IF !errorlevel! NEQ 0 goto :error
 
 echo "TZ Appli Written"
+)
+
+:: write loader if config loader is active
+IF  "%primary_only%" == "1" (
+set "action=Write OEMiROT_Loader"
+echo %action%
+%stm32programmercli% %connect_no_reset% -d %loader_dir%\Binary\%l_code_image% %loaderaddress% -v --skipErase
+IF !errorlevel! NEQ 0 goto :error
+echo "OEMiROT_Loader Written"
 )
 
 if  "%s_data_image_number%" == "1" (
@@ -99,10 +147,13 @@ IF not exist %rot_provisioning_path%\OEMiROT\Binary\%s_data_image% (
 @echo [31mError: s_data_enc_sign.hex does not exist! use TPC to generate it[0m
 goto :error
 )
+IF  "%primary_only%" == "1" (
+%stm32programmercli% %connect_no_reset% -d %rot_provisioning_path%\OEMiROT\Binary\%s_data_image% %slot4% -v --skipErase
+) ELSE (
 %stm32programmercli% %connect_no_reset% -d %rot_provisioning_path%\OEMiROT\Binary\%s_data_image% -v
+)
 IF !errorlevel! NEQ 0 goto :error
 )
-
 
 if  "%ns_data_image_number%" == "1" (
 set "action=Write non Secure Data"
@@ -111,7 +162,11 @@ IF not exist %rot_provisioning_path%\OEMiROT\Binary\%ns_data_image% (
 @echo [31mError: ns_data_enc_sign.hex does not exist! use TPC to generate it[0m
 goto :error
 )
+IF  "%primary_only%" == "1" (
+%stm32programmercli% %connect_no_reset% -d %rot_provisioning_path%\OEMiROT\Binary\%ns_data_image% %slot5% -v --skipErase
+) ELSE (
 %stm32programmercli% %connect_no_reset% -d %rot_provisioning_path%\OEMiROT\Binary\%ns_data_image% -v
+)
 IF !errorlevel! NEQ 0 goto :error
 )
 

@@ -32,7 +32,8 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-
+#define USB_PLUGGED   1u
+#define USB_UNPLUGGED 0u
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -46,17 +47,20 @@ static ULONG hid_mouse_interface_number;
 static ULONG hid_mouse_configuration_number;
 static UX_SLAVE_CLASS_HID_PARAMETER hid_mouse_parameter;
 static TX_THREAD ux_device_app_thread;
-extern PCD_HandleTypeDef      hpcd_USB_OTG_HS;
+extern PCD_HandleTypeDef           hpcd_USB_OTG_HS;
 
 /* USER CODE BEGIN PV */
 static TX_THREAD ux_hid_thread;
 extern uint8_t User_Button_State;
+/* State machine for VBUS monitoring */
+__IO Device_State device_state = Device_VBUS_SENSING;
+uint32_t vbus_on = 1;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
 static VOID app_ux_device_thread_entry(ULONG thread_input);
 /* USER CODE BEGIN PFP */
-
+static VOID USBC_Detect_Process(uint32_t raw);
 /* USER CODE END PFP */
 
 /**
@@ -224,6 +228,7 @@ UINT MX_USBX_Device_Stack_Init(void)
 static VOID app_ux_device_thread_entry(ULONG thread_input)
 {
   /* USER CODE BEGIN app_ux_device_thread_entry */
+  GPIO_PinState level;
   /* USB_OTG_HS init function */
   MX_USB_OTG_HS_PCD_Init();
 
@@ -235,9 +240,29 @@ static VOID app_ux_device_thread_entry(ULONG thread_input)
     /* USER CODE END MAIN_INITIALIZE_STACK_ERROR */
   }
 
-  /* Start the USB device */
-  HAL_PCD_Start(&hpcd_USB_OTG_HS);
+  /* USB device start deferred until PA11 (USBC_DETECT) indicates attach */
+  level = HAL_GPIO_ReadPin(USBC_DETECT_GPIO_Port, USBC_DETECT_Pin);
 
+  if (level == GPIO_PIN_SET)
+  {
+    USBC_Detect_Process(USB_PLUGGED);
+  }
+  else
+  {
+    USBC_Detect_Process(USB_UNPLUGGED);
+  }
+
+  if (device_state == Device_Connection || device_state == Device_Disconnection)
+  {
+    if (level == GPIO_PIN_SET)
+    {
+      USBC_Detect_Process(USB_PLUGGED);
+    }
+    else
+    {
+      USBC_Detect_Process(USB_UNPLUGGED);
+    }
+  }
   /* USER CODE END app_ux_device_thread_entry */
 }
 
@@ -256,12 +281,13 @@ UINT MX_USBX_Device_Stack_DeInit(void)
   /* USER CODE END MX_USBX_Device_Stack_DeInit_PreTreatment_0 */
 
   /* Unregister USB device controller. */
+
   if (ux_dcd_stm32_uninitialize((ULONG)USB_OTG_HS, (ULONG)&hpcd_USB_OTG_HS) != UX_SUCCESS)
   {
     return UX_ERROR;
   }
 
-  /* Unregister hid class. */
+/* Unregister hid class. */
   if (ux_device_stack_class_unregister(_ux_system_slave_class_hid_name,
                                        ux_device_class_hid_entry) != UX_SUCCESS)
   {
@@ -285,19 +311,101 @@ UINT MX_USBX_Device_Stack_DeInit(void)
 
 /* USER CODE BEGIN 1 */
 /**
-  * @brief  HAL_GPIO_EXTI_Falling_Callback
-  *         EXTI line detection callback.
-  * @param  GPIO_Pin: Specifies the port pin connected to corresponding EXTI line.
+  * @brief  USBC_Detect_Process
+  *         Handles USB device attach/detach state transitions based on PA1 (USBC_DETECT) digital level.
+  *         Starts or stops the USB device.
+  * @param  raw: VBUS sense value (1 = attach, 0 = detach) sampled from USBC_DETECT pin.
+  * @retval none
+  */
+static VOID USBC_Detect_Process(uint32_t raw)
+{
+  switch (device_state)
+  {
+  case Device_VBUS_SENSING:
+    if (raw)
+    {
+      device_state = Device_Connection;
+    }
+    else
+    {
+      device_state = Device_Disconnection;
+    }
+    break;
+
+  case Device_Connection:
+    if (vbus_on == 1)
+    {
+      if (HAL_PCD_Start(&hpcd_USB_OTG_HS) != HAL_OK)
+      {
+        Error_Handler();
+      }
+      vbus_on = 0;
+    }
+    device_state = Device_VBUS_SENSING;
+    break;
+
+  case Device_Disconnection:
+    if (vbus_on == 0)
+    {
+      ux_device_stack_disconnect();
+      if (HAL_PCD_Stop(&hpcd_USB_OTG_HS) != HAL_OK)
+      {
+        Error_Handler();
+      }
+      vbus_on = 1;
+    }
+    device_state = Device_VBUS_SENSING;
+    break;
+
+  default:
+    device_state = Device_VBUS_SENSING;
+    break;
+  }
+}
+
+/**
+  * @brief  GPIO EXTI Callback function
+  *         Handles USB attach events triggered by USBC_DETECT pin rising edge.
+  *         Invokes USB state machine to process device plug-in (attach).
+  * @param  GPIO_Pin
+  * @retval None
+  */
+void HAL_GPIO_EXTI_Rising_Callback(uint16_t GPIO_Pin)
+{
+  if (GPIO_Pin == USBC_DETECT_Pin)
+  {
+      USBC_Detect_Process(USB_PLUGGED);
+      if (device_state == Device_Connection || device_state == Device_Disconnection)
+      {
+          USBC_Detect_Process(USB_PLUGGED);
+      }
+  }
+}
+
+/**
+  * @brief  GPIO EXTI Callback function
+  *         Handles USB attach/detach events triggered by USBC_DETECT pin falling edge.
+  *         Invokes USB state machine to process device unplug (detach).
+  * @param  GPIO_Pin
   * @retval None
   */
 void HAL_GPIO_EXTI_Falling_Callback(uint16_t GPIO_Pin)
 {
-
   /* Check if EXTI from User Button */
   if (GPIO_Pin == BUTTON_USER_Pin)
   {
     User_Button_State ^= 1U;
   }
+
+  if (GPIO_Pin == USBC_DETECT_Pin)
+  {
+      USBC_Detect_Process(USB_UNPLUGGED);
+      if (device_state == Device_Connection || device_state == Device_Disconnection)
+      {
+          USBC_Detect_Process(USB_UNPLUGGED);
+      }
+  }
 }
+
 
 /* USER CODE END 1 */

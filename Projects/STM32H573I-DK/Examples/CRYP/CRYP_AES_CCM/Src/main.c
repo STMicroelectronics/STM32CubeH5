@@ -319,6 +319,7 @@ static void data_cmp(uint32_t *EncryptedText, uint32_t *RefText, uint32_t Size)
 
 /**
   * @brief  This function is executed in case of error occurrence.
+  * @param  None
   * @retval None
   */
 void Error_Handler(void)

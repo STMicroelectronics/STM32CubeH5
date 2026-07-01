@@ -353,6 +353,11 @@ extern RTC_HandleTypeDef RTCHandle;
  *----------------------------------------------------------------------------*/
 void Reset_Handler(void)
 {
+  /* Configure DWT to enable cycles counter */
+  CoreDebug->DEMCR |= CoreDebug_DEMCR_TRCENA_Msk | CoreDebug_DEMCR_MON_EN_Msk;
+  DWT->CYCCNT = 0;
+  DWT->CTRL |= DWT_CTRL_CYCCNTENA_Msk;
+
   /** Register access to avoid stack usage */
   /* Enable RAMCFG Clock */
   SET_BIT(RCC->AHB1ENR, RCC_AHB1ENR_RAMCFGEN);
@@ -416,11 +421,6 @@ void Reset_Handler(void)
   /* disable write access to backup domain */
   __DMB(); /* To wait for TAMP reg write complete before cutting access */
   CLEAR_BIT(PWR->DBPCR, PWR_DBPCR_DBP);
-
-  /* Configure DWT to enable cycles counter */
-  CoreDebug->DEMCR |= CoreDebug_DEMCR_TRCENA_Msk | CoreDebug_DEMCR_MON_EN_Msk;
-  DWT->CYCCNT = 0;
-  DWT->CTRL |= DWT_CTRL_CYCCNTENA_Msk;
 
   __set_MSPLIM((uint32_t)(&__STACK_LIMIT));
   /* CMSIS System Initialization */

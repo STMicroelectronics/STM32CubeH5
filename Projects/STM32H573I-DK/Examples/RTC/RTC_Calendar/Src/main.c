@@ -360,6 +360,7 @@ static void RTC_CalendarShow(uint8_t *showtime, uint8_t *showdate)
 
 /**
   * @brief  This function is executed in case of error occurrence.
+  * @param  None
   * @retval None
   */
 void Error_Handler(void)

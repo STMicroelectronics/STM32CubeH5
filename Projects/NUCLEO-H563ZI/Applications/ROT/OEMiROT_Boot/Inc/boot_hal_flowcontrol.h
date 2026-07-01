@@ -235,6 +235,13 @@ extern "C" {
 #define FLOW_STEP_MPU_L_CH_R7       0x000c64e2U        /*!< Step Loader Region 7 check value */
 #define FLOW_STEP_MPU_L_LCK         0x000a624fU        /*!< Step GTZC Lock Configuration enable */
 #define FLOW_STEP_MPU_L_LCK_CH      0x000aae83U        /*!< Step GTZC Lock Configuration Init check value */
+#if defined(MCUBOOT_PRIMARY_ONLY)
+#define FLOW_STEP_MPU_L_EN_R1      0x0005eca7U          /*!< Step Loader Region 1 enable value */
+#define FLOW_STEP_MPU_L_CH_R1      0x000660adU          /*!< Step Loader Region 1 check value */
+#else
+#define FLOW_STEP_MPU_L_EN_R1      0x00000000U          /*!< No effect on control flow */
+#define FLOW_STEP_MPU_L_CH_R1      0x00000000U          /*!< No effect on control flow */
+#endif /* MCUBOOT_PRIMARY_ONLY */
 #else
 #define FLOW_STEP_MPU_L_EN_R7       0x00000000U        /*!< No effect on control flow */
 #define FLOW_STEP_MPU_L_CH_R7       0x00000000U        /*!< No effect on control flow */
@@ -286,7 +293,7 @@ extern "C" {
 #define FLOW_STEP_NVIC_L_CH         0x00000000U        /*!< No effect on control flow */
 #endif /* MCUBOOT_EXT_LOADER && GENERATOR_TZ_AVAILABLE */
 
-#if defined(MCUBOOT_EXT_LOADER)
+#if defined(MCUBOOT_EXT_LOADER) && !defined(MCUBOOT_PRIMARY_ONLY)
 #define FLOW_STEP_HDPEXT_L_EN_B1    0x000d8b31U        /*!< Step HDPB1 Extend Loader enable value */
 #define FLOW_STEP_HDPEXT_L_CH_B1    0x000e5689U        /*!< Step HDPB1 Extend Loader check value */
 #define FLOW_STEP_HDPEXT_L_EN_B2    0x000e85a4U        /*!< Step HDPB2 Extend Loader enable value */
@@ -393,7 +400,9 @@ extern "C" {
 
 #define FLOW_CTRL_GPIO_L_EN         (FLOW_CTRL_GTZC_L_EN_TZSC ^  FLOW_STEP_GPIO_L_EN)
 
-#define FLOW_CTRL_MPU_L_EN_R7       (FLOW_CTRL_GPIO_L_EN ^       FLOW_STEP_MPU_L_EN_R7)
+#define FLOW_CTRL_MPU_L_EN_R1       (FLOW_CTRL_GPIO_L_EN ^       FLOW_STEP_MPU_L_EN_R1)
+  
+#define FLOW_CTRL_MPU_L_EN_R7       (FLOW_CTRL_MPU_L_EN_R1 ^     FLOW_STEP_MPU_L_EN_R7)
 
 #define FLOW_CTRL_SAU_L_EN_R0       (FLOW_CTRL_MPU_L_EN_R7  ^    FLOW_STEP_SAU_L_EN_R0)
 #define FLOW_CTRL_SAU_L_EN_R1       (FLOW_CTRL_SAU_L_EN_R0 ^     FLOW_STEP_SAU_L_EN_R1)
@@ -416,7 +425,9 @@ extern "C" {
 
 #define FLOW_CTRL_GPIO_L_CH         (FLOW_CTRL_GTZC_L_CH_TZSC ^  FLOW_STEP_GPIO_L_CH)
 
-#define FLOW_CTRL_MPU_L_CH_R7       (FLOW_CTRL_GPIO_L_CH ^       FLOW_STEP_MPU_L_CH_R7)
+#define FLOW_CTRL_MPU_L_CH_R1       (FLOW_CTRL_GPIO_L_CH ^       FLOW_STEP_MPU_L_CH_R1)  
+#define FLOW_CTRL_MPU_L_CH_R7       (FLOW_CTRL_MPU_L_CH_R1 ^     FLOW_STEP_MPU_L_CH_R7)
+
 #define FLOW_CTRL_MPU_L_LCK         (FLOW_CTRL_MPU_L_CH_R7 ^     FLOW_STEP_MPU_L_LCK)
 #define FLOW_CTRL_MPU_L_LCK_CH      (FLOW_CTRL_MPU_L_LCK ^       FLOW_STEP_MPU_L_LCK_CH)
 

@@ -322,6 +322,7 @@ void HAL_I3C_TgtHotJoinCallback(I3C_HandleTypeDef *hi3c, uint8_t dynamicAddress)
 
 /**
   * @brief  This function is executed in case of error occurrence.
+  * @param  None
   * @retval None
   */
 void Error_Handler(void)

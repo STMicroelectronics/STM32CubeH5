@@ -103,10 +103,6 @@ s_app_init_sign_hex_xml_field="$bin_path_xml_field/rot_tz_s_app_init_sign.hex"
 s_data_enc_sign_hex_xml_field="$provisioningdir/$bootpath/Binary/s_data_enc_sign.hex"
 s_data_init_sign_hex_xml_field="$provisioningdir/$bootpath/Binary/s_data_init_sign.hex"
 
-#Make sure we have a Binary sub-folder in UserApp folder
-if [ ! -e $bin_path_xml_field ]; then
-mkdir $bin_path_xml_field
-fi
 
 # Check if Python is installed
 python3 --version >/dev/null 2>&1

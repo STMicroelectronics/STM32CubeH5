@@ -562,6 +562,7 @@ static HAL_StatusTypeDef Buffercmp(uint32_t* pBuffer, uint32_t BufferLength, uin
 
 /**
   * @brief  This function is executed in case of error occurrence.
+  * @param  None
   * @retval None
   */
 void Error_Handler(void)

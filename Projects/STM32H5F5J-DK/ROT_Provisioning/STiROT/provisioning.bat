@@ -362,7 +362,11 @@ if "%isGeneratedByCubeMX%" == "true" goto :no_menu
 echo ===== Connect UART console (115200 baudrate) to get application menu.
 
 :no_menu
-echo ===== Power off/on the board to start the application.
+if /i "!product_state!"=="OPEN" (
+  echo ===== Warning: BOOT0 pin must be set to 1 ^(button pressed^) at each reset if the final product state is OPEN.
+  ) else (
+   echo ===== Power off/on the board to start the application.
+  )
 echo =====
 if [%1] neq [AUTO] cmd /k
 exit 0

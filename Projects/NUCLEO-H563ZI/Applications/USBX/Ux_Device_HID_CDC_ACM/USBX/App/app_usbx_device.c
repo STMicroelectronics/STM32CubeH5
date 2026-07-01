@@ -309,13 +309,6 @@ UINT MX_USBX_Device_Stack_Init(void)
 static VOID app_ux_device_thread_entry(ULONG thread_input)
 {
   /* USER CODE BEGIN app_ux_device_thread_entry */
-  /* Initialize the Stack USB Device*/
-  if (MX_USBX_Device_Stack_Init() != UX_SUCCESS)
-  {
-     /* USER CODE BEGIN MAIN_INITIALIZE_STACK_ERROR */
-     Error_Handler();
-     /* USER CODE END MAIN_INITIALIZE_STACK_ERROR */
-  }
 
   /* Wait for message queue to start/stop the device */
   while(1)
@@ -334,6 +327,14 @@ static VOID app_ux_device_thread_entry(ULONG thread_input)
       /* USB_DRD_FS init function */
       MX_USB_PCD_Init();
 
+      /* Initialize the Stack USB Device*/
+      if (MX_USBX_Device_Stack_Init() != UX_SUCCESS)
+      {
+        /* USER CODE BEGIN MAIN_INITIALIZE_STACK_ERROR */
+        Error_Handler();
+        /* USER CODE END MAIN_INITIALIZE_STACK_ERROR */
+      }
+
       /* Start device USB */
       HAL_PCD_Start(&hpcd_USB_DRD_FS);
     }
@@ -345,6 +346,13 @@ static VOID app_ux_device_thread_entry(ULONG thread_input)
       /* Stop device USB */
       HAL_PCD_Stop(&hpcd_USB_DRD_FS);
 
+      /* Uninitialize the Stack USB Device*/
+      if (MX_USBX_Device_Stack_DeInit() != UX_SUCCESS)
+      {
+        /* USER CODE BEGIN MAIN_UNINITIALIZE_STACK_ERROR */
+        Error_Handler();
+        /* USER CODE END MAIN_UNINITIALIZE_STACK_ERROR */
+      }
       /* USB_DRD_FS deinit function */
       HAL_PCD_DeInit(&hpcd_USB_DRD_FS);
     }

@@ -1,7 +1,6 @@
 #!/bin/bash -
-# Getting the CubeProgammer_cli path 
+# Getting the CubeProgammer_cli path
 source ../env.sh
-
 
 # Environment variable for log file
 current_log_file="provisioning.log"
@@ -79,31 +78,31 @@ product_state_choice()
   product_state=$(echo $product_state | tr '[:lower:]' '[:upper:]')
 
   if [ "$product_state" == "OPEN" ]; then
-    echo 
+    echo
     ps_value=0xED
     connect_boot0
   fi
 
   if [ "$product_state" == "PROVISIONED" ]; then
-    echo 
+    echo
     ps_value=0x2E
     set_provisionning_ps
   fi
 
   if [ "$product_state" == "TZ-CLOSED" ]; then
-    echo 
+    echo
     ps_value=0xC6
     set_provisionning_ps
   fi
 
   if [ "$product_state" == "CLOSED" ]; then
-    echo 
+    echo
     ps_value=0x72
     set_provisionning_ps
   fi
 
   if [ "$product_state" == "LOCKED" ]; then
-    echo 
+    echo
     ps_value=0x5C
     set_provisionning_ps
   fi
@@ -117,16 +116,15 @@ product_state_choice()
 # Connect BOOT0 pin to VDD
 connect_boot0()
 {
-
   echo "   * BOOT0 pin should be connected to VDD"
-  echo "       (STM32H5F5J-DK: press & hold Boot B3 Button)"
+  echo "       (STM32H5F5J-DK: Press Boot Button B3)"
   echo "       Press any key to continue..."
-  echo 
+  echo
   if [ "$mode" != "AUTO" ]; then read -p "" -n1 -s; fi
   provisioning_step
 }
 
-# Provisioning execution 
+# Provisioning execution
 set_provisionning_ps()
 {
   action="Setting the product state PROVISIONING"
@@ -134,19 +132,18 @@ set_provisionning_ps()
   echo "   * $action"
   "$stm32programmercli" $connect_no_reset -ob PRODUCT_STATE=0x17 > $provisioning_log
   if [ $? -ne 0 ]; then step_error; fi
-  echo 
+  echo
   provisioning_step
 }
 
 # Set the final product state of the STM32H5 product
 set_final_ps()
 {
-  
   action="Setting the final product state $product_state "
   current_log_file=$provisioning_log
   echo "   * $action"
   "$stm32programmercli" $connect_no_reset -ob PRODUCT_STATE=$ps_value >> $provisioning_log
-  echo 
+  echo
   if [ $? -ne 0 ]; then step_error; fi
   final_execution
 }
@@ -162,7 +159,7 @@ provisioning_step()
   if [ $obkey_prog_error -ne 0 ]; then step_error; fi
   echo "       Successful obk provisioning"
   echo "       (see $ob_key_provisioning_log for details)"
-  echo 
+  echo
   if [ "$product_state" != "OPEN" ]; then set_final_ps; fi
   set_final_ps
 }
@@ -185,13 +182,13 @@ final_execution()
 }
 # Error when external script is executed
 step_error()
-{ 
- #log error file
+{
+  #log error file
   if [ -e "error" ]; then
     cat error
     rm error
   fi
-  echo 
+  echo
   echo "====="
   echo "===== Error while executing "$action"."
   echo "===== See $current_log_file for details. Then try again."
@@ -200,7 +197,6 @@ step_error()
   exit 1
 }
 # ============================================================== Script start  =============================================================
-
 
 echo "====="
 echo "===== Provisioning of STiRoT_OEMuROT boot path"
@@ -330,10 +326,10 @@ if [ $isGeneratedByCubeMX != "true" ]; then
   fi
 fi
 
-# ========================================================= Board provisioning steps =======================================================  
+# ========================================================= Board provisioning steps =======================================================
 echo "Step 3 : Provisioning"
-echo "   * BOOT0 pin should be disconnected from VDD:"
-echo "       (STM32H5F5J-DK: release Boot B3 Button)"
+echo "   * BOOT0 pin should be disconnected from VDD"
+echo "       (STM32H5F5J-DK: Release Boot Button B3)"
 echo "       Press any key to continue..."
 echo
 if [ "$mode" != "AUTO" ]; then read -p "" -n1 -s; fi

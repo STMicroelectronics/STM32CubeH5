@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * @file    DMA2D/DMA2D_Downscale/Inc/STLogo.h 
+  * @file    DMA2D/DMA2D_Downscale/Inc/STLogo.h
   * @author  MCD Application Team
   ******************************************************************************
   * @attention

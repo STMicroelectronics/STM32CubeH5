@@ -70,7 +70,7 @@ UINT MX_USBX_Init(VOID)
   * @brief  _ux_utility_interrupt_disable
   *         USB utility interrupt disable.
   * @param  none
-  * @retval none
+  * @retval interrupt save
   */
 ALIGN_TYPE _ux_utility_interrupt_disable(VOID)
 {

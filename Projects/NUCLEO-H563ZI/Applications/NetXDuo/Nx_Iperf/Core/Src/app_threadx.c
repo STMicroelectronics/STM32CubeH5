@@ -52,8 +52,8 @@
 /* USER CODE END PFP */
 
 /**
-  * @brief Application ThreadX Initialization.
-  * @param memory_ptr: memory pointer
+  * @brief  Application ThreadX Initialization.
+  * @param  memory_ptr: memory pointer
   * @retval int
   */
 UINT App_ThreadX_Init(VOID *memory_ptr)

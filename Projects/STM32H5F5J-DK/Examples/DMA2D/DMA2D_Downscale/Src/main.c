@@ -47,10 +47,23 @@ LTDC_HandleTypeDef hltdc;
 
 /* USER CODE BEGIN PV */
 DMA2D_DownscalingCfgTypeDef Downscalingcfg;
-uint32_t xpos, ypos, xSize, i;
-uint32_t scaledWidth;
-uint32_t scaledHeight;
 static __IO uint32_t transferCompleteDetected = 0;
+
+static const uint16_t gDownscaleProfiles[][4] =
+{
+  {1U, 1U, 1U, 1U},     /* Full-size image */
+  {3U, 4U, 3U, 4U},     /* 75% width and 75% height */
+  {1U, 2U, 1U, 2U},     /* 50% width and 50% height */
+  {1U, 4U, 1U, 4U},     /* 25% width and 25% height */
+  {1U, 1U, 4U, 5U},     /* Full width with 80% height */
+  {3U, 4U, 1U, 1U},     /* 75% width with full height */
+  {1U, 1U, 3U, 4U},     /* Full width with 75% height */
+  {2U, 3U, 7U, 10U},    /* 66% width with 70% height */
+  {13U, 17U, 13U, 17U}, /* Approximately 76% width and height */
+  {13U, 17U, 5U, 8U},   /* Approximately 76% width with 62% height */
+};
+
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -108,10 +121,12 @@ int main(void)
 
   Downscalingcfg.PixelPerLines = 480;
   Downscalingcfg.NumberOfLines = 272;
-  Downscalingcfg.HRatio = 1;
-  Downscalingcfg.VRatio = 1;
-  Downscalingcfg.VPhase = 0;
-  Downscalingcfg.HPhase = 0;
+  Downscalingcfg.HRatio        = 1;
+  Downscalingcfg.VRatio        = 1;
+  Downscalingcfg.HRatioDiv     = 1;
+  Downscalingcfg.VRatioDiv     = 1;
+  Downscalingcfg.VPhase        = 0;
+  Downscalingcfg.HPhase        = 0;
 
   /* USER CODE END 2 */
 
@@ -122,11 +137,15 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+    uint32_t i;
+
     /* Both horizontal and vertical scaling together */
-    for (i = 0; i < 4; i++)
+    for (i = 0; i < (sizeof(gDownscaleProfiles) / sizeof(gDownscaleProfiles[0])); i++)
     {
-      Downscalingcfg.HRatio = i + 1;
-      Downscalingcfg.VRatio = i + 1;
+      Downscalingcfg.HRatio = gDownscaleProfiles[i][0];
+      Downscalingcfg.HRatioDiv = gDownscaleProfiles[i][1];
+      Downscalingcfg.VRatio = gDownscaleProfiles[i][2];
+      Downscalingcfg.VRatioDiv = gDownscaleProfiles[i][3];
 
       PerformScaling(&Downscalingcfg);
     }
@@ -347,13 +366,6 @@ static void MX_GPIO_Init(void)
   /* USER CODE END MX_GPIO_Init_1 */
 
   /* GPIO Ports Clock Enable */
-  __HAL_RCC_GPIOI_CLK_ENABLE();
-  __HAL_RCC_GPIOB_CLK_ENABLE();
-  __HAL_RCC_GPIOG_CLK_ENABLE();
-  __HAL_RCC_GPIOD_CLK_ENABLE();
-  __HAL_RCC_GPIOK_CLK_ENABLE();
-  __HAL_RCC_GPIOE_CLK_ENABLE();
-  __HAL_RCC_GPIOJ_CLK_ENABLE();
   __HAL_RCC_GPIOF_CLK_ENABLE();
   __HAL_RCC_GPIOH_CLK_ENABLE();
 
@@ -388,18 +400,22 @@ void TransferComplete(DMA2D_HandleTypeDef *hdma2d)
 
 void PerformScaling(DMA2D_DownscalingCfgTypeDef *cfg)
 {
-  uint32_t xpos, ypos, xSize;
-  uint32_t scaledWidth = STLogo_width / cfg->HRatio;
-  uint32_t scaledHeight = STLogo_height / cfg->VRatio;
+  uint32_t xpos, ypos;
+  uint32_t scaledWidth;
+  uint32_t scaledHeight;
 
+  /* Ceiling division keeps display dimensions aligned with generated output. */
+  scaledWidth = ((STLogo_width * cfg->HRatio) + cfg->HRatioDiv - 1U) / cfg->HRatioDiv;
+  scaledHeight = ((STLogo_height * cfg->VRatio) + cfg->VRatioDiv - 1U) / cfg->VRatioDiv;
+
+  /* DMA2D downscale is configured as a ratio: output = input * Ratio / RatioDiv. */
   HAL_DMA2D_ConfigDownscaling(&hdma2d, DMA2D_SOURCE_BLENDER_OUTPUT, cfg);
 
   xpos = (STLogo_width - scaledWidth) / 2;
   ypos = (STLogo_height - scaledHeight) / 2;
 
-  xSize = (STLogo_width % cfg->HRatio) ? (scaledWidth + 1) : scaledWidth;
-
-  HAL_LTDC_SetWindowSize(&hltdc, xSize, scaledHeight, LTDC_LAYER_1);
+  /* Adjust the LTDC window to the final scaled image size and center it on screen. */
+  HAL_LTDC_SetWindowSize(&hltdc, scaledWidth, scaledHeight, LTDC_LAYER_1);
   HAL_LTDC_SetWindowPosition(&hltdc, xpos, ypos, LTDC_LAYER_1);
 
   transferCompleteDetected = 0;
@@ -422,6 +438,7 @@ void PerformScaling(DMA2D_DownscalingCfgTypeDef *cfg)
 
 /**
   * @brief  This function is executed in case of error occurrence.
+  * @param  None
   * @retval None
   */
 void Error_Handler(void)

@@ -70,6 +70,11 @@ typedef struct mbedtls_ccm_context
   unsigned char y[16];                 /* The Y working buffer */
   size_t plaintext_len;                /* Total plaintext length */
   size_t add_len;                      /* Total authentication data length */
+#if defined(MBEDTLS_HAL_CCM_MULTIPART_ALT)
+  size_t len;                          /* total length of the encrypted data. */
+  unsigned char buf[16];               /* The buf working value. */
+  size_t remain_len;                   /* remain length of the non encrypted data. */
+#endif /* MBEDTLS_HAL_CCM_MULTIPART_ALT */
   size_t tag_len;                      /* Total tag length */
   unsigned int q;                      /* The Q working value */
   int mode;                            /* The operation to perform:

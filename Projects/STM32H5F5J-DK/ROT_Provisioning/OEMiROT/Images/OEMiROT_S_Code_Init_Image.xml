@@ -40,7 +40,7 @@
 	</Param>
 	<Param>
 		<Name>Firmware area size</Name>
-		<Value>0x6000</Value>
+		<Value>0x8000</Value>
 		<Type>Data</Type>
 		<Command>-S</Command>
 		<Hidden>1</Hidden>
@@ -82,8 +82,8 @@
 		<Command>-s</Command>
 		<Hidden>1</Hidden>
 		<Tooltip>Value of Security counter on which antirollback feature is relying.
-		'auto' (default) : security counter value is automatically aligned to image version.
-		'32 bits value': security counter value manually selected (not aligned with image version).
+		"auto" (default) : security counter value is automatically aligned to image version.
+		"32 bits value": security counter value manually selected (not aligned with image version).
 		Antirollback feature is inactive if security counter value remains unchanged at each version of image.
 		</Tooltip>
 		<Default>auto</Default>

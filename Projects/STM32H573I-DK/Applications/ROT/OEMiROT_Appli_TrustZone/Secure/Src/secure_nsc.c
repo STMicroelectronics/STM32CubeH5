@@ -150,13 +150,49 @@ CMSE_NS_ENTRY void SECURE_RegisterCallback(SECURE_CallbackIDTypeDef CallbackId, 
     }
   }
 }
+
+extern ARM_DRIVER_FLASH FLASH_DEV_NAME;
+#define BANK_NUMBER  2
+
+static void secure_internal_flash(uint32_t offset_start, uint32_t offset_end)
+{
+  volatile uint32_t *SecBB[8]= {&FLASH_S->SECBB1R1, &FLASH_S->SECBB1R2, &FLASH_S->SECBB1R3, &FLASH_S->SECBB1R4,
+                                &FLASH_S->SECBB2R1, &FLASH_S->SECBB2R2, &FLASH_S->SECBB2R3, &FLASH_S->SECBB2R4};
+  volatile uint32_t *ptr;
+  uint32_t regwrite=0x0, index;
+  uint32_t block_start = offset_start;
+  uint32_t block_end =  offset_end;
+  const ARM_FLASH_INFO *flash_info;
+
+  flash_info = FLASH_DEV_NAME.GetInfo();
+
+  block_start = block_start / flash_info->page_size;
+  block_end = (block_end / flash_info->page_size) ;
+
+  /* 1f is for 32 bits */
+  for (index = block_start & ~0x1f; index < flash_info->sector_count ; index++)
+  { /* clean register on index aligned */
+    if (!(index & 0x1f)){
+       regwrite=0x0;
+    }
+    if ((index >= block_start) && (index <= block_end))
+      regwrite = regwrite | ( 1 << (index & 0x1f));
+    /* write register when 32 sub block are set or last block to set  */
+    if ((index & 0x1f ) == 0x1f) {
+      ptr = (uint32_t *)SecBB[index>>5];
+      *ptr = regwrite;
+    }
+  }
+}
+
 /**
   * @brief  Sau idau configuration before jumping into loader
   * @retval None
   */
-CMSE_NS_ENTRY void SECURE_loader_cfg(void)
+CMSE_NS_ENTRY void SECURE_loader_run(void)
 {
   uint32_t i = 0U;
+
   /* configuration stage */
   __HAL_RCC_GTZC1_CLK_ENABLE();
 
@@ -165,16 +201,16 @@ CMSE_NS_ENTRY void SECURE_loader_cfg(void)
   /* All bocks of SRAM1 configured non secure / privileged (default value) */
   for (i = 0; i < GTZC_MPCBB1_NB_VCTR; i++)
   {
-  /*SRAM1 -> MPCBB1*/
-  GTZC_MPCBB1_S->SECCFGR[i] = GTZC_MPCBB_ALL_NSEC;
-  GTZC_MPCBB1_S->PRIVCFGR[i] = GTZC_MPCBB_ALL_NPRIV;
+    /*SRAM1 -> MPCBB1*/
+    GTZC_MPCBB1_S->SECCFGR[i] = GTZC_MPCBB_ALL_NSEC;
+    GTZC_MPCBB1_S->PRIVCFGR[i] = GTZC_MPCBB_ALL_NPRIV;
   }
   /* All bocks of SRAM3 configured non secure / privileged (default value) */
   for (i = 0; i < GTZC_MPCBB3_NB_VCTR; i++)
   {
-  /*SRAM3 -> MPCBB3*/
-  GTZC_MPCBB3_S->SECCFGR[i] = GTZC_MPCBB_ALL_NSEC;
-  GTZC_MPCBB3_S->PRIVCFGR[i] = GTZC_MPCBB_ALL_NPRIV;
+    /*SRAM3 -> MPCBB3*/
+    GTZC_MPCBB3_S->SECCFGR[i] = GTZC_MPCBB_ALL_NSEC;
+    GTZC_MPCBB3_S->PRIVCFGR[i] = GTZC_MPCBB_ALL_NPRIV;
   }
   __HAL_RCC_GPIOA_CLK_ENABLE();
   __HAL_RCC_GPIOB_CLK_ENABLE();
@@ -207,6 +243,9 @@ CMSE_NS_ENTRY void SECURE_loader_cfg(void)
     SAU->RLAR = (sau_load_cfg[i].RLAR & SAU_RLAR_LADDR_Msk) |
                 SAU_RLAR_ENABLE_Msk;
   }
+
+  secure_internal_flash(0x00, S_IMAGE_SECONDARY_PARTITION_OFFSET-1);
+
   /* Force memory writes before continuing */
   __DSB();
   /* Flush and refill pipeline with updated permissions */
@@ -221,6 +260,7 @@ CMSE_NS_ENTRY void SECURE_loader_cfg(void)
   SCB->AIRCR  = (uint32_t)((0x5FAUL << SCB_AIRCR_VECTKEY_Pos) |
                            (SCB->AIRCR & 0x0000FFFFU) |
                            SCB_AIRCR_BFHFNMINS_Msk);
+
   NVIC->ITNS[0U] = RSS_NVIC_INIT_ITNS0_VAL;
   NVIC->ITNS[1U] = RSS_NVIC_INIT_ITNS1_VAL;
   NVIC->ITNS[2U] = RSS_NVIC_INIT_ITNS2_VAL;
@@ -228,6 +268,31 @@ CMSE_NS_ENTRY void SECURE_loader_cfg(void)
 
   /* Stop systick before jumping */
   HAL_SuspendTick();
+
+  uint32_t boot_address = cmse_nsfptr_create(*(uint32_t *)(BOOTLOADER_BASE_NS + 4U));
+
+  /*Increment HDPL to HDPL3*/
+  SET_BIT(SBS->HDPLCR,  SBS_HDPLCR_INCR_HDPL);
+
+  __TZ_set_MSP_NS((*(uint32_t *)BOOTLOADER_BASE_NS));
+  SCB_NS->VTOR = BOOTLOADER_BASE_NS;
+
+  __asm volatile("movs r0, %0\n"
+               "movs r1, #0\n" /*clear registers before jumping to non-secure*/
+               "movs r2, #0\n"
+               "movs r3, #0\n"
+               "movs r4, #0\n"
+               "movs r5, #0\n"
+               "movs r6, #0\n"
+               "movs r7, #0\n"
+               "mov r8, r5\n"
+               "mov r9, r5\n"
+               "mov r10, r5\n"
+               "mov r11, r5\n"
+               "mov r12, r5\n"
+               "MSR APSR_nzcvq,r1\n" /*clear APSR*/
+               "bxns r0\n"::"r"(boot_address)); /*jump to non-secure address*/
+  /*BXNS, no return here possible*/
 }
 
 /**

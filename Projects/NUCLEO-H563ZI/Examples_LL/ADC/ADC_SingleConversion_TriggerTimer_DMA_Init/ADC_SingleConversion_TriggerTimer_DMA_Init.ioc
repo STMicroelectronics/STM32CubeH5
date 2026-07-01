@@ -53,6 +53,7 @@ MMTAppReg3.MEMORYMAP.Size=2097152
 MMTAppReg3.MEMORYMAP.StartAddress=0x08000000
 MMTAppRegionsCount=3
 MMTConfigApplied=false
+MMTSectionSuffix=_Section
 Mcu.CPN=STM32H563ZIT6
 Mcu.ContextProject=TrustZoneDisabled
 Mcu.Family=STM32H5
@@ -84,8 +85,8 @@ Mcu.PinsNb=11
 Mcu.ThirdPartyNb=0
 Mcu.UserConstants=
 Mcu.UserName=STM32H563ZITx
-MxCube.Version=6.14.0
-MxDb.Version=DB.6.0.140
+MxCube.Version=6.18.0
+MxDb.Version=DB.6.0.180
 NVIC.ADC1_IRQn=true\:0\:0\:false\:false\:true\:true\:true\:true
 NVIC.BusFault_IRQn=true\:0\:0\:false\:false\:true\:false\:false\:false
 NVIC.DebugMonitor_IRQn=true\:0\:0\:false\:false\:true\:false\:false\:false
@@ -103,6 +104,17 @@ PB0.GPIOParameters=GPIO_Label
 PB0.GPIO_Label=LED1
 PB0.Locked=true
 PB0.Signal=GPIO_Output
+PCC.Bar.Display=Horizontal Bar
+PCC.Checker=false
+PCC.Display=Plot\: All Steps
+PCC.Line=STM32H563/H573
+PCC.MCU=STM32H563ZITx
+PCC.PartNumber=STM32H563ZITx
+PCC.SequenceTime=1.0 ms
+PCC.SequenceTime.Unit=ms
+PCC.Series=STM32H5
+PCC.Temperature=25
+PCC.Vdd=3.0
 PinOutPanel.RotationAngle=0
 ProjectManager.AskForMigrate=true
 ProjectManager.BackupPrevious=false
@@ -110,17 +122,12 @@ ProjectManager.CompilerLinker=GCC
 ProjectManager.CompilerOptimize=6
 ProjectManager.ComputerToolchain=false
 ProjectManager.CoupleFile=false
-<<<<<<< HEAD   (4b0001 [H5] Activate the “Dead battery signals disabled”)
-=======
->>>>>>> CHANGE (2390c0 fix(example): fix IOC in ADC/ADC_SingleConversion_TriggerTim)
 ProjectManager.DeletePrevious=true
 ProjectManager.DeviceId=STM32H563ZITx
-<<<<<<< HEAD   (4b0001 [H5] Activate the “Dead battery signals disabled”)
-=======
 ProjectManager.Example=ADC_SingleConversion_TriggerTimer_DMA_Init
 ProjectManager.ExampleSource=CubeFw
->>>>>>> CHANGE (2390c0 fix(example): fix IOC in ADC/ADC_SingleConversion_TriggerTim)
 ProjectManager.FreePins=false
+ProjectManager.FreePinsContext=
 ProjectManager.HalAssertFull=false
 ProjectManager.HeapSize=0x200
 ProjectManager.KeepUserCode=true
@@ -135,7 +142,7 @@ ProjectManager.ProjectName=ADC_SingleConversion_TriggerTimer_DMA_Init
 ProjectManager.ProjectStructure=
 ProjectManager.RegisterCallBack=
 ProjectManager.StackSize=0x400
-ProjectManager.TargetToolchain=EWARM V8
+ProjectManager.TargetToolchain=EWARM V9.20
 ProjectManager.ToolChainLocation=
 ProjectManager.UAScriptAfterPath=
 ProjectManager.UAScriptBeforePath=

@@ -74,8 +74,9 @@ demand.</p>
 <figcaption aria-hidden="true">STM32Cube</figcaption>
 </figure>
 <p>The <strong>drivers</strong> provided within this package
-<strong>support</strong> the <strong>STM32H573xx / STM32H563xx /
-STM32H562xx / STM32H503xx / STM32H533xx / STM32H523xx
+<strong>support</strong> the <strong>STM32H543xx/ STM32H553xx/
+STM32H5E4xx/ STM32H5E5xx/ STM32H5F4xx/ STM32H5F5xx/ STM32H573xx /
+STM32H563xx / STM32H562xx / STM32H503xx / STM32H533xx / STM32H523xx
 lines.</strong></p>
 <ul>
 <li>For quick getting started with the STM32CubeH5 firmware package,
@@ -107,9 +108,644 @@ with STM32H5</a></li>
 <section id="update-history" class="col-sm-12 col-lg-8">
 <h2><strong>Update History</strong></h2>
 <div class="collapse">
-<input type="checkbox" id="collapse-section10" checked aria-hidden="true">
-<label for="collapse-section10" checked aria-hidden="true"><strong>V1.6.0
-/ 04-February-2026</strong></label>
+<input type="checkbox" id="collapse-section11" checked aria-hidden="true">
+<label for="collapse-section11" checked aria-hidden="true"><strong>V1.7.0
+/ 03-June-2026</strong></label>
+<div>
+<h2 id="main-changes">Main Changes</h2>
+<ul>
+<li><strong>Official Release</strong> of <strong>STM32CubeH5</strong>
+Firmware Package, to support <strong>STM32H543xx</strong> and
+<strong>STM32H553xx</strong> devices (STM32Cube for STM32H5 Series)</li>
+<li>Maintenance update for the STM32CubeH5 Firmware Package supporting
+STM32H5E4xx, STM32H5E5xx, STM32H5F4xx, STM32H5F5xx, STM32H503xx,
+STM32H523xx, STM32H533xx, STM32H562xx, STM32H563xx and STM32H573xx
+devices.</li>
+<li>Examples/applications/templates and demo added for
+<strong>NUCLEO-H553ZG</strong> board.</li>
+<li>BSP support for NUCLEO-H553ZG board.</li>
+<li>TrustZone-disabled reference project template added for
+<strong>ARM-STUDIO</strong> on NUCLEO-H553ZG.</li>
+<li>New TrustZone-enabled no-isolation template added on NUCLEO-H553ZG
+boards.</li>
+<li>New OEMiROT boot &amp; Application with TZ enabled, for
+NUCLEO-H553ZG.</li>
+<li>SA0076 fixed</li>
+<li>DMA2D downscaling API improved to support fractional ratio
+representation while preserving backward compatibility along with DMA2D
+downscale example on STM32H5F5J-DK.</li>
+</ul>
+<h2 id="contents">Contents</h2>
+<h3 id="sbom"><strong>SBOM</strong></h3>
+<ul>
+<li>Deliver SBOM in <a href="sbom_cdx.json">CycloneDX v1.5
+format</a></li>
+</ul>
+<h3 id="cmsis-drivers-updates"><strong>CMSIS Drivers</strong>
+updates</h3>
+<ul>
+<li>Official release of <strong>STM32H543xx</strong> and
+<strong>STM32H553xx</strong> devices.</li>
+<li>CMSIS Device Release version of bits and registers definition
+aligned with RM0539 (STM32H543xx / STM32H553xx reference manual) RM0481
+(STM32H523xx, STM32H533xx, STM32H562xx, STM32H563xx and STM32H573xx
+reference manual), RM0492 (STM32H503xx reference manual) and RM0517
+(STM32H5E4xx, STM32H5E5xx, STM32H5F4xx and STM32H5F5xx reference
+manual)</li>
+</ul>
+<h3 id="halll-drivers-updates"><strong>HAL/LL Drivers</strong>
+updates</h3>
+<ul>
+<li><p><strong>Official Release</strong> V1.7.0 of <span
+style="font-weight: bold;">STM32CubeH5</span> Firmware Package, to
+support <strong>STM32H543xx</strong> and <strong>STM32H553xx</strong>
+devices.</p></li>
+<li><p>Support added for H5 1M devices in all HAL/LL drivers.</p></li>
+<li><p>General updates to fix known defects and implementation
+enhancements.</p></li>
+<li><p><strong>HAL Drivers</strong> updates:</p>
+<ul>
+<li><strong>HAL CCB</strong> driver
+<ul>
+<li>Updated support for recovery from seed error sequence after RNG
+v4.4.</li>
+<li>Fixed transient variable handling in sanity check support.</li>
+<li>Added RNG handle support for resilient seed error recovery.</li>
+<li>Updated support for wrap keys from secure domain to non-secure
+domain.</li>
+<li>Fixed MISRA Rule 12.2 issues in HAL CCB.</li>
+<li>Updated support to CCB v2.1.</li>
+</ul></li>
+<li><strong>HAL CRYP</strong> driver
+<ul>
+<li>Fixed MISRA-C Rule 7.1 in hal_cryp.c.</li>
+<li>Fixed MISRA-C Rule 2.2_c warning in stm32h5xx_hal_cryp.c.</li>
+<li>Fixed CCM partial output handling for non-32-bit aligned
+payloads.</li>
+<li>Fixed missing second CRYP handle usage in SAES shared-key mode.</li>
+<li>Updated seed recovery handling after the RNG v4.4.</li>
+<li>Fixed tickstart handling in SAES.</li>
+<li>Updated implementation related to AES GCM decryption tag
+handling.</li>
+</ul></li>
+<li><strong>HAL DMA2D</strong> driver
+<ul>
+<li>DMA2D3 downscaling implementation added to expose the full 4K-step
+scaling range with equidistant increments.</li>
+</ul></li>
+<li><strong>HAL FLASH</strong> driver
+<ul>
+<li>Removed smart prefetch APIs from the FLASH driver.</li>
+<li>Added dedicated HAL functions to independently lock and unlock
+secure and non-secure FLASH control registers.</li>
+</ul></li>
+<li><strong>HAL FMC</strong> driver
+<ul>
+<li>Fixed MISRA warning Rule 11.3 on the NOR driver.</li>
+<li>Removed 8-bit configuration support from the FMC NOR driver.</li>
+<li>Fixed NAND status handling when HAL_NAND_Read_Status returns
+NAND_ERROR.</li>
+</ul></li>
+<li><strong>HAL RNG</strong> driver
+<ul>
+<li>Updated comment for <code>NistCompliance</code> field in
+<code>RNG_ConfigTypeDef</code>.</li>
+<li>Updated seed recovery handling after the RNG v4.4.</li>
+<li>Fixed the clear logic for the clock error flag during interrupt
+handling.</li>
+<li>Added error-state check at the start of seed recovery.</li>
+<li>Added resilient <code>__HAL_UNLOCK</code>.</li>
+<li>Added warning handling related to resilient seed recovery.</li>
+<li>Fixed missing NSCR register.</li>
+<li>Improved recovery from seed error handling related to RNG v4.4.</li>
+<li>Fixed resilient recovery warning handling.</li>
+</ul></li>
+<li><strong>HAL SDMMC</strong> driver
+<ul>
+<li>Fixed MISRA-C warning Rule 10.3 in
+<code>stm32h5xx_hal_sdio.c</code>.</li>
+<li>Fixed MISRA-C Rule 8.13 violation.</li>
+<li>Fixed SD card initialization at frequencies below 3 MHz.</li>
+<li>Fixed MISRA-C Rule 12.2 violations.</li>
+<li>Improved support for SD card V1.</li>
+<li>Fixed command argument handling for block and byte modes.</li>
+</ul></li>
+<li><strong>HAL SMARTCARD</strong> driver
+<ul>
+<li>Fixed improper initialization of the smartcard clock.</li>
+</ul></li>
+<li><strong>HAL USB</strong> driver
+<ul>
+<li>Added support for get frame number.</li>
+<li>Updated RX count register handling.</li>
+<li>Avoided out-of-band reads.</li>
+<li>Fixed MISRA-C Rule 8.13 issues.</li>
+</ul></li>
+</ul></li>
+<li><p><strong>HAL Drivers</strong> updates:</p>
+<ul>
+<li><strong>LL RNG</strong> driver
+<ul>
+<li>Updated recovery from seed error handling after RNG v4.4.</li>
+<li>Updated interrupt clear handling and resilient recovery logic.</li>
+<li>Added support for resilient unlock behavior.</li>
+<li>Fixed warnings related to resilient seed recovery.</li>
+<li>Fixed missing NSCR register.</li>
+<li>Updated NIST compliance parameter handling.</li>
+</ul></li>
+</ul></li>
+</ul>
+<h3 id="middlewares-updates"><strong>Middlewares</strong> updates:</h3>
+<ul>
+<li>Update <strong>STM32_USBPD Core Library</strong> version to
+<strong>v4.3.3</strong></li>
+<li>Update <strong>STM32_USBPD Device Library</strong> version to
+<strong>h5_v1.3.2</strong></li>
+<li>Update <strong>STM32_Audio</strong> version to
+<strong>v3.7.1</strong></li>
+<li>Update <strong>OpenBootloader</strong> version to
+<strong>v6.1.3</strong></li>
+<li>Update <strong>ThreadX</strong> version to
+<strong>threadx-6.4.0.260327</strong></li>
+<li>Update <strong>NetX Duo</strong> version to
+<strong>netxduo-6.4.0.260415</strong></li>
+<li>Update <strong>USBX</strong> version to
+<strong>usbx-6.4.0.260508</strong></li>
+<li>Update <strong>FileX</strong> version to
+<strong>filex-6.4.0.260403</strong></li>
+<li>Update <strong>LevelX</strong> version to
+<strong>levelx-6.4.0.260403</strong></li>
+<li>Update <strong>CMSIS-RTOS ThreadX wrapper</strong> version to
+<strong>tx-cmsis-1.4.1.260410</strong></li>
+<li>Update <strong>USBX STM32 Device Controllers</strong> version to
+<strong>usbx-6.4.0.260508</strong></li>
+<li>Update <strong>USBX STM32 Host Controllers</strong> version to
+<strong>usbx-6.4.0.260508</strong></li>
+<li>Update <strong>NetX Drivers</strong> version to
+<strong>netxduo-6.4.0.260415</strong></li>
+<li>Update <strong>FileX Drivers</strong> version to
+<strong>filex-6.4.0.260403</strong></li>
+<li>Update <strong>LevelX Drivers</strong> version to
+<strong>levelx-6.4.0.260403</strong></li>
+</ul>
+<h3 id="utilities-updates"><strong>Utilities</strong> updates:</h3>
+<ul>
+<li>Update <strong>ROT_AppliConfig</strong> version to
+<strong>v1.1.6</strong></li>
+</ul>
+<h3 id="projects"><strong>Projects</strong></h3>
+<p>The <strong>STM32CubeH5</strong> Firmware package comes with template
+running on STMicroelectronics boards, organized by board and provided
+with preconfigured projects for the main supported toolchains. The
+exhaustive list of projects is provided in this table <a
+href="Projects/STM32CubeProjectsList.html">STM32CubeProjectsList.html</a></p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Name</th>
+<th style="text-align: left;">Version</th>
+<th style="text-align: left;">Release notes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Projects</td>
+<td style="text-align: left;">V1.7.0 <span
+class="icon-st-update"></span></td>
+<td style="text-align: left;"><a
+href="Projects/Release_Notes.html">release notes</a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="components"><strong>Components</strong></h3>
+<p><small>The components flagged by “<span
+class="icon-st-update"></span>” have changed since the previous release.
+“<span class="icon-st-add"></span>” are new.</small></p>
+<table>
+<caption><strong>Drivers</strong></caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Name</th>
+<th style="text-align: left;">Version</th>
+<th style="text-align: left;">Release note</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">CMSIS</td>
+<td style="text-align: left;">v5.9.0</td>
+<td style="text-align: left;"><a
+href="Drivers/CMSIS/Documentation/index.html">release notes</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">STM32H5xx CMSIS</td>
+<td style="text-align: left;">V1.7.0 <span
+class="icon-st-update"></span></td>
+<td style="text-align: left;"><a
+href="https://htmlpreview.github.io/?https://github.com/STMicroelectronics/cmsis-device-h5/blob/master/Release_Notes.html">release
+notes</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">STM32H5xx HAL</td>
+<td style="text-align: left;">V1.7.0 <span
+class="icon-st-update"></span></td>
+<td style="text-align: left;"><a
+href="https://htmlpreview.github.io/?https://github.com/STMicroelectronics/stm32h5xx-hal-driver/blob/master/Release_Notes.html">release
+notes</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BSP STM32H5xx NUCLEO</td>
+<td style="text-align: left;">V1.3.0 <span
+class="icon-st-update"></span></td>
+<td style="text-align: left;"><a
+href="https://htmlpreview.github.io/?https://github.com/STMicroelectronics/stm32h5xx-nucleo-bsp/blob/main/Release_Notes.html">release
+notes</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">BSP STM32H573I-DK</td>
+<td style="text-align: left;">V1.2.0 <span
+class="icon-st-update"></span></td>
+<td style="text-align: left;"><a
+href="https://htmlpreview.github.io/?https://github.com/STMicroelectronics/stm32h573i-discovery-bsp/blob/main/Release_Notes.html">release
+notes</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BSP STM32H5F5J-DK</td>
+<td style="text-align: left;">V1.1.0 <span
+class="icon-st-update"></span></td>
+<td style="text-align: left;"><a
+href="https://htmlpreview.github.io/?https://github.com/STMicroelectronics/stm32h5f5j-discovery-bsp/blob/main/Release_Notes.html">release
+notes</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">BSP Common</td>
+<td style="text-align: left;">V7.2.1</td>
+<td style="text-align: left;"><a
+href="https://htmlpreview.github.io/?https://github.com/STMicroelectronics/stm32-bsp-common/blob/v7.2.1/Release_Notes.html">release
+notes</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BSP lan8742</td>
+<td style="text-align: left;">V1.0.4</td>
+<td style="text-align: left;"><a
+href="https://htmlpreview.github.io/?https://github.com/STMicroelectronics/stm32-lan8742/blob/v1.0.4/Release_Notes.html">release
+notes</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">BSP cs42l51</td>
+<td style="text-align: left;">V2.0.6</td>
+<td style="text-align: left;"><a
+href="https://htmlpreview.github.io/?https://github.com/STMicroelectronics/stm32-cs42l51/blob/v2.0.6/Release_Notes.html">release
+notes</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BSP mx25lm51245g</td>
+<td style="text-align: left;">V3.0.3</td>
+<td style="text-align: left;"><a
+href="https://htmlpreview.github.io/?https://github.com/STMicroelectronics/stm32-mx25lm51245g/blob/v3.0.3/Release_Notes.html">release
+notes</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">BSP ft6x06</td>
+<td style="text-align: left;">V2.0.3</td>
+<td style="text-align: left;"><a
+href="https://htmlpreview.github.io/?https://github.com/STMicroelectronics/stm32-ft6x06/blob/v2.0.3/Release_Notes.html">release
+notes</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BSP st7789h2</td>
+<td style="text-align: left;">V2.0.4</td>
+<td style="text-align: left;"><a
+href="https://htmlpreview.github.io/?https://github.com/STMicroelectronics/stm32-st7789h2/blob/v2.0.4/Release_Notes.html">release
+notes</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">BSP tcpp0203</td>
+<td style="text-align: left;">V1.2.3</td>
+<td style="text-align: left;"><a
+href="https://htmlpreview.github.io/?https://github.com/STMicroelectronics/stm32-tcpp0203/blob/v1.2.3/Release_Notes.html">release
+notes</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BSP mx_wifi</td>
+<td style="text-align: left;">V2.3.4</td>
+<td style="text-align: left;"><a
+href="https://htmlpreview.github.io/?https://github.com/STMicroelectronics/stm32-mx-wifi/blob/v2.3.4/Release_Notes.html">release
+notes</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">BSP aps6408</td>
+<td style="text-align: left;">V2.0.1</td>
+<td style="text-align: left;"><a
+href="https://htmlpreview.github.io/?https://github.com/STMicroelectronics/stm32-aps6408/blob/v2.0.1/Release_Notes.html">release
+notes</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BSP st1633i</td>
+<td style="text-align: left;">v1.0.0</td>
+<td style="text-align: left;"><a
+href="Drivers/BSP/Components/st1633i/Release_Notes.html">release
+notes</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">BSP ism330dhcx</td>
+<td style="text-align: left;">V1.8.0</td>
+<td style="text-align: left;"><a
+href="https://htmlpreview.github.io/?https://github.com/STMicroelectronics/stm32-ism330dhcx/blob/v1.8.0/Release_Notes.html">release
+notes</a></td>
+</tr>
+</tbody>
+</table>
+<table>
+<caption><strong>Middlewares</strong></caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Name</th>
+<th style="text-align: left;">Version</th>
+<th style="text-align: left;">Release note</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">STM32 USBPD Core Library</td>
+<td style="text-align: left;">v4.3.3 <span
+class="icon-st-update"></span></td>
+<td style="text-align: left;"><a
+href="Middlewares/ST/STM32_USBPD_Library/Core/Release_Notes.html">release
+notes</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">STM32 USBPD Device Library</td>
+<td style="text-align: left;">h5_v1.3.2 <span
+class="icon-st-update"></span></td>
+<td style="text-align: left;"><a
+href="Middlewares/ST/STM32_USBPD_Library/Devices/STM32H5XX/Release_Notes.html">release
+notes</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">STM32_Audio</td>
+<td style="text-align: left;">v3.7.1 <span
+class="icon-st-update"></span></td>
+<td style="text-align: left;"><a
+href="Middlewares/ST/STM32_Audio/Addons/PDM/Release_Notes.html">release
+notes</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">OpenBootloader</td>
+<td style="text-align: left;">v6.1.3 <span
+class="icon-st-update"></span></td>
+<td style="text-align: left;"><a
+href="https://htmlpreview.github.io/?https://github.com/STMicroelectronics/stm32-mw-openbl/blob/v6.1.3/Release_Notes.html">release
+notes</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ThreadX</td>
+<td style="text-align: left;">threadx-6.4.0</td>
+<td style="text-align: left;"><a
+href="https://github.com/eclipse-threadx/threadx/releases/tag/v6.4.0_rel">release
+notes</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">ST modified 260327 <span
+class="icon-st-update"></span></td>
+<td style="text-align: left;"><a
+href="https://github.com/STMicroelectronics/stm32-mw-threadx/blob/v6.4.0_260327/st_readme.txt">ST release notes</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">NetXduo</td>
+<td style="text-align: left;">netxduo-6.4.0</td>
+<td style="text-align: left;"><a
+href="https://github.com/eclipse-threadx/netxduo/releases/tag/v6.4.0_rel">release
+notes</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">ST modified 260415 <span
+class="icon-st-update"></span></td>
+<td style="text-align: left;"><a
+href="https://github.com/STMicroelectronics/stm32-mw-netxduo/blob/v6.4.0_260415/st_readme.txt">ST release notes</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">USBX</td>
+<td style="text-align: left;">usbx-6.4.0</td>
+<td style="text-align: left;"><a
+href="https://github.com/azure-rtos/usbx/releases/tag/v6.4.0_rel">release
+notes</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">ST modified 260508 <span
+class="icon-st-update"></span></td>
+<td style="text-align: left;"><a
+href="https://github.com/STMicroelectronics/stm32-mw-usbx/blob/v6.4.0_260508/st_readme.txt">ST release notes</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">FileX</td>
+<td style="text-align: left;">filex-6.4.0</td>
+<td style="text-align: left;"><a
+href="https://github.com/azure-rtos/filex/releases/tag/v6.4.0_rel">release
+notes</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">ST modified 260403 <span
+class="icon-st-update"></span></td>
+<td style="text-align: left;"><a
+href="https://github.com/STMicroelectronics/stm32-mw-filex/blob/v6.4.0_260403/st_readme.txt">ST release notes</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">LevelX</td>
+<td style="text-align: left;">levelx-6.4.0</td>
+<td style="text-align: left;"><a
+href="https://github.com/azure-rtos/levelx/releases/tag/v6.4.0_rel">release
+notes</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">ST modified 260403 <span
+class="icon-st-update"></span></td>
+<td style="text-align: left;"><a
+href="https://github.com/STMicroelectronics/stm32-mw-levelx/blob/v6.4.0_260403/st_readme.txt">ST release notes</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">mbed-crypto</td>
+<td style="text-align: left;">v3.6.6</td>
+<td style="text-align: left;"><a
+href="Middlewares/Third_Party/mbed-crypto/README.md">release
+notes</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">ST modified 20260511 <span
+class="icon-st-update"></span></td>
+<td style="text-align: left;"><a
+href="https://github.com/STMicroelectronics/stm32-mw-mbedtls/blob/v3.6.6_20260511/st_readme.txt">ST release
+notes</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">mcuboot</td>
+<td style="text-align: left;">v1.7.2.40 <span
+class="icon-st-update"></span></td>
+<td style="text-align: left;"><a
+href="https://github.com/STMicroelectronics/stm32-mw-mcuboot/blob/v1.7.2.40/st_readme.txt">ST release
+notes</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">mbed-crypto-alt</td>
+<td style="text-align: left;">v1.2.1 <span
+class="icon-st-update"></span></td>
+<td style="text-align: left;"><a
+href="Middlewares/ST/mbedtls_alt/Release_Notes.html">ST release
+notes</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">mbedtls_key_wrap_engine</td>
+<td style="text-align: left;">v1.0.4 <span
+class="icon-st-update"></span></td>
+<td style="text-align: left;"><a
+href="Middlewares/ST/mbedtls_key_wrap_engine/Release_Notes.html">ST
+release notes</a></td>
+</tr>
+</tbody>
+</table>
+<table>
+<caption><strong>Utilities</strong></caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Name</th>
+<th style="text-align: left;">Version</th>
+<th style="text-align: left;">Release note</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Common</td>
+<td style="text-align: left;">V1.6.1</td>
+<td style="text-align: left;"><a
+href="Utilities/Common/Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Fonts</td>
+<td style="text-align: left;">V2.0.3</td>
+<td style="text-align: left;"><a
+href="Utilities/Fonts/Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CPU</td>
+<td style="text-align: left;">V1.1.3</td>
+<td style="text-align: left;"><a
+href="Utilities/CPU/Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">lcd</td>
+<td style="text-align: left;">v2.2.0</td>
+<td style="text-align: left;"><a
+href="Utilities/lcd/Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">GUI_INTERFACE</td>
+<td style="text-align: left;">v2.3.0</td>
+<td style="text-align: left;"><a
+href="Utilities/GUI_INTERFACE/Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">TRACER_EMB</td>
+<td style="text-align: left;">V1.10.0</td>
+<td style="text-align: left;"><a
+href="Utilities/TRACER_EMB/Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ROT_AppliConfig</td>
+<td style="text-align: left;">v1.1.6 <span
+class="icon-st-update"></span></td>
+<td style="text-align: left;"><a
+href="Utilities/PC_Software/ROT_AppliConfig/Release_Notes.html">release
+notes</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">HASH_HAL_Migrator</td>
+<td style="text-align: left;">V1.0.0</td>
+<td style="text-align: left;"><a
+href="Utilities/PC_Software/HASH_HAL_Migrator/Release_Notes.html">release
+notes</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">JPEG</td>
+<td style="text-align: left;">v2.0.3</td>
+<td style="text-align: left;"><a
+href="Utilities/JPEG/Release_Notes.html">release notes</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="development-toolchains-and-compilers">Development Toolchains and
+Compilers</h2>
+<ul>
+<li>IAR Embedded Workbench for ARM (EWARM) toolchain V9.20.4 + ST-LINK,
+patch available here:
+<ul>
+<li><a
+href="Utilities\PC_Software\IDEs_Patches\EWARM\EWARMv9_STM32H5xx_V1.3.0.zip">Utilities\PC_Software\IDEs_Patches\EWARM\EWARMv9_STM32H5xx_V1.3.0.zip</a><br />
+</li>
+<li>This patch supports
+<strong>STM32H553</strong>/<strong>STM32H543</strong>/STM32H573/STM32H563/STM32H562/STM32H503/STM32H533/STM32H523/STM32H5F5/STM32H5F4/STM32H5E5/STM32H5E4
+devices</li>
+</ul></li>
+<li>RealView Microcontroller Development Kit (MDK-ARM) toolchain V5.38 +
+ST-LINK, patch available here:
+<ul>
+<li><a
+href="Utilities\PC_Software\IDEs_Patches\MDK-ARM\Keil.STM32H5xx_DFP.2.3.0.zip">Utilities\PC_Software\IDEs_Patches\MDK-ARM\Keil.STM32H5xx_DFP.2.3.0.zip</a></li>
+<li>This patch supports
+<strong>STM32H553</strong>/<strong>STM32H543</strong>/STM32H573/STM32H563/STM32H562/STM32H503/STM32H533/STM32H523/STM32H5F5/STM32H5F4/STM32H5E5/STM32H5E4
+devices</li>
+</ul></li>
+<li>STM32CubeIDE V1.23.0 (GCC14)</li>
+</ul>
+<h2 id="supported-devices-and-boards">Supported Devices and boards</h2>
+<ul>
+<li>Devices:
+<ul>
+<li>STM32H573xx/STM32H563xx/STM32H562xx revX</li>
+<li>STM32H503xx revX</li>
+<li>STM32H533xx/STM32H523xx revA</li>
+<li>STM32H5E4xx/STM32H5E5xx/STM32H5F4xx/STM32H5F5xx revX</li>
+<li><strong>STM32H553xx</strong>/<strong>STM32H543xx</strong> revX</li>
+</ul></li>
+<li>Boards:
+<ul>
+<li>NUCLEO-H563ZI REV C</li>
+<li>NUCLEO-H503RB REV C</li>
+<li>STM32H573I-DK REV C</li>
+<li>NUCLEO-H533RE REV C</li>
+<li>NUCLEO-H5E5ZJ</li>
+<li>STM32H5F5J-DK</li>
+<li><strong>NUCLEO-H553ZG</strong></li>
+</ul></li>
+</ul>
+<h2 id="dependencies">Dependencies</h2>
+<ul>
+<li>STM32CubeMX V6.18.0</li>
+</ul>
+<h2 id="known-limitations">Known Limitations</h2>
+<ul>
+<li>Some projects are not generated with STM32CubeMX tool for the
+exhaustive list please refer to this table <a
+href="Projects/STM32CubeProjectsList.html">STM32CubeProjectsList.html</a></li>
+<li>The project Tx_FreeRTOS_Wrapper generates a warning “The left and
+right operands in tx_freertos.c are identical”. This warning has no
+impact on the project’s functionality</li>
+</ul>
+<h2 id="backward-compatibility">Backward Compatibility</h2>
+<ul>
+<li>Not applicable</li>
+</ul>
+</div>
+</div>
+<div class="collapse">
+<input type="checkbox" id="collapse-section10" aria-hidden="true">
+<label for="collapse-section10" aria-hidden="true"><strong>V1.6.0 /
+04-February-2026</strong></label>
 <div>
 <ul>
 <li><strong>Official Release</strong> V1.6.0 of <span
@@ -123,7 +759,7 @@ STM32H563xx</strong> and <strong>STM32H573xx</strong> devices.</li>
 <li>Add support of STM32H5 4M device.</li>
 <li>Deliver new <strong>PLAY HAL</strong> driver.</li>
 </ul>
-<h2 id="main-changes">Main Changes</h2>
+<h2 id="main-changes-1">Main Changes</h2>
 <ul>
 <li>Official release of <strong>STM32H5E4xx, STM32H5E5xx,
 STM32H5F4xx</strong> and <strong>STM32H5F5xx</strong> devices.</li>
@@ -162,7 +798,7 @@ asymmetric wrapped keys.</li>
 operations, wrap key and generate wrapped key.</li>
 </ul></li>
 </ul>
-<h2 id="contents">Contents</h2>
+<h2 id="contents-1">Contents</h2>
 <h3 id="features"><strong>Features</strong></h3>
 <p>STM32CubeH5 gathers in one single package all the generic embedded
 software components required to develop an application on STM32H5
@@ -185,12 +821,12 @@ reference firmware supports all the different configurations of the
 SMT32H5, it implements Secure Boot and Secure Firmware Update functions
 managed into the two iRot (when ST-iRoT not active) and uRot memory
 areas.</p>
-<h3 id="sbom"><strong>SBOM</strong></h3>
+<h3 id="sbom-1"><strong>SBOM</strong></h3>
 <ul>
 <li>Deliver SBOM in <a href="sbom_cdx.json">CycloneDX v1.5
 format</a></li>
 </ul>
-<h3 id="cmsis-drivers-updates"><strong>CMSIS Drivers</strong>
+<h3 id="cmsis-drivers-updates-1"><strong>CMSIS Drivers</strong>
 updates</h3>
 <ul>
 <li>CMSIS Device Release version of bits and registers definition
@@ -202,7 +838,7 @@ STM32H5F5xx reference manual) (Please Refer to the <a
 href="https://htmlpreview.github.io/?https://github.com/STMicroelectronics/cmsis-device-h5/blob/master/Release_Notes.html"><strong>release
 notes</strong></a> for details)</li>
 </ul>
-<h3 id="halll-drivers-updates"><strong>HAL/LL Drivers</strong>
+<h3 id="halll-drivers-updates-1"><strong>HAL/LL Drivers</strong>
 updates</h3>
 <ul>
 <li><p>HAL and LL drivers Release for STM32H5XX devices (Please Refer to
@@ -579,7 +1215,7 @@ H5.</li>
 </ul></li>
 </ul></li>
 </ul>
-<h3 id="middlewares-updates"><strong>Middlewares</strong> updates</h3>
+<h3 id="middlewares-updates-1"><strong>Middlewares</strong> updates</h3>
 <ul>
 <li>Update <strong>ThreadX</strong> version to
 <strong>threadx-6.4.0.250822</strong><br />
@@ -620,7 +1256,7 @@ H5.</li>
 <li>Add new component <strong>mbedtls_key_wrap_engine</strong> version
 <strong>v1.0.2</strong></li>
 </ul>
-<h3 id="utilities-updates"><strong>Utilities</strong> updates</h3>
+<h3 id="utilities-updates-1"><strong>Utilities</strong> updates</h3>
 <ul>
 <li>Update <strong>lcd </strong> version to
 <strong>v2.2.0</strong><br />
@@ -631,7 +1267,7 @@ H5.</li>
 <li>Add new component <strong>jpeg</strong> version
 <strong>v2.0.3</strong></li>
 </ul>
-<h3 id="projects"><strong>Projects</strong></h3>
+<h3 id="projects-1"><strong>Projects</strong></h3>
 <p>The <strong>STM32CubeH5</strong> Firmware package comes with template
 running on STMicroelectronics boards, organized by board and provided
 with preconfigured projects for the main supported toolchains. The
@@ -655,7 +1291,7 @@ href="Projects/Release_Notes.html">release notes</a></td>
 </tr>
 </tbody>
 </table>
-<h3 id="components"><strong>Components</strong></h3>
+<h3 id="components-1"><strong>Components</strong></h3>
 <p><small>The components flagged by “<span
 class="icon-st-update"></span>” have changed since the previous release.
 “<span class="icon-st-add"></span>” are new.</small></p>
@@ -834,7 +1470,7 @@ notes</a></td>
 <td style="text-align: left;">V6.1.2 <span
 class="icon-st-update"></span></td>
 <td style="text-align: left;"><a
-href="https://htmlpreview.github.io/?https://github.com/STMicroelectronics/stm32-mw-openbl/blob/v6.1.2/Release_Notes.html">release
+href="https://htmlpreview.github.io/?https://github.com/STMicroelectronics/stm32-mw-openbl/blob/v6.1.3/Release_Notes.html">release
 notes</a></td>
 </tr>
 <tr class="odd">
@@ -882,7 +1518,7 @@ notes</a></td>
 <td style="text-align: left;">mbed-tls-v3.6.4 <span
 class="icon-st-update"></span></td>
 <td style="text-align: left;"><a
-href="https://github.com/STMicroelectronics/stm32-mw-mbedtls/blob/v3.6.4_20250701/st_readme.txt">ST release
+href="https://github.com/STMicroelectronics/stm32-mw-mbedtls/blob/v3.6.6_20260511/st_readme.txt">ST release
 notes</a></td>
 </tr>
 <tr class="odd">
@@ -890,7 +1526,7 @@ notes</a></td>
 <td style="text-align: left;">v1.7.2.38 <span
 class="icon-st-update"></span></td>
 <td style="text-align: left;"><a
-href="https://github.com/STMicroelectronics/stm32-mw-mcuboot/blob/v1.7.2.38/st_readme.txt">ST release
+href="https://github.com/STMicroelectronics/stm32-mw-mcuboot/blob/v1.7.2.40/st_readme.txt">ST release
 notes</a></td>
 </tr>
 <tr class="even">
@@ -982,8 +1618,8 @@ href="Utilities/JPEG/Release_Notes.html">release notes</a></td>
 </tr>
 </tbody>
 </table>
-<h2 id="development-toolchains-and-compilers">Development Toolchains and
-Compilers</h2>
+<h2 id="development-toolchains-and-compilers-1">Development Toolchains
+and Compilers</h2>
 <ul>
 <li>IAR Embedded Workbench for ARM (EWARM) toolchain V9.20.4 + ST-LINK,
 patch available here:
@@ -1006,7 +1642,8 @@ devices</li>
 </ul></li>
 <li>STM32CubeIDE V1.22.0 (GCC14)</li>
 </ul>
-<h2 id="supported-devices-and-boards">Supported Devices and boards</h2>
+<h2 id="supported-devices-and-boards-1">Supported Devices and
+boards</h2>
 <ul>
 <li>Devices:
 <ul>
@@ -1026,14 +1663,14 @@ revX</strong></li>
 <li><strong>STM32H5F5J-DK</strong></li>
 </ul></li>
 </ul>
-<h2 id="dependencies">Dependencies</h2>
+<h2 id="dependencies-1">Dependencies</h2>
 <ul>
 <li>STM32CubeMX V6.17.0</li>
 <li>The EMW3080B MXCHIP Wi-Fi module firmware version used is V2.3.4,
 for more details refer to Wi-Fi example readme files which can be found
 under Projects/STM32H573I-DK/Applications/NetXDuo.</li>
 </ul>
-<h2 id="known-limitations">Known Limitations</h2>
+<h2 id="known-limitations-1">Known Limitations</h2>
 <ul>
 <li>Some projects are not generated with STM32CubeMX tool for the
 exhaustive list please refer to this table <a
@@ -1049,7 +1686,7 @@ will be provided in the next releases:
 <li>NUCLEO-H563ZI/Examples/DAC/SimpleConversion</li>
 </ul></li>
 </ul>
-<h2 id="backward-compatibility">Backward Compatibility</h2>
+<h2 id="backward-compatibility-1">Backward Compatibility</h2>
 <ul>
 <li>Not applicable</li>
 </ul>
@@ -1064,7 +1701,7 @@ will be provided in the next releases:
 style="font-weight: bold;">STM32CubeH5</span> Firmware Package for
 maintenance of ROT Applications. ** Only compatible with STM32CubeH5
 Cube FW package v1.5.0</p>
-<h2 id="main-changes-1">Main Changes</h2>
+<h2 id="main-changes-2">Main Changes</h2>
 <ul>
 <li>This release mainly focused on security related updates - security
 middlewares and RoT applications</li>
@@ -1079,7 +1716,7 @@ STM32H533, STM32H563, and STM32H573 products</li>
 <li><strong>Enabled STM32CubeIDE users on Windows OS</strong> to run RoT
 .bat scripts</li>
 </ul>
-<h2 id="contents-1">Contents</h2>
+<h2 id="contents-2">Contents</h2>
 <h3 id="features-1"><strong>Features</strong></h3>
 <p>STM32CubeH5 gathers in one single package all the generic embedded
 software components required to develop an application on STM32H5
@@ -1190,7 +1827,7 @@ href="Projects/Release_Notes.html">release notes</a></td>
 </tr>
 </tbody>
 </table>
-<h3 id="components-1"><strong>Components</strong></h3>
+<h3 id="components-2"><strong>Components</strong></h3>
 <p><small>The components flagged by “<span
 class="icon-st-update"></span>” have changed since the previous release.
 “<span class="icon-st-add"></span>” are new.</small></p>
@@ -1325,7 +1962,7 @@ notes</a></td>
 <td style="text-align: left;">mbed-tls-v3.6.4_20250701 <span
 class="icon-st-update"></span></td>
 <td style="text-align: left;"><a
-href="https://github.com/STMicroelectronics/stm32-mw-mbedtls/blob/v3.6.4_20250701/st_readme.txt">ST release
+href="https://github.com/STMicroelectronics/stm32-mw-mbedtls/blob/v3.6.6_20260511/st_readme.txt">ST release
 notes</a></td>
 </tr>
 <tr class="even">
@@ -1333,14 +1970,14 @@ notes</a></td>
 <td style="text-align: left;">V1.7.2.38 <span
 class="icon-st-update"></span></td>
 <td style="text-align: left;"><a
-href="https://github.com/STMicroelectronics/stm32-mw-mcuboot/blob/v1.7.2.38/st_readme.txt">ST release
+href="https://github.com/STMicroelectronics/stm32-mw-mcuboot/blob/v1.7.2.40/st_readme.txt">ST release
 notes</a></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">OpenBootloader</td>
 <td style="text-align: left;">V6.1.1</td>
 <td style="text-align: left;"><a
-href="https://htmlpreview.github.io/?https://github.com/STMicroelectronics/stm32-mw-openbl/blob/v6.1.2/Release_Notes.html">release
+href="https://htmlpreview.github.io/?https://github.com/STMicroelectronics/stm32-mw-openbl/blob/v6.1.3/Release_Notes.html">release
 notes</a></td>
 </tr>
 <tr class="even">
@@ -1443,7 +2080,7 @@ notes</a></td>
 </tr>
 </tbody>
 </table>
-<h2 id="development-toolchains-and-compilers-1">Development Toolchains
+<h2 id="development-toolchains-and-compilers-2">Development Toolchains
 and Compilers</h2>
 <ul>
 <li>IAR Embedded Workbench for ARM (EWARM) toolchain V9.20.4 + ST-LINK,
@@ -1464,7 +2101,7 @@ STM32H573/STM32H563/STM32H562/STM32H503/STM32H533/STM32H523 devices</li>
 </ul></li>
 <li>STM32CubeIDE V1.18.0 (GCC13)</li>
 </ul>
-<h2 id="supported-devices-and-boards-1">Supported Devices and
+<h2 id="supported-devices-and-boards-2">Supported Devices and
 boards</h2>
 <ul>
 <li>Devices:
@@ -1481,19 +2118,19 @@ boards</h2>
 <li>NUCLEO-H533RE REV C</li>
 </ul></li>
 </ul>
-<h2 id="dependencies-1">Dependencies</h2>
+<h2 id="dependencies-2">Dependencies</h2>
 <ul>
 <li>This patch release package is only compatible with STM32H5 Cube FW
 V1.5.0 package.</li>
 <li>STM32CubeMX V6.14.0</li>
 </ul>
-<h2 id="known-limitations-1">Known Limitations</h2>
+<h2 id="known-limitations-2">Known Limitations</h2>
 <ul>
 <li>Projects are not generated with STM32CubeMX tool for the exhaustive
 list please refer to this table <a
 href="Projects/STM32CubeProjectsList.html">STM32CubeProjectsList.html</a></li>
 </ul>
-<h2 id="backward-compatibility-1">Backward Compatibility</h2>
+<h2 id="backward-compatibility-2">Backward Compatibility</h2>
 <ul>
 <li>Not applicable</li>
 </ul>
@@ -1508,7 +2145,7 @@ href="Projects/STM32CubeProjectsList.html">STM32CubeProjectsList.html</a></li>
 style="font-weight: bold;">STM32CubeH5</span> Firmware Package, to
 support <strong>STM32H503xx, STM32H523xx, STM32H533xx, STM32H562xx,
 STM32H563xx</strong> and <strong>STM32H573xx</strong> devices</p>
-<h2 id="main-changes-2">Main Changes</h2>
+<h2 id="main-changes-3">Main Changes</h2>
 <ul>
 <li>Add <strong>SDIO HAL</strong> driver compliant with SDIO 3.0</li>
 <li>Remove <strong>secure_manager_api</strong> middleware</li>
@@ -1533,7 +2170,7 @@ projects with <strong>EWARM, MDK-ARM</strong> and
 <li>Add <strong>DCACHE_Maintenance</strong> example with MDK-ARM and
 STM32CubeIDE toolchains support on STM32H573I-DK board</li>
 </ul>
-<h2 id="contents-2">Contents</h2>
+<h2 id="contents-3">Contents</h2>
 <h3 id="features-2"><strong>Features</strong></h3>
 <p>STM32CubeH5 gathers in one single package all the generic embedded
 software components required to develop an application on STM32H5
@@ -1556,7 +2193,7 @@ reference firmware supports all the different configurations of the
 SMT32H5, it implements Secure Boot and Secure Firmware Update functions
 managed into the two iRot (when ST-iRoT not active) and uRot memory
 areas.</p>
-<h3 id="cmsis-drivers-updates-1"><strong>CMSIS Drivers</strong>
+<h3 id="cmsis-drivers-updates-2"><strong>CMSIS Drivers</strong>
 updates</h3>
 <ul>
 <li>CMSIS Device Release version of bits and registers definition
@@ -1567,7 +2204,7 @@ the <a
 href="https://htmlpreview.github.io/?https://github.com/STMicroelectronics/cmsis-device-h5/blob/master/Release_Notes.html"><strong>release
 notes</strong></a> for details)</li>
 </ul>
-<h3 id="halll-drivers-updates-1"><strong>HAL/LL Drivers</strong>
+<h3 id="halll-drivers-updates-2"><strong>HAL/LL Drivers</strong>
 updates</h3>
 <ul>
 <li><p>HAL and LL drivers Maintenance Release for STM32H5XX devices
@@ -1687,7 +2324,7 @@ enabled</li>
 </ul></li>
 </ul></li>
 </ul>
-<h3 id="middlewares-updates-1"><strong>Middlewares</strong> updates</h3>
+<h3 id="middlewares-updates-2"><strong>Middlewares</strong> updates</h3>
 <ul>
 <li>Remove <strong>secure_manager_api</strong> middleware</li>
 <li>Update <strong>mcuboot</strong> version to
@@ -1697,12 +2334,12 @@ enabled</li>
 <li>Update <strong>AzureRTOS</strong> middlewares version to
 <strong>V6.4.0.241011</strong></li>
 </ul>
-<h3 id="utilities-updates-1"><strong>Utilities</strong> updates</h3>
+<h3 id="utilities-updates-2"><strong>Utilities</strong> updates</h3>
 <ul>
 <li>Remove <strong>Certificates</strong>, <strong>ITSbuilder</strong>
 and <strong>IAT_Verifier</strong> utilities</li>
 </ul>
-<h3 id="projects-1"><strong>Projects</strong></h3>
+<h3 id="projects-2"><strong>Projects</strong></h3>
 <ul>
 <li>Add <strong>ADC_SingleConversion_TriggerTimer_DMA_Init</strong>
 LL_Example with EWARM toolchain support on NUCLEO-H563ZI board</li>
@@ -1752,7 +2389,7 @@ href="Projects/Release_Notes.html">release notes</a></td>
 </tr>
 </tbody>
 </table>
-<h3 id="components-2"><strong>Components</strong></h3>
+<h3 id="components-3"><strong>Components</strong></h3>
 <p><small>The components flagged by “<span
 class="icon-st-update"></span>” have changed since the previous release.
 “<span class="icon-st-add"></span>” are new.</small></p>
@@ -1889,7 +2526,7 @@ notes</a></td>
 <td style="text-align: left;">mbed-tls-v3.6.2_20241125 <span
 class="icon-st-update"></span></td>
 <td style="text-align: left;"><a
-href="https://github.com/STMicroelectronics/stm32-mw-mbedtls/blob/v3.6.4_20250701/st_readme.txt">ST release
+href="https://github.com/STMicroelectronics/stm32-mw-mbedtls/blob/v3.6.6_20260511/st_readme.txt">ST release
 notes</a></td>
 </tr>
 <tr class="even">
@@ -1897,14 +2534,14 @@ notes</a></td>
 <td style="text-align: left;">V1.7.2.27 <span
 class="icon-st-update"></span></td>
 <td style="text-align: left;"><a
-href="https://github.com/STMicroelectronics/stm32-mw-mcuboot/blob/v1.7.2.38/st_readme.txt">ST release
+href="https://github.com/STMicroelectronics/stm32-mw-mcuboot/blob/v1.7.2.40/st_readme.txt">ST release
 notes</a></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">OpenBootloader</td>
 <td style="text-align: left;">V6.1.1</td>
 <td style="text-align: left;"><a
-href="https://htmlpreview.github.io/?https://github.com/STMicroelectronics/stm32-mw-openbl/blob/v6.1.2/Release_Notes.html">release
+href="https://htmlpreview.github.io/?https://github.com/STMicroelectronics/stm32-mw-openbl/blob/v6.1.3/Release_Notes.html">release
 notes</a></td>
 </tr>
 <tr class="even">
@@ -2011,7 +2648,7 @@ notes</a></td>
 </tr>
 </tbody>
 </table>
-<h2 id="development-toolchains-and-compilers-2">Development Toolchains
+<h2 id="development-toolchains-and-compilers-3">Development Toolchains
 and Compilers</h2>
 <ul>
 <li>IAR Embedded Workbench for ARM (EWARM) toolchain V9.20.4 + ST-LINK,
@@ -2033,7 +2670,7 @@ STM32H573/STM32H563/STM32H562/STM32H503/STM32H533/STM32H523 devices</li>
 </ul></li>
 <li>STM32CubeIDE V1.18.0 (GCC13)</li>
 </ul>
-<h2 id="supported-devices-and-boards-2">Supported Devices and
+<h2 id="supported-devices-and-boards-3">Supported Devices and
 boards</h2>
 <ul>
 <li>Devices:
@@ -2050,14 +2687,14 @@ boards</h2>
 <li>NUCLEO-H533RE REV C</li>
 </ul></li>
 </ul>
-<h2 id="dependencies-2">Dependencies</h2>
+<h2 id="dependencies-3">Dependencies</h2>
 <ul>
 <li>STM32CubeMX V6.14.0</li>
 <li>The EMW3080B MXCHIP Wi-Fi module firmware version used is V2.3.4,
 for more details refer to Wi-Fi example readme files which can be found
 under Projects/STM32H573I-DK/Applications/NetXDuo.</li>
 </ul>
-<h2 id="known-limitations-2">Known Limitations</h2>
+<h2 id="known-limitations-3">Known Limitations</h2>
 <ul>
 <li><p>Some projects are not generated with STM32CubeMX tool for the
 exhaustive list please refer to this table <a
@@ -2076,7 +2713,7 @@ and will be provided in the next releases:</p>
 <li>NUCLEO-H563ZI/Examples/DAC/SimpleConversion</li>
 </ul></li>
 </ul>
-<h2 id="backward-compatibility-2">Backward Compatibility</h2>
+<h2 id="backward-compatibility-3">Backward Compatibility</h2>
 <ul>
 <li>Not applicable</li>
 </ul>
@@ -2091,7 +2728,7 @@ and will be provided in the next releases:</p>
 style="font-weight: bold;">STM32CubeH5</span> Firmware Package, to
 support <strong>STM32H503xx, STM32H523xx, STM32H533xx, STM32H562xx,
 STM32H563xx</strong> and <strong>STM32H573xx</strong> devices</p>
-<h2 id="main-changes-3">Main Changes</h2>
+<h2 id="main-changes-4">Main Changes</h2>
 <ul>
 <li>Update <strong>AzureRTOS</strong> Middleware version to
 <strong>V6.4.0</strong> and over <strong>50 applications</strong>
@@ -2110,7 +2747,7 @@ support on NUCLEO-H503RB board</li>
 <li>Update <strong>secure_manager_api</strong> version to
 <strong>V2.2.1</strong></li>
 </ul>
-<h2 id="contents-3">Contents</h2>
+<h2 id="contents-4">Contents</h2>
 <h3 id="features-3"><strong>Features</strong></h3>
 <p>STM32CubeH5 gathers in one single package all the generic embedded
 software components required to develop an application on STM32H5
@@ -2139,7 +2776,7 @@ management, Platform Attestation, Secure Firmware Update functions. For
 more details refer to the SMAK application. Please refer to <a
 href="https://wiki.st.com/stm32mcu/wiki/Security:How_to_start_with_Secure_Manager_default_configuration_on_STM32H5">Wiki
 page</a></p>
-<h3 id="cmsis-drivers-updates-2"><strong>CMSIS Drivers</strong>
+<h3 id="cmsis-drivers-updates-3"><strong>CMSIS Drivers</strong>
 updates</h3>
 <ul>
 <li>CMSIS Device Maintenance Release version of bits and registers
@@ -2148,7 +2785,7 @@ manual) (Please Refer to the <a
 href="https://htmlpreview.github.io/?https://github.com/STMicroelectronics/cmsis-device-h5/blob/master/Release_Notes.html"><strong>release
 notes</strong></a> for details)</li>
 </ul>
-<h3 id="halll-drivers-updates-2"><strong>HAL/LL Drivers</strong>
+<h3 id="halll-drivers-updates-3"><strong>HAL/LL Drivers</strong>
 updates</h3>
 <ul>
 <li><p>HAL and LL drivers Maintenance Release for STM32H5XX devices
@@ -2264,7 +2901,7 @@ LL_RCC_USB_CLKSOURCE_PLL2Q</li>
 </ul></li>
 </ul></li>
 </ul>
-<h3 id="middlewares-updates-2"><strong>Middlewares</strong> updates</h3>
+<h3 id="middlewares-updates-3"><strong>Middlewares</strong> updates</h3>
 <ul>
 <li>Update <strong>Azure RTOS</strong> version to
 <strong>V6.4.0</strong></li>
@@ -2281,11 +2918,11 @@ LL_RCC_USB_CLKSOURCE_PLL2Q</li>
 <li>Implementation of the AEAD multipart PSA APIs</li>
 </ul></li>
 </ul>
-<h3 id="utilities-updates-2"><strong>Utilities</strong> updates</h3>
+<h3 id="utilities-updates-3"><strong>Utilities</strong> updates</h3>
 <ul>
 <li>No update</li>
 </ul>
-<h3 id="projects-2"><strong>Projects</strong></h3>
+<h3 id="projects-3"><strong>Projects</strong></h3>
 <ul>
 <li>Update over <strong>50 applications</strong> aligned with V6.4.0
 AzureRTOS middleware version upgrade</li>
@@ -2333,7 +2970,7 @@ href="Projects/Release_Notes.html">release notes</a></td>
 </tr>
 </tbody>
 </table>
-<h3 id="components-3"><strong>Components</strong></h3>
+<h3 id="components-4"><strong>Components</strong></h3>
 <p><small>The components flagged by “<span
 class="icon-st-update"></span>” have changed since the previous release.
 “<span class="icon-st-add"></span>” are new.</small></p>
@@ -2479,7 +3116,7 @@ class="icon-st-update"></span></td>
 <td style="text-align: left;">mbed-tls-v3.6.1_20241004 <span
 class="icon-st-update"></span></td>
 <td style="text-align: left;"><a
-href="https://github.com/STMicroelectronics/stm32-mw-mbedtls/blob/v3.6.4_20250701/st_readme.txt">ST release
+href="https://github.com/STMicroelectronics/stm32-mw-mbedtls/blob/v3.6.6_20260511/st_readme.txt">ST release
 notes</a></td>
 </tr>
 <tr class="odd">
@@ -2487,14 +3124,14 @@ notes</a></td>
 <td style="text-align: left;">V1.7.2.25 <span
 class="icon-st-update"></span></td>
 <td style="text-align: left;"><a
-href="https://github.com/STMicroelectronics/stm32-mw-mcuboot/blob/v1.7.2.38/st_readme.txt">ST release
+href="https://github.com/STMicroelectronics/stm32-mw-mcuboot/blob/v1.7.2.40/st_readme.txt">ST release
 notes</a></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">OpenBootloader</td>
 <td style="text-align: left;">V6.1.1</td>
 <td style="text-align: left;"><a
-href="https://htmlpreview.github.io/?https://github.com/STMicroelectronics/stm32-mw-openbl/blob/v6.1.2/Release_Notes.html">release
+href="https://htmlpreview.github.io/?https://github.com/STMicroelectronics/stm32-mw-openbl/blob/v6.1.3/Release_Notes.html">release
 notes</a></td>
 </tr>
 <tr class="odd">
@@ -2616,7 +3253,7 @@ notes</a></td>
 </tr>
 </tbody>
 </table>
-<h2 id="development-toolchains-and-compilers-3">Development Toolchains
+<h2 id="development-toolchains-and-compilers-4">Development Toolchains
 and Compilers</h2>
 <ul>
 <li>IAR Embedded Workbench for ARM (EWARM) toolchain V9.20.4 + ST-LINK,
@@ -2638,7 +3275,7 @@ STM32H573/STM32H563/STM32H562/STM32H503/STM32H533/STM32H523 devices</li>
 </ul></li>
 <li>STM32CubeIDE V1.16.1 (GCC12)</li>
 </ul>
-<h2 id="supported-devices-and-boards-3">Supported Devices and
+<h2 id="supported-devices-and-boards-4">Supported Devices and
 boards</h2>
 <ul>
 <li>Devices:
@@ -2655,7 +3292,7 @@ boards</h2>
 <li>NUCLEO-H533RE REV C</li>
 </ul></li>
 </ul>
-<h2 id="dependencies-3">Dependencies</h2>
+<h2 id="dependencies-4">Dependencies</h2>
 <ul>
 <li>STM32CubeMX V6.13.0</li>
 <li>The SMAK Non-Secure application requires the installation of Secure
@@ -2666,7 +3303,7 @@ delivered outside this package.</li>
 for more details refer to Wi-Fi example readme files which can be found
 under Projects/STM32H573I-DK/Applications/NetXDuo.</li>
 </ul>
-<h2 id="known-limitations-3">Known Limitations</h2>
+<h2 id="known-limitations-4">Known Limitations</h2>
 <ul>
 <li>Some projects are not generated with STM32CubeMX tool for the
 exhaustive list please refer to this table <a
@@ -2721,7 +3358,7 @@ will be provided in the next releases:
 <li>STM32H573I-DK/Examples/OCTOSPI/OSPI_NOR_AutoPolling_DTR</li>
 </ul></li>
 </ul>
-<h2 id="backward-compatibility-3">Backward Compatibility</h2>
+<h2 id="backward-compatibility-4">Backward Compatibility</h2>
 <ul>
 <li>Not applicable</li>
 </ul>
@@ -2732,7 +3369,7 @@ will be provided in the next releases:
 <label for="collapse-section6" checked aria-hidden="true"><strong>V1.3.0
 / 05-June-2024</strong></label>
 <div>
-<h2 id="main-changes-4">Main Changes</h2>
+<h2 id="main-changes-5">Main Changes</h2>
 <ul>
 <li>Maintenance Release V1.3.0 of <span
 style="font-weight: bold;">STM32CubeH5</span> Firmware Package, to
@@ -2744,7 +3381,7 @@ non-secure applications.</li>
 <li>Add ROT Application support on STM32H52Xxx (256K flash
 configurations) and STM32H56Xxx (1M flash configurations) devices</li>
 </ul>
-<h2 id="contents-4">Contents</h2>
+<h2 id="contents-5">Contents</h2>
 <h3 id="features-4"><strong>Features</strong></h3>
 <p>STM32CubeH5 gathers in one single package all the generic embedded
 software components required to develop an application on STM32H5
@@ -2773,7 +3410,7 @@ management, Platform Attestation, Secure Firmware Update functions. For
 more details refer to the SMAK application. Please refer to <a
 href="https://wiki.st.com/stm32mcu/wiki/Security:How_to_start_with_Secure_Manager_default_configuration_on_STM32H5">Wiki
 page</a></p>
-<h3 id="cmsis-drivers-updates-3"><strong>CMSIS Drivers</strong>
+<h3 id="cmsis-drivers-updates-4"><strong>CMSIS Drivers</strong>
 updates</h3>
 <ul>
 <li>CMSIS Device Maintenance Release version of bits and registers
@@ -2790,7 +3427,7 @@ and RNG_NSCR_EN_OSC6 defines</li>
 <li>Rename EXTI_RTSR2_TR to EXTI_RTSR2_RT define</li>
 <li>Rename EXTI_FTSR2_TR to EXTI_FTSR2_FT define</li>
 </ul>
-<h3 id="halll-drivers-updates-3"><strong>HAL/LL Drivers</strong>
+<h3 id="halll-drivers-updates-4"><strong>HAL/LL Drivers</strong>
 updates</h3>
 <ul>
 <li><p>HAL and LL drivers Maintenance Release for STM32H5XX devices
@@ -2830,16 +3467,16 @@ TIM_CLEARINPUTSOURCE_OCREFCLR constants</li>
 </ul></li>
 </ul></li>
 </ul>
-<h3 id="middlewares-updates-3"><strong>Middlewares</strong> updates</h3>
+<h3 id="middlewares-updates-4"><strong>Middlewares</strong> updates</h3>
 <ul>
 <li>Update secure_manager_api version to V2.2.0</li>
 <li>Update mbed-crypto version to mbed-tls-v2.28.8_20240419</li>
 </ul>
-<h3 id="utilities-updates-3"><strong>Utilities</strong> updates</h3>
+<h3 id="utilities-updates-4"><strong>Utilities</strong> updates</h3>
 <ul>
 <li>Update ROT_AppliConfig version to V1.1.3</li>
 </ul>
-<h3 id="projects-3"><strong>Projects</strong></h3>
+<h3 id="projects-4"><strong>Projects</strong></h3>
 <p>The <strong>STM32CubeH5</strong> Firmware package comes with template
 running on STMicroelectronics boards, organized by board and provided
 with preconfigured projects for the main supported toolchains. The
@@ -2863,7 +3500,7 @@ href="Projects/Release_Notes.html">release notes</a></td>
 </tr>
 </tbody>
 </table>
-<h3 id="components-4"><strong>Components</strong></h3>
+<h3 id="components-5"><strong>Components</strong></h3>
 <p><small>The components flagged by “<span
 class="icon-st-update"></span>” have changed since the previous release.
 “<span class="icon-st-add"></span>” are new.</small></p>
@@ -3008,21 +3645,21 @@ class="icon-st-update"></span></td>
 <td style="text-align: left;">mbed-tls-v2.28.8_20240419 <span
 class="icon-st-update"></span></td>
 <td style="text-align: left;"><a
-href="https://github.com/STMicroelectronics/stm32-mw-mbedtls/blob/v3.6.4_20250701/st_readme.txt">ST release
+href="https://github.com/STMicroelectronics/stm32-mw-mbedtls/blob/v3.6.6_20260511/st_readme.txt">ST release
 notes</a></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">mcuboot</td>
 <td style="text-align: left;">V1.7.2.22</td>
 <td style="text-align: left;"><a
-href="https://github.com/STMicroelectronics/stm32-mw-mcuboot/blob/v1.7.2.38/st_readme.txt">ST release
+href="https://github.com/STMicroelectronics/stm32-mw-mcuboot/blob/v1.7.2.40/st_readme.txt">ST release
 notes</a></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">OpenBootloader</td>
 <td style="text-align: left;">V6.1.1</td>
 <td style="text-align: left;"><a
-href="https://htmlpreview.github.io/?https://github.com/STMicroelectronics/stm32-mw-openbl/blob/v6.1.2/Release_Notes.html">release
+href="https://htmlpreview.github.io/?https://github.com/STMicroelectronics/stm32-mw-openbl/blob/v6.1.3/Release_Notes.html">release
 notes</a></td>
 </tr>
 <tr class="odd">
@@ -3141,7 +3778,7 @@ notes</a></td>
 </tr>
 </tbody>
 </table>
-<h2 id="development-toolchains-and-compilers-4">Development Toolchains
+<h2 id="development-toolchains-and-compilers-5">Development Toolchains
 and Compilers</h2>
 <ul>
 <li>IAR Embedded Workbench for ARM (EWARM) toolchain V9.20.4 + ST-LINK,
@@ -3163,7 +3800,7 @@ STM32H573/STM32H563/STM32H562/STM32H503/STM32H533/STM32H523 devices</li>
 </ul></li>
 <li>STM32CubeIDE V1.15.0 (GCC12)</li>
 </ul>
-<h2 id="supported-devices-and-boards-4">Supported Devices and
+<h2 id="supported-devices-and-boards-5">Supported Devices and
 boards</h2>
 <ul>
 <li>Devices:
@@ -3180,7 +3817,7 @@ boards</h2>
 <li>NUCLEO-H533RE REV C</li>
 </ul></li>
 </ul>
-<h2 id="dependencies-4">Dependencies</h2>
+<h2 id="dependencies-5">Dependencies</h2>
 <ul>
 <li>STM32CubeMX V6.12.0</li>
 <li>The SMAK Non-Secure application requires the installation of Secure
@@ -3191,7 +3828,7 @@ delivered outside this package.</li>
 for more details refer to Wi-Fi example readme files which can be found
 under Projects/STM32H573I-DK/Applications/NetXDuo.</li>
 </ul>
-<h2 id="known-limitations-4">Known Limitations</h2>
+<h2 id="known-limitations-5">Known Limitations</h2>
 <ul>
 <li>Some projects are not generated with STM32CubeMX tool for the
 exhaustive list please refer to this table <a
@@ -3220,7 +3857,7 @@ of V2.3.4 rc 13”</li>
 <li>STM32H573I-DK/Applications/FileX/Fx_Dual_Instance</li>
 </ul></li>
 </ul>
-<h2 id="backward-compatibility-4">Backward Compatibility</h2>
+<h2 id="backward-compatibility-5">Backward Compatibility</h2>
 <ul>
 <li>Not applicable</li>
 </ul>
@@ -3231,13 +3868,13 @@ of V2.3.4 rc 13”</li>
 <label for="collapse-section5" checked aria-hidden="true"><strong>V1.2.0
 / 14-February-2024</strong></label>
 <div>
-<h2 id="main-changes-5">Main Changes</h2>
+<h2 id="main-changes-6">Main Changes</h2>
 <ul>
 <li>First official release of <span
 style="font-weight: bold;">STM32CubeH5</span> Firmware Package, to
 support <strong>STM32H533xx and STM32H523xx devices</strong></li>
 </ul>
-<h2 id="contents-5">Contents</h2>
+<h2 id="contents-6">Contents</h2>
 <h3 id="features-5"><strong>Features</strong></h3>
 <p>STM32CubeH5 gathers in one single package all the generic embedded
 software components required to develop an application on STM32H5
@@ -3264,7 +3901,7 @@ Compliant, and accessible by the non-secure domain. It can be
 additionally installed on STM32H5 to enable Cryptographic, Secure key
 management, Platform Attestation, Secure Firmware Update functions. For
 more details refer to the SMAK application.</p>
-<h3 id="projects-4"><strong>Projects</strong></h3>
+<h3 id="projects-5"><strong>Projects</strong></h3>
 <p>The <strong>STM32CubeH5</strong> Firmware package comes with template
 running on STMicroelectronics boards, organized by board and provided
 with preconfigured projects for the main supported toolchains. The
@@ -3288,7 +3925,7 @@ href="Projects/Release_Notes.html">release notes</a></td>
 </tr>
 </tbody>
 </table>
-<h3 id="components-5"><strong>Components</strong></h3>
+<h3 id="components-6"><strong>Components</strong></h3>
 <p><small>The components flagged by “<span
 class="icon-st-update"></span>” have changed since the previous release.
 “<span class="icon-st-add"></span>” are new.</small></p>
@@ -3433,7 +4070,7 @@ notes</a></td>
 <td style="text-align: center;">V2.28.5_20240108 <span
 class="icon-st-update"></span></td>
 <td style="text-align: center;"><a
-href="https://github.com/STMicroelectronics/stm32-mw-mbedtls/blob/v3.6.4_20250701/st_readme.txt">ST release
+href="https://github.com/STMicroelectronics/stm32-mw-mbedtls/blob/v3.6.6_20260511/st_readme.txt">ST release
 notes</a></td>
 </tr>
 <tr class="odd">
@@ -3441,14 +4078,14 @@ notes</a></td>
 <td style="text-align: center;">V1.7.2.22 <span
 class="icon-st-update"></span></td>
 <td style="text-align: center;"><a
-href="https://github.com/STMicroelectronics/stm32-mw-mcuboot/blob/v1.7.2.38/st_readme.txt">ST release
+href="https://github.com/STMicroelectronics/stm32-mw-mcuboot/blob/v1.7.2.40/st_readme.txt">ST release
 notes</a></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">OpenBootloader</td>
 <td style="text-align: center;">V6.1.1</td>
 <td style="text-align: center;"><a
-href="https://htmlpreview.github.io/?https://github.com/STMicroelectronics/stm32-mw-openbl/blob/v6.1.2/Release_Notes.html">release
+href="https://htmlpreview.github.io/?https://github.com/STMicroelectronics/stm32-mw-openbl/blob/v6.1.3/Release_Notes.html">release
 notes</a></td>
 </tr>
 <tr class="odd">
@@ -3567,7 +4204,7 @@ notes</a></td>
 </tr>
 </tbody>
 </table>
-<h2 id="development-toolchains-and-compilers-5">Development Toolchains
+<h2 id="development-toolchains-and-compilers-6">Development Toolchains
 and Compilers</h2>
 <ul>
 <li>IAR Embedded Workbench for ARM (EWARM) toolchain V9.20.1 + ST-LINK,
@@ -3590,7 +4227,7 @@ devices</li>
 </ul></li>
 <li>STM32CubeIDE V1.15.0 (GCC12)</li>
 </ul>
-<h2 id="supported-devices-and-boards-5">Supported Devices and
+<h2 id="supported-devices-and-boards-6">Supported Devices and
 boards</h2>
 <ul>
 <li>Devices:
@@ -3607,7 +4244,7 @@ boards</h2>
 <li><strong>NUCLEO-H533RE REV C</strong></li>
 </ul></li>
 </ul>
-<h2 id="dependencies-5">Dependencies</h2>
+<h2 id="dependencies-6">Dependencies</h2>
 <ul>
 <li>STM32CubeMX V6.11.0
 <ul>
@@ -3622,7 +4259,7 @@ delivered outside this package.</li>
 for more details refer to Wi-Fi example readme files which can be found
 under Projects/STM32H573I-DK/Applications/NetXDuo.</li>
 </ul>
-<h2 id="known-limitations-5">Known Limitations</h2>
+<h2 id="known-limitations-6">Known Limitations</h2>
 <ul>
 <li>Some projects are not generated with STM32CubeMX tool for the
 exhaustive list please refer to this table <a
@@ -3650,7 +4287,7 @@ of V2.3.4 rc 13”</li>
 <li>STM32H573I-DK/Examples/OCTOSPI/OSPI_NOR_ReadWrite_DMA_DTR</li>
 </ul></li>
 </ul>
-<h2 id="backward-compatibility-5">Backward Compatibility</h2>
+<h2 id="backward-compatibility-6">Backward Compatibility</h2>
 <ul>
 <li>Not applicable</li>
 </ul>
@@ -3661,7 +4298,7 @@ of V2.3.4 rc 13”</li>
 <label for="collapse-section4" checked aria-hidden="true"><strong>V1.1.1
 / 11-August-2023</strong></label>
 <div>
-<h2 id="main-changes-6">Main Changes</h2>
+<h2 id="main-changes-7">Main Changes</h2>
 <ul>
 <li><p>Patch release of <span
 style="font-weight: bold;">STM32CubeH5</span> Firmware Package, to
@@ -3685,7 +4322,7 @@ articles</a> dedicated to this solution.</p></li>
 X-CUBE-SEC-M-H5, is available in <a
 href="https://www.st.com/en/embedded-software/stm32trustee-sm.html">STM32TRUSTEE-SM</a>.</p></li>
 </ul>
-<h2 id="contents-6">Contents</h2>
+<h2 id="contents-7">Contents</h2>
 <p>This patch release updates:</p>
 <ul>
 <li><p>Embedded software components of Secure Manager v1.0.0 (includes
@@ -3694,7 +4331,7 @@ non secure application to demonstrate Secure Manager)</p></li>
 <li><p>Fix issue of PC scripts for Root Of Trust applications (OEMiROT,
 STiROT), for execution on Linux and Mac OS</p></li>
 </ul>
-<h3 id="projects-5"><strong>Projects</strong></h3>
+<h3 id="projects-6"><strong>Projects</strong></h3>
 <p>The <strong>STM32CubeH5</strong> Firmware package comes with template
 running on STMicroelectronics boards, organized by board and provided
 with preconfigured projects for the main supported toolchains. The
@@ -3727,7 +4364,7 @@ MCU. The provisioning script ensures the provisioning of the Debug
 Authentication is performed prior modifying the product state , so that
 it will be possible to reinitialize the device.</li>
 </ul>
-<h3 id="components-6"><strong>Components</strong></h3>
+<h3 id="components-7"><strong>Components</strong></h3>
 <p><small>The components flagged by “<span
 class="icon-st-update"></span>” have changed since the previous release.
 </small></p>
@@ -3781,7 +4418,7 @@ notes</a></td>
 </tr>
 </tbody>
 </table>
-<h2 id="development-toolchains-and-compilers-6">Development Toolchains
+<h2 id="development-toolchains-and-compilers-7">Development Toolchains
 and Compilers</h2>
 <ul>
 <li>IAR Embedded Workbench for ARM (EWARM) toolchain V9.20.1 + ST-LINK,
@@ -3793,7 +4430,7 @@ href="Utilities\PC_Software\IDEs_Patches\EWARM">Utilities\PC_Software\IDEs_Patch
 <strong>STM32H573/STM32H563/STM32H562/STM32H503</strong> devices</li>
 </ul></li>
 </ul>
-<h2 id="backward-compatibility-6">Backward Compatibility</h2>
+<h2 id="backward-compatibility-7">Backward Compatibility</h2>
 <ul>
 <li>No compatibility break</li>
 </ul>
@@ -3804,12 +4441,12 @@ href="Utilities\PC_Software\IDEs_Patches\EWARM">Utilities\PC_Software\IDEs_Patch
 <label for="collapse-section3" checked aria-hidden="true"><strong>V1.1.0
 / 09-June-2023</strong></label>
 <div>
-<h2 id="main-changes-7">Main Changes</h2>
+<h2 id="main-changes-8">Main Changes</h2>
 <ul>
 <li>Maintenance Release of <span
 style="font-weight: bold;">STM32CubeH5</span> Firmware Package</li>
 </ul>
-<h2 id="contents-7">Contents</h2>
+<h2 id="contents-8">Contents</h2>
 <h3 id="features-6"><strong>Features</strong></h3>
 <p>STM32CubeH5 gathers in one single package all the generic embedded
 software components required to develop an application on STM32H5
@@ -3836,7 +4473,7 @@ Compliant, and accessible by the non-secure domain. It can be
 additionally installed on STM32H5 to enable Cryptographic, Secure key
 management, Platform Attestation, Secure Firmware Update functions. For
 more details refer to the SMAK application.</p>
-<h3 id="projects-6"><strong>Projects</strong></h3>
+<h3 id="projects-7"><strong>Projects</strong></h3>
 <p>The <strong>STM32CubeH5</strong> Firmware package comes with template
 running on STMicroelectronics boards, organized by board and provided
 with preconfigured projects for the main supported toolchains. The
@@ -3871,7 +4508,7 @@ MCU. The provisioning script ensures the provisioning of the Debug
 Authentication is performed prior modifying the product state , so that
 it will be possible to reinitialize the device.</li>
 </ul>
-<h3 id="components-7"><strong>Components</strong></h3>
+<h3 id="components-8"><strong>Components</strong></h3>
 <p><small>The components flagged by “<span
 class="icon-st-update"></span>” have changed since the previous release.
 “<span class="icon-st-add"></span>” are new.</small></p>
@@ -4018,14 +4655,14 @@ class="icon-st-update"></span></td>
 <td style="text-align: center;">mbed-crypto-2.25.0.4 <span
 class="icon-st-update"></span></td>
 <td style="text-align: center;"><a
-href="https://github.com/STMicroelectronics/stm32-mw-mbedtls/blob/v3.6.4_20250701/st_readme.txt">ST release
+href="https://github.com/STMicroelectronics/stm32-mw-mbedtls/blob/v3.6.6_20260511/st_readme.txt">ST release
 notes</a></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">mcuboot</td>
 <td style="text-align: center;">V1.7.2.11</td>
 <td style="text-align: center;"><a
-href="https://github.com/STMicroelectronics/stm32-mw-mcuboot/blob/v1.7.2.38/st_readme.txt">ST release
+href="https://github.com/STMicroelectronics/stm32-mw-mcuboot/blob/v1.7.2.40/st_readme.txt">ST release
 notes</a></td>
 </tr>
 <tr class="even">
@@ -4038,7 +4675,7 @@ class="icon-st-update"></span></td>
 <td style="text-align: left;">OpenBootloader</td>
 <td style="text-align: center;">V6.1.1</td>
 <td style="text-align: center;"><a
-href="https://htmlpreview.github.io/?https://github.com/STMicroelectronics/stm32-mw-openbl/blob/v6.1.2/Release_Notes.html">release
+href="https://htmlpreview.github.io/?https://github.com/STMicroelectronics/stm32-mw-openbl/blob/v6.1.3/Release_Notes.html">release
 notes</a></td>
 </tr>
 <tr class="even">
@@ -4155,7 +4792,7 @@ notes</a></td>
 </tr>
 </tbody>
 </table>
-<h2 id="development-toolchains-and-compilers-7">Development Toolchains
+<h2 id="development-toolchains-and-compilers-8">Development Toolchains
 and Compilers</h2>
 <ul>
 <li>IAR Embedded Workbench for ARM (EWARM) toolchain V9.20.1 + ST-LINK,
@@ -4176,7 +4813,7 @@ href="Utilities\PC_Software\IDEs_Patches\MDK-ARM">Utilities\PC_Software\IDEs_Pat
 </ul></li>
 <li>STM32CubeIDE V1.13.0 (GCC11)</li>
 </ul>
-<h2 id="supported-devices-and-boards-6">Supported Devices and
+<h2 id="supported-devices-and-boards-7">Supported Devices and
 boards</h2>
 <ul>
 <li>Devices:
@@ -4191,7 +4828,7 @@ boards</h2>
 <li>STM32H573I-DK REV C</li>
 </ul></li>
 </ul>
-<h2 id="dependencies-6">Dependencies</h2>
+<h2 id="dependencies-7">Dependencies</h2>
 <ul>
 <li>STM32CubeMX V6.9.0
 <ul>
@@ -4206,7 +4843,7 @@ delivered outside this package.</li>
 for more details refer to Wi-Fi example readme files which can be found
 under Projects/STM32H573I-DK/Applications/NetXDuo.</li>
 </ul>
-<h2 id="known-limitations-6">Known Limitations</h2>
+<h2 id="known-limitations-7">Known Limitations</h2>
 <ul>
 <li>Some project are not generated with STM32CubeMX tool for the
 exhaustive list please refer to this table <a
@@ -4249,7 +4886,7 @@ of V2.3.4 rc 13”</li>
 <li>STM32H573I-DK/Examples/OSPI/OSPI_NOR_ReadWrite_DMA_DTR</li>
 </ul></li>
 </ul>
-<h2 id="backward-compatibility-7">Backward Compatibility</h2>
+<h2 id="backward-compatibility-8">Backward Compatibility</h2>
 <ul>
 <li>No compatibility break</li>
 </ul>
@@ -4260,14 +4897,14 @@ of V2.3.4 rc 13”</li>
 <label for="collapse-section2" checked aria-hidden="true"><strong>V1.0.1
 / 31-March-2023</strong></label>
 <div>
-<h2 id="main-changes-8">Main Changes</h2>
+<h2 id="main-changes-9">Main Changes</h2>
 <ul>
 <li>Patch release of <span style="font-weight: bold;">STM32CubeH5</span>
 Firmware Package</li>
 <li>Fix DA obk provisioning failure when TZ disabled on NUCLEO-H563ZI
 board</li>
 </ul>
-<h2 id="contents-8">Contents</h2>
+<h2 id="contents-9">Contents</h2>
 <p>The same contents as for V1.0.0 except modifications done on the
 following files to fix above issue:</p>
 <ul>
@@ -4281,12 +4918,12 @@ following files to fix above issue:</p>
 <label for="collapse-section1" checked aria-hidden="true"><strong>V1.0.0
 / 10-February-2023</strong></label>
 <div>
-<h2 id="main-changes-9">Main Changes</h2>
+<h2 id="main-changes-10">Main Changes</h2>
 <ul>
 <li>First Official Release of <span
 style="font-weight: bold;">STM32CubeH5</span> Firmware Package</li>
 </ul>
-<h2 id="contents-9">Contents</h2>
+<h2 id="contents-10">Contents</h2>
 <h3 id="features-7"><strong>Features</strong></h3>
 <p>STM32CubeH5 gathers in one single package all the generic embedded
 software components required to develop an application on STM32H5
@@ -4313,7 +4950,7 @@ Compliant, and accessible by the non-secure domain. It can be
 additionally installed on STM32H5 to enable Cryptographic, Secure key
 management, Platform Attestation, Secure Firmware Update functions. For
 more details refer to the SMAK application.</p>
-<h3 id="projects-7"><strong>Projects</strong></h3>
+<h3 id="projects-8"><strong>Projects</strong></h3>
 <p>The <strong>STM32CubeH5</strong> Firmware package comes with template
 running on STMicroelectronics boards, organized by board and provided
 with preconfigured projects for the main supported toolchains. The
@@ -4349,7 +4986,7 @@ it will be possible to reinitialize the device.</p></li>
 <li><p>This firmware package contains examples that run only on the
 STM32H573I-DK which will be available in June 2023.</p></li>
 </ul>
-<h3 id="components-8"><strong>Components</strong></h3>
+<h3 id="components-9"><strong>Components</strong></h3>
 <table>
 <caption><strong>Drivers</strong></caption>
 <thead>
@@ -4484,14 +5121,14 @@ notes</a></td>
 <td style="text-align: left;">mbed-crypto</td>
 <td style="text-align: center;">mbed-crypto-2.25.0</td>
 <td style="text-align: center;"><a
-href="https://github.com/STMicroelectronics/stm32-mw-mbedtls/blob/v3.6.4_20250701/st_readme.txt">ST release
+href="https://github.com/STMicroelectronics/stm32-mw-mbedtls/blob/v3.6.6_20260511/st_readme.txt">ST release
 notes</a></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">mcuboot</td>
 <td style="text-align: center;">V1.7.2.11</td>
 <td style="text-align: center;"><a
-href="https://github.com/STMicroelectronics/stm32-mw-mcuboot/blob/v1.7.2.38/st_readme.txt">ST release
+href="https://github.com/STMicroelectronics/stm32-mw-mcuboot/blob/v1.7.2.40/st_readme.txt">ST release
 notes</a></td>
 </tr>
 <tr class="even">
@@ -4503,7 +5140,7 @@ notes</a></td>
 <td style="text-align: left;">OpenBootloader</td>
 <td style="text-align: center;">V6.1.1</td>
 <td style="text-align: center;"><a
-href="https://htmlpreview.github.io/?https://github.com/STMicroelectronics/stm32-mw-openbl/blob/v6.1.2/Release_Notes.html">release
+href="https://htmlpreview.github.io/?https://github.com/STMicroelectronics/stm32-mw-openbl/blob/v6.1.3/Release_Notes.html">release
 notes</a></td>
 </tr>
 <tr class="even">
@@ -4605,7 +5242,7 @@ notes</a></td>
 </tr>
 </tbody>
 </table>
-<h2 id="development-toolchains-and-compilers-8">Development Toolchains
+<h2 id="development-toolchains-and-compilers-9">Development Toolchains
 and Compilers</h2>
 <ul>
 <li>IAR Embedded Workbench for ARM (EWARM) toolchain V9.20.1 + ST-LINK,
@@ -4626,7 +5263,7 @@ href="Utilities\PC_Software\IDEs_Patches\MDK-ARM">Utilities\PC_Software\IDEs_Pat
 </ul></li>
 <li>STM32CubeIDE V1.12.0 (GCC11)</li>
 </ul>
-<h2 id="supported-devices-and-boards-7">Supported Devices and
+<h2 id="supported-devices-and-boards-8">Supported Devices and
 boards</h2>
 <ul>
 <li>Devices:
@@ -4641,7 +5278,7 @@ boards</h2>
 <li>STM32H573I-DK REV C</li>
 </ul></li>
 </ul>
-<h2 id="dependencies-7">Dependencies</h2>
+<h2 id="dependencies-8">Dependencies</h2>
 <ul>
 <li>STM32CubeMX V6.8.0
 <ul>
@@ -4656,7 +5293,7 @@ delivered outside this package.</li>
 for more details refer to Wi-Fi example readme files which can be found
 under Projects/STM32H573I-DK/Applications/NetXDuo.</li>
 </ul>
-<h2 id="known-limitations-7">Known Limitations</h2>
+<h2 id="known-limitations-8">Known Limitations</h2>
 <ul>
 <li>Some project are not generated with STM32CubeMX tool for the
 exhaustive list please refer to this table <a
@@ -4709,7 +5346,7 @@ of V2.3.4 rc 13”</li>
 <li>STM32H573I-DK/Examples/OSPI/OSPI_NOR_ReadWrite_DMA_DTR</li>
 </ul></li>
 </ul>
-<h2 id="backward-compatibility-8">Backward Compatibility</h2>
+<h2 id="backward-compatibility-9">Backward Compatibility</h2>
 <ul>
 <li>Not applicable</li>
 </ul>

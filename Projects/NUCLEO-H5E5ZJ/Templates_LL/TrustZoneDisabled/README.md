@@ -20,7 +20,7 @@ To port a LL example to the targeted board:
 1. Select the LL example to port.
    To find the board on which LL examples are deployed, refer to LL examples list
    in "STM32CubeProjectsList.html", table section "Examples_LL"
-   or Application Note: STM32Cube firmware examples for STM32E5 Series
+   or Application Note: STM32Cube firmware examples for STM32H5 Series
 
 2. Replace source files of the LL template by the ones of the LL example, except
    code specific to board.  

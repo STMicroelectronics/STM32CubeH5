@@ -53,7 +53,7 @@
 
 /**
   * @brief  Application ThreadX Initialization.
-  * @param memory_ptr: memory pointer
+  * @param  memory_ptr: memory pointer
   * @retval int
   */
 UINT App_ThreadX_Init(VOID *memory_ptr)
@@ -67,22 +67,22 @@ UINT App_ThreadX_Init(VOID *memory_ptr)
   return ret;
 }
 
-  /**
+/**
   * @brief  Function that implements the kernel's initialization.
   * @param  None
   * @retval None
   */
 void MX_ThreadX_Init(void)
 {
-  /* USER CODE BEGIN  Before_Kernel_Start */
+  /* USER CODE BEGIN Before_Kernel_Start */
 
-  /* USER CODE END  Before_Kernel_Start */
+  /* USER CODE END Before_Kernel_Start */
 
   tx_kernel_enter();
 
-  /* USER CODE BEGIN  Kernel_Start_Error */
+  /* USER CODE BEGIN Kernel_Start_Error */
 
-  /* USER CODE END  Kernel_Start_Error */
+  /* USER CODE END Kernel_Start_Error */
 }
 
 /* USER CODE BEGIN 1 */

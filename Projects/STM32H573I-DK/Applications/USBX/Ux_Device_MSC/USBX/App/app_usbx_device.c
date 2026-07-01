@@ -293,6 +293,9 @@ static VOID app_ux_device_thread_entry(ULONG thread_input)
     /* Check if received message equal to USB_PCD_STOP */
     else if (USB_Device_State_Msg == STOP_USB_DEVICE)
     {
+      /* Deactivate device interfaces */
+      ux_device_stack_disconnect();
+
       /* Stop device USB */
       HAL_PCD_Stop(&hpcd_USB_DRD_FS);
 

@@ -85,7 +85,11 @@ UINT MX_USBX_Device_Stack_DeInit(void);
 #endif
 
 /* USER CODE BEGIN 1 */
-
+typedef enum {
+  Device_VBUS_SENSING=0,
+  Device_Connection,
+  Device_Disconnection,
+}Device_State;
 /* USER CODE END 1 */
 
 #ifdef __cplusplus

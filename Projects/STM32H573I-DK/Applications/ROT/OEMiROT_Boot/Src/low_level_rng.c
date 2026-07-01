@@ -70,7 +70,7 @@ void RNG_Init(void)
 void RNG_GetBytes(uint8_t *output, size_t length, size_t *output_length)
 {
   int32_t ret = 0;
-  uint8_t try = 0;
+  uint8_t tries = 0;
   __IO uint8_t random[4];
   *output_length = 0;
 
@@ -80,9 +80,13 @@ void RNG_GetBytes(uint8_t *output, size_t length, size_t *output_length)
     if (HAL_RNG_GenerateRandomNumber(&handle, (uint32_t *)random) != HAL_OK)
     {
       /* retry when random number generated are not immediately available */
-      if (try < 3)
+      if (tries < 3)
       {
-        try++;
+        if (HAL_RNG_GetError(&handle) == HAL_RNG_ERROR_RECOVERSEED)
+        {
+          (void)HAL_RNGEx_RecoverSeedError(&handle);
+        }
+        tries++;
       }
       else
       {

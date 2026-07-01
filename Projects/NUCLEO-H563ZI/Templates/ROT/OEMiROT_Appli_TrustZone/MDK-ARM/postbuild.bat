@@ -3,12 +3,16 @@
 :: When script is called from STM32CubeIDE : set signing="%1"
 :: When script is called from IAR or KEIL  : set "signing=%1"
 set "signing=%1"
+
 :: Getting the Trusted Package Creator CLI path
 set "projectdir=%~dp0"
 pushd %projectdir%\..\..\..\..\ROT_Provisioning
+
 set provisioningdir=%cd%
 popd
+
 call "%provisioningdir%\env.bat"
+
 :: Enable delayed expansion
 setlocal EnableDelayedExpansion
 
@@ -17,6 +21,13 @@ setlocal EnableDelayedExpansion
 :: Environment variable for log file
 set current_log_file="%projectdir%\postbuild.log"
 echo. > %current_log_file%
+
+::=================================================
+::Variables updated by OEMiROT_Boot postbuild
+::=================================================
+set app_image_number=2
+set image_s_size=0x6000
+set primary_only=0
 
 ::========================================================================================
 ::image binary files
@@ -44,6 +55,8 @@ set ns_data_init_xml="%provisioningdir%\OEMiROT\Images\OEMiROT_NS_Data_Init_Imag
 set bin_path_xml_field="..\..\..\Templates\ROT\OEMiROT_Appli_TrustZone\Binary"
 set fw_in_bin_xml_field="Firmware binary input file"
 set fw_out_bin_xml_field="Image output file"
+
+IF "%primary_only%"=="0" (
 set s_app_bin_xml_field="%bin_path_xml_field%\rot_tz_s_app.bin"
 set ns_app_bin_xml_field="%bin_path_xml_field%\rot_tz_ns_app.bin"
 set s_app_enc_sign_hex_xml_field="%bin_path_xml_field%\rot_tz_s_app_enc_sign.hex"
@@ -54,17 +67,23 @@ set s_data_enc_sign_hex_xml_field="%provisioningdir%\OEMiROT\Binary\s_data_enc_s
 set ns_data_enc_sign_hex_xml_field="%provisioningdir%\OEMiROT\Binary\ns_data_enc_sign.hex"
 set s_data_init_sign_hex_xml_field="%provisioningdir%\OEMiROT\Binary\s_data_init_sign.hex"
 set ns_data_init_sign_hex_xml_field="%provisioningdir%\OEMiROT\Binary\ns_data_init_sign.hex"
+) ELSE (
+set s_app_bin_xml_field="%bin_path_xml_field%\rot_tz_s_app.bin"
+set ns_app_bin_xml_field="%bin_path_xml_field%\rot_tz_ns_app.bin"
+set s_app_enc_sign_hex_xml_field="%bin_path_xml_field%\rot_tz_s_app_enc_sign.bin"
+set ns_app_enc_sign_hex_xml_field="%bin_path_xml_field%\rot_tz_ns_app_enc_sign.bin"
+set s_app_init_sign_hex_xml_field="%bin_path_xml_field%\rot_tz_s_app_init_sign.bin"
+set ns_app_init_sign_hex_xml_field="%bin_path_xml_field%\rot_tz_ns_app_init_sign.bin"
+set s_data_enc_sign_hex_xml_field="%provisioningdir%\OEMiROT\Binary\s_data_enc_sign.bin"
+set ns_data_enc_sign_hex_xml_field="%provisioningdir%\OEMiROT\Binary\ns_data_enc_sign.bin"
+set s_data_init_sign_hex_xml_field="%provisioningdir%\OEMiROT\Binary\s_data_init_sign.bin"
+set ns_data_init_sign_hex_xml_field="%provisioningdir%\OEMiROT\Binary\ns_data_init_sign.bin"
+)
 
 ::Make sure we have a Binary sub-folder in UserApp folder
 if not exist "%bin_path_xml_field%" (
 mkdir "%bin_path_xml_field%"
 )
-
-::=================================================
-::Variables updated by OEMiROT_Boot postbuild
-::=================================================
-set app_image_number=2
-set image_s_size=0x6000
 
 :start
 ::=================================================================================================
@@ -107,6 +126,32 @@ if not "%MAJOR_VER%" == "3" (
 set "applicfg=%cube_fw_path%\Utilities\PC_Software\ROT_AppliConfig\AppliCfg.py"
 
 :postbuild
+REM Set "Firmware execution area offset" to 0x0 in all xml files in order to generate enc.bin that can be upgraded by YMODEM
+REM to be used in case of primary only
+IF "%primary_only%"=="1" (
+powershell -ExecutionPolicy Bypass -Command ^
+  "$files_init   = @('%s_code_init_xml%', '%s_data_init_xml%', '%ns_code_init_xml%', '%ns_data_init_xml%');" ^
+  "$files_noinit = @('%s_code_xml%',      '%s_data_xml%',      '%ns_code_xml%',      '%ns_data_xml%');" ^
+  "foreach ($f in $files_init) {" ^
+  "if (Test-Path $f) {" ^
+  "Write-Host 'Patch INIT XML:' $f;" ^
+  "$xml = [xml](Get-Content $f);" ^
+  "$o = $xml.SelectSingleNode(\"//Param[Name='Firmware execution area offset']/Value\");" ^
+  "if ($o -ne $null) { $o.'#text' = '0x0' }" ^
+  "$xml.Save($f);" ^
+  "}" ^
+  "}" ^
+  "foreach ($f in $files_noinit) {" ^
+  "if (Test-Path $f) {" ^
+  "Write-Host 'Patch NOINIT XML:' $f;" ^
+  "$xml = [xml](Get-Content $f);" ^
+  "$o = $xml.SelectSingleNode(\"//Param[Name='Firmware download area offset']/Value\");" ^
+  "if ($o -ne $null) { $o.'#text' = '0x0' }" ^
+  "$xml.Save($f);" ^
+  "}" ^
+  "}"
+)
+
 echo Postbuild %signing% image >> %current_log_file% 2>>&1
 
 if "%app_image_number%" == "2" (

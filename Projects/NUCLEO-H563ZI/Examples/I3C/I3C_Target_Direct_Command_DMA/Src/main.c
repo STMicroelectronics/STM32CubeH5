@@ -385,6 +385,7 @@ void HAL_I3C_ErrorCallback(I3C_HandleTypeDef *hi3c)
 
 /**
   * @brief  This function is executed in case of error occurrence.
+  * @param  None
   * @retval None
   */
 void Error_Handler(void)

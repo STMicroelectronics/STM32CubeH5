@@ -163,7 +163,11 @@ final_execution()
   echo "====="
   echo "===== The board is correctly configured."
   echo "===== Connect UART console (115200 baudrate) to get application menu."
-  echo "===== Power off/on the board to start the application."
+  if [ "$product_state" = "OPEN" ]; then
+    echo "===== Warning: BOOT0 pin must be set to 1 (button pressed) at each reset if the final product state is OPEN."
+  else
+    echo "===== Power off/on the board to start the application."
+  fi
   echo "====="
   if [ "$mode" != "AUTO" ]; then $SHELL; fi
   exit 0

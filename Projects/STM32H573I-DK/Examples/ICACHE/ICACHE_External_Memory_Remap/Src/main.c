@@ -328,6 +328,7 @@ static void __attribute__((section(".ext_flash_region"), noinline)) IO_Blink_ext
 
 /**
   * @brief  This function is executed in case of error occurrence.
+  * @param  None
   * @retval None
   */
 void Error_Handler(void)

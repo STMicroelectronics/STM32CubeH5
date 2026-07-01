@@ -406,6 +406,7 @@ static uint32_t BufferCmp8b(const uint8_t *pBuffer1, const uint8_t *pBuffer2, ui
 
 /**
   * @brief  This function is executed in case of error occurrence.
+  * @param  None
   * @retval None
   */
 void Error_Handler(void)

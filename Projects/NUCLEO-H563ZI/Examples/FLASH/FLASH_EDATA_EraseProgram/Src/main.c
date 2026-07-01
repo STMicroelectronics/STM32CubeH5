@@ -478,6 +478,7 @@ static uint32_t Check_Flash_Content(uint32_t StartAddress, uint32_t EndAddress, 
 
 /**
   * @brief  This function is executed in case of error occurrence.
+  * @param  None
   * @retval None
   */
 void Error_Handler(void)

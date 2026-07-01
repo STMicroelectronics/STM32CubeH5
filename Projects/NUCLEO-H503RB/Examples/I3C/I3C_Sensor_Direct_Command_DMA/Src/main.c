@@ -621,6 +621,7 @@ static void DisplayCCCValue(I3C_CCCTypeDef *pGetCCCList, char **pCCCCharList, ui
 
 /**
   * @brief  This function is executed in case of error occurrence.
+  * @param  None
   * @retval None
   */
 void Error_Handler(void)

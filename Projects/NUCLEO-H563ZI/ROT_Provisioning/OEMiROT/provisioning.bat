@@ -119,6 +119,7 @@ if "%isGeneratedByCubeMX%" == "true" (
 echo        Press any key to continue...
 echo.
 if [%1] neq [AUTO] pause >nul
+
 if "%isGeneratedByCubeMX%" == "true" goto :cubemx2
 echo    * Code firmware image generation
 echo        Open the OEMiROT_Appli_TrustZone project with preferred toolchain.
@@ -129,12 +130,20 @@ echo        generated with the postbuild command.
 echo        Press any key to continue...
 echo.
 if [%1] neq [AUTO] pause >nul
+if  "%primary_only%" == "1" (
+echo    * Loader firmware image generation
+echo        Open the OEMiROT_Loader project with preferred toolchain and rebuild all files.
+echo        Press any key to continue...
+echo.
+if [%1] neq [AUTO] pause >nul
+)
 echo    * Data secure generation (if Data secure image is enabled)
 echo        Select OEMiRoT_S_Data_Image.xml(Default path is \ROT_Provisioning\OEMiROT\Images\OEMiROT_S_Data_Image.xml)
 echo        Generate the s_data_enc_sign.hex image
 echo        Press any key to continue...
 echo.
 if [%1] neq [AUTO] pause >nul
+
 if "%s_data_image_number%" == "0" (goto :no_s_data)
 %stm32tpccli% -pb %s_data_xml% >> %provisioning_log%
 if !errorlevel! neq 0 goto :step_error

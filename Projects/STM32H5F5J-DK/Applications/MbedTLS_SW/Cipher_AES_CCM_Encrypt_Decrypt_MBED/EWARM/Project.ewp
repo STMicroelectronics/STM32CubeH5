@@ -1213,6 +1213,9 @@
             <file>
                 <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\Third_Party\mbed-crypto\library\sha256.c</name>
             </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\Third_Party\mbed-crypto\library\psa_crypto_random.c</name>
+            </file>
         </group>
         <group>
             <name>ST</name>

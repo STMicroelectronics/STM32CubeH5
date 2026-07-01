@@ -195,8 +195,8 @@ if !errorlevel! neq 0 goto :step_error
 :cubemx2
 :: ========================================================= Board provisioning steps =======================================================
 echo Step 3 : Provisioning
-echo    * BOOT0 pin should be disconnected from VDD:
-echo        (STM32H5F5J-DK: press & hold Boot B3 Button)
+echo    * BOOT0 pin should be disconnected from VDD
+echo        (STM32H5F5J-DK: Release Boot Button B3)
 echo        Press any key to continue...
 echo;
 if [%1] neq [AUTO] pause >nul
@@ -256,8 +256,8 @@ goto product_state_choice
 :: ========================================= Product State configuration and Provisioning steps ==========================================
 :: Connect BOOT0 pin to VDD (SW1)
 :connect_boot0
-echo    * BOOT0 pin connected to VDD
-echo        (STM32H5F5J-DK: release Boot B3 Button)
+echo    * BOOT0 pin should be connected to VDD
+echo        (STM32H5F5J-DK: Press Boot Button B3)
 echo        Press any key to continue...
 echo;
 if [%1] neq [AUTO] pause >nul

@@ -45,6 +45,16 @@ static void Error_Handler(void);
   */
 int main(void)
 {
+ /*
+  * When OEMIROT_FAST_WAKE_UP is enabled, the OEMiRoT relies on the hardware SBF (standby flag)
+  * to skip firmware image verification. The SBF flag remains set when the application is entered
+  * after a wake-up from standby mode. This allows the application to handle its own software
+  * context restoration. To maintain a secure execution environment, the user application must
+  * clear the SBF flag after it is processed.
+  *
+  * In this example, the SBF flag is simply cleared without any processing.
+  */
+  __HAL_PWR_CLEAR_FLAG(PWR_FLAG_SBF);
 
   /* STM32H5xx HAL library initialization:
        - Systick timer is configured by default as source of time base, but user

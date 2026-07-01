@@ -510,6 +510,7 @@ void HAL_I2C_ErrorCallback(I2C_HandleTypeDef *I2cHandle)
 
 /**
   * @brief  This function is executed in case of error occurrence.
+  * @param  None
   * @retval None
   */
 void Error_Handler(void)
