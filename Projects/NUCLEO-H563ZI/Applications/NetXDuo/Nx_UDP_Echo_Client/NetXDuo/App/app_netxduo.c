@@ -55,6 +55,7 @@ TX_THREAD AppLinkThread;
 NX_UDP_SOCKET UDPSocket;
 ULONG IpAddress;
 ULONG NetMask;
+static UCHAR data_buffer[DEFAULT_PAYLOAD_SIZE];
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -325,7 +326,6 @@ static VOID App_UDP_Thread_Entry(ULONG thread_input)
   UINT count = 0;
   ULONG bytes_read;
   NX_PACKET *server_packet;
-  UCHAR data_buffer[512];
 
   NX_PACKET *data_packet;
 
@@ -374,12 +374,23 @@ static VOID App_UDP_Thread_Entry(ULONG thread_input)
     {
       ULONG source_ip_address;
       UINT source_port;
+      ULONG bytes_to_copy;
 
       /* get the server IP address and  port */
       nx_udp_source_extract(server_packet, &source_ip_address, &source_port);
 
-      /* retrieve the data sent by the server */
-      nx_packet_data_retrieve(server_packet, data_buffer, &bytes_read);
+      /* retrieve the data sent by the server with explicit bounds */
+      bytes_to_copy = sizeof(data_buffer) - 1U;
+      bytes_read = 0;
+      ret = nx_packet_data_extract_offset(server_packet, 0, data_buffer, bytes_to_copy, &bytes_read);
+
+      if (ret != NX_SUCCESS)
+      {
+        nx_packet_release(server_packet);
+        break;
+      }
+
+      data_buffer[bytes_read] = '\0';
 
       /* print the received data */
       PRINT_DATA(source_ip_address, source_port, data_buffer);

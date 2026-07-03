@@ -54,6 +54,7 @@ TX_THREAD AppLinkThread;
 ULONG IpAddress;
 ULONG NetMask;
 NX_TCP_SOCKET TCPSocket;
+static CHAR data_buffer[DEFAULT_PAYLOAD_SIZE];
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -346,12 +347,10 @@ static VOID tcp_listen_callback(NX_TCP_SOCKET *socket_ptr, UINT port)
 static VOID App_TCP_Thread_Entry(ULONG thread_input)
 {
   UINT ret;
-  UCHAR data_buffer[512];
-
-  ULONG source_ip_address;
+  ULONG source_ip_address = 0;
   NX_PACKET *data_packet;
 
-  UINT source_port;
+  ULONG source_port = 0;
   ULONG bytes_read;
 
   /* create the TCP socket */
@@ -390,6 +389,7 @@ static VOID App_TCP_Thread_Entry(ULONG thread_input)
     {
       Error_Handler();
     }
+    nx_tcp_socket_peer_info_get(&TCPSocket, &source_ip_address, &source_port);
   }
 
   while(1)
@@ -405,28 +405,54 @@ static VOID App_TCP_Thread_Entry(ULONG thread_input)
     if(socket_state != NX_TCP_ESTABLISHED)
     {
       ret = nx_tcp_server_socket_accept(&TCPSocket, NX_IP_PERIODIC_RATE);
+      nx_tcp_socket_peer_info_get(&TCPSocket, &source_ip_address, &source_port);
     }
 
     if(ret == NX_SUCCESS)
     {
-      /* receive the TCP packet send by the client */
+      /* receive the TCP packet sent by the client */
       ret = nx_tcp_socket_receive(&TCPSocket, &data_packet, NX_WAIT_FOREVER);
 
       if (ret == NX_SUCCESS)
       {
         HAL_GPIO_TogglePin(GPIOI, GPIO_PIN_9);
+        bytes_read = 0;
+        ret = nx_packet_data_extract_offset(data_packet, 0, data_buffer, sizeof(data_buffer) - 1U, &bytes_read);
+        if (ret == NX_SUCCESS)
+        {
+          data_buffer[bytes_read] = '\0';
+          PRINT_DATA(source_ip_address, source_port, data_buffer);
+        }
+        else
+        {
+          PRINT_DATA(source_ip_address, source_port, "Error in extracting packet data");
+        }
+        nx_packet_release(data_packet);
 
-        /* get the client IP address and  port */
-        nx_udp_source_extract(data_packet, &source_ip_address, &source_port);
+        if (bytes_read > 0)
+        {
+          /* need to use another TCP packet to send back the data */
+          NX_PACKET *tx_packet;
 
-        /* retrieve the data sent by the client */
-        nx_packet_data_retrieve(data_packet, data_buffer, &bytes_read);
-
-        /* print the received data */
-        PRINT_DATA(source_ip_address, source_port, data_buffer);
-
-        /* immediately resend the same packet */
-        ret =  nx_tcp_socket_send(&TCPSocket, data_packet, NX_IP_PERIODIC_RATE);
+          ret = nx_packet_allocate(&NxAppPool, &tx_packet, NX_TCP_PACKET, NX_WAIT_FOREVER);
+          if (ret == NX_SUCCESS)
+          {
+            ret = nx_packet_data_append(tx_packet, data_buffer, bytes_read,
+                                      &NxAppPool, NX_WAIT_FOREVER);
+            if (ret == NX_SUCCESS)
+            {
+              ret = nx_tcp_socket_send(&TCPSocket, tx_packet, NX_IP_PERIODIC_RATE);
+            }
+            else
+            {
+              nx_packet_release(tx_packet);
+            }
+          }
+          else
+          {
+            PRINT_DATA(source_ip_address, source_port, "Error in allocating the tx packet");
+          }
+        }
 
         if (ret == NX_SUCCESS)
         {

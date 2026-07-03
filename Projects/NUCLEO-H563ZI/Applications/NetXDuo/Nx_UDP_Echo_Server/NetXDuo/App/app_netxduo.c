@@ -55,6 +55,7 @@ NX_PACKET_POOL NxAppPool;
 NX_IP          NetXDuoEthIpInstance;
 TX_SEMAPHORE   DHCPSemaphore;
 NX_DHCP        DHCPClient;
+static UCHAR data_buffer[DEFAULT_PAYLOAD_SIZE];
 /* USER CODE BEGIN PV */
 
 /* USER CODE END PV */
@@ -337,7 +338,6 @@ static VOID App_UDP_Thread_Entry(ULONG thread_input)
   ULONG bytes_read;
   UINT source_port;
 
-  UCHAR data_buffer[512];
   ULONG source_ip_address;
   NX_PACKET *data_packet;
 
@@ -370,8 +370,15 @@ static VOID App_UDP_Thread_Entry(ULONG thread_input)
 
     if (ret == NX_SUCCESS)
     {
-      /* data is available, read it into the data buffer */
-      nx_packet_data_retrieve(data_packet, data_buffer, &bytes_read);
+      /* data is available, read it into the data buffer with explicit bounds */
+      bytes_read = 0;
+      ret = nx_packet_data_extract_offset(data_packet, 0, data_buffer, sizeof(data_buffer) - 1U, &bytes_read);
+      if (ret != NX_SUCCESS)
+      {
+        nx_packet_release(data_packet);
+        continue;
+      }
+      data_buffer[bytes_read] = '\0';
 
       /* get info about the client address and port */
       nx_udp_source_extract(data_packet, &source_ip_address, &source_port);
