@@ -208,8 +208,8 @@
             <Ro3Chk>0</Ro3Chk>
             <Ir1Chk>1</Ir1Chk>
             <Ir2Chk>0</Ir2Chk>
-            <Ra1Chk>0</Ra1Chk>
-            <Ra2Chk>0</Ra2Chk>
+            <Ra1Chk>1</Ra1Chk>
+            <Ra2Chk>1</Ra2Chk>
             <Ra3Chk>0</Ra3Chk>
             <Im1Chk>1</Im1Chk>
             <Im2Chk>0</Im2Chk>
